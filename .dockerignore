@@ -1,0 +1,10 @@
+.git
+.mirsad
+**/__pycache__
+**/*.pyc
+web/node_modules
+reports
+deliverables
+docs
+data/detector/splits
+.env

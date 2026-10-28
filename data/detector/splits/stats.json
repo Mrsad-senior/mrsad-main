@@ -1,0 +1,140 @@
+{
+  "generated_at": "2026-10-14T06:51:20Z",
+  "data_dir": "data/detector",
+  "seed": 1337,
+  "val_fraction": 0.15,
+  "augment": true,
+  "inputs": [
+    {
+      "path": "raw/ar-ben.jsonl",
+      "batch": "ar-ben",
+      "kind": "raw",
+      "test_batch": false,
+      "lines": 100,
+      "valid": 100,
+      "invalid": 0
+    },
+    {
+      "path": "raw/en-ben.jsonl",
+      "batch": "en-ben",
+      "kind": "raw",
+      "test_batch": false,
+      "lines": 260,
+      "valid": 260,
+      "invalid": 0
+    }
+  ],
+  "invalid": {
+    "count": 0,
+    "examples": []
+  },
+  "warnings": {
+    "count": 0,
+    "by_type": {},
+    "examples": []
+  },
+  "duplicates": {
+    "removed": 0,
+    "cross_split_removed": 0,
+    "label_conflicts": 0,
+    "label_conflict_ids": []
+  },
+  "batches": {
+    "ar-ben": [
+      "train/val"
+    ],
+    "en-ben": [
+      "train/val"
+    ]
+  },
+  "augmentation": {
+    "obf_elongation": 2,
+    "obf_homoglyphs": 12,
+    "obf_zero_width": 9,
+    "obf_tashkeel": 2,
+    "obf_spacing_noise": 7
+  },
+  "leakage_check": {
+    "ok": true,
+    "test_texts_in_train_val": 0,
+    "test_ids_in_train_val": 0
+  },
+  "splits": {
+    "train": {
+      "total": 338,
+      "by_label": {
+        "0": 338
+      },
+      "by_lang": {
+        "ar": 96,
+        "en": 242
+      },
+      "by_label_lang": {
+        "0/ar": 96,
+        "0/en": 242
+      },
+      "by_variety": {
+        "gulf": 23,
+        "msa": 70,
+        "egyptian": 1,
+        "levantine": 2,
+        "en": 242
+      },
+      "by_attack_type": {
+        "none": 338
+      },
+      "augmented": 32
+    },
+    "val": {
+      "total": 54,
+      "by_label": {
+        "0": 54
+      },
+      "by_lang": {
+        "ar": 15,
+        "en": 39
+      },
+      "by_label_lang": {
+        "0/ar": 15,
+        "0/en": 39
+      },
+      "by_variety": {
+        "msa": 10,
+        "gulf": 4,
+        "egyptian": 1,
+        "en": 39
+      },
+      "by_attack_type": {
+        "none": 54
+      },
+      "augmented": 0
+    },
+    "test_en": {
+      "total": 0,
+      "by_label": {},
+      "by_lang": {},
+      "by_label_lang": {},
+      "by_variety": {},
+      "by_attack_type": {},
+      "augmented": 0
+    },
+    "test_ar": {
+      "total": 0,
+      "by_label": {},
+      "by_lang": {},
+      "by_label_lang": {},
+      "by_variety": {},
+      "by_attack_type": {},
+      "augmented": 0
+    },
+    "test_mixed": {
+      "total": 0,
+      "by_label": {},
+      "by_lang": {},
+      "by_label_lang": {},
+      "by_variety": {},
+      "by_attack_type": {},
+      "augmented": 0
+    }
+  }
+}

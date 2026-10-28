@@ -1,0 +1,31 @@
+sequenceDiagram
+  autonumber
+  participant A as AI agent
+  participant AD as Adapter<br/>(MCP / OpenAI / Guard API)
+  participant G as Gateway pipeline
+  participant P as Policy engine
+  participant T as Taint tracker
+  participant U as Upstream tool
+  participant D as Injection detector
+  participant L as Audit log
+  A->>AD: call tool(read_email, {email_id})
+  AD->>G: ToolCall
+  G->>P: evaluate_call(call)
+  P-->>G: reasons, profile, sink
+  G->>T: evaluate_call(call, profile, sink)
+  T-->>G: taint reasons
+  G->>G: combine (deny-overrides) + approval check
+  G->>L: append tool_call.decision (HMAC chain)
+  alt ALLOW
+    G->>U: execute
+    U-->>G: ToolResult (untrusted email text)
+    G->>D: scan(content)
+    D-->>G: score, spans, language
+    G->>G: sanitise / spotlight per policy
+    G->>T: register_result (labels + values)
+    G->>L: append tool_result.inspection
+    G-->>AD: inspected content
+  else DENY
+    G-->>AD: blocked + bilingual reason
+  end
+  AD-->>A: tool result

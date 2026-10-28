@@ -1,0 +1,30 @@
+flowchart TB
+  subgraph CH["1 · Channel"]
+    direction TB
+    C1["Direct injection<br/>the attacker is the user"]
+    C2["Indirect injection<br/>e-mails, web pages, documents,<br/>CRM notes, other tool results"]
+    C3["Tool-metadata poisoning<br/>MCP tool names and descriptions;<br/>shadowing, rug pulls"]
+  end
+  subgraph TE["2 · Technique"]
+    direction TB
+    T1["Instruction override,<br/>fake task completion"]
+    T2["Context partitioning,<br/>role or system impersonation"]
+    T3["Optimisation-based and<br/>adaptive search"]
+    T4["Obfuscation and language shift<br/>Unicode tricks, transliteration,<br/>Arabizi, dialect"]
+    T5["Concealment<br/>harmful action behind<br/>a normal-looking reply"]
+  end
+  subgraph GO["3 · Attacker goal"]
+    direction TB
+    G1["Goal hijacking"]
+    G2["Prompt leaking"]
+    G3["Data exfiltration<br/>private source → external sink"]
+    G4["Tool misuse<br/>harmful arguments to<br/>legitimate tools"]
+    G5["Persistence and propagation<br/>memory poisoning, worms"]
+  end
+  CH ==> TE ==> GO
+  classDef ch fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+  classDef te fill:#fff7ed,stroke:#f59e0b,color:#7c2d12
+  classDef go fill:#e6f4f4,stroke:#0f766e,color:#0b1f3a
+  class C1,C2,C3 ch
+  class T1,T2,T3,T4,T5 te
+  class G1,G2,G3,G4,G5 go

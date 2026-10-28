@@ -1,0 +1,1748 @@
+# Verified bibliography (IEEE). Every entry was checked against its source by an independent fact-checker.
+# Cite with [@key]; only cited entries appear in a document's reference list, numbered by first use.
+- key: '1'
+  ieee: 'Check Point Software Technologies, "Getting started with AI Guardrails," Check Point AI Security documentation (docs.lakera.ai). Accessed: Oct. 11, 2026. [Online]. Available: https://docs.lakera.ai/docs/quickstart'
+  url: https://docs.lakera.ai/docs/quickstart
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '10'
+  ieee: 'NVIDIA, "Content safety," NVIDIA NeMo Guardrails Library Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.nvidia.com/nemo/guardrails/latest/configure-guardrails/guardrail-catalog/content-safety'
+  url: https://docs.nvidia.com/nemo/guardrails/latest/configure-guardrails/guardrail-catalog/content-safety
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '11'
+  ieee: 'NVIDIA, "NeMo Guardrails," GitHub repository NVIDIA-NeMo/Guardrails (release v0.24.1, Sep. 16, 2026). Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/NVIDIA-NeMo/Guardrails'
+  url: https://github.com/NVIDIA-NeMo/Guardrails
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '12'
+  ieee: 'T. Rebedea, R. Dinu, M. N. Sreedhar, C. Parisien, and J. Cohen, "NeMo Guardrails: A toolkit for controllable and safe LLM applications with programmable rails," in Proc. 2023 Conf. Empirical Methods in Natural Language Processing: System Demonstrations (EMNLP), Dec. 2023, pp. 431-445, doi: 10.18653/v1/2023.emnlp-demo.40.'
+  url: https://aclanthology.org/2023.emnlp-demo.40/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '13'
+  ieee: 'Meta, "About LlamaFirewall," LlamaFirewall documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://meta-llama.github.io/PurpleLlama/LlamaFirewall/docs/documentation/about-llamafirewall'
+  url: https://meta-llama.github.io/PurpleLlama/LlamaFirewall/docs/documentation/about-llamafirewall
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '14'
+  ieee: 'Meta, "LlamaFirewall," GitHub repository meta-llama/PurpleLlama (LlamaFirewall directory, MIT licence). Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/meta-llama/PurpleLlama/tree/main/LlamaFirewall'
+  url: https://github.com/meta-llama/PurpleLlama/tree/main/LlamaFirewall
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '15'
+  ieee: 'S. Chennabasappa et al., "LlamaFirewall: An open source guardrail system for building secure AI agents," arXiv:2505.03574, May 2025. [Online]. Available: https://arxiv.org/abs/2505.03574'
+  url: https://arxiv.org/abs/2505.03574
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '16'
+  ieee: 'Meta, "Llama Prompt Guard 2 86M," model card, Hugging Face. Accessed: Oct. 11, 2026. [Online]. Available: https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M'
+  url: https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '17'
+  ieee: 'Microsoft, "Prompt Shields in Azure AI Content Safety," Microsoft Learn, Aug. 28, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection'
+  url: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '18'
+  ieee: 'Microsoft, "Guardrails and controls overview in Microsoft Foundry," Microsoft Learn, Jul. 31, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview'
+  url: https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '19'
+  ieee: 'Microsoft, "Agentic Workflows: Task Adherence (preview)," Microsoft Learn, Apr. 2, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://learn.microsoft.com/en-us/azure/foundry/guardrails/task-adherence'
+  url: https://learn.microsoft.com/en-us/azure/foundry/guardrails/task-adherence
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '2'
+  ieee: 'Check Point Software Technologies, "Prompt Defense," Check Point AI Security documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.lakera.ai/docs/prompt-defense'
+  url: https://docs.lakera.ai/docs/prompt-defense
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '20'
+  ieee: 'Microsoft, "Region availability and service limits - Azure AI Content Safety," Microsoft Learn, Sep. 18, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/region-availability'
+  url: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/region-availability
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '21'
+  ieee: 'Microsoft, "Connect agents to MCP server endpoints," Microsoft Learn, Aug. 26, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol'
+  url: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '22'
+  ieee: 'Microsoft Azure, "Content Safety in Foundry Control Plane - pricing." Accessed: Oct. 11, 2026. [Online]. Available: https://azure.microsoft.com/en-us/pricing/details/content-safety/'
+  url: https://azure.microsoft.com/en-us/pricing/details/content-safety/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '23'
+  ieee: 'Amazon Web Services, "Detect prompt attacks with Amazon Bedrock Guardrails," Amazon Bedrock User Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-prompt-attack.html'
+  url: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-prompt-attack.html
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '24'
+  ieee: 'Amazon Web Services, "Languages supported by Amazon Bedrock Guardrails," Amazon Bedrock User Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-supported-languages.html'
+  url: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-supported-languages.html
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '25'
+  ieee: 'Amazon Web Services, "Amazon Bedrock pricing." Accessed: Oct. 11, 2026. [Online]. Available: https://aws.amazon.com/bedrock/pricing/'
+  url: https://aws.amazon.com/bedrock/pricing/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '26'
+  ieee: 'Amazon Web Services, "Add an action group to your agent in Amazon Bedrock," Amazon Bedrock User Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-action-add.html'
+  url: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-action-add.html
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '27'
+  ieee: 'Amazon Web Services, "Policy in Amazon Bedrock AgentCore: Control agent interactions," Amazon Bedrock AgentCore Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html'
+  url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '28'
+  ieee: 'Amazon Web Services, "Policy scope," Amazon Bedrock AgentCore Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-scope.html'
+  url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-scope.html
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '29'
+  ieee: 'Amazon Web Services, "Temporal policies," Amazon Bedrock AgentCore Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-temporal.html'
+  url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-temporal.html
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '3'
+  ieee: 'Check Point Software Technologies, "Policies," Check Point AI Security documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.lakera.ai/docs/policies'
+  url: https://docs.lakera.ai/docs/policies
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '30'
+  ieee: 'Amazon Web Services, "Policy in Amazon Bedrock AgentCore is now generally available," AWS What''s New, Mar. 3, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://aws.amazon.com/about-aws/whats-new/2026/03/policy-amazon-bedrock-agentcore-generally-available/'
+  url: https://aws.amazon.com/about-aws/whats-new/2026/03/policy-amazon-bedrock-agentcore-generally-available/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '31'
+  ieee: 'Amazon Web Services, "Amazon Bedrock AgentCore now supports Bedrock Guardrails in policy," AWS What''s New, Jun. 17, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://aws.amazon.com/about-aws/whats-new/2026/06/amazon-bedrock-agentcore-policy-guardrails-generally-available/'
+  url: https://aws.amazon.com/about-aws/whats-new/2026/06/amazon-bedrock-agentcore-policy-guardrails-generally-available/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '32'
+  ieee: 'Amazon Web Services, "Understanding Amazon Bedrock AgentCore Gateway CloudTrail events," Amazon Bedrock AgentCore Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/understanding-gateway-cloudtrail-log-entries.html'
+  url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/understanding-gateway-cloudtrail-log-entries.html
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '33'
+  ieee: 'Amazon Web Services, "Validating CloudTrail log file integrity," AWS CloudTrail User Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-validation-intro.html'
+  url: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-validation-intro.html
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '34'
+  ieee: 'Amazon Web Services, "Amazon Bedrock AgentCore pricing." Accessed: Oct. 11, 2026. [Online]. Available: https://aws.amazon.com/bedrock/agentcore/pricing/'
+  url: https://aws.amazon.com/bedrock/agentcore/pricing/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '35'
+  ieee: 'Google Cloud, "Model Armor overview," Google Cloud documentation, updated Oct. 9, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.cloud.google.com/model-armor/overview'
+  url: https://docs.cloud.google.com/model-armor/overview
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '36'
+  ieee: 'Google Cloud, "Integrate Model Armor with Google and Google Cloud MCP servers," Google Cloud documentation, updated Oct. 9, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.cloud.google.com/model-armor/model-armor-mcp-google-cloud-integration'
+  url: https://docs.cloud.google.com/model-armor/model-armor-mcp-google-cloud-integration
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '37'
+  ieee: 'Google Cloud, "Agent Gateway overview," Gemini Enterprise Agent Platform documentation, updated Oct. 9, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/gateways/agent-gateway-overview'
+  url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/gateways/agent-gateway-overview
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '38'
+  ieee: 'Google Cloud, "Security Command Center pricing." Accessed: Oct. 11, 2026. [Online]. Available: https://cloud.google.com/security-command-center/pricing'
+  url: https://cloud.google.com/security-command-center/pricing
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '39'
+  ieee: 'Cloudflare, "AI Security for Apps," Cloudflare WAF documentation, updated Sep. 8, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://developers.cloudflare.com/waf/detections/ai-security-for-apps/'
+  url: https://developers.cloudflare.com/waf/detections/ai-security-for-apps/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '4'
+  ieee: 'Check Point Software Technologies, "AI Agent Security overview," Check Point AI Security documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.lakera.ai/docs/agent-security'
+  url: https://docs.lakera.ai/docs/agent-security
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '40'
+  ieee: 'Cloudflare, "Prompt injection detection," Cloudflare WAF documentation, updated Apr. 16, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://developers.cloudflare.com/waf/detections/ai-security-for-apps/prompt-injection/'
+  url: https://developers.cloudflare.com/waf/detections/ai-security-for-apps/prompt-injection/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '41'
+  ieee: 'L. Reese, Z. Zheng, and C. Newcomb, "AI Security for Apps is now generally available," The Cloudflare Blog, Mar. 11, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://blog.cloudflare.com/ai-security-for-apps-ga/'
+  url: https://blog.cloudflare.com/ai-security-for-apps-ga/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '42'
+  ieee: 'Cloudflare, "Guardrails," Cloudflare AI Gateway documentation, updated Sep. 30, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://developers.cloudflare.com/ai-gateway/features/guardrails/'
+  url: https://developers.cloudflare.com/ai-gateway/features/guardrails/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '43'
+  ieee: 'Cloudflare, "Usage considerations," Cloudflare AI Gateway documentation, updated Aug. 27, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://developers.cloudflare.com/ai-gateway/features/guardrails/usage-considerations/'
+  url: https://developers.cloudflare.com/ai-gateway/features/guardrails/usage-considerations/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '44'
+  ieee: 'Cloudflare, "MCP server portals," Cloudflare One documentation, updated Oct. 9, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/'
+  url: https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '45'
+  ieee: 'Protect AI, "llm-guard: The security toolkit for LLM interactions," GitHub repository (archived; MIT licence). Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/protectai/llm-guard'
+  url: https://github.com/protectai/llm-guard
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '46'
+  ieee: 'Protect AI, "Prompt injection," LLM Guard documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://protectai.github.io/llm-guard/input_scanners/prompt_injection/'
+  url: https://protectai.github.io/llm-guard/input_scanners/prompt_injection/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '47'
+  ieee: 'Protect AI, "deberta-v3-base-prompt-injection-v2," model card, Hugging Face. Accessed: Oct. 11, 2026. [Online]. Available: https://huggingface.co/protectai/deberta-v3-base-prompt-injection-v2'
+  url: https://huggingface.co/protectai/deberta-v3-base-prompt-injection-v2
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '48'
+  ieee: 'Palo Alto Networks, "Palo Alto Networks completes acquisition of Protect AI," press release, Jul. 22, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://www.paloaltonetworks.com/company/press/2025/palo-alto-networks-completes-acquisition-of-protect-ai'
+  url: https://www.paloaltonetworks.com/company/press/2025/palo-alto-networks-completes-acquisition-of-protect-ai
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '49'
+  ieee: 'Snyk, "Snyk acquires Invariant Labs to accelerate agentic AI security innovation," press release, Jun. 24, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://snyk.io/news/snyk-acquires-invariant-labs-to-accelerate-agentic-ai-security-innovation/'
+  url: https://snyk.io/news/snyk-acquires-invariant-labs-to-accelerate-agentic-ai-security-innovation/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '5'
+  ieee: 'Check Point Software Technologies, "AI Guardrails dashboard," Check Point AI Security documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.lakera.ai/docs/platform'
+  url: https://docs.lakera.ai/docs/platform
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '50'
+  ieee: 'Invariant Labs, "invariant: Guardrails for secure and robust agent development," GitHub repository (Apache-2.0). Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/invariantlabs-ai/invariant'
+  url: https://github.com/invariantlabs-ai/invariant
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '51'
+  ieee: 'Invariant Labs, "invariant-gateway," GitHub repository (Apache-2.0). Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/invariantlabs-ai/invariant-gateway'
+  url: https://github.com/invariantlabs-ai/invariant-gateway
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '52'
+  ieee: 'Invariant Labs, "explorer," GitHub repository (Apache-2.0). Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/invariantlabs-ai/explorer'
+  url: https://github.com/invariantlabs-ai/explorer
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '53'
+  ieee: 'Snyk, "agent-scan: Security scanner for AI agents, MCP servers and agent skills," GitHub repository (Apache-2.0; redirected from invariantlabs-ai/mcp-scan). Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/snyk/agent-scan'
+  url: https://github.com/snyk/agent-scan
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '54'
+  ieee: 'D. Berman, "Evo ADS Govern Agent Behavior goes GA: Bringing MCP usage under control," Snyk Blog, Sep. 30, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://snyk.io/blog/evo-ads-govern-agent-behavior-ga/'
+  url: https://snyk.io/blog/evo-ads-govern-agent-behavior-ga/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '55'
+  ieee: 'M. Nair, L. Beurer-Kellner, and K. Huszcza, "From code to agents: Proactively securing AI-native apps with Cursor and Snyk," Snyk Blog, Dec. 22, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://snyk.io/blog/evo-agent-guard-cursor-integration/'
+  url: https://snyk.io/blog/evo-agent-guard-cursor-integration/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '56'
+  ieee: 'Docker, "docker mcp gateway run," Docker Docs CLI reference. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.docker.com/reference/cli/docker/mcp/gateway/run/'
+  url: https://docs.docker.com/reference/cli/docker/mcp/gateway/run/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '57'
+  ieee: 'Docker, "Docker MCP Toolkit," Docker Docs. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.docker.com/ai/mcp-catalog-and-toolkit/toolkit/'
+  url: https://docs.docker.com/ai/mcp-catalog-and-toolkit/toolkit/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '58'
+  ieee: 'Docker, "mcp-gateway: docker mcp CLI plugin / MCP Gateway," GitHub repository (MIT). Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/docker/mcp-gateway'
+  url: https://github.com/docker/mcp-gateway
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '59'
+  ieee: 'agentgateway, "MCP authorization," agentgateway documentation (policy reference). Accessed: Oct. 11, 2026. [Online]. Available: https://agentgateway.dev/docs/standalone/main/documentation/configuration/security/mcp-authz/'
+  url: https://agentgateway.dev/docs/standalone/main/documentation/configuration/security/mcp-authz/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '6'
+  ieee: 'Check Point Software Technologies, "Check Point acquires Lakera to deliver end-to-end AI security for enterprises," press release, Sep. 16, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://www.checkpoint.com/press-releases/check-point-acquires-lakera-to-deliver-end-to-end-ai-security-for-enterprises/'
+  url: https://www.checkpoint.com/press-releases/check-point-acquires-lakera-to-deliver-end-to-end-ai-security-for-enterprises/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '60'
+  ieee: 'agentgateway, "About MCP guardrails," agentgateway documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://agentgateway.dev/docs/kubernetes/latest/documentation/mcp/guardrails/about/'
+  url: https://agentgateway.dev/docs/kubernetes/latest/documentation/mcp/guardrails/about/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '61'
+  ieee: 'agentgateway, "agentgateway: Next generation agentic proxy for AI agents and MCP servers," GitHub repository (Apache-2.0; a Series of LF Projects, LLC). Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/agentgateway/agentgateway'
+  url: https://github.com/agentgateway/agentgateway
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '62'
+  ieee: 'IBM, "ContextForge (mcp-context-forge)," GitHub repository (Apache-2.0). Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/IBM/mcp-context-forge'
+  url: https://github.com/IBM/mcp-context-forge
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '63'
+  ieee: 'E. Debenedetti et al., "Defeating prompt injections by design," arXiv:2503.18813, Mar. 2025 (v2, Jun. 2025). [Online]. Available: https://arxiv.org/abs/2503.18813'
+  url: https://arxiv.org/abs/2503.18813
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '64'
+  ieee: 'Google Research, "camel-prompt-injection: Code for the paper ''Defeating Prompt Injections by Design''," GitHub repository (Apache-2.0). Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/google-research/camel-prompt-injection'
+  url: https://github.com/google-research/camel-prompt-injection
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '65'
+  ieee: 'Amazon Web Services, "Core concepts," Amazon Bedrock AgentCore Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-core-concepts.html'
+  url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-core-concepts.html
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '66'
+  ieee: 'Amazon Web Services, "Amazon Bedrock AgentCore now includes Policy (preview), Evaluations (preview) and more," AWS What''s New, Dec. 2, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://aws.amazon.com/about-aws/whats-new/2025/12/amazon-bedrock-agentcore-policy-evaluations-preview/'
+  url: https://aws.amazon.com/about-aws/whats-new/2025/12/amazon-bedrock-agentcore-policy-evaluations-preview/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '67'
+  ieee: 'Check Point Software Technologies, "Check Point Software reports 2025 third quarter financial results," press release, Oct. 28, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://www.checkpoint.com/press-releases/check-point-software-reports-2025-third-quarter-financial-results/'
+  url: https://www.checkpoint.com/press-releases/check-point-software-reports-2025-third-quarter-financial-results/
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '7'
+  ieee: 'NVIDIA, "Overview," NVIDIA NeMo Guardrails Library Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.nvidia.com/nemo/guardrails/about-nemo-guardrails-library/overview'
+  url: https://docs.nvidia.com/nemo/guardrails/about-nemo-guardrails-library/overview
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '8'
+  ieee: 'NVIDIA, "Guardrail types," NVIDIA NeMo Guardrails Library Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.nvidia.com/nemo/guardrails/latest/about-nemo-guardrails-library/rail-types'
+  url: https://docs.nvidia.com/nemo/guardrails/latest/about-nemo-guardrails-library/rail-types
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: '9'
+  ieee: 'NVIDIA, "Tools integration with the NeMo Guardrails library," NVIDIA NeMo Guardrails Library Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.nvidia.com/nemo/guardrails/latest/integration-with-third-party-libraries/tools-integration'
+  url: https://docs.nvidia.com/nemo/guardrails/latest/integration-with-third-party-libraries/tools-integration
+  track: competitive-analysis
+  summary: ''
+  relevance: ''
+- key: abdelnasser2026salamahbench
+  ieee: 'O. Abdelnasser, F. Alharbi, K. Khasawneh, I. Alouani, and M. E. Fouda, "SalamahBench: Dialect and category level safety evaluation of Arabic language models," arXiv:2603.04410, 2026. [Online]. Available: https://arxiv.org/abs/2603.04410'
+  url: https://arxiv.org/abs/2603.04410
+  track: multilingual-arabic-security-and-standards
+  summary: 8,270 harmful prompts in MSA plus five varieties, Saudi among them (49,620 pairs). Defines the Dialect Shift and Category-Specific Dialect Deviation metrics and evaluates Fanar 2, ALLaM 2 and Karnak 1.
+  relevance: Has a Saudi dialect split. Its paired design is a template for per-dialect detector evaluation.
+- key: abdulmageed2021arbert
+  ieee: 'M. Abdul-Mageed, A. Elmadany, and E. M. B. Nagoudi, "ARBERT & MARBERT: Deep bidirectional transformers for Arabic," in Proc. 59th Annu. Meeting Assoc. Comput. Linguistics and 11th Int. Joint Conf. Natural Lang. Process. (ACL-IJCNLP), Vol. 1 (Long Papers), Online, Aug. 2021, pp. 7088–7105, doi: 10.18653/v1/2021.acl-long.551.'
+  url: https://aclanthology.org/2021.acl-long.551/
+  track: multilingual-arabic-security-and-standards
+  summary: ''
+  relevance: ''
+- key: abdulmageed2021marbert
+  ieee: 'M. Abdul-Mageed, A. Elmadany, and E. M. B. Nagoudi, "ARBERT & MARBERT: Deep bidirectional transformers for Arabic," in Proc. 59th Annu. Meeting ACL and 11th IJCNLP, Vol. 1, Aug. 2021, pp. 7088-7105, doi: 10.18653/v1/2021.acl-long.551.'
+  url: https://aclanthology.org/2021.acl-long.551/
+  track: multilingual-arabic-security-and-standards
+  summary: Dialect-aware Arabic encoders plus the 42-dataset ARLUE benchmark. They beat larger models such as XLM-R Large.
+  relevance: MARBERTv2 is the leading candidate backbone, given ArabicDialectSafety results.
+- key: abed2026asas
+  ieee: 'F. Abed, H. Khan, M. S. Bari, B. Khan, and A. Abujabal, "Redteaming leading Arabic LLMs with ASAS," arXiv:2608.21985, Aug. 2026. [Online]. Available: https://arxiv.org/abs/2608.21985'
+  url: https://arxiv.org/abs/2608.21985
+  track: multilingual-arabic-security-and-standards
+  summary: 801 human-curated Arabic red-team prompts across 8 categories and 8 attack strategies. Most of the 7 models failed on about 50% of unsafe prompts; obfuscation and direct attacks worked best, and GPT-4o was a poor judge.
+  relevance: Supports normalizing text before detection and scoring the detector against human labels.
+- key: agentgateway-github
+  ieee: 'agentgateway, "agentgateway: Next generation agentic proxy for AI agents and MCP servers," GitHub repository. Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/agentgateway/agentgateway'
+  url: https://github.com/agentgateway/agentgateway
+  track: competitive-analysis
+  summary: Apache-2.0 proxy for agents, MCP and A2A; the README states it is a Linux Foundation project.
+  relevance: Vendor-neutral, actively maintained infrastructure option.
+- key: agentgateway-guardrails
+  ieee: 'agentgateway, "About MCP guardrails," agentgateway documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://agentgateway.dev/docs/kubernetes/latest/mcp/guardrails/about/'
+  url: https://agentgateway.dev/docs/kubernetes/latest/mcp/guardrails/about/
+  track: competitive-analysis
+  summary: ExtMCP sends MCP calls such as tools/call to an external gRPC processor that can pass, mutate or deny them and inspect responses. No built-in detectors or human approval.
+  relevance: Mirsad could be implemented as an ExtMCP processor.
+- key: agentgateway-mcp-authz
+  ieee: 'agentgateway, "MCP authorization," agentgateway documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://agentgateway.dev/docs/standalone/main/mcp/mcp-authz/'
+  url: https://agentgateway.dev/docs/standalone/main/mcp/mcp-authz/
+  track: competitive-analysis
+  summary: MCP authorization uses CEL expressions evaluated against MCP method invocations to control which tools, prompts and resources a client can reach.
+  relevance: Open-source tool-level authorization comparable to Mirsad's per-tool policy.
+- key: alam2026arguard
+  ieee: 'F. Alam, M. R. Biswas, M. B. Kmainasi, A. E. Shahroor, H. Mubarak, G. Mikros, A. Hasnat, and W. Zaghouani, "ArGuard shared task: Harmful content detection in Arabic memes and LLM prompts," arXiv:2609.29349, Sep. 2026. [Online]. Available: https://arxiv.org/abs/2609.29349'
+  url: https://arxiv.org/abs/2609.29349
+  track: multilingual-arabic-security-and-standards
+  summary: Shared-task overview. Track B covers Arabic harmful-prompt detection (binary and 7-class), using ArabicDialectSafety and AraSafe data; best macro-F1 was 0.984 (B1) and 0.790 (B2).
+  relevance: Upper bounds and system recipes for Arabic prompt classification. Shows there is no Arabic injection-detection task yet.
+- key: alghanim2024arabizi
+  ieee: 'M. Al Ghanim, S. Almohaimeed, M. Zheng, Y. Solihin, and Q. Lou, "Jailbreaking LLMs with Arabic transliteration and Arabizi," in Proc. 2024 Conf. Empirical Methods Natural Lang. Process. (EMNLP), Miami, FL, USA, Nov. 2024, pp. 18584–18600, doi: 10.18653/v1/2024.emnlp-main.1034.'
+  url: https://aclanthology.org/2024.emnlp-main.1034/
+  track: multilingual-arabic-security-and-standards
+  summary: AdvBench prompts in Standardized Arabic, even with prefix injection, mostly failed to elicit unsafe content from GPT-4 and Claude 3 Sonnet, but transliterated and Arabizi versions succeeded. The authors hypothesize learned associations with specific words and call for safety training across all language forms.
+  relevance: An MSA-only detector will miss real Arabic attacks, so Mirsad's test set and normalization must cover Arabizi, transliteration, dialect, and code-switching.
+- key: amershi2019guidelines
+  ieee: 'S. Amershi, D. Weld, M. Vorvoreanu, A. Fourney, B. Nushi, P. Collisson, J. Suh, S. Iqbal, P. N. Bennett, K. Inkpen, J. Teevan, R. Kikin-Gil, and E. Horvitz, "Guidelines for human-AI interaction," in Proc. CHI Conf. Human Factors Comput. Syst. (CHI ''19), Glasgow, U.K., 2019, pp. 1–13, doi: 10.1145/3290605.3300233.'
+  url: https://doi.org/10.1145/3290605.3300233
+  track: foundations
+  summary: Eighteen validated design guidelines for AI-infused systems, grouped as initially, during interaction, when wrong, and over time. Validated with 49 design practitioners against 20 AI products. CHI 2019 Honorable Mention.
+  relevance: 'Shapes the approval UI: explain why a call was flagged, make approve and deny efficient, show consequences, and learn over time. Also serves as a heuristic checklist for usability evaluation.'
+- key: anthropic-api-credits
+  ieee: 'Anthropic, "How do I pay for my Claude API usage?," Claude Help Center. [Online]. Available: https://support.claude.com/en/articles/8977456. Accessed: Oct. 11, 2026.'
+  url: https://support.claude.com/en/articles/8977456
+  track: budget-evidence
+  summary: Claude API usage is paid from prepaid credits bought in the Console. Credits expire one year after purchase and are non-refundable. Optional auto-reload is available. No minimum purchase is stated.
+  relevance: Supports buying credits just in time for the confirmatory run and keeping auto-reload off.
+- key: anthropic-models-overview
+  ieee: 'Anthropic, "Models overview," Claude Platform Docs. [Online]. Available: https://platform.claude.com/docs/en/about-claude/models/overview. Accessed: Oct. 11, 2026.'
+  url: https://platform.claude.com/docs/en/about-claude/models/overview
+  track: budget-evidence
+  summary: Compares Fable 5.1, Opus 5.5, Sonnet 5.5 and Haiku 5.5. Sonnet 5.5 is positioned as the best mix of speed and intelligence, with API ID claude-sonnet-5-5, a 1M context window, tool use, and retirement no sooner than 28 Sep 2027.
+  relevance: Justifies Sonnet 5.5 as the Anthropic mid-tier model and confirms it will remain available through the project year.
+- key: anthropic-pricing
+  ieee: 'Anthropic, "Pricing," Claude Platform Docs. [Online]. Available: https://platform.claude.com/docs/en/about-claude/pricing. Accessed: Oct. 11, 2026.'
+  url: https://platform.claude.com/docs/en/about-claude/pricing
+  track: budget-evidence
+  summary: Per-MTok price table for all Claude models. Sonnet 5.5 is $2 input / $10 output, cache hits $0.10, and Batch $1/$5. Notes that the newer tokenizer (Claude 4.7+) yields about 30% more tokens, and lists tool-use system-prompt overhead (286 tokens for Sonnet 5.5).
+  relevance: 'Anthropic mid-tier price for the confirmatory run: $40 (150 SAR) per 2,000-episode base-case run, $20 on Batch.'
+- key: antoun2020arabert
+  ieee: 'W. Antoun, F. Baly, and H. Hajj, "AraBERT: Transformer-based model for Arabic language understanding," in Proc. 4th Workshop Open-Source Arabic Corpora Process. Tools (OSACT4), with a Shared Task on Offensive Language Detection, Marseille, France, May 2020, pp. 9–15.'
+  url: https://aclanthology.org/2020.osact-1.2/
+  track: multilingual-arabic-security-and-standards
+  summary: BERT pretrained on Arabic. Outperformed mBERT and reached state of the art on most Arabic tasks tested.
+  relevance: Baseline backbone for the Arabic detector.
+- key: apple-developer-enroll
+  ieee: 'Apple Inc., "Become a member - Apple Developer Program," Apple Developer. [Online]. Available: https://developer.apple.com/programs/enroll/. Accessed: Oct. 11, 2026.'
+  url: https://developer.apple.com/programs/enroll/
+  track: budget-evidence
+  summary: Membership is 99 USD per membership year (local currency at enrolment). Requires two-factor authentication, legal age and legal name. Fee waivers apply only to some non-profits, institutions and government bodies.
+  relevance: A native iOS app would cost about 371.25 SAR per year, which the SPAP never budgeted; the PWA avoids it.
+- key: ashraf2025arabic
+  ieee: 'Y. Ashraf, Y. Wang, B. Gu, P. Nakov, and T. Baldwin, "Arabic dataset for LLM safeguard evaluation," in Proc. 2025 Conf. Nations Americas Chapter Assoc. Comput. Linguistics: Human Lang. Technol. (NAACL), Vol. 1 (Long Papers), Albuquerque, NM, USA, Apr. 2025, pp. 5529–5546, doi: 10.18653/v1/2025.naacl-long.285.'
+  url: https://aclanthology.org/2025.naacl-long.285/
+  track: multilingual-arabic-security-and-standards
+  summary: ''
+  relevance: ''
+- key: ashraf2025arabicsafeguard
+  ieee: 'Y. Ashraf, Y. Wang, B. Gu, P. Nakov, and T. Baldwin, "Arabic dataset for LLM safeguard evaluation," in Proc. 2025 Conf. Nations Americas Chapter Assoc. Comput. Linguistics: Human Lang. Technol. (NAACL), Vol. 1, Albuquerque, NM, USA, 2025, pp. 5529-5546, doi: 10.18653/v1/2025.naacl-long.285.'
+  url: https://aclanthology.org/2025.naacl-long.285/
+  track: multilingual-arabic-security-and-standards
+  summary: '5,799 Arab-region-adapted questions: direct attacks, indirect attacks and harmless questions with sensitive words. Answers are scored from both governmental and oppositional perspectives across five LLMs.'
+  relevance: The harmless-but-sensitive subset can test the Arabic detector's false positives.
+- key: aws-agentcore-cloudtrail
+  ieee: 'Amazon Web Services, "Understanding Amazon Bedrock AgentCore Gateway CloudTrail events," Amazon Bedrock AgentCore Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/understanding-gateway-cloudtrail-log-entries.html'
+  url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/understanding-gateway-cloudtrail-log-entries.html
+  track: competitive-analysis
+  summary: InvokeGateway data events record the tool name, JWT claims and target, with request arguments and results redacted.
+  relevance: Shows what AWS's audit records contain; needed for a fair comparison with Mirsad's per-decision audit.
+- key: aws-agentcore-guardrails-in-policy
+  ieee: 'Amazon Web Services, "Amazon Bedrock AgentCore now supports Bedrock Guardrails in policy," AWS What''s New, Jun. 17, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://aws.amazon.com/about-aws/whats-new/2026/06/amazon-bedrock-agentcore-policy-guardrails-generally-available/'
+  url: https://aws.amazon.com/about-aws/whats-new/2026/06/amazon-bedrock-agentcore-policy-guardrails-generally-available/
+  track: competitive-analysis
+  summary: Guardrails can now screen the outputs of authorized agent actions and the inputs to gateway targets for prompt injection, evaluated within policy at the gateway.
+  relevance: Shows AWS combining deterministic policy with an injection detector, the same layering Mirsad proposes.
+- key: aws-agentcore-policy
+  ieee: 'Amazon Web Services, "Policy in Amazon Bedrock AgentCore: Control agent interactions," Amazon Bedrock AgentCore Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html'
+  url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html
+  track: competitive-analysis
+  summary: Deterministic Cedar/Dogwood policies enforced at AgentCore Gateway outside the agent's code. Supports fine-grained permissions on user identity and tool input parameters, natural-language authoring, CloudWatch monitoring and audit logging of decisions.
+  relevance: Closest commercial analogue to Mirsad's per-tool and per-parameter policy engine.
+- key: aws-agentcore-policy-ga
+  ieee: 'Amazon Web Services, "Policy in Amazon Bedrock AgentCore is now generally available," AWS What''s New, Mar. 3, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://aws.amazon.com/about-aws/whats-new/2026/03/policy-amazon-bedrock-agentcore-generally-available/'
+  url: https://aws.amazon.com/about-aws/whats-new/2026/03/policy-amazon-bedrock-agentcore-generally-available/
+  track: competitive-analysis
+  summary: Announces GA of AgentCore Policy for centralized control of agent-to-tool interactions, with natural-language-to-Cedar authoring, in thirteen regions.
+  relevance: Dates the arrival of commercial tool-layer policy enforcement.
+- key: aws-agentcore-policy-scope
+  ieee: 'Amazon Web Services, "Policy scope," Amazon Bedrock AgentCore Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-understanding-cedar.html'
+  url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-understanding-cedar.html
+  track: competitive-analysis
+  summary: Maps Cedar principal, action and resource onto OAuth/IAM callers, individual MCP tools (Target___Tool) and gateways. Wildcard actions are not supported; tools are grouped through gateway targets.
+  relevance: Design reference for Mirsad's policy schema.
+- key: aws-agentcore-pricing
+  ieee: 'Amazon Web Services, "Amazon Bedrock AgentCore pricing." Accessed: Oct. 11, 2026. [Online]. Available: https://aws.amazon.com/bedrock/agentcore/pricing/'
+  url: https://aws.amazon.com/bedrock/agentcore/pricing/
+  track: competitive-analysis
+  summary: Policy authorization costs $0.000025 per request. Natural-language policy authoring costs $0.13 per 1,000 input tokens. Guardrail usage within policy is billed separately.
+  relevance: Pricing comparison.
+- key: aws-agentcore-temporal
+  ieee: 'Amazon Web Services, "Temporal policies," Amazon Bedrock AgentCore Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-temporal.html'
+  url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-temporal.html
+  track: competitive-analysis
+  summary: Dogwood temporal operators (formerly within, since within, count, sum) evaluate session history, for example requiring a prior approval action before a sale. Limited by quotas, regions and same-account/region constraints; the session ID is caller-supplied.
+  relevance: Nearest commercial approximation to data-flow rules and approval-gated actions; shows how it differs from taint tracking.
+- key: aws-agents-action-group
+  ieee: 'Amazon Web Services, "Add an action group to your agent in Amazon Bedrock," Amazon Bedrock User Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-action-add.html'
+  url: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-action-add.html
+  track: competitive-analysis
+  summary: Bedrock Agents functions can set requireConfirmation to ENABLED, which asks the user to confirm before invocation. AWS presents this as a safeguard against malicious prompt injection.
+  relevance: Per-function approval primitive comparable to Mirsad's HITL approval.
+- key: aws-bedrock-pricing
+  ieee: 'Amazon Web Services, "Amazon Bedrock pricing." Accessed: Oct. 11, 2026. [Online]. Available: https://aws.amazon.com/bedrock/pricing/'
+  url: https://aws.amazon.com/bedrock/pricing/
+  track: competitive-analysis
+  summary: Guardrails content filters cost $0.15 per 1,000 text units (Standard and Classic). Through InvokeGuardrailChecks, a standalone prompt-attack check costs $0.08 per 1,000 text units.
+  relevance: Pricing comparison.
+- key: aws-cloudtrail-integrity
+  ieee: 'Amazon Web Services, "Validating CloudTrail log file integrity," AWS CloudTrail User Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-validation-intro.html'
+  url: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-validation-intro.html
+  track: competitive-analysis
+  summary: CloudTrail hashes log files with SHA-256 and delivers hourly RSA-signed digest files, each containing the previous digest's signature, so modification or deletion can be detected.
+  relevance: The one documented tamper-evident logging mechanism among competitors; it is file-level and opt-in, not per decision.
+- key: aws-guardrails-languages
+  ieee: 'Amazon Web Services, "Languages supported by Amazon Bedrock Guardrails," Amazon Bedrock User Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-supported-languages.html'
+  url: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-supported-languages.html
+  track: competitive-analysis
+  summary: In the Standard tier, Arabic is 'Optimized and supported' for content filters and prompt attacks. The Classic tier supports only English, French and Spanish.
+  relevance: Shows a major cloud vendor offers Arabic-optimized injection detection.
+- key: aws-guardrails-prompt-attack
+  ieee: 'Amazon Web Services, "Detect prompt attacks with Amazon Bedrock Guardrails," Amazon Bedrock User Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-prompt-attack.html'
+  url: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-prompt-attack.html
+  track: competitive-analysis
+  summary: The prompt-attack filter covers jailbreak, prompt injection and prompt leakage (Standard tier). User input must be tagged. The filter does not evaluate tool results or tool definitions.
+  relevance: Key evidence that model-I/O guardrails miss indirect injection arriving through tool outputs.
+- key: aws-lightsail
+  ieee: 'Amazon Web Services, "Amazon Lightsail Pricing." [Online]. Available: https://aws.amazon.com/lightsail/pricing/. Accessed: Oct. 11, 2026.'
+  url: https://aws.amazon.com/lightsail/pricing/
+  track: budget-evidence
+  summary: The Linux bundle with 4 GB, 2 vCPU, 80 GB SSD and 4 TB transfer costs $24/mo with public IPv4 and $20/mo IPv6-only.
+  relevance: Independent second provider at $24/mo, confirming the 540 SAR figure for 6 months.
+- key: azure-content-safety-pricing
+  ieee: 'Microsoft Azure, "Content Safety in Foundry Control Plane - pricing." Accessed: Oct. 11, 2026. [Online]. Available: https://azure.microsoft.com/en-us/pricing/details/content-safety/'
+  url: https://azure.microsoft.com/en-us/pricing/details/content-safety/
+  track: competitive-analysis
+  summary: Free tier includes 5,000 text records per month for Prompt Shields. The Standard tier is billed per 1,000 text records, where one record is up to 1,000 characters.
+  relevance: Pricing model for comparison.
+- key: azure-foundry-guardrails
+  ieee: 'Microsoft, "Guardrails and controls overview in Microsoft Foundry," Microsoft Learn, Jul. 31, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview'
+  url: https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview
+  track: competitive-analysis
+  summary: Foundry guardrails have four intervention points; tool call and tool response are agent-only and in preview. Agents support only annotate-and-block. Spotlighting and groundedness are not supported for agents. Hosted agents get network egress controls (preview).
+  relevance: Shows Azure moving screening to the tool layer, but in preview and only inside Foundry.
+- key: azure-foundry-mcp
+  ieee: 'Microsoft, "Connect agents to MCP server endpoints," Microsoft Learn, Aug. 26, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol'
+  url: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol
+  track: competitive-analysis
+  summary: Foundry MCP tool supports allowed_tools and require_approval (always or never; default always) with approval request and response items. Advises treating MCP results as untrusted, implementing your own approval UX, and logging approvals.
+  relevance: Approval is a platform primitive; the UX and audit trail are left to developers, which is the gap Mirsad's mobile app addresses.
+- key: azure-prompt-shields
+  ieee: 'Microsoft, "Prompt Shields in Azure AI Content Safety," Microsoft Learn, Aug. 28, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection'
+  url: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection
+  track: competitive-analysis
+  summary: Defines user-prompt attacks and document (indirect) attacks with their subtypes. Scanned at the user input and tool response points in Foundry. Spotlighting (preview) base64-encodes documents as lower-trust input. The API accepts a prompt plus up to five documents.
+  relevance: Clearest vendor taxonomy of indirect injection; Spotlighting is the nearest commercial idea to provenance marking.
+- key: azure-region-limits-language
+  ieee: 'Microsoft, "Region availability and service limits - Azure AI Content Safety," Microsoft Learn, Sep. 18, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/region-availability'
+  url: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/region-availability
+  track: competitive-analysis
+  summary: States that Prompt Shields was tested with English only and may work in other languages with varying quality. Prompt Shields API limits are 10K characters for the prompt and up to five documents totalling 10K characters.
+  relevance: Primary evidence that Azure's injection detector has not been tested on Arabic.
+- key: azure-task-adherence
+  ieee: 'Microsoft, "Agentic workflows Task Adherence (preview)," Microsoft Learn, Apr. 2, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://learn.microsoft.com/en-us/azure/foundry/guardrails/task-adherence'
+  url: https://learn.microsoft.com/en-us/azure/foundry/guardrails/task-adherence
+  track: competitive-analysis
+  summary: API that flags tool invocations misaligned with user intent and returns a reason, recommended for blocking or human-in-the-loop escalation. Tested on English; 100K-character limit.
+  relevance: An ML-based alternative to Mirsad's declarative and taint-based action control.
+- key: bajunaid2026sdaiadraft
+  ieee: 'L. Bajunaid and N. Ezzat, "The SDAIA publishes draft amendments to the Implementing Regulations of the PDPL," Clyde & Co, Oct. 8, 2026. [Online]. Available: https://www.clydeco.com/en/insights/2026/10/sdaia-publishes-draft-amendments-to-the-pdpl'
+  url: https://www.clydeco.com/en/insights/2026/10/sdaia-publishes-draft-amendments-to-the-pdpl
+  track: multilingual-arabic-security-and-standards
+  summary: ''
+  relevance: ''
+- key: beurerkellner2025designpatterns
+  ieee: L. Beurer-Kellner et al., "Design patterns for securing LLM agents against prompt injections," arXiv:2506.08837, Jun. 2025.
+  url: https://arxiv.org/abs/2506.08837
+  track: defenses
+  summary: Six patterns for agents with provable resistance (Action-Selector, Plan-Then-Execute, LLM Map-Reduce, Dual LLM, Code-Then-Execute, Context-Minimization) and ten case studies. States that no single pattern fits all threat models and that general-purpose agents remain out of reach. Warns that human confirmation is burdensome, fatigue-prone, and open to obfuscated actions.
+  relevance: Mirsad approximates Plan-Then-Execute at runtime, and the fatigue warnings shape Mirsad's escalation design.
+- key: camel-github
+  ieee: 'Google Research, "camel-prompt-injection: Code for the paper ''Defeating Prompt Injections by Design''," GitHub repository. Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/google-research/camel-prompt-injection'
+  url: https://github.com/google-research/camel-prompt-injection
+  track: competitive-analysis
+  summary: Research artifact for reproducing the paper. The README says it is not a Google product, will not be maintained, and that the interpreter likely contains bugs and may not be fully secure. Apache-2.0.
+  relevance: Confirms CaMeL is not a deployable product, which leaves room for Mirsad as a practical system.
+- key: card1980klm
+  ieee: 'S. K. Card, T. P. Moran, and A. Newell, "The keystroke-level model for user performance time with interactive systems," Commun. ACM, vol. 23, no. 7, pp. 396–410, Jul. 1980, doi: 10.1145/358886.358895.'
+  url: https://doi.org/10.1145/358886.358895
+  track: foundations
+  summary: Predicts error-free expert task time by summing primitive operators (keystroke, point, home, draw, mental preparation, system response) using placement heuristics for M. Operator estimates include M = 1.35 s, P = 1.10 s and H = 0.40 s. Prediction error was 21 percent for individual tasks across 10 systems.
+  relevance: Analytical estimate of the per-approval interaction cost in Mirsad's mobile app, for comparison with measured user-test times.
+- key: checkpoint-lakera-press
+  ieee: 'Check Point Software Technologies, "Check Point acquires Lakera to deliver end-to-end AI security for enterprises," press release, Sep. 16, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://www.checkpoint.com/press-releases/check-point-acquires-lakera-to-deliver-end-to-end-ai-security-for-enterprises/'
+  url: https://www.checkpoint.com/press-releases/check-point-acquires-lakera-to-deliver-end-to-end-ai-security-for-enterprises/
+  track: competitive-analysis
+  summary: Announces Check Point's agreement to acquire Lakera, with closing expected in Q4 2025.
+  relevance: Explains the rebranding of Lakera Guard as Check Point AI Guardrails and the consolidation of the market.
+- key: chen2025metasecalign
+  ieee: 'S. Chen, A. Zharmagambetov, D. Wagner, and C. Guo, "Meta-SecAlign: Training LLMs against prompt injection for robust agents," arXiv:2507.02735, Jul. 2025 (v4, Sep. 2026).'
+  url: https://arxiv.org/abs/2507.02735
+  track: defenses
+  summary: Fixes SecAlign's utility loss on agentic tasks with randomized injection positions and self-generated training labels. Keeps almost all undefended utility while improving security over SecAlign against static and GCG adaptive attacks. Evaluated on Llama-3.1-8B, Llama-3.3-70B, Llama-4-Scout, Qwen3-4B, and Qwen3.6-27B across six benchmarks including AgentDojo, InjecAgent, WASP, and SEP.
+  relevance: Strongest model-level baseline in 2026. Nasr et al. report 96% adaptive ASR against it (versus 2% static), which shows the need for Mirsad's deterministic layer.
+- key: chen2025secalign
+  ieee: 'S. Chen, A. Zharmagambetov, S. Mahloujifar, K. Chaudhuri, D. Wagner, and C. Guo, "SecAlign: Defending against prompt injection with preference optimization," in Proc. 2025 ACM SIGSAC Conf. Computer and Communications Security (CCS ''25), 2025, pp. 2833-2847, doi: 10.1145/3719027.3744836.'
+  url: https://doi.org/10.1145/3719027.3744836
+  track: defenses
+  summary: Builds preference pairs (a secure response to the real instruction versus an insecure response to the injection) and trains with DPO using LoRA on open models (e.g., Llama3-8B-Instruct, Mistral-7B-Instruct). Reports injection success below 10% even against stronger-than-training optimization attacks, 0% on InjecAgent, and a 2-3% MMLU loss. Requires the exact prompt format, does not reach 100% security, and does not cover jailbreaks.
+  relevance: Optional model-level layer behind Mirsad, but it gives no guarantees or audit trail.
+- key: chen2025struq
+  ieee: 'S. Chen, J. Piet, C. Sitawarin, and D. Wagner, "StruQ: Defending against prompt injection with structured queries," in Proc. 34th USENIX Security Symp. (USENIX Security 25), Seattle, WA, USA, Aug. 2025, pp. 2383-2400.'
+  url: https://www.usenix.org/conference/usenixsecurity25/presentation/chen-sizhe
+  track: defenses
+  summary: 'Separates prompt and data into two channels: a secure front-end formats them with reserved delimiters, and a model fine-tuned on data-channel-injected examples learns to ignore instructions there. It improves injection resistance with little or no utility loss but requires fine-tuning an open model.'
+  relevance: Same principle as Mirsad's taint labels (a separate channel for untrusted data), which Mirsad applies at the protocol level without retraining.
+- key: chennabasappa2025llamafirewall
+  ieee: 'S. Chennabasappa et al., "LlamaFirewall: An open source guardrail system for building secure AI agents," arXiv:2505.03574, May 2025.'
+  url: https://arxiv.org/abs/2505.03574
+  track: defenses
+  summary: Meta's open agent guardrail combining PromptGuard 2, AlignmentCheck (an experimental chain-of-thought auditor that needs a large model and can itself be injected), CodeShield, and custom regex or LLM scanners. On AgentDojo, ASR was 17.6% with no guardrail, 7.5% with PG2, 2.89% with AlignmentCheck (Llama 4 Maverick), and 1.75% combined. Utility went from 47.7% to 42.7%.
+  relevance: The closest open-source relative of Mirsad and a natural comparison point. It lacks deterministic taint/policy enforcement, human approval, and a tamper-evident log.
+- key: cloudflare-ai-gateway-guardrails
+  ieee: 'Cloudflare, "Guardrails," Cloudflare AI Gateway documentation, updated Sep. 30, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://developers.cloudflare.com/ai-gateway/features/guardrails/'
+  url: https://developers.cloudflare.com/ai-gateway/features/guardrails/
+  track: competitive-analysis
+  summary: AI Gateway guardrails evaluate prompts and responses for harmful categories, with flag or block actions and logs of prompts, responses and enforced guardrails.
+  relevance: Proxy-level content guardrail without tool semantics.
+- key: cloudflare-ai-gateway-usage
+  ieee: 'Cloudflare, "Usage considerations," Cloudflare AI Gateway documentation, updated Aug. 27, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://developers.cloudflare.com/ai-gateway/features/guardrails/usage-considerations/'
+  url: https://developers.cloudflare.com/ai-gateway/features/guardrails/usage-considerations/
+  track: competitive-analysis
+  summary: Uses Llama Guard 3 8B for categories S1-S13 and Prompt Guard 2 86M for prompt injection (P1). Supported languages listed exclude Arabic. Usage is billed through Workers AI.
+  relevance: Shows Cloudflare reuses Meta's detector; no Arabic coverage listed.
+- key: cloudflare-ai-security-apps
+  ieee: 'Cloudflare, "AI Security for Apps," Cloudflare WAF documentation, updated Sep. 8, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://developers.cloudflare.com/waf/detections/ai-security-for-apps/'
+  url: https://developers.cloudflare.com/waf/detections/ai-security-for-apps/
+  track: competitive-analysis
+  summary: AI Security for Apps (formerly Firewall for AI) scans requests to cf-llm-labelled endpoints, JSON only, and adds PII, topic and prompt-injection fields. AI detection fields are an Enterprise paid add-on.
+  relevance: Example of an edge/WAF AI firewall that does not see agent-to-tool traffic.
+- key: cloudflare-blog-ga
+  ieee: 'Z. Zheng and C. Newcomb, "AI Security for Apps is now generally available," The Cloudflare Blog, Mar. 11, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://blog.cloudflare.com/ai-security-for-apps-ga/'
+  url: https://blog.cloudflare.com/ai-security-for-apps-ga/
+  track: competitive-analysis
+  summary: Announces GA of a model-agnostic reverse-proxy detection layer (prompt injection, PII, toxic and custom topics) available to Enterprise customers. No dedicated MCP or tool protections are described.
+  relevance: Confirms product status and positioning.
+- key: cloudflare-mcp-portals
+  ieee: 'Cloudflare, "MCP server portals," Cloudflare One documentation, updated Oct. 9, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/'
+  url: https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/
+  track: competitive-analysis
+  summary: Centralizes multiple MCP servers behind one endpoint with tool and prompt allow-listing (default_disabled/updated_tools), per-portal logs and DLP via Gateway. No per-parameter rules, injection detection or approval are documented.
+  relevance: Commercial MCP gateway with coarse tool control; Mirsad adds semantic controls.
+- key: cloudflare-prompt-injection
+  ieee: 'Cloudflare, "Prompt injection detection," Cloudflare WAF documentation, updated Apr. 16, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://developers.cloudflare.com/waf/detections/ai-security-for-apps/prompt-injection/'
+  url: https://developers.cloudflare.com/waf/detections/ai-security-for-apps/prompt-injection/
+  track: competitive-analysis
+  summary: Prompt injection is scored 1-99 in cf.llm.prompt.injection_score, with lower scores meaning higher risk. No language statement.
+  relevance: Detector interface comparison; language coverage undocumented.
+- key: cloudflare-quick-tunnels
+  ieee: 'Cloudflare, "Quick Tunnels," Cloudflare Docs. [Online]. Available: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/. Accessed: Oct. 11, 2026.'
+  url: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/
+  track: budget-evidence
+  summary: Temporary trycloudflare.com hostnames with no account or domain needed; for testing only, no uptime guarantee, a 200 in-flight request limit, no SSE, and the hostname changes on every start.
+  relevance: Last-resort demo fallback; the lack of SSE support may rule it out for streaming MCP or approval channels.
+- key: cloudflare-tunnel
+  ieee: 'Cloudflare, "Cloudflare Tunnel," Cloudflare Docs. [Online]. Available: https://developers.cloudflare.com/tunnel/. Accessed: Oct. 11, 2026.'
+  url: https://developers.cloudflare.com/tunnel/
+  track: budget-evidence
+  summary: An outbound-only connector publishes local services under public hostnames without opening inbound ports. The page states it is available on all plans.
+  relevance: Zero-cost way to expose a lab-hosted gateway over HTTPS.
+- key: clydeco2026pdpldraft
+  ieee: L. Bajunaid and N. Ezzat, "The SDAIA publishes draft amendments to the Implementing Regulations of the PDPL," Clyde & Co, Oct. 8, 2026.
+  url: https://www.clydeco.com/en/insights/2026/10/sdaia-publishes-draft-amendments-to-the-pdpl
+  track: multilingual-arabic-security-and-standards
+  summary: 'Istitlaa consultation open 6 Oct to 5 Nov 2026. Proposals: 72-hour SDAIA notice for any breach regardless of harm, DPIAs for emerging technologies, data localisation, and privacy policies in the subjects'' language.'
+  relevance: Likely to raise the value of Mirsad's logs, including blocked attempts, and of Arabic-first approval prompts.
+- key: conneau2020xlmr
+  ieee: 'A. Conneau, K. Khandelwal, N. Goyal, V. Chaudhary, G. Wenzek, F. Guzmán, E. Grave, M. Ott, L. Zettlemoyer, and V. Stoyanov, "Unsupervised cross-lingual representation learning at scale," in Proc. 58th Annu. Meeting Assoc. Comput. Linguistics (ACL), Online, Jul. 2020, pp. 8440–8451, doi: 10.18653/v1/2020.acl-main.747.'
+  url: https://aclanthology.org/2020.acl-main.747/
+  track: multilingual-arabic-security-and-standards
+  summary: 'XLM-R: a masked language model trained on more than 2TB of filtered web text in 100 languages, with strong cross-lingual transfer.'
+  relevance: Single-model baseline for a bilingual Arabic/English detector.
+- key: costa2025fides
+  ieee: M. Costa et al., "Securing AI agents with information-flow control," arXiv:2505.23643, May 2025.
+  url: https://arxiv.org/abs/2505.23643
+  track: defenses
+  summary: Formal IFC model for agent planners plus FIDES, which labels data with integrity and confidentiality, propagates labels conservatively, and enforces trusted-action and permitted-flow policies at tool calls. It hides results in variables and uses a constrained quarantined LLM with low-capacity outputs. On AgentDojo it prevents all attacks except text-to-text and one calendar case, and it aborts on violation, citing confirmation fatigue as the reason to avoid human prompts.
+  relevance: Theoretical basis for Mirsad's taint tracking. Mirsad can adopt its consequential/egress tool classification and route violations to human approval instead of aborting.
+- key: crosby2009efficient
+  ieee: S. A. Crosby and D. S. Wallach, "Efficient data structures for tamper-evident logging," in Proc. 18th USENIX Secur. Symp., Montreal, QC, Canada, Aug. 2009.
+  url: https://www.usenix.org/conference/usenixsecurity09/technical-sessions/presentation/efficient-data-structures-tamper-evident
+  track: foundations
+  summary: 'Defines tamper evidence through auditor challenges (membership and consistency proofs) and introduces a Merkle-tree history tree with logarithmic proofs: a 3 KB proof versus an ~800 MB hash-chain trace to prove membership of a random event in an 80M-event log. Also supports authenticated search and agreed-upon deletion, and reports 1,750 events/s on one core (10,500 events/s with signatures offloaded).'
+  relevance: Gives the vocabulary for Mirsad's audit verification and a scalable upgrade path from the linear chain.
+- key: debenedetti2024agentdojo
+  ieee: 'E. Debenedetti, J. Zhang, M. Balunović, L. Beurer-Kellner, M. Fischer, and F. Tramèr, "AgentDojo: A dynamic environment to evaluate prompt injection attacks and defenses for LLM agents," in Adv. Neural Inf. Process. Syst. 37 (NeurIPS 2024), Datasets and Benchmarks Track, 2024, pp. 82895-82920, doi: 10.52202/079017-2636.'
+  url: https://proceedings.neurips.cc/paper_files/paper/2024/hash/97091a5177d8dc64b1da8bf3e1f6fb54-Abstract-Datasets_and_Benchmarks_Track.html
+  track: attacks-benchmarks
+  summary: Extensible stateful environment with 4 suites (Workspace, Slack, Travel, Banking), 97 user tasks and 629 security cases. GPT-4o targeted ASR under the 'important message' attack is about 48-58% depending on the table. A tool-filter defense cut ASR to about 7% while keeping benign utility (73% vs 69%). A PI detector reached similar security (about 8%) but cut benign utility from 69% to about 41% (and utility under attack from 50% to 21%).
+  relevance: Primary recommended evaluation harness for Mirsad, using utility, utility under attack and ASR. The detector false-positive result shapes how Mirsad's detector should be tuned, and the tool-filter result supports least-privilege policy.
+- key: debenedetti2025camel
+  ieee: E. Debenedetti et al., "Defeating prompt injections by design," arXiv:2503.18813, Mar. 2025 (v2, Jun. 2025).
+  url: https://arxiv.org/abs/2503.18813
+  track: defenses
+  summary: 'CaMeL: a privileged LLM writes restricted Python from the trusted query, and a tool-less quarantined LLM parses untrusted data. A custom interpreter tracks data flow and capabilities and checks Python security policies before each tool call. Solves 77% of AgentDojo tasks with provable security (versus 84% undefended). Median token overhead is about 2.82x input and 2.73x output. In real deployments, violations are meant to require user confirmation rather than be blocked.'
+  relevance: The gold-standard comparison. Mirsad brings its provenance-and-policy ideas to unmodified agents at the MCP boundary, with coarser taint.
+- key: deng2024multilingual
+  ieee: 'Y. Deng, W. Zhang, S. J. Pan, and L. Bing, "Multilingual jailbreak challenges in large language models," in Proc. 12th Int. Conf. Learn. Represent. (ICLR), 2024. [Online]. Available: https://arxiv.org/abs/2310.06474'
+  url: https://arxiv.org/abs/2310.06474
+  track: multilingual-arabic-security-and-standards
+  summary: Separates unintentional and intentional multilingual jailbreaks and introduces MultiJail (315 prompts in 9 languages, Arabic among them). Intentional attacks reached 80.92% unsafe output on ChatGPT and 40.71% on GPT-4. Proposes Self-Defense fine-tuning.
+  relevance: Human-translated Arabic test data. Benign Arabic traffic must not be over-blocked.
+- key: denning1976lattice
+  ieee: 'D. E. Denning, "A lattice model of secure information flow," Commun. ACM, vol. 19, no. 5, pp. 236–243, May 1976, doi: 10.1145/360051.360056.'
+  url: https://doi.org/10.1145/360051.360056
+  track: foundations
+  summary: Models security classes as a lattice with a can-flow relation and a join operator. A flow is secure only if it respects the class ordering. The model covers explicit and implicit flows and leads to automatic certification of program flows.
+  relevance: 'Theoretical basis for Mirsad''s taint labels: joining the labels of the agent''s context sets the label of a tool argument. Label creep is the reason human declassification is needed.'
+- key: digitalocean-droplets
+  ieee: 'DigitalOcean, "Droplet Pricing." [Online]. Available: https://www.digitalocean.com/pricing/droplets. Accessed: Oct. 11, 2026.'
+  url: https://www.digitalocean.com/pricing/droplets
+  track: budget-evidence
+  summary: The Basic 4 GiB / 2 vCPU Droplet with 80 GiB SSD and 4,000 GiB transfer costs $24.00/mo ($0.03571/hr). Billing has been per second since 1 Jan 2026, capped at the monthly price.
+  relevance: 'Reference price for the revised VM line: 6 x $24 = 540 SAR.'
+- key: docker-mcp-gateway-github
+  ieee: 'Docker, "mcp-gateway: docker mcp CLI plugin / MCP Gateway," GitHub repository. Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/docker/mcp-gateway'
+  url: https://github.com/docker/mcp-gateway
+  track: competitive-analysis
+  summary: 'README: a unified MCP endpoint that runs servers in isolated containers, with secrets management, OAuth, per-profile tool enablement and call tracing. MIT licence.'
+  relevance: Licensing and capabilities of a likely deployment host.
+- key: docker-mcp-gateway-run
+  ieee: 'Docker, "docker mcp gateway run," Docker Docs CLI reference. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.docker.com/reference/cli/docker/mcp/gateway/run/'
+  url: https://docs.docker.com/reference/cli/docker/mcp/gateway/run/
+  track: competitive-analysis
+  summary: Lists gateway flags including --tools, --block-secrets (default true), --block-network, --interceptor (when:type:path), --log-calls (default true), --verify-signatures, and CPU and memory limits.
+  relevance: Open-source MCP gateway that could host Mirsad as an interceptor.
+- key: docker-mcp-toolkit
+  ieee: 'Docker, "Docker MCP Toolkit," Docker Docs. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.docker.com/ai/mcp-catalog-and-toolkit/toolkit/'
+  url: https://docs.docker.com/ai/mcp-catalog-and-toolkit/toolkit/
+  track: competitive-analysis
+  summary: Describes passive security (signed images, SBOMs) and active security (1 CPU and 2 GB limits, no default filesystem access, blocking of secrets in tool traffic). No prompt injection detection or approval is mentioned.
+  relevance: Infrastructure isolation complements Mirsad's semantic controls.
+- key: dziemian2026ipi
+  ieee: 'M. Dziemian et al., "How vulnerable are AI agents to indirect prompt injections? Insights from a large-scale public competition," arXiv:2603.15714, 2026. [Online]. Available: https://arxiv.org/abs/2603.15714'
+  url: https://arxiv.org/abs/2603.15714
+  track: attacks-benchmarks
+  summary: 'Competition on concealed indirect injection: about 272k attempts from 464 participants against 13 frontier models in tool-calling, coding and computer-use settings, producing 8,648 successes across 41 scenarios. Every model was vulnerable (ASR from 0.5% for Claude Opus 4.5 to 8.5% for Gemini 2.5 Pro). Universal strategies transferred across 21 of 41 behaviors, and capability correlated only weakly with robustness.'
+  relevance: Concealed attacks are invisible in the chat, which justifies Mirsad's independent audit log and an approval UI that shows actual tool arguments.
+- key: eidson2023-webpush
+  ieee: 'B. Eidson and J. Simmons, "Web Push for Web Apps on iOS and iPadOS," WebKit Blog, Feb. 16, 2023. [Online]. Available: https://webkit.org/blog/13878/web-push-for-web-apps-on-ios-and-ipados/. Accessed: Oct. 11, 2026.'
+  url: https://webkit.org/blog/13878/web-push-for-web-apps-on-ios-and-ipados/
+  track: budget-evidence
+  summary: iOS/iPadOS 16.4 adds standards-based Web Push (Push API, Notifications API, Service Workers) for Home Screen web apps. Permission must follow a user gesture, and Apple Developer Program membership is not needed.
+  relevance: Technical basis for delivering HITL approval notifications to iPhone and Android through a PWA without store fees.
+- key: evtimov2025wasp
+  ieee: 'I. Evtimov, A. Zharmagambetov, A. Grattafiori, C. Guo, and K. Chaudhuri, "WASP: Benchmarking web agent security against prompt injection attacks," in Adv. Neural Inf. Process. Syst. 38 (NeurIPS 2025), Datasets and Benchmarks Track, 2025, pp. 22436-22458, doi: 10.52202/085713-0666.'
+  url: https://papers.nips.cc/paper_files/paper/2025/hash/1c9818387f5dd0a0bc151214660f059d-Abstract-Datasets_and_Benchmarks_Track.html
+  track: attacks-benchmarks
+  summary: End-to-end web-agent benchmark (VisualWebArena-derived, GitLab and Reddit) in which attackers can only post ordinary user content. Agents, including o1 and GPT-4o-mini with instruction hierarchy and Claude Computer Use, are partially hijacked in up to 86% of cases but rarely achieve the attacker's full goal (0-17% in Sec. 1; up to 16% in Sec. 4).
+  relevance: Supports stopping the first unsafe tool call at the boundary, and shows that model-level mitigations alone are insufficient.
+- key: gebru2021datasheets
+  ieee: 'T. Gebru, J. Morgenstern, B. Vecchione, J. W. Vaughan, H. Wallach, H. Daumé III, and K. Crawford, "Datasheets for datasets," Commun. ACM, vol. 64, no. 12, pp. 86–92, Dec. 2021, doi: 10.1145/3458723.'
+  url: https://doi.org/10.1145/3458723
+  track: foundations
+  summary: Proposes question-driven datasheets documenting a dataset's motivation, composition, collection, preprocessing and labeling, uses, distribution and maintenance, to improve transparency and accountability.
+  relevance: 'Template for documenting Mirsad''s Arabic/English injection benchmark and detector data: provenance, dialect coverage, labeling, licensing.'
+- key: gemini-api-pricing
+  ieee: 'Google, "Gemini Developer API pricing," Google AI for Developers. [Online]. Available: https://ai.google.dev/gemini-api/docs/pricing. Accessed: Oct. 11, 2026.'
+  url: https://ai.google.dev/gemini-api/docs/pricing
+  track: budget-evidence
+  summary: Gemini 3.8 Flash is free of charge on the Free tier. Paid is $0.75/$3.75 per 1M tokens through 31 Dec 2026, rising to $1.50/$7.50 from 1 Jan 2027. Free-tier content is used to improve Google products.
+  relevance: Optional zero-cost cloud-model comparison (synthetic data only); scheduled 2027 price rise is further evidence for keeping contingency.
+- key: github-education-apply
+  ieee: 'GitHub, "Apply to GitHub Education as a student," GitHub Docs. [Online]. Available: https://docs.github.com/en/education/about-github-education/github-education-for-students/apply-to-github-education-as-a-student. Accessed: Oct. 11, 2026.'
+  url: https://docs.github.com/en/education/about-github-education/github-education-for-students/apply-to-github-education-as-a-student
+  track: budget-evidence
+  summary: Eligibility requires age 13+, enrolment in a degree- or diploma-granting programme, a personal GitHub account, proof of enrolment, and a verified academic email where the school issues one.
+  relevance: All five PSU students can apply; benefits are per member.
+- key: github-student-pack
+  ieee: 'GitHub, "GitHub Student Developer Pack," GitHub Education. [Online]. Available: https://education.github.com/pack. Accessed: Oct. 11, 2026.'
+  url: https://education.github.com/pack
+  track: budget-evidence
+  summary: Free offers for verified students, including Azure (free services plus $100 credit, ages 18+), a Namecheap .me domain plus SSL for one year, a Name.com free domain, a free .TECH domain for one year, Heroku $13/mo for 24 months, Codespaces Pro, Copilot Student and Doppler Team. DigitalOcean is no longer listed.
+  relevance: Source of free domains and cloud credit for the zero-cost plan; confirms there is no DigitalOcean student credit.
+- key: google-agent-gateway
+  ieee: 'Google Cloud, "Agent Gateway overview," Gemini Enterprise Agent Platform documentation, updated Oct. 9, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/gateways/agent-gateway-overview'
+  url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/gateways/agent-gateway-overview
+  track: competitive-analysis
+  summary: Enforcement component for agent ingress and egress. Parses MCP attributes to restrict specific tools and calls Model Armor on prompts and tool responses. Observability goes through Cloud Logging and Trace.
+  relevance: Google's tool-level authorization; argument-level rules and approval are not documented.
+- key: google-model-armor-mcp
+  ieee: 'Google Cloud, "Integrate Model Armor with Google and Google Cloud MCP servers," Google Cloud documentation, updated Oct. 9, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.cloud.google.com/model-armor/model-armor-mcp-google-cloud-integration'
+  url: https://docs.cloud.google.com/model-armor/model-armor-mcp-google-cloud-integration
+  track: competitive-analysis
+  summary: Project-wide floor settings sanitize MCP tools/call and prompts/get traffic and tool errors, but only for supported Google MCP servers; tools/list and resources are not covered. No per-tool rules or approval are described.
+  relevance: Shows a cloud vendor screening at the MCP boundary, with coarse scope.
+- key: google-model-armor-overview
+  ieee: 'Google Cloud, "Model Armor overview," Google Cloud documentation, updated Oct. 9, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.cloud.google.com/model-armor/overview'
+  url: https://docs.cloud.google.com/model-armor/overview
+  track: competitive-analysis
+  summary: Screens prompts and responses as independent single-turn requests for RAI harms, prompt injection and jailbreak, sensitive data and malicious URLs. Injection filters were tested on 9 languages (not Arabic). Logging is opt-in.
+  relevance: Detector baseline; stateless design rules out data-flow tracking; Arabic not tested.
+- key: google-play-get-started
+  ieee: 'Google, "Get started with Play Console," Play Console Help. [Online]. Available: https://support.google.com/googleplay/android-developer/answer/6112435. Accessed: Oct. 11, 2026.'
+  url: https://support.google.com/googleplay/android-developer/answer/6112435
+  track: budget-evidence
+  summary: Developer registration has a one-time US$25 fee, plus identity verification (government ID and card), device verification, and testing requirements for personal accounts created after 13 Nov 2023.
+  relevance: The SPAP Google Play line (100 SAR; actual 93.75 SAR) becomes 0 SAR with a PWA.
+- key: google-play-testing
+  ieee: 'Google, "App testing requirements for new personal developer accounts," Play Console Help. [Online]. Available: https://support.google.com/googleplay/android-developer/answer/14151465. Accessed: Oct. 11, 2026.'
+  url: https://support.google.com/googleplay/android-developer/answer/14151465
+  track: budget-evidence
+  summary: New personal accounts must run a closed test with at least 12 testers opted in continuously for the previous 14 days before applying for production access.
+  relevance: 'Schedule argument for the PWA: avoids recruiting testers and a two-week wait.'
+- key: google-scc-pricing
+  ieee: 'Google Cloud, "Security Command Center pricing." Accessed: Oct. 11, 2026. [Online]. Available: https://cloud.google.com/security-command-center/pricing'
+  url: https://cloud.google.com/security-command-center/pricing
+  track: competitive-analysis
+  summary: Model Armor standalone is free up to 2 million tokens per month, then $0.10 per million tokens. SCC Premium and Enterprise subscriptions include 3 billion tokens per month.
+  relevance: Pricing comparison.
+- key: greshake2023indirect
+  ieee: 'K. Greshake, S. Abdelnabi, S. Mishra, C. Endres, T. Holz, and M. Fritz, "Not what you''ve signed up for: Compromising real-world LLM-integrated applications with indirect prompt injection," in Proc. 16th ACM Workshop Artif. Intell. Secur. (AISec ''23), Copenhagen, Denmark, 2023, pp. 79-90, doi: 10.1145/3605764.3623985.'
+  url: https://doi.org/10.1145/3605764.3623985
+  track: attacks-benchmarks
+  summary: Defines indirect prompt injection, where instructions are planted in content an LLM app later retrieves. Builds a threat taxonomy (data theft, worming, information-ecosystem contamination and more) and demonstrates attacks on Bing's GPT-4 chat, code-completion engines and synthetic GPT-4 apps.
+  relevance: Defines the exact threat Mirsad targets. The finding that retrieved data acts as code motivates taint labels on untrusted tool outputs.
+- key: haber1991timestamp
+  ieee: 'S. Haber and W. S. Stornetta, "How to time-stamp a digital document," J. Cryptol., vol. 3, no. 2, pp. 99–111, 1991, doi: 10.1007/BF00196791.'
+  url: https://doi.org/10.1007/BF00196791
+  track: foundations
+  summary: Proposes certifying document creation times so that back-dating or forward-dating is infeasible even with a colluding time-stamping service. One scheme links each certificate to hashed information from the previous one; a second distributes trust across pseudorandomly chosen witnesses.
+  relevance: Origin of the hash-linking technique in Mirsad's audit chain (prev_hash per event). Its reliance on copies held outside the service is analogous to Mirsad's external anchor.
+- key: hackett2025bypassing
+  ieee: 'W. Hackett, L. Birch, S. Trawicki, N. Suri, and P. Garraghan, "Bypassing LLM guardrails: An empirical analysis of evasion attacks against prompt injection and jailbreak detection systems," in Proc. 1st Workshop on LLM Security (LLMSEC), Vienna, Austria, Aug. 2025, pp. 101-114.'
+  url: https://aclanthology.org/2025.llmsec-1.8/
+  track: defenses
+  summary: Evades six detectors (Azure Prompt Shield, ProtectAI v1/v2, Meta Prompt Guard, NeMo Guard Jailbreak Detect, Vijil) with 12 character-injection techniques and 8 adversarial-ML word perturbations. Emoji smuggling reached 100% evasion against every guardrail on each threat type it was tested on. Word rankings from an open white-box model (ProtectAI v2) improved transfer to Azure Prompt Shield. Payload usability by the target LLM was not rigorously measured, and non-Latin scripts were not evaluated.
+  relevance: Mirsad's Arabic detector must normalize diacritics, bidi, zero-width, tag characters, and homoglyphs before classification.
+- key: hetzner-cloud-pages
+  ieee: 'Hetzner Online GmbH, "Cheap cloud-hosting – low vps prices for developers" and "Hetzner Virtual Private Server: Best Price-Performance Ratio." [Online]. Available: https://www.hetzner.com/cloud/cost-optimized/ and https://www.hetzner.com/cloud/regular-performance/. Accessed: Oct. 11, 2026.'
+  url: https://www.hetzner.com/cloud/cost-optimized/
+  track: budget-evidence
+  summary: Product pages. All Cost-Optimized CX/CAX plans, including CX23, are labelled 'not available' with a notice that they cannot currently be ordered. Regular Performance CPX plans, including CPX22 (2 vCPU AMD, 4 GB, 80 GB), carry no such label.
+  relevance: Shows the cheapest plan cannot be ordered, so the budget uses the price of an orderable plan.
+- key: hetzner-ip-pricing
+  ieee: 'Hetzner Online GmbH, "IP pricing," Hetzner Docs. [Online]. Available: https://docs.hetzner.com/general/infrastructure-and-availability/ipv4-pricing/. Accessed: Oct. 11, 2026.'
+  url: https://docs.hetzner.com/general/infrastructure-and-availability/ipv4-pricing/
+  track: budget-evidence
+  summary: A cloud primary IPv4 costs EUR 0.50 ($0.60) per month excluding VAT; primary IPv6 is free.
+  relevance: Adds $0.60/month to Hetzner server prices for a publicly reachable demo.
+- key: hetzner-price-adjustment-2026
+  ieee: 'Hetzner Online GmbH, "Hetzner Price Adjustment 15 June 2026," Hetzner Docs, ID GE-D9256, Jun. 15, 2026. [Online]. Available: https://docs.hetzner.com/general/infrastructure-and-availability/price-adjustment/. Accessed: Oct. 11, 2026.'
+  url: https://docs.hetzner.com/general/infrastructure-and-availability/price-adjustment/
+  track: budget-evidence
+  summary: 'Official old and new price tables (excluding IPv4 and VAT) effective 15 Jun 2026. For Germany/Finland: CX23 (2 vCPU/4 GB) went from EUR 3.99 to 5.49 (USD 4.99 to 6.49); CPX22 went from EUR 7.99 to 19.49 (USD 9.49 to 22.99).'
+  relevance: 'Hetzner VM cost: CX23 at 159.53 SAR for 6 months, CPX22 at 530.78 SAR. Also evidence of 2026 price volatility, which justifies the contingency line.'
+- key: hines2024spotlighting
+  ieee: 'K. Hines, G. Lopez, M. Hall, F. Zarfati, Y. Zunger, and E. Kıcıman, "Defending against indirect prompt injection attacks with spotlighting," in Proc. Conf. Applied Machine Learning in Information Security (CAMLIS 2024), CEUR Workshop Proceedings, vol. 3920, Arlington, VA, USA, Oct. 2024, pp. 48-62. Accessed: Oct. 11, 2026. [Online]. Available: https://ceur-ws.org/Vol-3920/paper03.pdf'
+  url: https://ceur-ws.org/Vol-3920/paper03.pdf
+  track: defenses
+  summary: Prompt-level transforms (delimiting, datamarking, encoding) that give a continuous signal of provenance. On text-davinci-003, GPT-3.5-Turbo, and GPT-4, attack success fell from over 50% to under 2% with minimal task impact. Encoding is recommended only for high-capacity models. The authors admit they lack a clear understanding of why it works, evaluate only fixed attacks, and do not test multilingual input.
+  relevance: Optional defense-in-depth Mirsad could apply to tainted tool outputs. Nasr et al. broke it at over 95% ASR, and Arabic datamarking is untested.
+- key: hou2025mcplandscape
+  ieee: 'X. Hou, Y. Zhao, S. Wang, and H. Wang, "Model Context Protocol (MCP): Landscape, security threats, and future research directions," ACM Trans. Softw. Eng. Methodol., vol. 35, no. 10, pp. 1-37, 2026, doi: 10.1145/3796519.'
+  url: https://doi.org/10.1145/3796519
+  track: attacks-benchmarks
+  summary: Survey describing the MCP server lifecycle in 4 phases (creation, deployment, operation, maintenance) and 16 activities, with a threat taxonomy of 4 attacker types and 16 scenarios, case studies, phase-specific safeguards and research directions (summarized from arXiv v3).
+  relevance: Places Mirsad in the operation phase and helps define out-of-scope threats (e.g., supply chain).
+- key: ibm-contextforge-github
+  ieee: 'IBM, "ContextForge (mcp-context-forge)," GitHub repository. Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/IBM/mcp-context-forge'
+  url: https://github.com/IBM/mcp-context-forge
+  track: competitive-analysis
+  summary: Apache-2.0 gateway, registry and proxy federating MCP, A2A and REST/gRPC services with authentication, rate limiting, plugins and observability. The README does not detail injection or approval features.
+  relevance: Another open-source MCP gateway in the market.
+- key: inoue2021camelbert
+  ieee: G. Inoue, B. Alhafni, N. Baimukan, H. Bouamor, and N. Habash, "The interplay of variant, size, and task type in Arabic pre-trained language models," in Proc. 6th Arabic Natural Lang. Process. Workshop (WANLP), Kyiv, Ukraine (Virtual), Apr. 2021, pp. 92–104.
+  url: https://aclanthology.org/2021.wanlp-1.10/
+  track: multilingual-arabic-security-and-standards
+  summary: Introduces the CAMeLBERT MSA, DA, CA and Mix models. Matching the pretraining variant to the task data matters more than data size.
+  relevance: Guides backbone choice for Gulf and mixed traffic.
+- key: invariant-explorer-github
+  ieee: 'Invariant Labs, "explorer," GitHub repository. Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/invariantlabs-ai/explorer'
+  url: https://github.com/invariantlabs-ai/explorer
+  track: competitive-analysis
+  summary: States that the hosted Invariant Explorer was shut down in January 2026 and directs users to Snyk's AI security offering. Apache-2.0.
+  relevance: Evidence of uncertain maintenance for the Invariant open-source stack.
+- key: invariant-gateway-github
+  ieee: 'Invariant Labs, "invariant-gateway," GitHub repository. Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/invariantlabs-ai/invariant-gateway'
+  url: https://github.com/invariantlabs-ai/invariant-gateway
+  track: competitive-analysis
+  summary: Zero-configuration proxy for LLM providers and MCP (stdio, SSE, Streamable HTTP) that applies guardrails and pushes traces to Invariant Explorer. Apache-2.0.
+  relevance: Closest open-source architecture to Mirsad's proxy deployment.
+- key: invariant-guardrails-github
+  ieee: 'Invariant Labs, "invariant: Guardrails for secure and robust agent development," GitHub repository. Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/invariantlabs-ai/invariant'
+  url: https://github.com/invariantlabs-ai/invariant
+  track: competitive-analysis
+  summary: Python-like rule language over agent traces. Rules can match tool calls with argument patterns and chain calls with the '->' flow operator (e.g., get_inbox -> send_email to an external address). Includes a prompt_injection detector and runs via Gateway or as a local library. Apache-2.0.
+  relevance: Most important prior art for Mirsad's declarative per-tool and per-parameter policy and flow rules.
+- key: invariant2025github
+  ieee: 'M. Milanta and L. Beurer-Kellner, "GitHub MCP exploited: Accessing private repositories via MCP," Invariant Labs Blog, May 26, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://invariantlabs.ai/blog/mcp-github-vulnerability'
+  url: https://invariantlabs.ai/blog/mcp-github-vulnerability
+  track: attacks-benchmarks
+  summary: A malicious public GitHub issue makes an agent using the official GitHub MCP server leak private-repository data into a public PR (demonstrated with Claude 4 Opus in Claude Desktop). The authors call this a 'toxic agent flow', note users' 'Always Allow' habit, and recommend per-session repository scoping and continuous monitoring, since GitHub cannot fix it with server patches.
+  relevance: Ideal demonstration scenario for Mirsad's taint plus per-session policy. The 'Always Allow' habit argues for risk-based HITL.
+- key: invariant2025toolpoisoning
+  ieee: 'L. Beurer-Kellner and M. Fischer, "MCP security notification: Tool poisoning attacks," Invariant Labs Blog, Apr. 1, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks'
+  url: https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks
+  track: attacks-benchmarks
+  summary: 'Introduces MCP tool poisoning: hidden instructions in a tool description make the agent (Cursor) read ~/.cursor/mcp.json and ~/.ssh/id_rsa and leak them via a ''sidenote'' parameter, and the confirmation dialog hides the full arguments. Also describes shadowing of trusted tools across servers (redirecting all emails) and rug pulls after approval. Mitigations: clear UI for full descriptions, version/hash pinning, cross-server dataflow controls.'
+  relevance: Mirsad should scan tool metadata, hash-pin descriptions with changes logged in the audit chain, and show full arguments in HITL approvals.
+- key: iso2022iso27001
+  ieee: Information Security, Cybersecurity and Privacy Protection - Information Security Management Systems - Requirements, ISO/IEC 27001:2022, 3rd ed., ISO/IEC JTC 1/SC 27, Oct. 2022.
+  url: https://webstore.iec.ch/publication/79694
+  track: multilingual-arabic-security-and-standards
+  summary: ISMS requirements; clauses 4-10 are mandatory for conformity. Amended in 2024 (climate action).
+  relevance: Mirsad supports access-control, logging and monitoring controls for AI agents.
+- key: iso2023iso42001
+  ieee: Information Technology - Artificial Intelligence - Management System, ISO/IEC 42001:2023, 1st ed., ISO/IEC JTC 1/SC 42, Dec. 2023.
+  url: https://webstore.iec.ch/publication/90574
+  track: multilingual-arabic-security-and-standards
+  summary: Requirements and guidance for an AI management system, for any organization that provides or uses AI.
+  relevance: Mirsad supplies operational controls and audit evidence for an AIMS.
+- key: iso27001
+  ieee: Information Security, Cybersecurity and Privacy Protection — Information Security Management Systems — Requirements, ISO/IEC 27001:2022, 3rd ed., ISO/IEC JTC 1/SC 27, Oct. 2022 (amended by ISO/IEC 27001:2022/Amd 1:2024).
+  url: https://webstore.iec.ch/en/publication/79694
+  track: multilingual-arabic-security-and-standards
+  summary: ''
+  relevance: ''
+- key: iso29119_series
+  ieee: 'Software and Systems Engineering — Software Testing — Part 1: General Concepts, ISO/IEC/IEEE 29119-1:2022, Feb. 2022.'
+  url: https://webstore.iec.ch/en/publication/74072
+  track: foundations
+  summary: International software-testing standard series. Part 1 (2022) covers concepts. Parts 2-4 (2021) cover test processes, documentation templates, and test design techniques such as equivalence partitioning, boundary value analysis and decision table testing.
+  relevance: Test documentation templates and techniques (partitioning, boundary values, decision tables) for Mirsad's policy engine, plus a test completion report.
+- key: iso29148_2018
+  ieee: Systems and Software Engineering — Life Cycle Processes — Requirements Engineering, ISO/IEC/IEEE 29148:2018, Nov. 2018.
+  url: https://webstore.iec.ch/en/publication/64315
+  track: foundations
+  summary: Second edition (replacing 29148:2011) specifying requirements-engineering processes across the life cycle, how to apply the requirements processes of 15288 and 12207, the information items they produce (BRS, StRS, SyRS, SRS) with content and format, and characteristics of individual requirements and requirement sets.
+  relevance: Structure and quality characteristics for Mirsad's SRS, with verifiable, traceable functional and non-functional requirements.
+- key: iso42001
+  ieee: Information Technology — Artificial Intelligence — Management System, ISO/IEC 42001:2023, 1st ed., ISO/IEC JTC 1/SC 42, Dec. 2023.
+  url: https://webstore.iec.ch/en/publication/90574
+  track: multilingual-arabic-security-and-standards
+  summary: ''
+  relevance: ''
+- key: ksa2016vision2030
+  ieee: 'Kingdom of Saudi Arabia, Saudi Vision 2030, Riyadh, Saudi Arabia, Apr. 2016. Accessed: Oct. 11, 2026. [Online]. Available: https://www.vision2030.gov.sa/media/rc0b5oy1/saudi_vision203.pdf'
+  url: https://www.vision2030.gov.sa/media/rc0b5oy1/saudi_vision203.pdf
+  track: multilingual-arabic-security-and-standards
+  summary: National strategy with three themes. Commits to effective e-government, a top-five UN E-Government ranking target, digital infrastructure, and governance of digital transformation.
+  relevance: National-relevance argument for an Arabic-capable AI agent firewall.
+- key: ksa2021pdpl
+  ieee: 'Kingdom of Saudi Arabia, Personal Data Protection Law, Royal Decree No. M/19 of 9/2/1443H (16 Sep. 2021), Council of Ministers Resolution No. 98 of 7/2/1443H, amended by Royal Decree No. M/148 of 5/9/1444H (Mar. 2023). Accessed: Oct. 11, 2026. [Online]. Available: https://laws.boe.gov.sa/BoeLaws/Laws/LawDetails/b7cfae89-828e-4994-b167-adaa00e37188/1'
+  url: https://laws.boe.gov.sa/BoeLaws/Laws/LawDetails/b7cfae89-828e-4994-b167-adaa00e37188/1
+  track: multilingual-arabic-security-and-standards
+  summary: Published 24 Sep 2021; in force 720 days after publication (Sep 2023) under amended Art. 43. Art. 19 requires security measures, Art. 20 breach notification, and Art. 29 sets cross-border transfer limits.
+  relevance: Taint tracking and destination policies act as technical measures. The audit log supports breach assessment.
+- key: kubrak2025arabictools
+  ieee: 'K. Kubrak, A. El-Moselhy, A. Alsulami, R. Altuwaim, H. I. Fawaz, and F. Alsaby, "Arabic prompts with English tools: A benchmark," presented at the LLMs, Big Data, and Multilinguality for All (LLMs4All) Workshop, IEEE BigData 2025, Macau, Dec. 2025, arXiv:2601.05101. [Online]. Available: https://arxiv.org/abs/2601.05101'
+  url: https://arxiv.org/abs/2601.05101
+  track: multilingual-arabic-security-and-standards
+  summary: ''
+  relevance: ''
+- key: kubrak2026arabictools
+  ieee: 'K. Kubrak, A. El-Moselhy, A. Alsulami, R. Altuwaim, H. I. Fawaz, and F. Alsaby, "Arabic prompts with English tools: A benchmark," presented at the LLMs4All Workshop, IEEE BigData 2025, Macau, Dec. 2025, arXiv:2601.05101.'
+  url: https://arxiv.org/abs/2601.05101
+  track: multilingual-arabic-security-and-standards
+  summary: First Arabic tool-calling benchmark. Accuracy drops 5-10% when users write in Arabic, whether tool descriptions are in Arabic or English.
+  relevance: Arabic sessions produce more malformed tool arguments, which per-parameter policy catches.
+- key: lakera-agent-security
+  ieee: 'Check Point Software Technologies, "AI Agent Security overview," Check Point AI Security documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.lakera.ai/docs/agent-security'
+  url: https://docs.lakera.ai/docs/agent-security
+  track: competitive-analysis
+  summary: Describes agent posture assessment (tools, MCP servers) and runtime screening of prompts, outputs, tool calls, tool responses and tool descriptions. The feature is labelled an early-access release.
+  relevance: Shows Lakera's agent features are still maturing and do not include approval or audit features.
+- key: lakera-dashboard
+  ieee: 'Check Point Software Technologies, "AI Guardrails dashboard," Check Point AI Security documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.lakera.ai/docs/platform'
+  url: https://docs.lakera.ai/docs/platform
+  track: competitive-analysis
+  summary: Community customers are limited to 10k screening requests per month. Enterprise adds RBAC, SIEM export to S3 and data-retention control. Prompts are logged by default, and the dashboard is unavailable to self-hosting customers.
+  relevance: Pricing model, logging default (a data-residency concern) and evidence that tamper-evident audit is not documented.
+- key: lakera-policies
+  ieee: 'Check Point Software Technologies, "Policies," Check Point AI Security documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.lakera.ai/docs/policies'
+  url: https://docs.lakera.ai/docs/policies
+  track: competitive-analysis
+  summary: Explains project policies with five defense categories including Agent Behavior Defense. Example policies block tools outside an allow list and screen tool responses and tool calls. Sensitivity runs from L1 to L4 (default).
+  relevance: Evidence of tool allow-listing in a commercial detector; no per-parameter declarative rules are documented.
+- key: lakera-prompt-defense
+  ieee: 'Check Point Software Technologies, "Prompt Defense," Check Point AI Security documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.lakera.ai/docs/prompt-defense'
+  url: https://docs.lakera.ai/docs/prompt-defense
+  track: competitive-analysis
+  summary: Defines prompt attacks, including those arriving through tool responses and tool descriptions, and states that screening covers 100+ languages, with Arabic listed under Semitic languages.
+  relevance: Main commercial benchmark for Arabic injection detection; shows Mirsad is not the only Arabic-capable detector.
+- key: lakera-quickstart
+  ieee: 'Check Point Software Technologies, "Getting started with AI Guardrails," Check Point AI Security documentation (docs.lakera.ai). Accessed: Oct. 11, 2026. [Online]. Available: https://docs.lakera.ai/docs/quickstart'
+  url: https://docs.lakera.ai/docs/quickstart
+  track: competitive-analysis
+  summary: Describes the Guard API, which the application calls on each LLM interaction to screen input and output for prompt attacks, data leakage, content violations and unknown links, plus Detect vs. Enforce project modes.
+  relevance: Shows Lakera is a verdict API placed around model calls; the application still has to enforce the verdict.
+- key: lakera_guard_api
+  ieee: 'Lakera (Check Point), "Guard API endpoint," Check Point AI Guardrails (Lakera) Documentation. [Online]. Available: https://docs.lakera.ai/docs/api/guard (accessed Oct. 11, 2026).'
+  url: https://docs.lakera.ai/docs/api/guard
+  track: defenses
+  summary: Documents POST https://api.lakera.ai/v2/guard with OpenAI-style role-tagged messages. System and developer messages are trusted and not screened, tool messages are screened as untrusted, assistant tool_calls are screened as agent actions, and tool definitions can be screened separately. Only the last interaction is screened, so the API must be called at every interaction and tool call. Returns flagged (forced false in Detect mode) and an optional breakdown.
+  relevance: A reference trust-role model for Mirsad's taint labels. Shows how much integration a hosted screener needs.
+- key: lakera_prompt_defense
+  ieee: 'Lakera (Check Point), "Prompt Defense," Check Point AI Guardrails (Lakera) Documentation. [Online]. Available: https://docs.lakera.ai/docs/prompt-defense (accessed Oct. 11, 2026).'
+  url: https://docs.lakera.ai/docs/prompt-defense
+  track: defenses
+  summary: Vendor docs for the prompt-attack guardrail (injection and jailbreak), including attacks in poisoned tool responses, retrieved web pages and documents, and tool descriptions (screen these when adding a tool or MCP server). Offers Detect (monitor) and Enforce (block or warn) modes. Claims coverage of 'over 100+ global languages and scripts', including 'Arabic and other Semitic languages'.
+  relevance: The only surveyed product that documents Arabic coverage (vendor claim). The model is closed. The default SaaS mode raises data-residency concerns, and self-hosting needs an enterprise license, so Mirsad offers an open self-hosted alternative.
+- key: letsencrypt-about
+  ieee: 'Internet Security Research Group, "About Let''s Encrypt," Let''s Encrypt. [Online]. Available: https://letsencrypt.org/about/. Accessed: Oct. 11, 2026.'
+  url: https://letsencrypt.org/about/
+  track: budget-evidence
+  summary: A free, automated and open certificate authority run by the non-profit ISRG. Certificates are issued and renewed through ACME and publicly logged.
+  relevance: TLS line is 0 SAR.
+- key: li2025piguard
+  ieee: 'H. Li, X. Liu, N. Zhang, and C. Xiao, "PIGuard: Prompt injection guardrail via mitigating overdefense for free," in Proc. 63rd Annu. Meeting Assoc. Comput. Linguistics (Vol. 1: Long Papers), Vienna, Austria, Jul. 2025, pp. 30420-30437, doi: 10.18653/v1/2025.acl-long.1468.'
+  url: https://aclanthology.org/2025.acl-long.1468/
+  track: defenses
+  summary: 'Shows that prompt-guard models over-defend: accuracy drops to about 60% (near random) on NotInject, 339 benign samples full of trigger words. Proposes PIGuard, trained with MOF to reduce trigger-word bias, which surpasses the prior best model by 30.4%. Code and data are released, and the HF model is DeBERTa-v3-base, English.'
+  relevance: False positives become needless mobile approval requests, so Mirsad should build an Arabic NotInject-style benign set. PIGuard was the most resistant detector in Nasr et al. (71% ASR).
+- key: liu2023houyi
+  ieee: 'Y. Liu et al., "Prompt injection attack against LLM-integrated applications," arXiv:2306.05499, 2023. [Online]. Available: https://arxiv.org/abs/2306.05499'
+  url: https://arxiv.org/abs/2306.05499
+  track: attacks-benchmarks
+  summary: After finding that existing injection strategies had limited success against 10 commercial apps, the authors propose HouYi, a black-box attack with a pre-constructed prompt, a context-partition injection and a malicious payload. HouYi found 31 of 36 real LLM apps vulnerable, and 10 vendors (including Notion) confirmed the findings. Impacts include prompt theft and unrestricted LLM use.
+  relevance: Context-partition patterns are a detector feature class for Mirsad. Prompt theft motivates policies that keep system-prompt text out of outbound tool arguments.
+- key: liu2024formalizing
+  ieee: Y. Liu, Y. Jia, R. Geng, J. Jia, and N. Z. Gong, "Formalizing and benchmarking prompt injection attacks and defenses," in Proc. 33rd USENIX Security Symp. (USENIX Security 24), Philadelphia, PA, USA, Aug. 2024, pp. 1831-1847.
+  url: https://www.usenix.org/conference/usenixsecurity24/presentation/liu-yupei
+  track: defenses
+  summary: Formal framework for prompt injection and a benchmark of 5 attacks x 10 defenses x 10 LLMs x 7 tasks. The defenses are five prevention defenses (paraphrasing, retokenization, delimiters, sandwich, instructional) and five detection defenses (PPL, windowed PPL, naive LLM-based, response-based, known-answer). Prevention is weak or costly, most detectors miss attacks or flag clean data, and known-answer detection is the most effective detector.
+  relevance: Baseline definitions and defense taxonomy for the report's background. Known-answer detection relates to Mirsad's canary idea.
+- key: llamafirewall-about
+  ieee: 'Meta, "About LlamaFirewall," LlamaFirewall documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://meta-llama.github.io/PurpleLlama/LlamaFirewall/docs/documentation/about-llamafirewall'
+  url: https://meta-llama.github.io/PurpleLlama/LlamaFirewall/docs/documentation/about-llamafirewall
+  track: competitive-analysis
+  summary: Describes a layered defense (PromptGuard 2, AlignmentCheck, CodeShield, regex) that inspects user input, agent reasoning, generated code and injections in tool responses.
+  relevance: Open-source, agent-focused detection layer that Mirsad complements with deterministic enforcement.
+- key: llamafirewall-github
+  ieee: 'Meta, "LlamaFirewall," GitHub repository meta-llama/PurpleLlama (LlamaFirewall directory). Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/meta-llama/PurpleLlama/tree/main/LlamaFirewall'
+  url: https://github.com/meta-llama/PurpleLlama/tree/main/LlamaFirewall
+  track: competitive-analysis
+  summary: README covering the scanners, per-role configuration, scan_replay over traces and installation. AlignmentCheck needs an external LLM API key. The LlamaFirewall LICENSE file is MIT.
+  relevance: Licensing and integration model; shows no approval or audit features.
+- key: llmguard-github
+  ieee: 'Protect AI, "llm-guard: The security toolkit for LLM interactions," GitHub repository. Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/protectai/llm-guard'
+  url: https://github.com/protectai/llm-guard
+  track: competitive-analysis
+  summary: MIT-licensed library and API with 15 input and 21 output scanners. The README warns that the project and its Hugging Face models are archived and no longer maintained.
+  relevance: Historical open-source baseline; illustrates the risk of depending on vendor-maintained OSS detectors.
+- key: llmguard-prompt-injection-doc
+  ieee: 'Protect AI, "Prompt injection," LLM Guard documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://protectai.github.io/llm-guard/input_scanners/prompt_injection/'
+  url: https://protectai.github.io/llm-guard/input_scanners/prompt_injection/
+  track: competitive-analysis
+  summary: The PromptInjection scanner uses a fine-tuned DeBERTa-v3 classifier (0 = no injection, 1 = injection) and discusses direct and indirect injection scenarios such as RAG, browsing and email agents.
+  relevance: Describes the baseline detector's mechanism.
+- key: mcp2026spec
+  ieee: 'Model Context Protocol, "Specification," protocol revision 2026-07-28. Accessed: Oct. 11, 2026. [Online]. Available: https://modelcontextprotocol.io/specification/2026-07-28.'
+  url: https://modelcontextprotocol.io/specification/2026-07-28
+  track: multilingual-arabic-security-and-standards
+  summary: Current stateless revision of MCP. Security principles cover consent, privacy and tool safety. Tools SHOULD keep a human in the loop and clients SHOULD validate results and log for audit; annotations are untrusted. Includes a security best-practices page.
+  relevance: Defines the traffic Mirsad intercepts and the client-side controls Mirsad implements.
+- key: mcpherrin2025-45days
+  ieee: 'M. McPherrin, "Decreasing Certificate Lifetimes to 45 Days," Let''s Encrypt, Dec. 2, 2025. [Online]. Available: https://letsencrypt.org/2025/12/02/from-90-to-45. Accessed: Oct. 11, 2026.'
+  url: https://letsencrypt.org/2025/12/02/from-90-to-45
+  track: budget-evidence
+  summary: 'Timeline: an opt-in 45-day profile from 13 May 2026; the default profile moves to 64 days on 10 Feb 2027 and to 45 days on 16 Feb 2028.'
+  relevance: The default changes during the project year, so the deployment needs automated, ARI-aware renewal.
+- key: mcpherrin2026-6day-ip
+  ieee: 'M. McPherrin, "6-day and IP Address Certificates are Generally Available," Let''s Encrypt, Jan. 15, 2026. [Online]. Available: https://letsencrypt.org/2026/01/15/6day-and-ip-general-availability. Accessed: Oct. 11, 2026.'
+  url: https://letsencrypt.org/2026/01/15/6day-and-ip-general-availability
+  track: budget-evidence
+  summary: Short-lived (160-hour) certificates and IPv4/IPv6 address certificates became generally available through the opt-in 'shortlived' profile; IP certificates must be short-lived.
+  relevance: Enables trusted HTTPS on a VM's public IP with no domain, used in the zero-cost fallback.
+- key: mdn-service-worker
+  ieee: 'MDN contributors, "Service Worker API," MDN Web Docs, Mozilla. [Online]. Available: https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API. Accessed: Oct. 11, 2026.'
+  url: https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
+  track: budget-evidence
+  summary: Service workers enable offline use and push messages, and they run only in secure contexts (HTTPS), with localhost treated as secure for development.
+  relevance: Explains why HTTPS (TLS plus a reachable origin) cannot be dropped for the approval PWA.
+- key: meta2025promptguard2
+  ieee: 'Meta, "Llama Prompt Guard 2 86M," model card, Hugging Face. Accessed: Oct. 11, 2026. [Online]. Available: https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M.'
+  url: https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M
+  track: multilingual-arabic-security-and-standards
+  summary: 'Meta''s second-generation binary (benign/malicious) jailbreak and injection classifier: 86M on mDeBERTa-base and 22M on DeBERTa-xsmall, 512-token window (split longer inputs), modified tokenizer against adversarial tokenization. Reports 0.998 English AUC, 97.5% recall at 1% FPR, and 92.4 ms on an A100. Languages: en, fr, de, hi, it, pt, es, th (no Arabic). The card lists vulnerability to adaptive attacks as a limitation and presents the model as an additional layer of defense.'
+  relevance: Main open-source English baseline and likely starting checkpoint for Mirsad's Arabic fine-tune. The missing Arabic support is a documented gap Mirsad fills.
+- key: microsoft2026contentsafetylimits
+  ieee: 'Microsoft, "Region availability and service limits - Azure AI Content Safety," Microsoft Learn, Sep. 2026. [Online]. Available: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/region-availability (accessed Oct. 11, 2026).'
+  url: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/region-availability
+  track: defenses
+  summary: 'States that Prompt Shields (and several other features) ''were tested with English only''. They can work in many other languages with varying quality, and customers should do their own testing. Prompt Shields API limits: 10K-character prompt and up to five documents totaling 10K characters.'
+  relevance: Direct vendor evidence that a major shield is not validated for Arabic, which motivates Mirsad's bilingual detector.
+- key: microsoft2026promptshields
+  ieee: 'Microsoft, "Prompt Shields in Azure AI Content Safety," Microsoft Learn, Aug. 2026. [Online]. Available: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection (accessed Oct. 11, 2026).'
+  url: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/concepts/jailbreak-detection
+  track: defenses
+  summary: Hosted classifier for user prompt attacks (formerly 'jailbreak risk detection') and document attacks, each with subtypes (e.g., manipulated content, information gathering, fraud, malware, role-play, encoding attacks). In Foundry, document attacks are scanned at the user-input and tool-response intervention points. Offers a preview Spotlighting mode that base64-encodes documents. The standalone API analyzes a userPrompt plus up to five documents.
+  relevance: Major production shield. Its document-attack taxonomy is useful for labeling Mirsad's Arabic test set.
+- key: microsoft_stride
+  ieee: 'Microsoft, "Threats - Microsoft Threat Modeling Tool - Azure," Microsoft Learn. Accessed: Oct. 11, 2026. [Online]. Available: https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats.'
+  url: https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats
+  track: foundations
+  summary: Official descriptions, with examples, of the six STRIDE categories (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege), presented as part of the Threat Modeling Tool, a core element of the Microsoft SDL.
+  relevance: Indirect prompt injection maps to elevation of privilege, information disclosure and tampering. Mirsad's audit chain addresses repudiation. STRIDE-per-element (from Shostack) drives test-scenario selection.
+- key: mitchell2019modelcards
+  ieee: 'M. Mitchell, S. Wu, A. Zaldivar, P. Barnes, L. Vasserman, B. Hutchinson, E. Spitzer, I. D. Raji, and T. Gebru, "Model cards for model reporting," in Proc. Conf. Fairness, Accountability, Transparency (FAT* ''19), Atlanta, GA, USA, 2019, pp. 220–229, doi: 10.1145/3287560.3287596.'
+  url: https://doi.org/10.1145/3287560.3287596
+  track: foundations
+  summary: Short documents accompanying trained models that report intended use, factors, metrics, evaluation and training data, results broken down by factor, ethical considerations and caveats. Includes smile-detection and toxicity examples.
+  relevance: Mirsad's injection detector needs a model card with results broken down by language and dialect and by attack type, false-positive rates on benign tool outputs, and evasion limits.
+- key: mitre2026atlas
+  ieee: 'MITRE Corporation, "MITRE ATLAS: Adversarial Threat Landscape for AI Systems," knowledge base, release 2026.09, Sep. 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://atlas.mitre.org'
+  url: https://github.com/mitre-atlas/atlas-data/blob/main/CHANGELOG.md
+  track: multilingual-arabic-security-and-standards
+  summary: Adversary TTP knowledge base. Includes AML.T0051 (LLM Prompt Injection, direct/indirect/triggered) and agent tool techniques, plus MCP poisoning case studies added in 2026.
+  relevance: Technique IDs for tagging Mirsad's red-team tests and log entries.
+- key: mubarak2025arasafe
+  ieee: 'H. Mubarak, A. Mohamed, and M. Hawasly, "AraSafe: Benchmarking safety in Arabic LLMs," in Findings Assoc. Comput. Linguistics: EMNLP 2025, Suzhou, China, Nov. 2025, pp. 9976–9992, doi: 10.18653/v1/2025.findings-emnlp.529.'
+  url: https://aclanthology.org/2025.findings-emnlp.529/
+  track: multilingual-arabic-security-and-standards
+  summary: About 12K native, human-written Arabic prompts, each labeled by two experts into 9 safety classes, plus 12K synthetic harmful prompts from GPT-4o. Arabic and multilingual 7-13B LLMs and BERT classifiers were evaluated.
+  relevance: Natural Arabic data and published classifier baselines for the detector.
+- key: muhtadi2026mipiad
+  ieee: 'A. M. Muhtadi and M. R. Tazwar, "MIPIAD: Multilingual indirect prompt injection attack defense with Qwen–TF-IDF hybrid and meta-ensemble learning," arXiv:2605.07269, May 2026. [Online]. Available: https://arxiv.org/abs/2605.07269'
+  url: https://arxiv.org/abs/2605.07269
+  track: multilingual-arabic-security-and-standards
+  summary: 'Hybrid indirect-injection detector: a Qwen2.5-1.5B LoRA classifier plus TF-IDF, with ensembles, trained on 1.43M BIPIA-derived samples. Best F1 0.9205; English and Bangla only.'
+  relevance: Closest published architecture to Mirsad's detector. Arabic not covered.
+- key: namaa2025araprompguard
+  ieee: 'NAMAA-Space, "Ara-Prompt-Guard_V0," Hugging Face model card, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://huggingface.co/NAMAA-Space/Ara-Prompt-Guard_V0.'
+  url: https://huggingface.co/NAMAA-Space/Ara-Prompt-Guard_V0
+  track: defenses
+  summary: Community Arabic three-class (safe/injection/jailbreak) classifier. The HF metadata lists Llama-Prompt-Guard-2-86M as base, though the card text says 'BERT' and links the original PromptGuard. Trained on 33k examples (11k per class) translated from unnamed HF datasets in about 30 minutes on two GPUs. Self-reports about 97.3% accuracy and about 98% F1 on an Arabic-only test set. MSA only, no paper, and a V1 is announced.
+  relevance: The closest prior Arabic detector and the baseline Mirsad must beat. Its gaps (dialects, Arabizi, code-switching, independent testing) are Mirsad's contribution.
+- key: nasr2025attacker
+  ieee: 'M. Nasr et al., "The attacker moves second: Stronger adaptive attacks bypass defenses against LLM jailbreaks and prompt injections," arXiv:2510.09023, 2025. [Online]. Available: https://arxiv.org/abs/2510.09023'
+  url: https://arxiv.org/abs/2510.09023
+  track: attacks-benchmarks
+  summary: Scales four adaptive methods (gradient descent, RL, random search, human-guided exploration) to bypass 12 recent jailbreak and prompt-injection defenses (e.g., Spotlighting, Prompt Sandwiching, StruQ, MetaSecAlign, PromptGuard, MELON), with ASR above 90% for most, although most originally reported near-zero ASR.
+  relevance: Strong evidence that classifier and prompt defenses cannot be the last line. Mirsad's evaluation should include human red-teaming and adaptive attacks.
+- key: nasr2026attackermovessecond
+  ieee: 'M. Nasr et al., "The attacker moves second: Stronger adaptive attacks bypass defenses against LLM jailbreaks and prompt injections," in Proc. 35th USENIX Security Symp. (USENIX Security 26), Baltimore, MD, USA, Aug. 2026, pp. 1467-1486.'
+  url: https://www.usenix.org/conference/usenixsecurity26/presentation/nasr
+  track: defenses
+  summary: Gradient, RL, search, and human red-teaming (500+ participants, $20k in prizes) attacks bypass 12 recent defenses, most at over 90% ASR. Spotlighting and prompt sandwiching exceed 95%, MetaSecAlign reaches 96% (versus 2% static), MELON 76% without and 95% with full knowledge, StruQ is broken in every RL case, and ProtectAI, PromptGuard, and Model Armor exceed 90%, with PIGuard at 71%. Stacking detectors did not help, and many successful triggers did not look malicious. CaMeL and Progent were not evaluated.
+  relevance: The central citation for making deterministic tool-boundary policy, not detection, Mirsad's security boundary.
+- key: nca2024ecc
+  ieee: 'National Cybersecurity Authority, Essential Cybersecurity Controls (ECC-2:2024), Riyadh, Saudi Arabia, 2024. Accessed: Oct. 11, 2026. [Online]. Available: https://cdn.nca.gov.sa/api/files/public/upload/86e09090-44e4-481f-bc28-355673607654_ECC--2024-EN.pdf'
+  url: https://cdn.nca.gov.sa/api/files/public/upload/86e09090-44e4-481f-bc28-355673607654_ECC--2024-EN.pdf
+  track: multilingual-arabic-security-and-standards
+  summary: ''
+  relevance: ''
+- key: nemo-content-safety
+  ieee: 'NVIDIA, "Content safety," NVIDIA NeMo Guardrails Library Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.nvidia.com/nemo/guardrails/latest/configure-guardrails/guardrail-catalog/content-safety'
+  url: https://docs.nvidia.com/nemo/guardrails/latest/configure-guardrails/guardrail-catalog/content-safety
+  track: competitive-analysis
+  summary: Multilingual support returns refusals in the user's language (Arabic included among 9 languages). Language detection only selects the refusal language; safety models make the detection decision.
+  relevance: Shows NeMo's Arabic support relates to content safety and refusals, not documented injection detection.
+- key: nemo-github
+  ieee: 'NVIDIA, "NeMo Guardrails," GitHub repository NVIDIA-NeMo/Guardrails. Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/NVIDIA-NeMo/Guardrails'
+  url: https://github.com/NVIDIA-NeMo/Guardrails
+  track: competitive-analysis
+  summary: 'Repository README: Apache-2.0 licence, execution rails for custom actions (tools), built-in jailbreak and injection detection, and telemetry for tool input and output rails. Latest release v0.24.1 published Sep 16, 2026.'
+  relevance: Confirms licensing and active maintenance.
+- key: nemo-overview
+  ieee: 'NVIDIA, "Overview," NVIDIA NeMo Guardrails Library Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.nvidia.com/nemo/guardrails/latest/index.html'
+  url: https://docs.nvidia.com/nemo/guardrails/latest/index.html
+  track: competitive-analysis
+  summary: Introduces NeMo Guardrails as an open-source library and microservice configured with YAML and Colang, with input, retrieval, dialog, execution and output rails and tool-call validation.
+  relevance: Closest open-source programmable framework; Mirsad could in principle be built as NeMo execution rails.
+- key: nemo-rail-types
+  ieee: 'NVIDIA, "Guardrail types," NVIDIA NeMo Guardrails Library Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.nvidia.com/nemo/guardrails/latest/about-nemo-guardrails-library/rail-types'
+  url: https://docs.nvidia.com/nemo/guardrails/latest/about-nemo-guardrails-library/rail-types
+  track: competitive-analysis
+  summary: Defines the five rail types. Execution rails control and validate tool calls, their arguments and their results, but no per-tool or per-parameter configuration schema is described.
+  relevance: Shows NeMo supports tool-layer hooks but leaves the policy to custom code.
+- key: nemo-tools-integration
+  ieee: 'NVIDIA, "Tools integration with the NeMo Guardrails library," NVIDIA NeMo Guardrails Library Developer Guide. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.nvidia.com/nemo/guardrails/latest/integration-with-third-party-libraries/tools-integration'
+  url: https://docs.nvidia.com/nemo/guardrails/latest/integration-with-third-party-libraries/tools-integration
+  track: competitive-analysis
+  summary: Notes that tool messages are not subject to input rails and that tool execution results are trusted by default, and recommends output rails as mitigation. No approval workflow is described.
+  relevance: Documents exactly the gap (untrusted tool output) that Mirsad's taint-by-default design targets.
+- key: newsome2005dynamic
+  ieee: J. Newsome and D. Song, "Dynamic taint analysis for automatic detection, analysis, and signature generation of exploits on commodity software," in Proc. 12th Annu. Netw. Distrib. Syst. Secur. Symp. (NDSS), San Diego, CA, USA, Feb. 2005.
+  url: https://www.ndss-symposium.org/ndss2005/dynamic-taint-analysis-automatic-detection-analysis-and-signaturegeneration-exploits-commodity/
+  track: foundations
+  summary: Labels untrusted (network) input as tainted, tracks its spread at run time via binary rewriting (TaintCheck), and flags tainted data reaching sensitive uses. Detected most overwrite-exploit types with no false positives in the authors' tests and aids signature generation.
+  relevance: Direct ancestor of Mirsad's source-propagation-sink taint model, with untrusted tool outputs as sources and side-effecting tools as sinks.
+- key: nist2023airmf
+  ieee: 'E. Tabassi, "Artificial Intelligence Risk Management Framework (AI RMF 1.0)," National Institute of Standards and Technology, Gaithersburg, MD, USA, NIST AI 100-1, Jan. 2023, doi: 10.6028/NIST.AI.100-1.'
+  url: https://doi.org/10.6028/NIST.AI.100-1
+  track: multilingual-arabic-security-and-standards
+  summary: Voluntary framework built on Govern, Map, Measure and Manage and seven trustworthiness characteristics. A GenAI Profile followed in 2024, and the framework is now under revision.
+  relevance: Risk-management framing for the report. Mirsad acts as a Manage control and an evidence source for Measure.
+- key: nist2025hijacking
+  ieee: 'National Institute of Standards and Technology, Center for AI Standards and Innovation, "Technical blog: Strengthening AI agent hijacking evaluations," Jan. 17, 2025 (updated Dec. 19, 2025). Accessed: Oct. 11, 2026. [Online]. Available: https://www.nist.gov/news-events/news/2025/01/technical-blog-strengthening-ai-agent-hijacking-evaluations'
+  url: https://www.nist.gov/news-events/news/2025/01/technical-blog-strengthening-ai-agent-hijacking-evaluations
+  track: attacks-benchmarks
+  summary: NIST CAISI extended AgentDojo with RCE, database-exfiltration and automated-phishing injection tasks against an upgraded Claude 3.5 Sonnet agent. Red-teaming with UK AISI raised ASR from 11% (strongest baseline) to 81% (strongest new attack). Running 25 attempts raised average ASR on five tasks from 57% to 80%, and NIST recommends task-level reporting.
+  relevance: Identifies the high-risk sinks Mirsad must cover (shell, DB-to-network, email) and motivates multi-attempt evaluation and audit-log-based detection of probing.
+- key: nist2026competition
+  ieee: 'National Institute of Standards and Technology, Center for AI Standards and Innovation, "Insights into AI agent security from a large-scale red-teaming competition," CAISI Research Blog, Mar. 23, 2026. [Online]. Available: https://www.nist.gov/blogs/caissi-research-blog/insights-ai-agent-security-large-scale-red-teaming-competition (accessed Oct. 11, 2026).'
+  url: https://www.nist.gov/blogs/caissi-research-blog/insights-ai-agent-security-large-scale-red-teaming-competition
+  track: attacks-benchmarks
+  summary: NIST CAISI summary of a paper analysing a Gray Swan-hosted public competition. CAISI, UK AISI and several frontier labs partnered with Gray Swan on the analysis. At least one successful hijack was found against all 13 models, robustness varied sharply and did not track capability uniformly, universal attacks transferred, and attacks transferred more readily from robust to less robust models than the reverse.
+  relevance: Government-backed confirmation that no model is immune, which supports a model-independent firewall.
+- key: nvd2025cve32711
+  ieee: 'National Institute of Standards and Technology, "CVE-2025-32711 detail," National Vulnerability Database, Jun. 11, 2025. [Online]. Available: https://nvd.nist.gov/vuln/detail/CVE-2025-32711'
+  url: https://nvd.nist.gov/vuln/detail/CVE-2025-32711
+  track: attacks-benchmarks
+  summary: 'Official record of the EchoLeak vulnerability: AI command injection in M365 Copilot allows an unauthorized attacker to disclose information over a network. CWE-74 (assigned by Microsoft as CNA); CVSS 3.1 9.3 Critical (Microsoft) and 7.5 High (NVD).'
+  relevance: Authoritative evidence that prompt injection is now tracked as a CVE-class vulnerability, which helps motivate the project.
+- key: oasis2013xacml
+  ieee: 'E. Rissanen, Ed., "eXtensible Access Control Markup Language (XACML) Version 3.0," OASIS Standard, Jan. 22, 2013. Accessed: Oct. 11, 2026. [Online]. Available: https://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html'
+  url: https://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html
+  track: foundations
+  summary: Attribute-based access-control language and architecture (PEP, PDP, PIP, PAP, context handler) with rules, policies and policy sets, combining algorithms (deny-overrides, first-applicable, etc.), and obligations (which the PEP must fulfil) and advice (which it may ignore).
+  relevance: 'Reference architecture for Mirsad: gateway as PEP, policy engine as PDP, taint and detector as attribute providers, approval as an obligation. Combining algorithms give terms for rule precedence.'
+- key: ollama-openai-compat
+  ieee: 'Ollama, "OpenAI compatibility," Ollama Docs. [Online]. Available: https://docs.ollama.com/api/openai-compatibility. Accessed: Oct. 11, 2026.'
+  url: https://docs.ollama.com/api/openai-compatibility
+  track: budget-evidence
+  summary: Documents a subset of the OpenAI API, including /v1/chat/completions, with tool (function) calling marked as supported.
+  relevance: Lets Mirsad's OpenAI-style adapter switch between a local model and gpt-6.1-sol by changing only the base URL.
+- key: ollama-repo
+  ieee: 'Ollama, "ollama/ollama," GitHub repository, MIT License. [Online]. Available: https://github.com/ollama/ollama. Accessed: Oct. 11, 2026.'
+  url: https://github.com/ollama/ollama
+  track: budget-evidence
+  summary: Open-source runtime for running open-weight models locally behind a REST API. MIT licence; latest release v0.40.3 (11 Oct 2026). No usage fee for local inference.
+  relevance: 'Basis of the local-first design decision: development and most evaluation run at 0 SAR.'
+- key: opa_rego
+  ieee: 'Open Policy Agent, "Policy language," OPA Documentation. Accessed: Oct. 11, 2026. [Online]. Available: https://www.openpolicyagent.org/docs/policy-language.'
+  url: https://www.openpolicyagent.org/docs/policy-language
+  track: foundations
+  summary: OPA is a general-purpose policy engine that decouples decisions from enforcement. Rego is a declarative language inspired by Datalog and extended to structured documents such as JSON, built from rules, comprehensions, functions and packages over input and data documents. OPA is a CNCF graduated project (Feb 2021).
+  relevance: Main policy-as-code baseline against which to justify Mirsad's YAML per-tool/per-parameter policy format. A possible future export target.
+- key: openai-models
+  ieee: 'OpenAI, "Models," OpenAI API Docs. [Online]. Available: https://developers.openai.com/api/docs/models. Accessed: Oct. 11, 2026.'
+  url: https://developers.openai.com/api/docs/models
+  track: budget-evidence
+  summary: Presents GPT-6 Astra (most capable), GPT-6.1 Sol (near-Astra performance at lower cost) and GPT-6 Luna (efficient, high volume). Sol lists Functions, web search, file search and computer use among its tools.
+  relevance: Justifies gpt-6.1-sol as the OpenAI mid-tier model and confirms it supports function calling.
+- key: openai-pricing
+  ieee: 'OpenAI, "Pricing," OpenAI API Docs. [Online]. Available: https://developers.openai.com/api/docs/pricing. Accessed: Oct. 11, 2026.'
+  url: https://developers.openai.com/api/docs/pricing
+  track: budget-evidence
+  summary: Per-1M-token prices by tier (Standard, Batch, Flex, Fast, Ultrafast) with short- and long-context columns. gpt-6.1-sol is $2.00 input / $0.10 cached / $2.50 cache write / $10.00 output on Standard short context (at most 272K input tokens) and $1/$0.05/$1.25/$5 on Batch. Output prices include reasoning tokens.
+  relevance: 'OpenAI mid-tier price for the function-calling confirmatory run: $40 (150 SAR) per base-case run; the reasoning-token note motivates the 4k/2k sensitivity case.'
+- key: oracle-always-free
+  ieee: 'Oracle, "Always Free Resources," Oracle Cloud Infrastructure Documentation. [Online]. Available: https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm. Accessed: Oct. 11, 2026.'
+  url: https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm
+  track: budget-evidence
+  summary: 1,500 OCPU-hours and 9,000 GB-hours per month of Ampere A1 (equivalent to 2 OCPUs / 12 GB) plus two AMD micro VMs are free. Instances must be in the home region and may be reclaimed if idle (below 20% utilisation over 7 days).
+  relevance: Zero-cost VM option that exceeds the 2 vCPU / 4 GB requirement; idle reclamation must be managed.
+- key: owasp2024llmtop10
+  ieee: 'OWASP GenAI Security Project, "OWASP Top 10 for LLM Applications 2025," OWASP Foundation, Nov. 2024. Accessed: Oct. 11, 2026. [Online]. Available: https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/'
+  url: https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/
+  track: multilingual-arabic-security-and-standards
+  summary: 'LLM01 Prompt Injection (direct and indirect, including multilingual and obfuscated attacks) and LLM06 Excessive Agency, with mitigations: least privilege, human approval, segregating untrusted content, logging.'
+  relevance: Core industry mapping for every Mirsad feature.
+- key: owasp2025agenticthreats
+  ieee: 'OWASP GenAI Security Project, Agentic Security Initiative, "Agentic AI – Threats and Mitigations," ver. 1.1, OWASP Foundation, Dec. 2025 (ver. 1.0 first published Feb. 2025). Accessed: Oct. 11, 2026. [Online]. Available: https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/'
+  url: https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/
+  track: multilingual-arabic-security-and-standards
+  summary: 'First ASI guide: a threat-model-based reference of agentic threats and their mitigations.'
+  relevance: Background threat vocabulary for Mirsad's threat model.
+- key: owasp2025agentictop10
+  ieee: 'OWASP GenAI Security Project, "OWASP Top 10 for Agentic Applications for 2026," OWASP Foundation, Dec. 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/'
+  url: https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
+  track: multilingual-arabic-security-and-standards
+  summary: 'ASI01-ASI10: goal hijack, tool misuse, identity and privilege abuse, supply chain, code execution, memory poisoning, inter-agent communication, cascading failures, human-agent trust exploitation, rogue agents.'
+  relevance: Current agent-specific taxonomy that Mirsad's features map to.
+- key: owasp2025llm01
+  ieee: 'OWASP Gen AI Security Project, "LLM01:2025 prompt injection," in OWASP Top 10 for LLM Applications 2025, OWASP Foundation, Nov. 2024. [Online]. Available: https://genai.owasp.org/llmrisk/llm01-prompt-injection/ (accessed Oct. 11, 2026).'
+  url: https://genai.owasp.org/llmrisk/llm01-prompt-injection/
+  track: attacks-benchmarks
+  summary: Industry standard ranking prompt injection as the top LLM risk (2025 edition, released Nov. 2024). Defines direct and indirect injection (intentional or unintentional), lists impacts (sensitive-data and system-prompt disclosure, content manipulation, unauthorized function use, command execution, manipulated decisions) and lists mitigations such as constrained behavior, deterministic output validation, I/O filtering, least privilege, human approval, segregation of untrusted content and adversarial testing.
+  relevance: 'Requirements-traceability anchor: Mirsad implements several OWASP mitigations directly.'
+- key: panw-protectai-close
+  ieee: 'Palo Alto Networks, "Palo Alto Networks completes acquisition of Protect AI," press release, Jul. 22, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://www.paloaltonetworks.com/company/press/2025/palo-alto-networks-completes-acquisition-of-protect-ai'
+  url: https://www.paloaltonetworks.com/company/press/2025/palo-alto-networks-completes-acquisition-of-protect-ai
+  track: competitive-analysis
+  summary: Announces completion of the Protect AI acquisition. Protect AI technology becomes a cornerstone of Prisma AIRS.
+  relevance: Explains LLM Guard's change in status.
+- key: parasuraman2000model
+  ieee: 'R. Parasuraman, T. B. Sheridan, and C. D. Wickens, "A model for types and levels of human interaction with automation," IEEE Trans. Syst., Man, Cybern. A, Syst. Humans, vol. 30, no. 3, pp. 286–297, May 2000, doi: 10.1109/3468.844354.'
+  url: https://doi.org/10.1109/3468.844354
+  track: foundations
+  summary: Automation can apply at four information-processing stages (acquisition, analysis, decision selection, action implementation), each at different levels. Levels are chosen by human-performance criteria (workload, situation awareness, complacency, skill) and by reliability and consequence costs.
+  relevance: Frames Mirsad's risk-dependent automation level (auto-allow, block or ask a human) and warns about approver complacency.
+- key: perez2022ignore
+  ieee: 'F. Perez and I. Ribeiro, "Ignore previous prompt: Attack techniques for language models," presented at the NeurIPS ML Safety Workshop, 2022, arXiv:2211.09527. [Online]. Available: https://arxiv.org/abs/2211.09527'
+  url: https://arxiv.org/abs/2211.09527
+  track: attacks-benchmarks
+  summary: Introduces PromptInject, a mask-based framework for composing adversarial prompts against GPT-3. Defines goal hijacking and prompt leaking and shows that simple handcrafted inputs often succeed.
+  relevance: Source of two Mirsad threat classes (goal hijacking, prompt leaking) and of seed templates for the bilingual detector test set.
+- key: porkbun-domains
+  ieee: 'Porkbun, "Domain Name Pricing." [Online]. Available: https://porkbun.com/products/domains. Accessed: Oct. 11, 2026.'
+  url: https://porkbun.com/products/domains
+  track: budget-evidence
+  summary: Registrar price list in USD that includes ICANN fees. .com registration, renewal and transfer are each $11.08 per year.
+  relevance: 'Domain line: .com at 41.55 SAR per year (rounded to 45 SAR in the budget).'
+- key: promptguard2-card
+  ieee: 'Meta, "Llama Prompt Guard 2 86M," model card, Hugging Face. Accessed: Oct. 11, 2026. [Online]. Available: https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M'
+  url: https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M
+  track: competitive-analysis
+  summary: Binary benign/malicious classifier for explicit instruction-override attempts with a 512-token window. The 86M model was evaluated on English and 7 other languages (not Arabic). Released under the gated Llama 4 Community License.
+  relevance: Open multilingual baseline for Mirsad's detector; Arabic is not evaluated.
+- key: protectai-deberta-v2-card
+  ieee: 'Protect AI, "deberta-v3-base-prompt-injection-v2," model card, Hugging Face. Accessed: Oct. 11, 2026. [Online]. Available: https://huggingface.co/protectai/deberta-v3-base-prompt-injection-v2'
+  url: https://huggingface.co/protectai/deberta-v3-base-prompt-injection-v2
+  track: competitive-analysis
+  summary: The model card says the classifier handles English only, does not detect jailbreaks, and produces false positives on system prompts. Apache-2.0.
+  relevance: Evidence of English-only open detectors; motivates Mirsad's Arabic evaluation.
+- key: protectai2024debertav2
+  ieee: 'ProtectAI.com, "Fine-tuned DeBERTa-v3-base for prompt injection detection (deberta-v3-base-prompt-injection-v2)," Hugging Face model card, 2024. Accessed: Oct. 11, 2026. [Online]. Available: https://huggingface.co/protectai/deberta-v3-base-prompt-injection-v2.'
+  url: https://huggingface.co/protectai/deberta-v3-base-prompt-injection-v2
+  track: defenses
+  summary: DeBERTa-v3-base binary injection classifier (Apache-2.0). On 20k prompts from untrained datasets it reports 95.25% accuracy, 99.74% recall, and 91.59% precision. English only, does not detect jailbreaks, and gives false positives on system prompts. The card's example code truncates input at 512 tokens. The card says the project and its LLM Guard GitHub code are archived and unmaintained.
+  relevance: Widely used baseline Mirsad should compare against. It is English-only and unmaintained, which supports the case for a bilingual detector.
+- key: protectai_rebuff
+  ieee: 'Protect AI, "Rebuff: LLM prompt injection detector," GitHub repository (archived May 16, 2025). [Online]. Available: https://github.com/protectai/rebuff (accessed Oct. 11, 2026).'
+  url: https://github.com/protectai/rebuff
+  track: defenses
+  summary: 'Open-source prototype with four layers: heuristics, LLM-based detection, a vector DB of past attack embeddings, and canary tokens for leak detection. The README says it is still a prototype and cannot provide 100% protection. Archived 16 May 2025, last push Aug 2024, Apache-2.0.'
+  relevance: Historical defense-in-depth reference. Its canary-token idea can be reused by Mirsad to block exfiltration of sensitive tool results.
+- key: qwen2024qwen25
+  ieee: 'A. Yang et al. (Qwen Team), "Qwen2.5 technical report," arXiv:2412.15115, Dec. 2024 (rev. Jan. 2025). [Online]. Available: https://arxiv.org/abs/2412.15115'
+  url: https://arxiv.org/abs/2412.15115
+  track: multilingual-arabic-security-and-standards
+  summary: ''
+  relevance: ''
+- key: qwen2024qwen25_7b_card
+  ieee: 'Qwen Team, "Qwen2.5-7B-Instruct," model card, Hugging Face. Accessed: Oct. 11, 2026. [Online]. Available: https://huggingface.co/Qwen/Qwen2.5-7B-Instruct.'
+  url: https://huggingface.co/Qwen/Qwen2.5-7B-Instruct
+  track: multilingual-arabic-security-and-standards
+  summary: ''
+  relevance: ''
+- key: qwen2025modelcard
+  ieee: 'Qwen Team, "Qwen2.5-7B-Instruct," model card, Hugging Face. [Online]. Available: https://huggingface.co/Qwen/Qwen2.5-7B-Instruct (accessed Oct. 11, 2026).'
+  url: https://huggingface.co/Qwen/Qwen2.5-7B-Instruct
+  track: multilingual-arabic-security-and-standards
+  summary: States support for 29+ languages including Arabic, a 131,072-token context and improved JSON output.
+  relevance: Confirms official Arabic support claims.
+- key: radosevich2025mcpaudit
+  ieee: 'B. Radosevich and J. Halloran, "MCP safety audit: LLMs with the Model Context Protocol allow major security exploits," arXiv:2504.03767, 2025. [Online]. Available: https://arxiv.org/abs/2504.03767'
+  url: https://arxiv.org/abs/2504.03767
+  track: attacks-benchmarks
+  summary: Shows that Claude 3.7 and Llama-3.3-70B-Instruct with standard MCP servers (Filesystem, Slack, Everything, Chroma) can be prompted into malicious code execution, remote access control and credential theft. Introduces retrieval-agent deception (RADE) via poisoned vector-DB data and releases the MCPSafetyScanner auditing tool.
+  relevance: Sinks include filesystem and config writes, so Mirsad needs per-parameter path policy. Vector stores must be treated as untrusted taint sources.
+- key: rebedea2023nemo
+  ieee: 'T. Rebedea, R. Dinu, M. N. Sreedhar, C. Parisien, and J. Cohen, "NeMo Guardrails: A toolkit for controllable and safe LLM applications with programmable rails," in Proc. 2023 Conf. Empirical Methods in Natural Language Processing: System Demonstrations, Singapore, Dec. 2023, pp. 431-445, doi: 10.18653/v1/2023.emnlp-demo.40.'
+  url: https://aclanthology.org/2023.emnlp-demo.40/
+  track: defenses
+  summary: Open-source runtime toolkit in which developers write Colang flows (a mix of natural language and Python) for topical rails and execution rails that call custom actions (moderation, fact-checking, hallucination). Jailbreak and moderation rails ask a separate LLM yes/no questions. Dialogue rails cost about 3x the latency and cost of a normal call, and the authors say it should not be used as a stand-alone solution.
+  relevance: Precedent for a separate, declarative policy language. Mirsad applies the idea to per-tool, per-parameter rules enforced in code.
+- key: reddy2025echoleak
+  ieee: 'P. Reddy and A. S. Gujral, "EchoLeak: The first real-world zero-click prompt injection exploit in a production LLM system," in Proc. AAAI Symp. Ser., vol. 7, no. 1, 2025, pp. 303-311, doi: 10.1609/aaaiss.v7i1.36899.'
+  url: https://doi.org/10.1609/aaaiss.v7i1.36899
+  track: attacks-benchmarks
+  summary: Case study of the zero-click Microsoft 365 Copilot exfiltration (CVE-2025-32711). The chain evaded the XPIA injection classifier, bypassed link redaction with reference-style Markdown, used auto-fetched images and went through a CSP-allowed Teams proxy. Proposes prompt partitioning, I/O filtering, provenance-based access control and strict CSP.
+  relevance: Real-world proof that production injection classifiers can be bypassed. Provenance-based access control corresponds to Mirsad's taint tracking, and auto-fetched URLs are sinks.
+- key: rehberger2023plugins
+  ieee: 'J. Rehberger, "Plugin vulnerabilities: Visit a website and have your source code stolen," Embrace The Red, Jun. 20, 2023. [Online]. Available: https://embracethered.com/blog/posts/2023/chatgpt-plugin-vulns-chat-with-code/'
+  url: https://embracethered.com/blog/posts/2023/chatgpt-plugin-vulns-chat-with-code/
+  track: attacks-benchmarks
+  summary: Reports that 51 of 445 approved ChatGPT plugins used OAuth and that several were open to cross-plugin request forgery. In the demonstration, a malicious web page made the 'Chat with Code' GitHub plugin create repos, read private code and switch repositories to public. The post notes that OpenAI's store criteria require user confirmation but that review did not appear to enforce this.
+  relevance: Concrete tool-misuse exploit in an ancestor of MCP. It shows the need for Mirsad's per-parameter policy (e.g., visibility=public) and HITL confirmation.
+- key: rfc2104
+  ieee: 'H. Krawczyk, M. Bellare, and R. Canetti, "HMAC: Keyed-hashing for message authentication," RFC 2104, Feb. 1997, doi: 10.17487/RFC2104.'
+  url: https://www.rfc-editor.org/info/rfc2104
+  track: foundations
+  summary: Informational RFC specifying HMAC, a MAC built from an iterated hash and a secret key with inner and outer padding. Covers keys, truncated output, security considerations, sample code and test vectors. Updated by RFC 6151.
+  relevance: The primitive behind Mirsad's audit chain (HMAC-SHA256 with a separately derived audit key). Its symmetric nature means verifiers can also forge, which must be stated as a threat-model assumption.
+- key: rfc7519
+  ieee: 'M. Jones, J. Bradley, and N. Sakimura, "JSON Web Token (JWT)," RFC 7519, May 2015, doi: 10.17487/RFC7519.'
+  url: https://www.rfc-editor.org/info/rfc7519
+  track: foundations
+  summary: Compact, URL-safe claims format carried in JWS or JWE. Registers standard claims (iss, sub, aud, exp, nbf, iat, jti) and validation rules. Proposed Standard, updated by RFC 7797 and RFC 8725.
+  relevance: Mirsad issues short-lived HS256 JWTs after login. It should pin the algorithm and validate claims per RFC 8725, and keep the signing key separate from the audit HMAC key.
+- key: rfc7914
+  ieee: 'C. Percival and S. Josefsson, "The scrypt password-based key derivation function," RFC 7914, Aug. 2016, doi: 10.17487/RFC7914.'
+  url: https://www.rfc-editor.org/info/rfc7914
+  track: foundations
+  summary: Specifies the memory-hard scrypt KDF (Salsa20/8 core, BlockMix, ROMix), its parameters, an ASN.1 module and test vectors, and warns about denial of service from attacker-presented, unreasonably large parameters.
+  relevance: Mirsad stores passwords as salted scrypt PHC hashes (ln=14, r=8, p=1) and bounds parsed parameters. The RFC justifies the algorithm, and the parameters should be justified against login latency.
+- key: sabelfeld2003language
+  ieee: 'A. Sabelfeld and A. C. Myers, "Language-based information-flow security," IEEE J. Sel. Areas Commun., vol. 21, no. 1, pp. 5–19, Jan. 2003, doi: 10.1109/JSAC.2002.806121.'
+  url: https://doi.org/10.1109/JSAC.2002.806121
+  track: foundations
+  summary: Survey arguing that access control and encryption cannot guarantee end-to-end confidentiality. Takes noninterference as the baseline policy, reviews three decades of work focusing on security-type systems, and organizes four trends (language expressiveness, concurrency, covert channels, refined security policies including declassification) and open challenges.
+  relevance: Explains why Mirsad cannot prove noninterference for an LLM and must use conservative boundary-level taint. Its declassification discussion supports treating human approval as explicit, logged declassification.
+- key: saharanet-domain-pricing
+  ieee: 'Sahara Net, "Domain Pricing." [Online]. Available: https://shop.sahara.com/index.php?rp=/domain/pricing. Accessed: Oct. 11, 2026.'
+  url: https://shop.sahara.com/index.php?rp=/domain/pricing
+  track: budget-evidence
+  summary: Price table with New, Transfer and Renewal columns. .sa (and .com.sa, .pub.sa, etc.) is SAR 52.18 new, SAR 52.18 transfer and SAR 86.09 renewal for one year; .com is SAR 75.00. VAT treatment is not stated.
+  relevance: Optional .sa domain at 52.18 SAR in the first year.
+- key: saltzer1975protection
+  ieee: 'J. H. Saltzer and M. D. Schroeder, "The protection of information in computer systems," Proc. IEEE, vol. 63, no. 9, pp. 1278–1308, Sep. 1975, doi: 10.1109/PROC.1975.9939.'
+  url: https://doi.org/10.1109/PROC.1975.9939
+  track: foundations
+  summary: Classic tutorial on protection mechanisms that introduces eight design principles, including complete mediation, fail-safe defaults, least privilege, separation of privilege and psychological acceptability.
+  relevance: Justifies Mirsad's gateway (complete mediation), default-deny policies, per-parameter least privilege and human approval (separation of privilege).
+- key: sama2020-peg
+  ieee: 'Saudi Central Bank (SAMA), "SAMA Affirms Commitment to Exchange Rate Policy," SAMA Media Center, 2020. [Online]. Available: https://www.sama.gov.sa/en-US/MediaCenter/News/Pages/news-557.aspx. Accessed: Oct. 11, 2026.'
+  url: https://www.sama.gov.sa/en-US/MediaCenter/News/Pages/news-557.aspx
+  track: budget-evidence
+  summary: Official central-bank statement restating the riyal-dollar peg and the commitment to the official rate of 3.75 SAR per USD, backed by foreign-exchange reserves.
+  relevance: Source of the 3.75 conversion used for every SAR figure; the fixed peg means USD-billed items carry no FX risk.
+- key: saudinic-registrars
+  ieee: 'SaudiNIC, "Registrars." [Online]. Available: https://nic.sa/en/registrars. Accessed: Oct. 11, 2026.'
+  url: https://nic.sa/en/registrars
+  track: budget-evidence
+  summary: Lists the licensed .sa registrars (Hawsabah, Solutions by stc, NourNet, Sahara Net, DNet, T2) and the DGA registrar for government domains.
+  relevance: Confirms Sahara Net is a licensed registrar, so its .sa price is a valid reference.
+- key: saudinic-regulations
+  ieee: 'Communications, Space & Technology Commission (SaudiNIC), "Saudi Domain Names Registration Regulations." [Online]. Available: https://nic.sa/en/help/regulation. Accessed: Oct. 11, 2026.'
+  url: https://nic.sa/en/help/regulation
+  track: budget-evidence
+  summary: 'Sets eligibility for Saudi names: in-Kingdom entities, Saudi nationals or Premium Residency holders, licensed entities, and Saudi trademark owners. Second-level .sa is open to eligible persons; .com.sa, .edu.sa and .med.sa need a commercial registration or licence. Fees may be imposed, but no price list is given.'
+  relevance: Shows a .sa name is possible only if a Saudi-national member registers it, and that .edu.sa is not available to the team.
+- key: schick2023toolformer
+  ieee: 'T. Schick, J. Dwivedi-Yu, R. Dessì, R. Raileanu, M. Lomeli, E. Hambro, L. Zettlemoyer, N. Cancedda, and T. Scialom, "Toolformer: Language models can teach themselves to use tools," in Adv. Neural Inf. Process. Syst. (NeurIPS), vol. 36, 2023, pp. 68539–68551, doi: 10.52202/075280-2997.'
+  url: https://proceedings.neurips.cc/paper/2023/hash/d842425e4bf79ba039352da0f658a906-Abstract-Conference.html
+  track: foundations
+  summary: Self-supervised training lets an LM decide which APIs to call, when and with what arguments, keeping only calls that make future tokens easier to predict. Tools are a calculator, QA system, search engine, translation system and calendar. Zero-shot performance improves substantially, often competitive with much larger models, without losing core language-modelling ability.
+  relevance: Shows tool use becoming native to models, so defences must sit at the tool interface. It has no threat model for tool outputs, which is the gap Mirsad fills.
+- key: schneier1999secure
+  ieee: 'B. Schneier and J. Kelsey, "Secure audit logs to support computer forensics," ACM Trans. Inf. Syst. Secur., vol. 2, no. 2, pp. 159–176, May 1999, doi: 10.1145/317087.317089.'
+  url: https://doi.org/10.1145/317087.317089
+  track: foundations
+  summary: 'Forward-secure logging on an untrusted machine that only occasionally contacts a trusted one. Uses one-way evolving keys, per-entry encryption, hash chaining and MACs, so entries written before compromise cannot be read or undetectably altered. States the limits plainly: post-compromise entries are unprotected, and deletion can only be detected, not prevented.'
+  relevance: Closest design ancestor of Mirsad's HMAC-SHA256 audit chain. Mirsad's code documents the same limits (truncation needs an external anchor). Key evolution is a possible future improvement.
+- key: schwaber2020scrum
+  ieee: 'K. Schwaber and J. Sutherland, "The 2020 Scrum Guide," Nov. 2020. Accessed: Oct. 11, 2026. [Online]. Available: https://scrumguides.org/scrum-guide.html'
+  url: https://scrumguides.org/scrum-guide.html
+  track: foundations
+  summary: Official definition of Scrum covering empiricism and lean thinking (transparency, inspection, adaptation), five values, a single self-managing team of typically 10 or fewer with three accountabilities, five events (Sprint of one month or less), and three artifacts with commitments (Product Goal, Sprint Goal, Definition of Done). Licensed CC BY-SA 4.0.
+  relevance: Process framework for the 5-student team. The Definition of Done should include passing the attack regression suite and audit-chain verification.
+- key: sdaia2023pdplregs
+  ieee: 'Saudi Data and Artificial Intelligence Authority (SDAIA), Implementing Regulation of the Personal Data Protection Law and Regulation on Personal Data Transfer outside the Kingdom, Riyadh, Saudi Arabia, Sep. 2023. Accessed: Oct. 11, 2026. [Online]. Available: https://dgp.sdaia.gov.sa/wps/portal/pdp/knowledgecenter'
+  url: https://dgp.sdaia.gov.sa/wps/portal/pdp/knowledgecenter
+  track: multilingual-arabic-security-and-standards
+  summary: Published 7 Sep 2023. Require notifying SDAIA within 72 hours of a qualifying breach, DPIAs, records of processing and 30-day responses to data-subject requests.
+  relevance: The 72-hour window drives Mirsad's alerting and verifiable logs.
+- key: sdaia2024genaigov
+  ieee: Saudi Data and Artificial Intelligence Authority (SDAIA), Generative Artificial Intelligence Guidelines for Government, Doc. SDAIA-P116E, ver. 1, Riyadh, Saudi Arabia, May 2025 (English edition; first released Jan. 2024).
+  url: https://sdaia.gov.sa/en/SDAIA/about/Files/GenAIGuidelinesForGovernmentENCompressed.pdf
+  track: multilingual-arabic-security-and-standards
+  summary: 'Government GenAI use rules: human review of all results, no use in critical decisions, only public-classified data, and compliance with the PDPL and NCA standards.'
+  relevance: Mirsad enforces human review and data-classification limits for agents.
+- key: sdaia2025aiethics
+  ieee: 'Saudi Data and Artificial Intelligence Authority (SDAIA), AI Ethics Principles, Doc. SDAIA-P114E, ver. 1, Riyadh, Saudi Arabia, May 2025 (English edition; the principles were adopted in Sep. 2023). Accessed: Oct. 11, 2026. [Online]. Available: https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf'
+  url: https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf
+  track: multilingual-arabic-security-and-standards
+  summary: ''
+  relevance: ''
+- key: sdaia2025genaigov
+  ieee: 'Saudi Data and Artificial Intelligence Authority (SDAIA), Generative Artificial Intelligence Guidelines for Government, Doc. SDAIA-P116E, ver. 1, Riyadh, Saudi Arabia, May 2025 (English edition; first released Jan. 2024). Accessed: Oct. 11, 2026. [Online]. Available: https://sdaia.gov.sa/en/SDAIA/about/Files/GenAIGuidelinesForGovernmentENCompressed.pdf'
+  url: https://sdaia.gov.sa/en/SDAIA/about/Files/GenAIGuidelinesForGovernmentENCompressed.pdf
+  track: multilingual-arabic-security-and-standards
+  summary: ''
+  relevance: ''
+- key: shi2025progent
+  ieee: 'T. Shi et al., "Progent: Securing AI agents with privilege control," arXiv:2504.11703, Apr. 2025 (v3, May 2026).'
+  url: https://arxiv.org/abs/2504.11703
+  track: defenses
+  summary: Least-privilege JSON-Schema allow/forbid policies over tool names and arguments, with default deny and per-rule fallbacks (terminate, ask the user, return a message). LLM-proposed policy updates are classified by Z3 as narrowing (applied automatically) or expansion (needs approval, possibly from a human). Runs as a library (LangChain, OpenAI Agents SDK) or as a proxy in front of LLM and MCP endpoints. AgentDojo ASR 39.9% to 1.0%, ASB 70.3% to 3.9%, and 0% on AgentDojo with manual approval.
+  relevance: The closest published design to Mirsad's policy engine. It has no taint tracking, which Mirsad adds.
+- key: shostack2014threat
+  ieee: 'A. Shostack, Threat Modeling: Designing for Security. Indianapolis, IN, USA: John Wiley & Sons, 2014, ISBN: 978-1-118-80999-0.'
+  url: https://www.wiley.com/en-us/Threat+Modeling%3A+Designing+for+Security-p-9781118809990
+  track: foundations
+  summary: 'Practical threat-modeling book built on four questions (2014 wording: what are you building, what can go wrong once it is built, what should you do about those things, did you do a decent job of analysis). Compares asset-, attacker- and software-centric approaches and covers DFDs with trust boundaries, STRIDE (including STRIDE-per-element), attack trees and the Elevation of Privilege card game.'
+  relevance: Structures Mirsad's threat-model chapter and the trust boundaries between user, LLM, gateway, MCP servers and web content. Its Table B-0 is the citable source for the STRIDE-to-property mapping.
+- key: snyk-agent-scan
+  ieee: 'Snyk, "agent-scan: Security scanner for AI agents, MCP servers and agent skills," GitHub repository. Accessed: Oct. 11, 2026. [Online]. Available: https://github.com/snyk/agent-scan'
+  url: https://github.com/snyk/agent-scan
+  track: competitive-analysis
+  summary: Discovers local agents, MCP servers and skills and checks them for prompt injection, tool poisoning, tool shadowing and toxic flows. Tool metadata is sent to Snyk's Agent Scan API. Apache-2.0.
+  relevance: Successor of MCP-scan; a pre-deployment scanner that complements a runtime firewall like Mirsad.
+- key: snyk-evo-ads-ga
+  ieee: 'D. Berman, "Evo ADS Govern Agent Behavior goes GA: Bringing MCP usage under control," Snyk Blog, Sep. 30, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://snyk.io/blog/evo-ads-govern-agent-behavior-ga/'
+  url: https://snyk.io/blog/evo-ads-govern-agent-behavior-ga/
+  track: competitive-analysis
+  summary: GA of server-level MCP allow-listing for coding agents, enforced by endpoint hooks, with logging or blocking of out-of-policy use. Acknowledges it cannot stop destructive actions inside an approved server.
+  relevance: Shows Snyk's current commercial scope is coarse, leaving room for per-parameter and taint controls.
+- key: snyk-evo-agent-guard
+  ieee: 'Snyk, "From code to agents: Proactively securing AI-native apps with Cursor and Snyk," Snyk Blog, Dec. 22, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://snyk.io/blog/evo-agent-guard-cursor-integration/'
+  url: https://snyk.io/blog/evo-agent-guard-cursor-integration/
+  track: competitive-analysis
+  summary: Describes Evo Agent Guard as a runtime sidecar that scans MCP tool calls and outputs, blocks or sanitizes injected outputs and maps toxic flows. Offered as a private beta with design partners.
+  relevance: Commercial runtime agent guard in preview; vendor claims, unverified.
+- key: snyk-invariant-press
+  ieee: 'Snyk, "Snyk acquires Invariant Labs to accelerate agentic AI security innovation," press release, Jun. 24, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://snyk.io/news/snyk-acquires-invariant-labs-to-accelerate-agentic-ai-security-innovation/'
+  url: https://snyk.io/news/snyk-acquires-invariant-labs-to-accelerate-agentic-ai-security-innovation/
+  track: competitive-analysis
+  summary: Snyk acquires Invariant Labs, maker of Guardrails ('a transparent security layer at the LLM and agent level') and MCP server scanning.
+  relevance: Confirms the Snyk ownership asked about in the task.
+- key: theocharopoulos2025multilingual
+  ieee: 'P. Theocharopoulos, A. Kulkarni, and M. Magimai.-Doss, "Multilingual hidden prompt injection attacks on LLM-based academic reviewing," arXiv:2512.23684, Dec. 2025. [Online]. Available: https://arxiv.org/abs/2512.23684'
+  url: https://arxiv.org/abs/2512.23684
+  track: multilingual-arabic-security-and-standards
+  summary: ''
+  relevance: ''
+- key: theocharopoulos2025multilingualpi
+  ieee: P. Theocharopoulos, A. Kulkarni, and M. Magimai.-Doss, "Multilingual hidden prompt injection attacks on LLM-based academic reviewing," arXiv:2512.23684, Dec. 2025.
+  url: https://arxiv.org/abs/2512.23684
+  track: multilingual-arabic-security-and-standards
+  summary: Hidden injections in about 500 ICML papers. English, Japanese and Chinese injections changed LLM reviews substantially; Arabic injections had little or no effect.
+  relevance: One of the few indirect-injection studies that includes Arabic. Arabic risk tracks how well the model follows Arabic instructions.
+- key: toyer2024tensortrust
+  ieee: 'S. Toyer, O. Watkins, E. Mendes, J. Svegliato, L. Bailey, T. Wang, I. Ong, K. Elmaaroufi, P. Abbeel, T. Darrell, A. Ritter, and S. Russell, "Tensor Trust: Interpretable prompt injection attacks from an online game," in Proc. 12th Int. Conf. Learn. Represent. (ICLR), 2024. [Online]. Available: https://proceedings.iclr.cc/paper_files/paper/2024/hash/519c51529c3544b3430bd8b17d400365-Abstract-Conference.html'
+  url: https://proceedings.iclr.cc/paper_files/paper/2024/hash/519c51529c3544b3430bd8b17d400365-Abstract-Conference.html
+  track: attacks-benchmarks
+  summary: An online game that collected over 563,000 human-written injection attacks and 118,000 defenses (ICLR version), described as the first dataset with both human-generated attacks and defenses. The authors build prompt-extraction and prompt-hijacking robustness benchmarks and find interpretable strategies, some of which transfer to deployed apps.
+  relevance: Labeled English injection data for training and testing Mirsad's detector. It has no Arabic counterpart, which is a gap Mirsad can address.
+- key: vassilev2025ai1002
+  ieee: 'A. Vassilev, A. Oprea, A. Fordyce, H. Anderson, X. Davies, and M. Hamin, "Adversarial machine learning: A taxonomy and terminology of attacks and mitigations," National Institute of Standards and Technology, Gaithersburg, MD, USA, NIST AI 100-2e2025, Mar. 2025, doi: 10.6028/NIST.AI.100-2e2025.'
+  url: https://csrc.nist.gov/pubs/ai/100/2/e2025/final
+  track: multilingual-arabic-security-and-standards
+  summary: AML taxonomy for predictive and generative AI. Section 3.4 covers indirect prompt injection and its mitigations; Section 3.5 covers agent security; translation into less common languages is listed as a jailbreak technique.
+  relevance: Authoritative terminology. Endorses designing as if injection will happen.
+- key: vassilev2025nistaml
+  ieee: 'A. Vassilev, A. Oprea, A. Fordyce, H. Anderson, X. Davies, and M. Hamin, "Adversarial machine learning: A taxonomy and terminology of attacks and mitigations," National Institute of Standards and Technology, Gaithersburg, MD, USA, NIST AI 100-2e2025, Mar. 2025, doi: 10.6028/NIST.AI.100-2e2025.'
+  url: https://csrc.nist.gov/pubs/ai/100/2/e2025/final
+  track: multilingual-arabic-security-and-standards
+  summary: ''
+  relevance: ''
+- key: w3c2023wcag22
+  ieee: 'A. Campbell, C. Adams, R. B. Montgomery, M. Cooper, and A. Kirkpatrick, Eds., "Web Content Accessibility Guidelines (WCAG) 2.2," W3C Recommendation, Oct. 5, 2023 (updated Dec. 12, 2024). Accessed: Oct. 11, 2026. [Online]. Available: https://www.w3.org/TR/WCAG22/'
+  url: https://www.w3.org/TR/WCAG22/
+  track: foundations
+  summary: Testable accessibility success criteria under four principles (perceivable, operable, understandable, robust) and three conformance levels. Adds 9 criteria over 2.1 (e.g., Target Size Minimum, Accessible Authentication, Focus Not Obscured) and removes 4.1.1 Parsing.
+  relevance: Mirsad's approval app should target Level AA, especially target size for approve/deny, accessible login, and correct lang/dir for Arabic/English.
+- key: w3c_appmanifest
+  ieee: 'M. Cáceres, D. Murphy, and C. Liebel, Eds., "Web Application Manifest," W3C Working Draft, Oct. 9, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://www.w3.org/TR/appmanifest/'
+  url: https://www.w3.org/TR/appmanifest/
+  track: foundations
+  summary: JSON manifest that centralizes web-app metadata (names, icons, start_url, display, scope, orientation, colours, shortcuts, lang/dir) so the app can be installed and presented like a native app. start_url is purely advisory.
+  relevance: Mirsad's approval page links a web manifest, letting approvers install it as a PWA without app stores. Its lang/dir members matter for the bilingual UI.
+- key: w3c_serviceworkers
+  ieee: 'M. Chintala and Y. Yanagisawa, Eds., "Service Workers Nightly," W3C Candidate Recommendation Draft, Sep. 17, 2026. Accessed: Oct. 11, 2026. [Online]. Available: https://www.w3.org/TR/service-workers/'
+  url: https://www.w3.org/TR/service-workers/
+  track: foundations
+  summary: Event-driven workers scoped to an origin and path that intercept fetches, serve from a programmable cache, receive push and other functional events, may be terminated when idle, and are restricted to secure contexts.
+  relevance: Enables push notifications for pending approvals. Approval and decision API responses must never be served from cache, consistent with Mirsad's worker-src 'self' and no-store headers.
+- key: wallace2024instruction
+  ieee: 'E. Wallace, K. Xiao, R. Leike, L. Weng, J. Heidecke, and A. Beutel, "The instruction hierarchy: Training LLMs to prioritize privileged instructions," arXiv:2404.13208, 2024. [Online]. Available: https://arxiv.org/abs/2404.13208'
+  url: https://arxiv.org/abs/2404.13208
+  track: attacks-benchmarks
+  summary: Argues that models often give system prompts the same priority as text from users and third parties. Proposes an instruction hierarchy and a synthetic-data training method that teaches GPT-3.5 to ignore conflicting lower-privilege instructions, improving robustness (including to unseen attacks) with minimal capability loss.
+  relevance: Model-side counterpart of Mirsad's taint labels. Mirsad enforces the same priority deterministically at the tool layer for any model.
+- key: wallace2024instructionhierarchy
+  ieee: 'E. Wallace, K. Xiao, R. Leike, L. Weng, J. Heidecke, and A. Beutel, "The instruction hierarchy: Training LLMs to prioritize privileged instructions," arXiv:2404.13208, Apr. 2024.'
+  url: https://arxiv.org/abs/2404.13208
+  track: defenses
+  summary: Argues that models treat system prompts and untrusted text with equal priority. Defines an instruction hierarchy and a data-generation method that teaches the model to ignore lower-privileged conflicting instructions. Applied to GPT-3.5, robustness rises sharply, even on unseen attack types, with minimal capability loss.
+  relevance: Conceptual basis for Mirsad's trust levels, which Mirsad enforces outside the model at the tool boundary.
+- key: wang2026agentspec
+  ieee: 'H. Wang, C. M. Poskitt, and J. Sun, "AgentSpec: Customizable runtime enforcement for safe and reliable LLM agents," in Proc. IEEE/ACM 48th Int. Conf. Software Engineering (ICSE ''26), Apr. 2026, pp. 2938-2950, doi: 10.1145/3744916.3764546.'
+  url: https://doi.org/10.1145/3744916.3764546
+  track: defenses
+  summary: A DSL whose rules combine a trigger (state_change, before_action, agent_finish), predicates, and enforcement (user_inspection, llm_self_examine, invoke_action, stop). The main implementation is on LangChain, and the design is described as framework-agnostic. The abstract reports preventing over 90% of unsafe code-agent executions with millisecond overhead, and o1-generated rules at 95.56% precision and 70.96% recall for embodied agents.
+  relevance: Shows that a trigger-predicate-enforce engine with human inspection is practical. Mirsad adds taint/data-flow awareness, MCP-level interception, and audit.
+- key: wang2026mcptox
+  ieee: 'Z. Wang, Y. Gao, Y. Wang, S. Liu, H. Sun, H. Cheng, G. Shi, H. Du, and X. Li, "MCPTox: A benchmark for tool poisoning on real-world MCP servers," in Proc. AAAI Conf. Artif. Intell., vol. 40, no. 42, 2026, pp. 35811-35819, doi: 10.1609/aaai.v40i42.40895.'
+  url: https://ojs.aaai.org/index.php/AAAI/article/view/40895
+  track: attacks-benchmarks
+  summary: Tool-poisoning benchmark on 45 live MCP servers and 353 tools, with 1,348 malicious cases in 10 risk categories. Harm is executed via legitimate tools. Across 20 agents, o1-mini reached 72.8% ASR, more capable models were often more vulnerable, and refusals stayed under 3%.
+  relevance: Benchmark for Mirsad's metadata scanning. Because harm flows through legitimate tools, per-parameter policy on those tools is essential.
+- key: willison2022prompt
+  ieee: 'S. Willison, "Prompt injection attacks against GPT-3," Simon Willison''s Weblog, Sep. 12, 2022. Accessed: Oct. 11, 2026. [Online]. Available: https://simonwillison.net/2022/Sep/12/prompt-injection/'
+  url: https://simonwillison.net/2022/Sep/12/prompt-injection/
+  track: attacks-benchmarks
+  summary: Blog post that named 'prompt injection' after Riley Goodside's GPT-3 demonstration. It frames the attack as the LLM analogue of SQL injection and shows prompt leaking. It floats a parameterized-query-style fix with separate instruction and data channels but says it is unclear whether this is feasible; an April 2023 update calls it extremely difficult, if not impossible.
+  relevance: 'Founding assumption for Mirsad: the model cannot separate data from instructions, so enforcement must happen outside the model at the tool boundary.'
+- key: willison2024pivsjailbreak
+  ieee: 'S. Willison, "Prompt injection and jailbreaking are not the same thing," Simon Willison''s Weblog, Mar. 5, 2024. [Online]. Available: https://simonwillison.net/2024/Mar/5/prompt-injection-jailbreaking/'
+  url: https://simonwillison.net/2024/Mar/5/prompt-injection-jailbreaking/
+  track: attacks-benchmarks
+  summary: Distinguishes prompt injection (an attack on applications that concatenate untrusted input with trusted prompts) from jailbreaking (an attack on model safety filters). Argues that injection harm scales with the data and tools an app can reach, and warns against relying on jailbreak-trained filters to stop injection.
+  relevance: Sets Mirsad's scope as an injection firewall, not content moderation, and tells the team to train the detector on injection data rather than jailbreak data.
+- key: willison2025trifecta
+  ieee: 'S. Willison, "The lethal trifecta for AI agents: private data, untrusted content, and external communication," Simon Willison''s Weblog, Jun. 16, 2025. Accessed: Oct. 11, 2026. [Online]. Available: https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/'
+  url: https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/
+  track: attacks-benchmarks
+  summary: Argues that agents combining private-data access, exposure to untrusted content and external communication can be made to exfiltrate data. Notes that MCP encourages mixing tools so users can assemble this combination, and that '95%' guardrail detection is a failing grade. Points developers to design patterns that constrain agents after untrusted input, and tells end users to avoid the combination entirely.
+  relevance: Mirsad's taint tracking puts this into practice by gating external-communication sinks once untrusted content has entered context.
+- key: wu2024fsecure
+  ieee: 'F. Wu, E. Cecchetti, and C. Xiao, "System-level defense against indirect prompt injection attacks: An information flow control perspective," arXiv:2409.19091, Sep. 2024.'
+  url: https://arxiv.org/abs/2409.19091
+  track: defenses
+  summary: 'Proposes the ''f-secure'' LLM system: an LLM planner producing structured executable plans, a rule-based executor, and a security monitor that filters untrusted input out of planning, with formal models of the security guarantees and case-study and benchmark evaluation.'
+  relevance: Gives Mirsad the IFC vocabulary (sources, sinks, integrity) and the rule that untrusted data must not choose consequential actions.
+- key: wu2025isolategpt
+  ieee: 'Y. Wu, F. Roesner, T. Kohno, N. Zhang, and U. Iqbal, "IsolateGPT: An execution isolation architecture for LLM-based agentic systems," in Proc. Network and Distributed System Security Symp. (NDSS), 2025, doi: 10.14722/ndss.2025.241131.'
+  url: https://www.ndss-symposium.org/ndss-paper/isolategpt-an-execution-isolation-architecture-for-llm-based-agentic-systems/
+  track: defenses
+  summary: Hub-and-spoke isolation for LLM app ecosystems. The hub has a non-LLM operator, a planner, and memory. Each app runs in its own spoke with its own LLM and memory. Inter-app communication is mediated by the hub with user permission (permanent, session, or one-time), and irreversible actions need explicit consent. Across 1,598 attacks (20.2% success on the baseline), permission dialogs appeared in 7.6% of cases, all with warnings. Overhead is under 30% for 75.73% of queries.
+  relevance: A model for Mirsad's approval screen (permission scope plus risk warning). Its out-of-scope intra-app injection is where Mirsad's taint rules help.
+- key: xiang2026architecting
+  ieee: 'C. Xiang et al., "Architecting secure AI agents: Perspectives on system-level defenses against indirect prompt injection attacks," arXiv:2603.30016, Mar. 2026.'
+  url: https://arxiv.org/abs/2603.30016
+  track: defenses
+  summary: 'Position paper arguing that system-level defenses are the ''skeleton'' of agentic systems. Three positions: dynamic replanning and policy updates are often needed; learned models should make context-dependent security decisions only within designs that strictly constrain them; and personalization and human interaction are core for ambiguous cases. Also warns that benchmarks can create a false sense of utility and security.'
+  relevance: 'A recent citation supporting Mirsad''s hybrid architecture: rules as the boundary, the detector as a signal, and human approval.'
+- key: yang2024qwen25
+  ieee: A. Yang et al. (Qwen Team), "Qwen2.5 technical report," arXiv:2412.15115, Dec. 2024.
+  url: https://arxiv.org/abs/2412.15115
+  track: multilingual-arabic-security-and-standards
+  summary: Open-weight LLM family trained on 18T tokens. Reports Arabic AMMLU scores (72.44 for the 72B-Instruct model) and extends MGSM to Arabic.
+  relevance: Candidate detector backbone and agent under test.
+- key: yao2023react
+  ieee: 'S. Yao, J. Zhao, D. Yu, N. Du, I. Shafran, K. Narasimhan, and Y. Cao, "ReAct: Synergizing reasoning and acting in language models," in Proc. 11th Int. Conf. Learn. Represent. (ICLR), Kigali, Rwanda, 2023.'
+  url: https://arxiv.org/abs/2210.03629
+  track: foundations
+  summary: Interleaves reasoning traces with tool actions and observations. Overcomes hallucination and error propagation on HotpotQA and FEVER via a Wikipedia API, and beats imitation and RL baselines on ALFWorld and WebShop by 34 and 10 absolute points of success rate with 1-2 in-context examples.
+  relevance: Defines the reason-act-observe loop Mirsad mediates. Every act is a policy check and every observation is a possible taint source.
+- key: yi2025bipia
+  ieee: 'J. Yi, Y. Xie, B. Zhu, E. Kiciman, G. Sun, X. Xie, and F. Wu, "Benchmarking and defending against indirect prompt injection attacks on large language models," in Proc. 31st ACM SIGKDD Conf. Knowl. Discov. Data Min. V.1 (KDD ''25), Toronto, ON, Canada, 2025, pp. 1809-1820, doi: 10.1145/3690624.3709179.'
+  url: https://doi.org/10.1145/3690624.3709179
+  track: attacks-benchmarks
+  summary: BIPIA is presented as the first indirect-prompt-injection benchmark, covering email QA, web QA, table QA, summarization and code QA with text and code attacks. All 25 LLMs tested were vulnerable. Proposes black-box boundary-awareness/explicit-reminder defenses (border strings, in-context learning, multi-turn dialogue, datamarking) and a white-box special-token adversarial fine-tuning defense that reaches near-zero ASR.
+  relevance: Mirsad can apply boundary marking and provenance tags to untrusted tool outputs (it cannot use the white-box defense). BIPIA's email and web content can serve as detector test material.
+- key: yong2023lowresource
+  ieee: 'Z.-X. Yong, C. Menghini, and S. H. Bach, "Low-resource languages jailbreak GPT-4," presented at the NeurIPS 2023 Workshop on Socially Responsible Language Modelling Research (SoLaR), 2023, arXiv:2310.02446. [Online]. Available: https://arxiv.org/abs/2310.02446'
+  url: https://arxiv.org/abs/2310.02446
+  track: multilingual-arabic-security-and-standards
+  summary: Translating AdvBench harmful prompts into low-resource languages bypassed GPT-4 safety about 79% of the time. MSA Arabic, placed in the high-resource group, had only a 3.65% bypass rate.
+  relevance: Shows that model-level refusals cannot be relied on when the language changes. Motivates a language-aware detector in front of tools.
+- key: zaghouani2026arabicdialectsafety
+  ieee: 'W. Zaghouani, M. R. Biswas, K. K. Aldous, and M. Bessghaier, "ArabicDialectSafety: A dialect-aware benchmark for Arabic content safety classification," in Findings Assoc. Comput. Linguistics: EMNLP 2026, to appear; arXiv:2608.01291, 2026. [Online]. Available: https://arxiv.org/abs/2608.01291'
+  url: https://arxiv.org/abs/2608.01291
+  track: multilingual-arabic-security-and-standards
+  summary: 25,071 prompts in MSA plus 5 dialects with 7 harm categories. Fine-tuned MARBERTv2 reached macro-F1 0.95 (binary) and 0.90 (granular), beating prompted frontier LLMs.
+  relevance: Evidence that a compact fine-tuned Arabic encoder suits Mirsad's detector.
+- key: zaghouani2026dialectaware
+  ieee: 'W. Zaghouani, "Toward dialect-aware safety evaluation for Arabic large language models," in Proc. 6th Workshop Trustworthy NLP (TrustNLP), San Diego, CA, USA, Jul. 2026, pp. 503–514, doi: 10.18653/v1/2026.trustnlp-main.37.'
+  url: https://aclanthology.org/2026.trustnlp-main.37/
+  track: multilingual-arabic-security-and-standards
+  summary: Defines the Dialect Safety Gap, the DSG score, the Pairwise Dialect Inconsistency measure and the DASEP protocol. A probe found safety degrades with distance from MSA.
+  relevance: Metrics for measuring detector fairness across dialects.
+- key: zhan2024injecagent
+  ieee: 'Q. Zhan, Z. Liang, Z. Ying, and D. Kang, "InjecAgent: Benchmarking indirect prompt injections in tool-integrated large language model agents," in Findings Assoc. Comput. Linguist.: ACL 2024, Bangkok, Thailand, Aug. 2024, pp. 10471-10506, doi: 10.18653/v1/2024.findings-acl.624.'
+  url: https://aclanthology.org/2024.findings-acl.624/
+  track: attacks-benchmarks
+  summary: 1,054 test cases (17 user tools, 62 attacker tools) with pre-constructed tool responses. Attacks are either direct harm or two-step data stealing (extract, then transmit). Across 30 agents, ReAct GPT-4 was compromised 24% of the time, and an enhanced setting that prepends a fixed 'hacking prompt' raised this to 47%.
+  relevance: The data-stealing pattern is exactly the source-to-sink flow Mirsad's taint tracking blocks. Direct-harm cases map to per-tool/per-parameter policy.
+- key: zhan2025adaptive
+  ieee: 'Q. Zhan, R. Fang, H. S. Panchal, and D. Kang, "Adaptive attacks break defenses against indirect prompt injection attacks on LLM agents," in Findings Assoc. Comput. Linguistics: NAACL 2025, Albuquerque, NM, USA, Apr. 2025, pp. 7116-7132, doi: 10.18653/v1/2025.findings-naacl.395.'
+  url: https://aclanthology.org/2025.findings-naacl.395/
+  track: defenses
+  summary: Adaptive GCG variants (including multi-objective and two-stage) and AutoDAN bypass all 8 tested IPI defenses with over 50% ASR. The defenses are a fine-tuned detector, an LLM detector, a perplexity filter, instructional prevention, data prompt isolation, sandwich prevention, paraphrasing, and adversarial fine-tuning. Tested on InjecAgent with a prompted Vicuna-7B agent and a fine-tuned Llama3-8B agent. White-box, first-action only.
+  relevance: Shows Mirsad's detector will be bypassed, so policy and taint must hold on their own. Mirsad should run an adaptive attack on its detector.
+- key: zhang2025asb
+  ieee: 'H. Zhang, J. Huang, K. Mei, Y. Yao, Z. Wang, C. Zhan, H. Wang, and Y. Zhang, "Agent Security Bench (ASB): Formalizing and benchmarking attacks and defenses in LLM-based agents," in Proc. 13th Int. Conf. Learn. Represent. (ICLR), 2025, arXiv:2410.02644.'
+  url: https://arxiv.org/abs/2410.02644
+  track: attacks-benchmarks
+  summary: Benchmark with 10 scenarios, 10 agents, 400+ tools, 10 prompt-injection attacks, memory poisoning, a Plan-of-Thought backdoor, 4 mixed attacks and 11 defenses on 13 LLMs. The highest average ASR is 84.30%, and defenses have limited effectiveness. Introduces the Net Resilient Performance (NRP) utility-security metric.
+  relevance: Shows attacks at multiple agent stages. Memory-write tools should be both taint sinks and taint sources in Mirsad.
+- key: zhang2026msb
+  ieee: 'D. Zhang, Z. Li, X. Luo, X. Liu, P. Li, and W. Xu, "MCP Security Bench (MSB): Benchmarking attacks against Model Context Protocol in LLM agents," in Proc. 14th Int. Conf. Learn. Represent. (ICLR), 2026, arXiv:2510.15994.'
+  url: https://arxiv.org/abs/2510.15994
+  track: attacks-benchmarks
+  summary: End-to-end MCP attack benchmark with 12 attack types across planning, invocation and response handling (name collision, preference manipulation, description injection, out-of-scope parameters, user impersonation, false-error escalation, tool transfer, retrieval injection, mixed). Runs real tools over MCP with 9 agents, 10 domains, 405 tools and 2,000 instances. Reports an under-attack variant of ASB's Net Resilient Performance (NRP) metric.
+  relevance: MCP-native evaluation for Mirsad alongside AgentDojo. NRP can serve as a headline metric, and name collisions motivate server-qualified tool identities in policy.
+- key: zhu2025melon
+  ieee: 'K. Zhu, X. Yang, J. Wang, W. Guo, and W. Y. Wang, "MELON: Provable defense against indirect prompt injection attacks in AI agents," in Proc. 42nd Int. Conf. Machine Learning (ICML), PMLR, vol. 267, 2025, pp. 80310-80329.'
+  url: https://proceedings.mlr.press/v267/zhu25z.html
+  track: defenses
+  summary: 'Masked re-execution and tool comparison: it re-runs the trajectory with the user prompt masked and flags an attack when the original and masked runs produce similar actions. Three design elements reduce false positives and false negatives. Outperforms prior defenses on AgentDojo in both prevention and utility, and MELON-Aug improves further. Language-agnostic by design but not evaluated multilingually.'
+  relevance: Possible language-independent second opinion before escalation. Nasr et al. reach 76% ASR (Llama-3.3-70B, no defense knowledge) and 95% with full knowledge, so it cannot be the gate.
+- key: zou2025art
+  ieee: 'A. Zou et al., "Security challenges in AI agent deployment: Insights from a large scale public competition," in Adv. Neural Inf. Process. Syst. 38 (NeurIPS 2025), Datasets and Benchmarks Track, 2025, pp. 88855-88891, doi: 10.52202/085713-2676.'
+  url: https://papers.neurips.cc/paper_files/paper/2025/hash/73368bc7644c054b5bcc6490a8f2fb1c-Abstract-Datasets_and_Benchmarks_Track.html
+  track: attacks-benchmarks
+  summary: Public red-teaming competition against agents powered by 22 frontier LLMs in 44 scenarios. Of 1.8M injection attempts, more than 60k caused policy violations. It produced the ART benchmark, evaluated on 19 models in the arXiv version. Nearly all agents violated policy within 10-100 queries, attacks transferred across models, and robustness correlated weakly with size, capability or compute.
+  relevance: The violated deployment policies are what Mirsad encodes declaratively. Fast attacker success motivates audit-log monitoring of repeated attempts.
+- key: hevner2004design
+  ieee: 'A. R. Hevner, S. T. March, J. Park, and S. Ram, "Design science in information systems research," MIS Quarterly, vol. 28, no. 1, pp. 75–105, Mar. 2004, doi: 10.2307/25148625.'
+  url: https://doi.org/10.2307/25148625
+  track: foundations
+  summary: Guidelines for design-science research in information systems, in which an IT artefact is built to address an organisational problem and then evaluated rigorously.
+  relevance: Methodological basis of the project approach in Section 3.1.
+- key: acm2018code
+  ieee: 'Association for Computing Machinery, ACM Code of Ethics and Professional Conduct. New York, NY, USA: ACM, Jun. 2018.'
+  url: https://www.acm.org/code-of-ethics
+  track: foundations
+  summary: Professional code of the ACM, adopted in 2018, covering general ethical principles, professional responsibilities and leadership principles.
+  relevance: Professional code cited in Section 3.6.5.

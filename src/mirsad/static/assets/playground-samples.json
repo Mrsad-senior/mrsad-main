@@ -1,0 +1,13 @@
+{
+  "_readme": [
+    "Optional extra sample buttons for the Detector Playground (dashboard > Detector playground).",
+    "This file is intentionally empty in the repository: the project team fills it with its own labelled",
+    "evaluation texts (for example selected rows from the held-out detector test splits).",
+    "Each entry: {\"id\": \"short-id\", \"label_en\": \"Button label\", \"label_ar\": \"تسمية الزر\", \"lang\": \"en|ar|mixed\", \"text\": \"...\"}.",
+    "At most 24 entries are shown; labels are cut to 60 characters and texts to 100000 characters.",
+    "Source copy: web/public/assets/playground-samples.json (copied into the build).",
+    "Deployed copy: src/mirsad/static/assets/playground-samples.json (served at /assets/playground-samples.json, no rebuild needed).",
+    "See docs/web-ui.md, section 'Detector playground'."
+  ],
+  "samples": []
+}

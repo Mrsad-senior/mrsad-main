@@ -1,0 +1,32 @@
+template: docs/report/assets/IS499_template.docx
+output: deliverables/D4_Design_Document.docx
+bibliography: docs/report/references.yaml
+running_header: "Mirsad – D4 Design"
+cover:
+  logo: docs/report/assets/psu_logo.png
+  university: Prince Sultan University
+  college: College of Computer & Information Sciences
+  department: Information Systems Department
+  course: "IS499 – Senior Project"
+  doc_type: "D4 – High-Level and Low-Level Design"
+  title: "Mirsad (مرصاد)"
+  subtitle: "A Runtime Security Firewall for AI Agents Against Prompt-Injection Attacks"
+  team:
+    - {name: Mohammed Yasser Alanssari, id: 221110935, dept: "IS (CYS)"}
+    - {name: Bader Alshuraie, id: 221110016, dept: SE}
+    - {name: Bader Abdullah Abbod Alyamini, id: 221110197, dept: "IS (CYS)"}
+    - {name: Abdulmalik bin Saedan, id: 221110958, dept: "IS (CYS)"}
+    - {name: Abdullah Naif Abdullah Al-Orabi, id: 222110432, dept: "SE (AI & DS)"}
+  info:
+    - [Supervisor, Dr. Omaia Al-Omari]
+    - [Semester & Academic Year, "Senior Project I & II – Academic Year 2026–2027"]
+    - [Submission Date, "____________________"]
+    - ["Supervisor’s Signature", "____________________"]
+    - [Approval Date, "____________________"]
+front:
+  - {list: toc}
+  - {list: figures}
+  - {list: tables}
+body:
+  - content/d4_design.md
+  - content/references.md

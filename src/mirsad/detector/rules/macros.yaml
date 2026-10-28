@@ -1,0 +1,28 @@
+# Reusable regex fragments for the detector rules. Use them in patterns as {{NAME}}.
+# Patterns run on *normalised* text: lower case, Arabic folded (أإآ->ا, ى->ي, ة->ه, no tashkeel/tatweel),
+# ASCII digits, single spaces (newlines kept). Arabic written here is folded automatically at load time.
+macros:
+  # ------------------------------------------------------------------ English
+  IGNORE: '(?:ignore|ignoring|disregard|disregarding|forget|forgetting|skip|discard|override|overrule|bypass|neglect|abandon|set\s+aside|throw\s+out|scrap|dismiss)'
+  DET: '(?:(?:all|any|every|each|the|your|these|those|of|such|its|their|other)\s+)*'
+  PREV_EN: '(?:previous|previously\s+given|prior|preceding|above|earlier|former|original|initial|old|existing|current|system|developer|default|foregoing|aforementioned)'
+  INSTR_EN: '(?:instructions?|prompts?|directives?|rules|guidelines|commands|context|orders|guidance|constraints|programming|policies|restrictions|directions|system\s+prompt|system\s+message|training)'
+  AI: '(?:ai|a\.i\.|assistant|ai\s+assistant|ai\s+agent|ai\s+model|llm|large\s+language\s+model|language\s+model|chatbot|bot|copilot|gpt|gpt-?\d\w*|chatgpt|claude|gemini|model|automated\s+(?:system|agent|assistant)|virtual\s+assistant|email\s+assistant|agent)'
+  AI_STRICT: '(?:ai|a\.i\.|ai\s+(?:assistant|agent|model|system|bot)|llm|large\s+language\s+model|language\s+model|chatbot|gpt|gpt-?\d\w*|chatgpt|copilot|claude|gemini|virtual\s+assistant|digital\s+assistant|automated\s+(?:assistant|agent|system)|email\s+assistant|assistant\s+bot)'
+  EMAIL: '[\w.+-]+@[\w-]+(?:\.[\w-]+)+'
+  SEND_EN: '(?:send|forward|email|e-mail|mail|cc|bcc|transfer|wire|upload|post|export|share|transmit|leak|exfiltrate|deliver|copy|sync|relay|dispatch)'
+  ACTION_EN: '(?:send|forward|email|e-mail|transfer|wire|delete|remove|erase|wipe|export|upload|post|share|leak|copy|reveal|disclose|grant|change|reset|update|create|execute|run|call|invoke|fetch|visit|open|navigate|download|pay|reply|respond|include|append|add)'
+  SENSITIVE_EN: '(?:contacts?|customers?|clients?|customer\s+(?:data|records|list|details)|records|credentials?|passwords?|api\s+keys?|keys|tokens?|database|crm|conversations?|chat\s+history|history|inbox|mailbox|accounts?|address\s+book|payroll|salar(?:y|ies)|personal\s+data|user\s+data|card\s+numbers?|ibans?|bank\s+details)'
+  SECRETS_EN: '(?:passwords?|credentials?|api[\s_-]?keys?|secret(?:s|\s+keys?)?|access\s+tokens?|tokens|private\s+keys?|ssh\s+keys?|session\s+cookies?|cookies|otp|one[- ]time\s+(?:password|code)s?|2fa\s+codes?|verification\s+codes?|credit\s+card(?:\s+numbers?)?|card\s+numbers?|cvv|ibans?|bank\s+(?:details|account(?:\s+numbers?)?))'
+  # ------------------------------------------------------------------ Arabic (MSA + Gulf); folded at load time
+  # optional conjunction + preposition + article: و/ف + ب/ل/ك + ال (or the elided لل)
+  AP: '(?:[وف]?[بلك]?(?:ال|ل)?)'
+  AR_INSTR: '{{AP}}(?:تعليمات|اوامر|توجيهات|ارشادات|قواعد|قيود|اعدادات|برمجه|ضوابط|سياسات|التوجيهات)(?:ك|كم|ه|ها|هم|ي|نا)?'
+  AR_PREV: '(?:(?:ال)?(?:سابقه|ماضيه|قديمه|اصليه|اوليه|سالفه|سابق|اصلي|مذكوره\s+اعلاه)|اعلاه|فوق|المعطاه\s+لك|التي\s+(?:تلقيتها|اعطيت\s+لك|اعطيتها|قبل|سبقت)|اللي\s+(?:قبل|فوق|فاتت|فات|عطوك|عطيتك|قلته|قالوا\s+لك|قالوها\s+لك|قلت\s+لك|جاتك)|الي\s+(?:قبل|فوق|فات|فاتت))'
+  AR_IGNORE: '(?:تجاهل|تجاهلي|تجاهلوا|تتجاهل|اهمل|اهملي|اهملوا|انس|انسى|انسي|انسوا|اترك|اتركي|اتركوا|الغ|الغي|الغوا|اسقط|تخل\s+عن|تخلي\s+عن|تناس|تناسي|لا\s+تلتزم|لا\s+تتبع|لا\s+تطبق|توقف\s+عن\s+اتباع|تخط|تخطي|تجاوز)'
+  AR_DIALECT_IGNORE: '(?:طنش|طنشي|طنشوا|عطه\s+طاف|عطها\s+طاف|عطهم\s+طاف|خل\s+عنك|خلك\s+من|خلي\s+عنك|خلك\s+عن|خلنا\s+من|فكك\s+من|فكك\s+عن|سيبك\s+من|كبر\s+(?:راسك|مخك)\s+عن|لا\s+تعطي\s+بال\s+ل|لا\s+تسوي\s+سالفه\s+ل|مو\s+لازم\s+تتبع|لا\s+تمشي\s+علي|انسى\s+سالفه)'
+  AR_SEND: '(?:ارسل|ارسلي|ارسلوا|ابعث|ابعثي|ابعت|ابعتي|حول|حولي|اعد\s+توجيه|وجه|دز|دزي|طرش|طرشي|صدر|صدري|انقل|انقلي|شارك|شاركي|سرب|سربي|انسخ|ارفع)'
+  AR_AI: '(?:(?:ال)?مساعد\s+(?:ال)?(?:ذكي|آلي|افتراضي|رقمي)|(?:ال)?ذكاء\s+(?:ال)?اصطناعي|(?:ال)?نموذج\s+(?:ال)?(?:لغوي|ذكاء)|(?:ال)?وكيل\s+(?:ال)?(?:ذكي|آلي)|(?:ال)?(?:بوت|روبوت|شات\s*بوت)|شات\s*جي\s*بي\s*تي|chatgpt|gpt)'
+  AR_USER: '{{AP}}(?:مستخدم|انسان|بشر|صاحب\s+الحساب|مالك\s+الحساب)'
+  AR_SENSITIVE: '{{AP}}(?:عملاء|بيانات\s+(?:ال)?عملاء|جهات\s+(?:ال)?اتصال|كلمات\s+(?:ال)?مرور|كلمه\s+(?:ال)?مرور|محادثات|قاعده\s+(?:ال)?بيانات|قواعد\s+(?:ال)?بيانات|حسابات|سجلات|سجل\s+(?:ال)?محادثه|رواتب|بطاقات)'
+  AR_SECRETS: '{{AP}}(?:كلمه\s+(?:ال)?مرور|كلمات\s+(?:ال)?مرور|كلمه\s+(?:ال)?سر|(?:ال)?رقم\s+(?:ال)?سري|(?:ال)?رمز\s+(?:ال)?سري|رمز\s+(?:ال)?تحقق|بيانات\s+(?:ال)?دخول|مفتاح|مفاتيح|توكن|بيانات\s+(?:ال)?بطاقه|رقم\s+(?:ال)?بطاقه|ايبان|الايبان)'

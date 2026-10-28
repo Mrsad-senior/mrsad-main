@@ -1,0 +1,16 @@
+flowchart LR
+  AG[/"AI agent"/] -- "tool call" --> P1(("1.0<br/>Authenticate<br/>& adapt"))
+  P1 -- "ToolCall" --> P2(("2.0<br/>Evaluate<br/>policy"))
+  D1[("D1 Policies")] -- "active version" --> P2
+  P2 -- "profile · sink · reasons" --> P3(("3.0<br/>Check<br/>taint"))
+  D4[("D4 Session taint state")] -- "labels · values" --> P3
+  P3 -- "decision" --> P4(("4.0<br/>Human<br/>approval"))
+  P4 <-- "request / decision" --> AP[/"Approver"/]
+  D3[("D3 Approvals")] <--> P4
+  P4 -- "allowed call" --> TL[/"Upstream tools"/]
+  TL -- "raw result" --> P5(("5.0<br/>Inspect<br/>result"))
+  P5 -- "labels · values" --> D4
+  P5 -- "sanitised result" --> AG
+  P2 & P3 & P4 & P5 -- "events" --> P6(("6.0<br/>Audit<br/>(hash chain)"))
+  P6 --> D2[("D2 Audit events")]
+  D2 -- "search · replay · export" --> AD[/"Administrator / Auditor"/]

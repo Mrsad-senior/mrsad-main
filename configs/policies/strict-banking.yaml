@@ -1,0 +1,139 @@
+# Strict sample policy: customer-support agent of a fictional bank ("Najd Bank", najd-bank.example).
+#
+# Design principles (see docs/policy-language.md, "Worked scenarios"):
+#   * least privilege: only the listed tools exist for the agent, everything else is denied;
+#   * every call whose data leaves the bank (external sink) needs a human approver (rule below);
+#   * money movement is capped, rate-limited, always approved, and never possible after the
+#     session has read customer-supplied (untrusted) text;
+#   * confidential data may never flow to an external sink, and the detector blocks instead of sanitising.
+version: 1
+mode: enforce
+organization:
+  name: Najd Bank (fictional)
+  internal_domains: [najd-bank.example]
+defaults:
+  decision: deny
+  approval_timeout_s: 90
+detector:
+  flag_threshold: 0.4
+  block_threshold: 0.7
+  on_detect: block
+  spotlight: true
+taint:
+  enabled: true
+  destination_params: [to, cc, bcc, recipient, url, to_iban, webhook, phone]
+  trusted_fields: [id, ticket_id, customer_id, account_id, created_at, channel]
+  untrusted_to_external_sink: require_approval
+  confidential_to_external_sink: deny
+  untrusted_controls_destination: deny
+  after_injection_high_risk: deny
+agents:
+  - id: bank-support-assistant
+    name: Customer Support Assistant
+    description: Answers customer tickets, looks up accounts and prepares payments for human approval.
+    tools:
+      list_tickets:
+        allow: true
+        trust: untrusted
+        scan: true
+        constraints:
+          limit: {type: integer, min: 1, max: 25}
+      read_ticket:
+        allow: true
+        trust: untrusted
+        sensitivity: confidential
+        scan: true
+        detector: {flag_threshold: 0.3, block_threshold: 0.6}   # tickets are the main injection vector
+        constraints:
+          ticket_id: {required: true, pattern: "^TCK-[0-9]{6}$"}
+      get_account_summary:
+        allow: true
+        sensitivity: confidential
+        constraints:
+          account_id: {required: true, pattern: "^ACC-[0-9]{8}$"}
+        rate_limit: {max_calls: 30, per_seconds: 3600, scope: session}
+      list_transactions:
+        allow: true
+        sensitivity: confidential
+        constraints:
+          account_id: {required: true, pattern: "^ACC-[0-9]{8}$"}
+          days: {type: integer, min: 1, max: 90}
+        rate_limit: {max_calls: 20, per_seconds: 3600, scope: session}
+      reply_to_ticket:                # secure in-app message: the data stays inside the bank
+        allow: true
+        sink: internal
+        constraints:
+          ticket_id: {required: true, pattern: "^TCK-[0-9]{6}$"}
+          body: {required: true, max_length: 4000}
+      send_email:
+        allow: true
+        sink: dynamic
+        sink_params: [to, cc, bcc]
+        risk: medium
+        constraints:
+          to:      {required: true, max_items: 1}
+          cc:      {max_items: 0}
+          bcc:     {max_items: 0}
+          subject: {max_length: 200}
+          body:    {required: true, max_length: 4000, not_pattern: "(?i)(https?://|www\\.)",
+                    on_violation: require_approval}
+        rate_limit: {max_calls: 10, per_seconds: 3600}
+      freeze_card:
+        allow: true
+        risk: high
+        approval: on_risk
+        constraints:
+          card_last4: {required: true, pattern: "^[0-9]{4}$"}
+          reason:     {required: true, enum: [lost, stolen, suspected_fraud, customer_request]}
+      pay_bill:
+        allow: true
+        risk: high
+        approval: always
+        sink: external
+        constraints:
+          biller_id:  {required: true, pattern: "^BLR-[0-9]{4}$"}
+          amount_sar: {required: true, type: number, min: 1, max: 5000}
+        rate_limit: {max_calls: 5, per_seconds: 86400}
+      transfer_funds:
+        allow: true
+        risk: critical
+        approval: always
+        sink: external
+        constraints:
+          to_iban:    {required: true, pattern: "^SA[0-9]{22}$"}
+          amount_sar: {required: true, type: number, min: 1, max: 5000}
+          memo:       {max_length: 140, not_pattern: "(?i)(https?://|www\\.)"}
+        rate_limit: {max_calls: 3, per_seconds: 86400}
+      fetch_url:                      # only the bank's own help centre
+        allow: true
+        trust: untrusted
+        scan: true
+        sink: external
+        constraints:
+          url: {required: true, pattern: "^https://", domain_in: [help.najd-bank.example]}
+      "admin_*":   {allow: false}
+      "*":         {allow: false}
+rules:
+  - id: external-sinks-need-approval
+    description: Every call that sends data outside the bank needs a human approver.
+    when: {sink: external}
+    action: require_approval
+    message: This call sends data outside Najd Bank, so a human must approve it.
+    message_ar: هذا الاستدعاء يرسل بيانات إلى خارج بنك نجد، لذا يجب أن يوافق عليه موظف مختص.
+  - id: no-transfer-after-untrusted-input
+    description: Transfers are never executed in a session that has read customer-supplied content.
+    when: {tool: transfer_funds, session_tainted: true}
+    action: deny
+    message: Transfers cannot be made after the assistant has read customer-supplied content; use the banking app.
+    message_ar: لا يمكن تنفيذ التحويل بعد أن قرأ المساعد محتوى أرسله العميل؛ يُرجى استخدام تطبيق البنك.
+  - id: no-card-numbers-in-outbound-text
+    description: Outbound messages must never contain a full card number.
+    when:
+      tool: [send_email, reply_to_ticket]
+      arg_matches: {body: "(?<![0-9])(?:[0-9][ -]?){13,19}(?![0-9])"}
+    action: deny
+    risk_score: 0.8
+  - id: high-risk-after-untrusted-input
+    description: High and critical tools need approval once the session has read untrusted content.
+    when: {min_risk: high, session_tainted: true}
+    action: require_approval

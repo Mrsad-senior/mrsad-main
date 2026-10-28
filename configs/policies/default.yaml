@@ -1,0 +1,77 @@
+# Mirsad default policy for the Najd Trading Co. demo workspace (spec section 2.1).
+# Reference: docs/policy-language.md. Validate with: mirsad policy validate configs/policies/default.yaml
+version: 1
+organization:
+  name: Najd Trading Co.
+  internal_domains: [najd-trading.example]
+defaults:
+  decision: deny            # tools not matched by any agent tool entry
+  approval_timeout_s: 120
+detector:                   # global defaults; tools/agents may override `detector:` keys
+  flag_threshold: 0.5       # score >= flag  -> label suspicious, action "flag"
+  block_threshold: 0.8      # score >= block -> on_detect action
+  on_detect: sanitize       # sanitize | block | flag
+  spotlight: true           # wrap untrusted content with data-markers before returning it
+taint:
+  enabled: true
+  destination_params: [to, cc, bcc, recipient, url, to_iban, webhook]
+  trusted_fields: [from, sender, id, email_id, date, received_at, customer_id, doc_id]
+  untrusted_to_external_sink: require_approval   # session ingested untrusted content, call hits external sink
+  confidential_to_external_sink: require_approval # arguments carry values from confidential results to external sink
+  untrusted_controls_destination: deny           # a destination arg value came from untrusted (non-trusted-field) content
+  after_injection_high_risk: require_approval    # injection detected earlier in session -> any high/critical risk tool
+agents:
+  - id: email-crm-assistant
+    name: Email & CRM Assistant
+    description: Reads mail, looks up customers, drafts replies.
+    tools:
+      list_emails:      {allow: true, trust: untrusted, sensitivity: internal, scan: true}
+      read_email:       {allow: true, trust: untrusted, sensitivity: internal, scan: true}
+      send_email:
+        allow: true
+        sink: dynamic
+        sink_params: [to, cc, bcc]
+        risk: medium
+        constraints:
+          to:      {domain_in: [najd-trading.example], on_violation: require_approval}
+          body:    {max_length: 20000}
+        rate_limit: {max_calls: 20, per_seconds: 3600}
+      # CRM records are internal (trusted) but their free-text notes can hold text that came from outside
+      # (web forms, customer e-mails), so results are scanned for embedded instructions.
+      search_customers:
+        allow: true
+        sensitivity: confidential
+        scan: true
+        constraints:
+          limit: {max: 50}
+      get_customer:     {allow: true, sensitivity: confidential, scan: true}
+      export_customers:
+        allow: true
+        sensitivity: confidential
+        scan: true
+        risk: high
+        approval: on_risk
+        constraints:
+          count: {max: 50, on_violation: deny}
+        rate_limit: {max_calls: 3, per_seconds: 3600}
+      update_customer_note: {allow: true, risk: low}
+      delete_customer:  {allow: true, risk: critical, approval: always}
+      fetch_url:
+        allow: true
+        trust: untrusted
+        scan: true
+        sink: external
+        constraints:
+          url: {pattern: "^https?://", not_pattern: "(?i)(localhost|127\\.0\\.0\\.1|169\\.254\\.|\\.internal)"}
+      list_documents:   {allow: true, sensitivity: internal}
+      read_document:    {allow: true, trust: untrusted, sensitivity: internal, scan: true}
+      transfer_funds:   {allow: true, risk: critical, approval: always, sink: external,
+                         constraints: {amount_sar: {max: 10000, on_violation: deny}}}
+      "*":              {allow: false}
+rules:                      # optional global rules, evaluated after tool entries
+  - id: no-bulk-export-to-email
+    description: Never e-mail more than 50 customer records.
+    # Counts '@' characters (>= 51). Equivalent to the spec's "(?s)(.*@.*){51,}", which backtracks
+    # exponentially (a body with ~18 '@' hangs the regex engine) and is rejected by the validator.
+    when: {tool: send_email, arg_matches: {body: "(?s)\\A(?:[^@]*@){51}"}}
+    action: deny

@@ -1,0 +1,57 @@
+# Mirsad project plan (two semesters: Senior Project I = Fall 2026, Senior Project II = Spring 2027).
+# Source of truth for the Gantt chart, the WBS table and the milestone table in the report.
+team:
+  BS: {name: Bader Alshuraie, dept: SE, role: "Gateway core, protocol adapters, policy engine"}
+  AO: {name: Abdullah Naif Al-Orabi, dept: "SE (AI & DS)", role: "Arabic/English injection detector and dataset"}
+  BY: {name: Bader Abdullah Alyamini, dept: "IS (CYS)", role: "Taint tracking and tamper-evident audit log"}
+  MA: {name: Mohammed Yasser Alanssari, dept: "IS (CYS)", role: "Web dashboard and mobile approval app"}
+  AB: {name: Abdulmalik bin Saedan, dept: "IS (CYS)", role: "Benchmark, demo agent, security testing, project management"}
+phases:
+  - name: Investigation & requirements
+    tasks:
+      - {id: T1.1, name: Literature review & related products, start: 2026-09-01, end: 2026-09-30, owner: ALL}
+      - {id: T1.2, name: Threat model (STRIDE) & attack taxonomy, start: 2026-09-14, end: 2026-10-08, owner: "BY, AB"}
+      - {id: T1.3, name: Requirements analysis & SRS (D3), start: 2026-09-21, end: 2026-10-20, owner: ALL}
+      - {id: T1.4, name: Benchmark & dataset design, start: 2026-10-01, end: 2026-10-25, owner: "AB, AO"}
+  - name: Design
+    tasks:
+      - {id: T2.1, name: Architecture & HLD/LLD (D4), start: 2026-10-18, end: 2026-11-12, owner: BS}
+      - {id: T2.2, name: Policy language specification, start: 2026-10-20, end: 2026-11-10, owner: BS}
+      - {id: T2.3, name: Database & audit-chain design, start: 2026-10-25, end: 2026-11-12, owner: BY}
+      - {id: T2.4, name: UI wireframes (dashboard + approver app), start: 2026-10-25, end: 2026-11-15, owner: MA}
+  - name: Prototype (Senior Project I)
+    tasks:
+      - {id: T3.1, name: Gateway + MCP proxy + basic policies, start: 2026-11-15, end: 2026-12-15, owner: BS}
+      - {id: T3.2, name: Audit log & storage, start: 2026-11-15, end: 2026-12-10, owner: BY}
+      - {id: T3.3, name: Dataset authoring (AR/EN) starts, start: 2026-11-15, end: 2026-12-20, owner: "AO, ALL"}
+      - {id: T3.4, name: SP-I report & prototype demo, start: 2026-12-10, end: 2026-12-24, owner: ALL}
+  - name: Implementation I
+    tasks:
+      - {id: T4.1, name: Injection detector (rules + ML) & training, start: 2027-01-10, end: 2027-02-20, owner: AO}
+      - {id: T4.2, name: Taint tracking engine, start: 2027-01-10, end: 2027-02-15, owner: BY}
+      - {id: T4.3, name: OpenAI-compatible proxy & SDK, start: 2027-01-20, end: 2027-02-20, owner: BS}
+  - name: Implementation II
+    tasks:
+      - {id: T5.1, name: Approver PWA & notifications, start: 2027-02-01, end: 2027-03-15, owner: MA}
+      - {id: T5.2, name: Admin dashboard (EN/AR), start: 2027-02-01, end: 2027-03-20, owner: MA}
+      - {id: T5.3, name: Demo workspace & LLM demo agent, start: 2027-02-10, end: 2027-03-15, owner: AB}
+      - {id: T5.4, name: Approval workflow & admin API, start: 2027-02-15, end: 2027-03-20, owner: "BS, BY"}
+  - name: Testing & evaluation
+    tasks:
+      - {id: T6.1, name: "Unit, integration & UI tests (D5)", start: 2027-03-10, end: 2027-04-10, owner: ALL}
+      - {id: T6.2, name: Mirsad-Bench runs (scripted + LLM), start: 2027-03-15, end: 2027-04-15, owner: AB}
+      - {id: T6.3, name: Detector evaluation & error analysis, start: 2027-03-15, end: 2027-04-10, owner: AO}
+      - {id: T6.4, name: Penetration test of the gateway, start: 2027-03-25, end: 2027-04-20, owner: "AB, BY, MA"}
+  - name: Finalization
+    tasks:
+      - {id: T7.1, name: User guide (D6) & deployment, start: 2027-04-10, end: 2027-04-30, owner: "MA, BS"}
+      - {id: T7.2, name: "Final report, poster & slides", start: 2027-04-15, end: 2027-05-10, owner: ALL}
+      - {id: T7.3, name: Open-source release & final presentation, start: 2027-05-05, end: 2027-05-20, owner: ALL}
+milestones:
+  - {id: M1, name: "Proposal approved; threat model & SRS agreed", date: 2026-10-20, objective: "O1–O6 scoped"}
+  - {id: M2, name: "Architecture & policy language approved", date: 2026-11-15, objective: "O1, O2"}
+  - {id: M3, name: "Prototype intercepts MCP traffic with policies", date: 2026-12-20, objective: "O1, O2"}
+  - {id: M4, name: "Taint tracking & detector integrated", date: 2027-02-20, objective: "O3, O4"}
+  - {id: M5, name: "Approval app, dashboard & audit complete", date: 2027-03-20, objective: "O5"}
+  - {id: M6, name: "Benchmark & security testing complete", date: 2027-04-20, objective: "O6"}
+  - {id: M7, name: "Final submission & presentation", date: 2027-05-20, objective: "All"}

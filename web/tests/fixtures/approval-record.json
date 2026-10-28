@@ -1,0 +1,89 @@
+{
+  "id": "apr_91d3f03ccc974c9d",
+  "created_at": 1791721103.512727,
+  "expires_at": 1791721223.512727,
+  "status": "pending",
+  "agent_id": "email-crm-assistant",
+  "session_id": "smoke-1791721103",
+  "call_id": "call_s1",
+  "tool": "send_email",
+  "arguments": {
+    "to": "buyer@other.example",
+    "subject": "Price list",
+    "body": "Attached."
+  },
+  "decision": {
+    "call_id": "call_s1",
+    "action": "require_approval",
+    "reasons": [
+      {
+        "layer": "policy",
+        "code": "TOOL_RISK",
+        "message": "Tool 'send_email' is classified as medium risk (score 0.3).",
+        "message_ar": "الأداة 'send_email' مصنّفة بدرجة خطورة متوسطة (الدرجة 0.3).",
+        "action": "allow",
+        "rule_id": null,
+        "risk_score": 0.3,
+        "evidence": {
+          "tool": "send_email",
+          "risk": "medium",
+          "risk_score": 0.3
+        }
+      },
+      {
+        "layer": "policy",
+        "code": "CONSTRAINT_VIOLATION",
+        "message": "Argument 'to' sends data to 'other.example', outside the allowed domains ['najd-trading.example'].",
+        "message_ar": "الحقل 'to' يرسل البيانات إلى 'other.example'، وهو خارج النطاقات المسموح بها ['najd-trading.example'].",
+        "action": "require_approval",
+        "rule_id": "constraint:to.domain_in",
+        "risk_score": 0.5,
+        "evidence": {
+          "param": "to",
+          "operator": "domain_in",
+          "expected": [
+            "najd-trading.example"
+          ],
+          "actual": "other.example"
+        }
+      },
+      {
+        "layer": "taint",
+        "code": "TAINT_UNTRUSTED_TO_EXTERNAL",
+        "message": "⁨send_email⁩ would send data outside the organisation, and earlier in this conversation the assistant read content from an untrusted source (⁨read_email⁩). Instructions hidden in that content could be steering the assistant.",
+        "message_ar": "الأداة ⁨send_email⁩ سترسل بيانات إلى خارج المنظمة، وقد قرأ المساعد في وقت سابق من هذه المحادثة محتوى من مصدر غير موثوق (⁨read_email⁩). قد يحتوي ذلك المحتوى على تعليمات مخفية توجّه المساعد.",
+        "action": "require_approval",
+        "rule_id": "taint.untrusted_to_external_sink",
+        "risk_score": 0.6,
+        "evidence": {
+          "tool": "send_email",
+          "sink": "external",
+          "source_tool": "read_email",
+          "source_call_id": "call_r1",
+          "field": null,
+          "sources": [
+            {
+              "tool": "read_email",
+              "call_id": "call_r1"
+            }
+          ],
+          "source_count": 1
+        }
+      }
+    ],
+    "risk": "high",
+    "risk_score": 0.6,
+    "sink": "external",
+    "policy_version": "6ca37e7980e428ee5079d305d98200df658b2e3bcc234edc692cef310cb61012",
+    "approval_id": "apr_91d3f03ccc974c9d",
+    "approval_status": "pending",
+    "latency_ms": 1.27333402633667,
+    "audit_seq": 33
+  },
+  "summary_en": "The Email & CRM Assistant wants to send an email to buyer@other.example (outside the organisation) using the send_email tool. Mirsad paused it because the agent read an untrusted email (read_email call_r1) earlier in this session, and this action sends data outside the organisation, and the recipient address is outside the allowed domains (najd-trading.example). Risk level: high.",
+  "summary_ar": "يريد الوكيل «Email & CRM Assistant» إرسال بريد إلكتروني إلى buyer@other.example (خارج المؤسسة) عبر الأداة send_email. أوقف مرصاد الطلب مؤقتًا لأن الوكيل اطّلع في هذه الجلسة على بريد إلكتروني غير موثوق (read_email call_r1)، وهذا الإجراء يرسل بيانات إلى خارج المؤسسة، ولأن عنوان المستلم خارج النطاقات المسموح بها (najd-trading.example). مستوى الخطورة: مرتفع.",
+  "risk": "high",
+  "decided_by": null,
+  "decided_at": null,
+  "note": null
+}

@@ -1,0 +1,20 @@
+flowchart TB
+  subgraph Host["Server / VM (Docker Compose or Python venv)"]
+    direction TB
+    subgraph App["mirsad container — Python 3.12, FastAPI, Uvicorn"]
+      API["REST API · /v1 guard · /mcp · /v1/chat/completions"]
+      CORE["Gateway core · policy · taint · detector"]
+      STATIC["Static SPA: dashboard + approver PWA"]
+    end
+    DB[("PostgreSQL 16<br/>(SQLite in dev)")]
+    RED[("Redis (optional)<br/>shared rate limits")]
+    OLL["Ollama + Qwen2.5-7B<br/>(demo agent, optional)"]
+    MCPS["Upstream MCP servers<br/>(stdio / HTTP)"]
+  end
+  Agent["AI agent runtime"] -- "HTTPS + agent API key" --> API
+  Browser["Admin browser"] -- "HTTPS + JWT" --> STATIC
+  Phone["Approver phone (installed PWA)"] -- "HTTPS + JWT · Web Push" --> STATIC
+  App --> DB
+  App -.-> RED
+  App --> MCPS
+  App -.-> OLL

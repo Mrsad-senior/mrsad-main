@@ -1,0 +1,9 @@
+Mirsad (مرصاد) – a runtime security firewall for AI agents against prompt-injection attacks
+Copyright 2026-2027 The Mirsad team, Prince Sultan University, Riyadh
+
+Team: Mohammed Yasser Alanssari, Bader Alshuraie, Bader Abdullah Abbod Alyamini,
+      Abdulmalik bin Saedan, Abdullah Naif Abdullah Al-Orabi
+Supervisor: Dr. Omaia Al-Omari
+
+This product includes third-party open-source software; see docs/THIRD_PARTY.md.
+External test data: deepset/prompt-injections (Apache-2.0).

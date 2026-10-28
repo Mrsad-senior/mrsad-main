@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+.mirsad/
+*.db
+web/node_modules/
+web/dist/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.env
+.DS_Store

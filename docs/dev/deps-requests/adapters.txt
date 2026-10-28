@@ -1,0 +1,6 @@
+# adapters area (Bader Alshuraie) - no new packages were installed.
+mcp>=2.3,<3     # pin tightening only: adapters use the MCP SDK v2 API (mcp.Client, mcp.server.mcpserver.MCPServer,
+                # low-level Server(on_list_tools=..., on_call_tool=...), StreamableHTTPSessionManager);
+                # pyproject currently allows mcp>=1.12, whose API is incompatible.
+httpx2          # already installed as a dependency of mcp 2.x; imported directly for streamable-HTTP upstreams
+                # with custom headers (mcp.client.streamable_http requires an httpx2.AsyncClient). No pin needed.

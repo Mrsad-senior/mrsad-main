@@ -1,0 +1,10 @@
+flowchart LR
+  AG[/"AI agent"/] -- "1 tool call request" --> P0(("0<br/>Mirsad<br/>gateway"))
+  P0 -- "2 forwarded call" --> TL[/"Upstream tools"/]
+  TL -- "3 raw result" --> P0
+  P0 -- "4 inspected result" --> AG
+  P0 -- "approval request" --> AP[/"Approver"/]
+  AP -- "decision" --> P0
+  AD[/"Administrator"/] -- "policies · agents · users" --> P0
+  P0 -- "dashboards · audit reports" --> AD
+  P0 <--> DS[("Mirsad data store<br/>policies · audit · approvals · users · agents")]

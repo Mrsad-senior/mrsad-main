@@ -1,0 +1,10 @@
+stateDiagram-v2
+  [*] --> Pending: gateway escalates call<br/>(REQUIRE_APPROVAL)
+  Pending --> Approved: approver approves
+  Pending --> Denied: approver denies
+  Pending --> Expired: timeout (default 120 s)
+  Pending --> Cancelled: agent session closed
+  Approved --> [*]: call executed
+  Denied --> [*]: call blocked
+  Expired --> [*]: call blocked (fail-safe)
+  Cancelled --> [*]

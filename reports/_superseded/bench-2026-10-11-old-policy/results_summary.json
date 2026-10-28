@@ -1,0 +1,288 @@
+{
+  "generated_at": "2026-10-14T06:51:22+00:00",
+  "commit": null,
+  "python_tests": {
+    "total": 1281,
+    "passed": 1281,
+    "failed": 0,
+    "skipped": 0,
+    "by_area": {
+      "adapters": 78,
+      "api": 185,
+      "audit": 240,
+      "bench": 68,
+      "demo": 72,
+      "detector": 227,
+      "integration": 8,
+      "policy": 265,
+      "security": 45,
+      "taint": 93
+    }
+  },
+  "web_tests": {
+    "total": 194,
+    "passed": 194,
+    "failed": 0,
+    "files": 38
+  },
+  "coverage": {
+    "percent": 94.4,
+    "statements": 9763,
+    "by_package": {
+      "__init__": 100.0,
+      "adapters": 90.3,
+      "api": 91.2,
+      "approvals": 96.2,
+      "audit": 96.1,
+      "auth": 96.2,
+      "cli": 92.4,
+      "config": 95.8,
+      "detector": 96.9,
+      "gateway": 90.7,
+      "models": 100.0,
+      "policy": 94.9,
+      "sdk": 94.4,
+      "storage": 99.3,
+      "taint": 96.5,
+      "textutil": 98.2
+    }
+  },
+  "security": {
+    "bandit_issues": 0,
+    "bandit_loc": 13023,
+    "pip_audit_packages": 124,
+    "pip_audit_vulnerable": 0,
+    "npm_audit_vulnerabilities": 0
+  },
+  "latency": {
+    "in_process": {
+      "calls": 1000,
+      "sessions": 50,
+      "detector_mode": "rules_only",
+      "sequential_added_p50": 2.642,
+      "sequential_added_p95": 5.899,
+      "sequential_added_p99": 6.013,
+      "sequential_rps": 316.6,
+      "concurrent_added_p50": 204.784,
+      "concurrent_added_p95": 880.095,
+      "concurrent_added_p99": 1304.276,
+      "concurrent_rps": 154.5,
+      "concurrent_errors": 0,
+      "gateway_p50": 2.035,
+      "audit_ok": true,
+      "date": "2026-10-14T06:51:03+00:00"
+    },
+    "separate_process": {
+      "calls": 1000,
+      "sessions": 50,
+      "detector_mode": "rules_only",
+      "sequential_added_p50": 2.661,
+      "sequential_added_p95": 5.958,
+      "sequential_added_p99": 6.118,
+      "sequential_rps": 316.6,
+      "concurrent_added_p50": 165.511,
+      "concurrent_added_p95": 207.979,
+      "concurrent_added_p99": 216.067,
+      "concurrent_rps": 290.6,
+      "concurrent_errors": 0,
+      "gateway_p50": 2.058,
+      "audit_ok": true,
+      "date": "2026-10-14T06:51:13+00:00"
+    }
+  },
+  "bench": {
+    "llm_smoke": {
+      "agent": "llm",
+      "tasks": 4,
+      "attack_episodes": 0,
+      "replay_checked": 6,
+      "replay_matched": 6,
+      "audit_all_ok": true,
+      "configs": {
+        "full": {
+          "episodes": 4,
+          "calls": 6,
+          "utility": 0.75,
+          "fpr": 0.0,
+          "friction": 0.0,
+          "final_block_rate": 0.0,
+          "result_fp_rate": 0.0,
+          "asr": null,
+          "asr_reduction": null,
+          "gateway_p50_ms": 2.57,
+          "gateway_p95_ms": 10.108
+        },
+        "none": {
+          "episodes": 4,
+          "calls": 6,
+          "utility": 0.75,
+          "fpr": 0.0,
+          "friction": 0.0,
+          "final_block_rate": 0.0,
+          "result_fp_rate": null,
+          "asr": null,
+          "asr_reduction": null,
+          "gateway_p50_ms": null,
+          "gateway_p95_ms": null
+        }
+      }
+    },
+    "scripted_benign_deny": {
+      "agent": "scripted",
+      "tasks": 48,
+      "attack_episodes": 0,
+      "replay_checked": 272,
+      "replay_matched": 272,
+      "audit_all_ok": true,
+      "configs": {
+        "detector_only": {
+          "episodes": 48,
+          "calls": 68,
+          "utility": 1.0,
+          "fpr": 0.0,
+          "friction": 0.0,
+          "final_block_rate": 0.0,
+          "result_fp_rate": 0.0,
+          "asr": null,
+          "asr_reduction": null,
+          "gateway_p50_ms": 1.425,
+          "gateway_p95_ms": 2.778
+        },
+        "full": {
+          "episodes": 48,
+          "calls": 68,
+          "utility": 0.75,
+          "fpr": 0.0,
+          "friction": 0.1765,
+          "final_block_rate": 0.1765,
+          "result_fp_rate": 0.0,
+          "asr": null,
+          "asr_reduction": null,
+          "gateway_p50_ms": 1.9,
+          "gateway_p95_ms": 3.183
+        },
+        "none": {
+          "episodes": 48,
+          "calls": 68,
+          "utility": 1.0,
+          "fpr": 0.0,
+          "friction": 0.0,
+          "final_block_rate": 0.0,
+          "result_fp_rate": null,
+          "asr": null,
+          "asr_reduction": null,
+          "gateway_p50_ms": null,
+          "gateway_p95_ms": null
+        },
+        "policy_only": {
+          "episodes": 48,
+          "calls": 68,
+          "utility": 0.75,
+          "fpr": 0.0,
+          "friction": 0.1765,
+          "final_block_rate": 0.1765,
+          "result_fp_rate": 0.0,
+          "asr": null,
+          "asr_reduction": null,
+          "gateway_p50_ms": 1.083,
+          "gateway_p95_ms": 1.848
+        },
+        "taint_only": {
+          "episodes": 48,
+          "calls": 68,
+          "utility": 0.875,
+          "fpr": 0.0,
+          "friction": 0.0882,
+          "final_block_rate": 0.0882,
+          "result_fp_rate": 0.0,
+          "asr": null,
+          "asr_reduction": null,
+          "gateway_p50_ms": 1.224,
+          "gateway_p95_ms": 2.282
+        }
+      }
+    },
+    "scripted_benign_oracle": {
+      "agent": "scripted",
+      "tasks": 48,
+      "attack_episodes": 0,
+      "replay_checked": 272,
+      "replay_matched": 272,
+      "audit_all_ok": true,
+      "configs": {
+        "detector_only": {
+          "episodes": 48,
+          "calls": 68,
+          "utility": 1.0,
+          "fpr": 0.0,
+          "friction": 0.0,
+          "final_block_rate": 0.0,
+          "result_fp_rate": 0.0,
+          "asr": null,
+          "asr_reduction": null,
+          "gateway_p50_ms": 1.424,
+          "gateway_p95_ms": 2.869
+        },
+        "full": {
+          "episodes": 48,
+          "calls": 68,
+          "utility": 1.0,
+          "fpr": 0.0,
+          "friction": 0.1765,
+          "final_block_rate": 0.0,
+          "result_fp_rate": 0.0,
+          "asr": null,
+          "asr_reduction": null,
+          "gateway_p50_ms": 1.943,
+          "gateway_p95_ms": 3.951
+        },
+        "none": {
+          "episodes": 48,
+          "calls": 68,
+          "utility": 1.0,
+          "fpr": 0.0,
+          "friction": 0.0,
+          "final_block_rate": 0.0,
+          "result_fp_rate": null,
+          "asr": null,
+          "asr_reduction": null,
+          "gateway_p50_ms": null,
+          "gateway_p95_ms": null
+        },
+        "policy_only": {
+          "episodes": 48,
+          "calls": 68,
+          "utility": 1.0,
+          "fpr": 0.0,
+          "friction": 0.1765,
+          "final_block_rate": 0.0,
+          "result_fp_rate": 0.0,
+          "asr": null,
+          "asr_reduction": null,
+          "gateway_p50_ms": 1.051,
+          "gateway_p95_ms": 2.067
+        },
+        "taint_only": {
+          "episodes": 48,
+          "calls": 68,
+          "utility": 1.0,
+          "fpr": 0.0,
+          "friction": 0.0882,
+          "final_block_rate": 0.0,
+          "result_fp_rate": 0.0,
+          "asr": null,
+          "asr_reduction": null,
+          "gateway_p50_ms": 1.226,
+          "gateway_p95_ms": 2.531
+        }
+      }
+    }
+  },
+  "detector": null,
+  "code_size": {
+    "python_src": 15839,
+    "python_demo_bench": 5138,
+    "python_tests": 13451,
+    "web_ts": 10213
+  }
+}

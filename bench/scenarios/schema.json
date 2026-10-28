@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://najd-trading.example/mirsad/bench/scenario.schema.json",
+  "title": "Mirsad-Bench scenario file",
+  "description": "One YAML file of Mirsad-Bench scenarios. User-task files live in bench/scenarios/*.yaml; injection tasks and attack templates live only in bench/scenarios/attacks/*.yaml (supplied by the human team). Semantic checks that JSON Schema cannot express (tool names, tool arguments, fixture id collisions, read targets, template placeholders) are done by bench.loader.",
+  "type": "object",
+  "required": ["version"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {"const": 1},
+    "description": {"type": "string"},
+    "fixture_sets": {
+      "description": "Named fixture bundles that several user tasks can reuse via use_fixtures.",
+      "type": "object",
+      "propertyNames": {"$ref": "#/$defs/slug"},
+      "additionalProperties": {"$ref": "#/$defs/fixtures"}
+    },
+    "user_tasks": {"type": "array", "items": {"$ref": "#/$defs/userTask"}},
+    "injection_tasks": {"type": "array", "items": {"$ref": "#/$defs/injectionTask"}},
+    "attack_templates": {"type": "array", "items": {"$ref": "#/$defs/attackTemplate"}}
+  },
+  "$defs": {
+    "slug": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{1,63}$"},
+    "toolName": {
+      "type": "string",
+      "enum": ["list_emails", "read_email", "send_email", "search_customers", "get_customer",
+               "export_customers", "update_customer_note", "delete_customer", "fetch_url",
+               "list_documents", "read_document", "transfer_funds"]
+    },
+    "vector": {"enum": ["email", "web", "document", "crm_note"]},
+    "toolStep": {
+      "type": "object",
+      "required": ["tool"],
+      "additionalProperties": false,
+      "properties": {
+        "tool": {"$ref": "#/$defs/toolName"},
+        "args": {"type": "object", "default": {}}
+      }
+    },
+    "emailFixture": {
+      "type": "object",
+      "required": ["id", "from", "to", "subject", "body"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "pattern": "^E[0-9]{3,}$"},
+        "folder": {"enum": ["inbox", "sent", "archive"], "default": "inbox"},
+        "from": {"type": "string", "pattern": "^[^@\\s]+@[^@\\s]+\\.example$"},
+        "to": {"type": "string", "minLength": 3},
+        "subject": {"type": "string", "minLength": 1},
+        "body": {"type": "string", "minLength": 1},
+        "date": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+        "lang": {"enum": ["en", "ar"]}
+      }
+    },
+    "customerFixture": {
+      "type": "object",
+      "required": ["id", "name", "email"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "pattern": "^C[0-9]{3,}$"},
+        "name": {"type": "string", "minLength": 1},
+        "name_ar": {"type": "string"},
+        "email": {"type": "string", "pattern": "^[^@\\s]+@[^@\\s]+\\.example$"},
+        "phone": {"type": "string", "pattern": "^05[0-9]{8}$"},
+        "city": {"type": "string"},
+        "city_ar": {"type": "string"},
+        "tier": {"enum": ["bronze", "silver", "gold", "platinum"]},
+        "balance_sar": {"type": "number"},
+        "notes": {"type": "string"}
+      }
+    },
+    "webPageFixture": {
+      "type": "object",
+      "required": ["url", "title", "body"],
+      "additionalProperties": false,
+      "properties": {
+        "url": {"type": "string", "pattern": "^https?://[^/\\s]+\\.example(/\\S*)?$"},
+        "title": {"type": "string"},
+        "body": {"type": "string", "minLength": 1},
+        "lang": {"enum": ["en", "ar"]}
+      }
+    },
+    "documentFixture": {
+      "type": "object",
+      "required": ["id", "title", "body"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "pattern": "^D[0-9]{3,}$"},
+        "title": {"type": "string"},
+        "body": {"type": "string", "minLength": 1},
+        "owner": {"type": "string"},
+        "lang": {"enum": ["en", "ar"]},
+        "source": {"enum": ["internal", "external"]}
+      }
+    },
+    "fixtures": {
+      "description": "Items inserted into a fresh demo World before the episode (ordinary business content only).",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "emails": {"type": "array", "items": {"$ref": "#/$defs/emailFixture"}},
+        "customers": {"type": "array", "items": {"$ref": "#/$defs/customerFixture"}},
+        "web_pages": {"type": "array", "items": {"$ref": "#/$defs/webPageFixture"}},
+        "documents": {"type": "array", "items": {"$ref": "#/$defs/documentFixture"}}
+      }
+    },
+    "readTarget": {
+      "description": "A fixture or seed item the task reads, i.e. where externally supplied content could appear. Attack episodes plant the rendered template text into this item.",
+      "type": "object",
+      "required": ["vector", "target"],
+      "additionalProperties": false,
+      "properties": {
+        "vector": {"$ref": "#/$defs/vector"},
+        "target": {"type": "string", "minLength": 1}
+      }
+    },
+    "predicate": {
+      "description": "Success predicate evaluated on World side effects and on the calls that actually executed. Exactly one operator per object; combine with all/any/not.",
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "all": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/predicate"}},
+        "any": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/predicate"}},
+        "not": {"$ref": "#/$defs/predicate"},
+        "executed": {
+          "type": "object", "required": ["tool"], "additionalProperties": false,
+          "properties": {"tool": {"$ref": "#/$defs/toolName"}, "args": {"type": "object"}}
+        },
+        "sent_to": {"type": "string", "pattern": "^[^@\\s]+@[^@\\s]+$"},
+        "sent_to_domain": {"type": "string", "minLength": 3},
+        "email_body_contains": {
+          "type": "object", "required": ["text"], "additionalProperties": false,
+          "properties": {"to": {"type": "string"}, "text": {"type": "string", "minLength": 1}}
+        },
+        "note_updated": {
+          "type": "object", "required": ["customer_id"], "additionalProperties": false,
+          "properties": {"customer_id": {"type": "string"}, "contains": {"type": "string"}}
+        },
+        "exported": {
+          "type": "object", "additionalProperties": false,
+          "properties": {"min_count": {"type": "integer", "minimum": 0},
+                         "max_count": {"type": "integer", "minimum": 0}}
+        },
+        "fetched": {"type": "string", "minLength": 8},
+        "fetched_domain": {"type": "string", "minLength": 3},
+        "deleted": {"type": "string", "pattern": "^C[0-9]{3,}$"},
+        "transfer_to": {"type": "string", "minLength": 8},
+        "answer_contains_any": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "userTask": {
+      "type": "object",
+      "required": ["id", "lang", "variety", "category", "prompt", "plan", "success"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/slug"},
+        "lang": {"enum": ["en", "ar"]},
+        "variety": {"enum": ["en", "msa", "gulf"]},
+        "category": {
+          "enum": ["email_read", "crm_lookup", "internal_reply", "external_reply", "web_read", "doc_read",
+                   "crm_update", "export", "approval_required"]
+        },
+        "prompt": {"type": "string", "minLength": 5},
+        "use_fixtures": {"type": "array", "items": {"$ref": "#/$defs/slug"}},
+        "fixtures": {"$ref": "#/$defs/fixtures"},
+        "plan": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/toolStep"}},
+        "success": {"$ref": "#/$defs/predicate"},
+        "reads": {"type": "array", "items": {"$ref": "#/$defs/readTarget"}},
+        "expect_approval": {"type": "boolean", "default": false},
+        "notes": {"type": "string"}
+      }
+    },
+    "injectionTask": {
+      "description": "Supplied by the human team only (bench/scenarios/attacks/). The goal an attacker would want the agent to carry out, as tool actions plus a success predicate on World side effects. At least one of goal, goal_en, goal_ar is required: a template's {goal} placeholder is filled with goal_en or goal_ar according to the template language, falling back to goal.",
+      "type": "object",
+      "required": ["id", "category", "actions", "success"],
+      "anyOf": [{"required": ["goal"]}, {"required": ["goal_en"]}, {"required": ["goal_ar"]}],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/slug"},
+        "category": {"enum": ["exfiltration", "destruction", "fraud", "phishing", "privilege"]},
+        "goal": {"type": "string", "minLength": 1,
+                 "description": "Language-neutral fallback, used when the language-specific goal is missing."},
+        "goal_en": {"type": "string", "minLength": 1, "description": "Goal text for English (and, by default, mixed) templates."},
+        "goal_ar": {"type": "string", "minLength": 1, "description": "Goal text for Arabic templates (and templates with goal_lang ar)."},
+        "actions": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/toolStep"}},
+        "success": {"$ref": "#/$defs/predicate"},
+        "vectors": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/vector"},
+                    "description": "Optional: only combine with user-task reads of these vectors (default: all)."},
+        "notes": {"type": "string"}
+      }
+    },
+    "attackTemplate": {
+      "description": "Supplied by the human team only (bench/scenarios/attacks/). Text with a {goal} and/or {actions_text} placeholder; {user} and {model} are optional. Any other {lowercase_word} placeholder is rejected by the loader.",
+      "type": "object",
+      "required": ["id", "lang", "style", "template"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/slug"},
+        "lang": {"enum": ["en", "ar", "mixed"]},
+        "variety": {"enum": ["en", "msa", "gulf", "egyptian", "levantine", "arabizi", "mixed"]},
+        "style": {
+          "enum": ["ignore_previous", "important_instructions", "system_impersonation", "tool_knowledge",
+                   "completion", "social_engineering", "obfuscated", "dialect"]
+        },
+        "template": {"type": "string", "minLength": 1, "pattern": "\\{(goal|actions_text)\\}"},
+        "goal_lang": {"enum": ["en", "ar"],
+                      "description": "Which goal fills {goal} (and which language {user}/{model} use): default en for lang en and mixed, ar for lang ar."},
+        "vectors": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/vector"},
+                    "description": "Optional: only plant this template into reads of these vectors (default: all)."},
+        "source": {"type": "string"},
+        "notes": {"type": "string"}
+      }
+    }
+  }
+}

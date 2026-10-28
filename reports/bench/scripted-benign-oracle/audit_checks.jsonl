@@ -1,0 +1,4 @@
+{"defense": "full", "approver": "oracle", "episodes": 48, "audit": {"ok": true, "checked": 160, "message": "OK: 160 event(s) verified"}, "replay": {"checked": 68, "matched": 68, "mismatched_seqs": []}, "at": "2026-10-14T07:31:51+00:00"}
+{"defense": "policy_only", "approver": "oracle", "episodes": 48, "audit": {"ok": true, "checked": 160, "message": "OK: 160 event(s) verified"}, "replay": {"checked": 68, "matched": 68, "mismatched_seqs": []}, "at": "2026-10-14T07:31:51+00:00"}
+{"defense": "taint_only", "approver": "oracle", "episodes": 48, "audit": {"ok": true, "checked": 148, "message": "OK: 148 event(s) verified"}, "replay": {"checked": 68, "matched": 68, "mismatched_seqs": []}, "at": "2026-10-14T07:31:52+00:00"}
+{"defense": "detector_only", "approver": "oracle", "episodes": 48, "audit": {"ok": true, "checked": 136, "message": "OK: 136 event(s) verified"}, "replay": {"checked": 68, "matched": 68, "mismatched_seqs": []}, "at": "2026-10-14T07:31:52+00:00"}

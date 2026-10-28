@@ -1,0 +1,16 @@
+# Upstream tool servers that Mirsad proxies. Tools are exposed to agents only if the active policy allows them.
+upstreams:
+  # Simulated Najd Trading Co. workspace (email, CRM, web, documents, payments), loaded in-process.
+  - name: workspace
+    transport: inprocess
+    target: demo.workspace_server:server
+
+  # Example: an MCP server started as a subprocess over stdio.
+  # - name: files
+  #   transport: stdio
+  #   command: [python, -m, demo.workspace_server]
+
+  # Example: a remote MCP server over streamable HTTP.
+  # - name: remote
+  #   transport: http
+  #   url: http://127.0.0.1:9000/mcp

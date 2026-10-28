@@ -1,0 +1,80 @@
+erDiagram
+  users ||--o{ push_subscriptions : "user_id FK"
+  users ||..o{ policies : "created_by"
+  users ||..o{ approvals : "decided_by"
+  agents ||..o{ approvals : "agent_id"
+  agents ||..o{ audit_events : "agent_id"
+  approvals ||..|{ audit_events : "call_id"
+  policies ||..o{ audit_events : "policy_version"
+  audit_events |o..o| audit_events : "prev_hash"
+
+  users {
+    INTEGER id PK
+    VARCHAR username UK
+    VARCHAR password_hash "scrypt PHC string"
+    VARCHAR role "CHECK admin/approver/auditor"
+    VARCHAR display_name
+    VARCHAR lang "CHECK en/ar"
+    FLOAT created_at "UNIX epoch"
+    BOOLEAN disabled
+  }
+  push_subscriptions {
+    INTEGER id PK
+    INTEGER user_id FK "indexed"
+    VARCHAR endpoint UK "https only"
+    VARCHAR p256dh
+    VARCHAR auth
+    FLOAT created_at
+  }
+  agents {
+    VARCHAR id PK "slug"
+    VARCHAR name
+    TEXT description
+    VARCHAR policy_agent_id "agent id in the YAML policy"
+    VARCHAR key_prefix "indexed"
+    VARCHAR key_hash "SHA-256 of the key"
+    FLOAT created_at
+    BOOLEAN disabled
+    FLOAT last_seen_at
+  }
+  policies {
+    VARCHAR version PK "SHA-256 of canonical JSON"
+    TEXT yaml_text
+    FLOAT created_at
+    VARCHAR created_by
+    BOOLEAN active "indexed"
+    TEXT comment
+  }
+  audit_events {
+    INTEGER seq PK "assigned by the writer"
+    FLOAT ts "indexed"
+    VARCHAR event_type "indexed"
+    VARCHAR session_id "indexed"
+    VARCHAR agent_id "indexed"
+    VARCHAR tool "indexed"
+    VARCHAR call_id "indexed"
+    VARCHAR action "indexed"
+    VARCHAR risk
+    VARCHAR policy_version
+    TEXT payload_json "redacted, max 20000 chars"
+    VARCHAR prev_hash
+    VARCHAR hash "HMAC-SHA256"
+  }
+  approvals {
+    VARCHAR id PK "apr_ + 16 hex"
+    FLOAT created_at "indexed"
+    FLOAT expires_at
+    VARCHAR status "indexed"
+    VARCHAR agent_id
+    VARCHAR session_id
+    VARCHAR call_id "indexed"
+    VARCHAR tool
+    TEXT arguments_json "redacted"
+    TEXT decision_json
+    TEXT summary_en
+    TEXT summary_ar
+    VARCHAR risk
+    VARCHAR decided_by
+    FLOAT decided_at
+    TEXT note
+  }

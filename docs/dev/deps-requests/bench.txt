@@ -1,0 +1,4 @@
+# bench area - no new packages were installed.
+jsonschema>=4.20   # bench/loader.py validates scenario files against bench/scenarios/schema.json (Draft 2020-12).
+                   # Already installed as a dependency of mcp; please declare it directly in pyproject.
+matplotlib>=3.9    # already in the [dev] extra; used for reports/bench/**/figures (imported lazily).

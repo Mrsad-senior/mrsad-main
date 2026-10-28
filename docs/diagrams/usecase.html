@@ -1,0 +1,103 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Mirsad use cases</title>
+<style>
+  body { margin: 0; background: #fff; font-family: Arial, Helvetica, sans-serif; }
+  #diagram { display: inline-block; padding: 10px; background: #fff; }
+  .uc { fill: #e6f4f4; stroke: #0f766e; stroke-width: 1.6; }
+  .inc { fill: #eef2ff; stroke: #4f46e5; stroke-width: 1.4; }
+  .mis { fill: #1f2937; stroke: #111827; stroke-width: 1.6; }
+  .l { font-size: 12.5px; fill: #0b1f3a; text-anchor: middle; dominant-baseline: middle; }
+  .lw { font-size: 12.5px; fill: #fff; text-anchor: middle; dominant-baseline: middle; }
+  .actor { stroke: #0b1f3a; stroke-width: 2.2; fill: none; }
+  .an { font-size: 13px; font-weight: 700; fill: #0b1f3a; text-anchor: middle; }
+  .ln { stroke: #334155; stroke-width: 1.3; fill: none; }
+  .st { font-size: 10.5px; fill: #4338ca; font-style: italic; }
+  .thr { stroke: #dc2626; stroke-width: 1.5; fill: none; stroke-dasharray: 6 4; }
+  .mit { stroke: #16a34a; stroke-width: 1.5; fill: none; stroke-dasharray: 3 3; }
+</style></head>
+<body><div id="diagram">
+<svg width="1320" height="900" viewBox="0 0 1320 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#4338ca" stroke-width="1.4"/></marker>
+    <marker id="rd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+    <marker id="gn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+    <g id="stick"><circle cx="0" cy="-36" r="12" class="actor"/><path d="M0,-24 V12 M-22,-10 H22 M0,12 L-16,40 M0,12 L16,40" class="actor"/></g>
+  </defs>
+
+  <rect x="255" y="20" width="800" height="860" rx="16" fill="#f8fafc" stroke="#0b1f3a" stroke-width="2"/>
+  <text x="655" y="46" text-anchor="middle" font-size="17" font-weight="700" fill="#0b1f3a">Mirsad — runtime security firewall for AI agents</text>
+
+  <!-- Actors -->
+  <use href="#stick" x="110" y="190"/><text x="110" y="255" class="an">AI agent</text><text x="110" y="272" class="an" font-weight="400" font-size="11">(system actor)</text>
+  <use href="#stick" x="110" y="470"/><text x="110" y="535" class="an">Agent developer</text>
+  <g><use href="#stick" x="110" y="735"/><text x="110" y="800" class="an" fill="#b91c1c">Attacker</text><text x="110" y="817" class="an" font-weight="400" font-size="11" fill="#b91c1c">(misuse actor)</text></g>
+  <use href="#stick" x="1220" y="180"/><text x="1220" y="245" class="an">Approver</text>
+  <use href="#stick" x="1220" y="470"/><text x="1220" y="535" class="an">Administrator</text>
+  <use href="#stick" x="1220" y="760"/><text x="1220" y="825" class="an">Auditor</text>
+
+  <!-- Agent use cases -->
+  <ellipse cx="400" cy="110" rx="125" ry="28" class="uc"/><text x="400" y="110" class="l">Invoke tool via gateway</text>
+  <ellipse cx="400" cy="190" rx="125" ry="28" class="uc"/><text x="400" y="190" class="l">Receive inspected result</text>
+  <ellipse cx="400" cy="270" rx="125" ry="28" class="uc"/><text x="400" y="270" class="l">Discover permitted tools</text>
+  <!-- Developer -->
+  <ellipse cx="400" cy="430" rx="125" ry="28" class="uc"/><text x="400" y="424" class="l">Integrate agent</text><text x="400" y="440" class="l" font-size="11">(MCP · OpenAI · SDK)</text>
+  <ellipse cx="400" cy="510" rx="125" ry="28" class="uc"/><text x="400" y="510" class="l">Run Mirsad-Bench</text>
+
+  <!-- Included -->
+  <ellipse cx="655" cy="100" rx="118" ry="26" class="inc"/><text x="655" y="100" class="l">Evaluate policy &amp; limits</text>
+  <ellipse cx="655" cy="165" rx="118" ry="26" class="inc"/><text x="655" y="165" class="l">Check taint flow</text>
+  <ellipse cx="655" cy="230" rx="118" ry="26" class="inc"/><text x="655" y="230" class="l">Scan for injection (AR/EN)</text>
+  <ellipse cx="655" cy="295" rx="118" ry="26" class="inc"/><text x="655" y="295" class="l">Record audit event</text>
+  <ellipse cx="655" cy="375" rx="118" ry="28" class="uc" style="fill:#fff7ed;stroke:#d97706"/><text x="655" y="375" class="l">Request human approval</text>
+
+  <!-- Approver -->
+  <ellipse cx="915" cy="110" rx="122" ry="28" class="uc"/><text x="915" y="110" class="l">Approve / deny action</text>
+  <ellipse cx="915" cy="180" rx="122" ry="28" class="uc"/><text x="915" y="180" class="l">Receive push alert</text>
+  <ellipse cx="915" cy="250" rx="122" ry="28" class="uc"/><text x="915" y="250" class="l">View approval history</text>
+  <!-- Admin -->
+  <ellipse cx="915" cy="365" rx="122" ry="26" class="uc"/><text x="915" y="365" class="l">Manage policies</text>
+  <ellipse cx="915" cy="425" rx="122" ry="26" class="uc"/><text x="915" y="425" class="l">Manage agents &amp; keys</text>
+  <ellipse cx="915" cy="485" rx="122" ry="26" class="uc"/><text x="915" y="485" class="l">Manage users &amp; roles</text>
+  <ellipse cx="915" cy="545" rx="122" ry="26" class="uc"/><text x="915" y="545" class="l">Test detector</text>
+  <ellipse cx="915" cy="605" rx="122" ry="26" class="uc"/><text x="915" y="605" class="l">Monitor dashboard &amp; demo</text>
+  <!-- Auditor -->
+  <ellipse cx="915" cy="690" rx="122" ry="26" class="uc"/><text x="915" y="690" class="l">Search &amp; export audit log</text>
+  <ellipse cx="915" cy="750" rx="122" ry="26" class="uc"/><text x="915" y="750" class="l">Verify audit integrity</text>
+  <ellipse cx="915" cy="810" rx="122" ry="26" class="uc"/><text x="915" y="810" class="l">Replay a decision</text>
+
+  <!-- Misuse cases -->
+  <ellipse cx="400" cy="660" rx="125" ry="28" class="mis"/><text x="400" y="660" class="lw">Plant hidden instructions</text>
+  <ellipse cx="400" cy="740" rx="125" ry="28" class="mis"/><text x="400" y="740" class="lw">Hijack agent to exfiltrate</text>
+  <ellipse cx="400" cy="820" rx="125" ry="28" class="mis"/><text x="400" y="820" class="lw">Tamper with audit log</text>
+
+  <!-- Actor associations -->
+  <path class="ln" d="M134,170 L276,112 M134,185 L276,190 M134,200 L276,268"/>
+  <path class="ln" d="M134,460 L276,432 M134,478 L276,508"/>
+  <path class="ln" d="M1196,165 L1037,112 M1196,175 L1037,180 M1196,188 L1037,248"/>
+  <path class="ln" d="M1196,452 L1037,366 M1196,458 L1037,425 M1196,466 L1037,485 M1196,474 L1037,545 M1196,482 L1037,603"/>
+  <path class="ln" d="M1196,744 L1037,692 M1196,752 L1037,750 M1196,762 L1037,808"/>
+  <path class="ln" d="M134,720 L276,662 M134,735 L276,740 M134,750 L276,818" stroke="#b91c1c"/>
+
+  <!-- include / extend -->
+  <g stroke="#4338ca" stroke-width="1.2" fill="none" stroke-dasharray="5 4" marker-end="url(#o)">
+    <path d="M525,108 L536,102"/><path d="M520,118 C560,140 560,160 537,165"/><path d="M515,124 C575,170 575,220 538,228"/><path d="M510,130 C600,200 600,280 540,293"/>
+    <path d="M655,347 C640,250 560,170 520,128"/>
+  </g>
+  <text x="533" y="92" class="st">«include»</text>
+  <text x="568" y="337" class="st">«extend»</text>
+
+  <!-- Threatens / mitigates -->
+  <path class="thr" d="M455,634 C520,560 520,280 440,218" marker-end="url(#rd)"/>
+  <text x="498" y="560" font-size="10.5" fill="#dc2626" font-style="italic">«threatens»</text>
+  <path class="thr" d="M300,722 C220,600 220,250 290,126" marker-end="url(#rd)"/>
+  <text x="218" y="600" font-size="10.5" fill="#dc2626" font-style="italic" transform="rotate(-80 218 600)">«threatens»</text>
+  <path class="thr" d="M500,804 C640,760 660,420 655,323" marker-end="url(#rd)"/>
+  <text x="600" y="700" font-size="10.5" fill="#dc2626" font-style="italic">«threatens»</text>
+  <path class="mit" d="M690,256 C700,420 600,600 520,652" marker-end="url(#gn)"/>
+  <text x="680" y="460" font-size="10.5" fill="#16a34a" font-style="italic">«mitigates»</text>
+  <path class="mit" d="M760,178 C820,320 700,640 524,736" marker-end="url(#gn)"/>
+  <text x="742" y="560" font-size="10.5" fill="#16a34a" font-style="italic">«mitigates»</text>
+  <path class="mit" d="M793,754 C700,800 620,820 526,820" marker-end="url(#gn)"/>
+  <text x="640" y="838" font-size="10.5" fill="#16a34a" font-style="italic">«mitigates»</text>
+</svg>
+</div></body></html>

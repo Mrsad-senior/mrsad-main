@@ -1,0 +1,1 @@
+{"defense": "full", "approver": "oracle", "episodes": 4, "audit": {"ok": true, "checked": 12, "message": "OK: 12 event(s) verified"}, "replay": {"checked": 6, "matched": 6, "mismatched_seqs": []}, "at": "2026-10-14T07:32:38+00:00"}

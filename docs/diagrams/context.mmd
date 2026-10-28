@@ -1,0 +1,23 @@
+flowchart LR
+  user(["👤 Business user<br/>(asks the agent for help)"])
+  agent["🤖 AI agent<br/>(any LLM: Qwen, GPT, Claude…)"]
+  attacker(["🕵️ Attacker<br/>(controls emails, web pages,<br/>documents the agent reads)"])
+  subgraph MIRSAD["Mirsad gateway (system boundary)"]
+    gw["Policy · Taint tracking · AR/EN detector<br/>Approval · Audit log"]
+  end
+  tools[("🧰 Enterprise tools<br/>Email · CRM · Web · Documents · Payments")]
+  approver(["📱 Approver<br/>(security / line manager)"])
+  admin(["🛡️ Administrator / Auditor"])
+  user -- "task" --> agent
+  agent -- "tool calls (MCP / function calling)" --> gw
+  gw -- "allowed calls" --> tools
+  tools -- "results (may carry hidden instructions)" --> gw
+  gw -- "inspected, sanitised results" --> agent
+  attacker -. "plants injected instructions" .-> tools
+  gw -- "approval requests (push)" --> approver
+  approver -- "approve / deny" --> gw
+  admin -- "policies, agents, audit review" --> gw
+  classDef ext fill:#fff7ed,stroke:#f59e0b,color:#7c2d12
+  classDef bad fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+  class attacker bad
+  class user,approver,admin ext

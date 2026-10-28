@@ -1,0 +1,170 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Mirsad architecture</title>
+<style>
+  body { margin: 0; background: #fff; font-family: Arial, Helvetica, sans-serif; }
+  #diagram { display: inline-block; padding: 10px; background: #fff; }
+  .t { font-size: 13px; fill: #0b1f3a; }
+  .s { font-size: 11px; fill: #334155; }
+  .h { font-size: 15px; font-weight: 700; fill: #0b1f3a; }
+  .lane { font-size: 12px; font-weight: 700; fill: #0f766e; letter-spacing: .4px; }
+  .w { fill: #fff; }
+</style></head>
+<body><div id="diagram">
+<svg width="1440" height="770" viewBox="0 0 1440 770" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
+    <marker id="r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+    <linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#0b1f3a"/><stop offset="1" stop-color="#12345f"/></linearGradient>
+  </defs>
+
+  <!-- Agents -->
+  <rect x="20" y="90" width="254" height="400" rx="14" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="147" y="116" text-anchor="middle" class="h">AI agents (any LLM)</text>
+  <g>
+    <rect x="36" y="130" width="222" height="100" rx="10" fill="#fff" stroke="#6366f1"/>
+    <text x="147" y="168" text-anchor="middle" class="t" font-weight="700">MCP host</text>
+    <text x="147" y="188" text-anchor="middle" class="s">Claude Desktop, IDEs,</text>
+    <text x="147" y="204" text-anchor="middle" class="s">agent frameworks</text>
+    <rect x="36" y="250" width="222" height="100" rx="10" fill="#fff" stroke="#6366f1"/>
+    <text x="147" y="288" text-anchor="middle" class="t" font-weight="700">OpenAI-style agent</text>
+    <text x="147" y="308" text-anchor="middle" class="s">function calling · Qwen (Ollama),</text>
+    <text x="147" y="324" text-anchor="middle" class="s">GPT, Llama, …</text>
+    <rect x="36" y="370" width="222" height="100" rx="10" fill="#fff" stroke="#6366f1"/>
+    <text x="147" y="408" text-anchor="middle" class="t" font-weight="700">Custom agent + SDK</text>
+    <text x="147" y="428" text-anchor="middle" class="s">Python guard() decorator</text>
+    <text x="147" y="444" text-anchor="middle" class="s">any framework</text>
+  </g>
+
+  <!-- Gateway -->
+  <rect x="320" y="40" width="800" height="560" rx="18" fill="#f8fafc" stroke="url(#g)" stroke-width="3"/>
+  <rect x="320" y="40" width="800" height="40" rx="18" fill="url(#g)"/>
+  <rect x="320" y="62" width="800" height="18" fill="#12345f"/>
+  <text x="720" y="67" text-anchor="middle" font-size="18" font-weight="700" class="w">MIRSAD GATEWAY · مرصاد</text>
+
+  <!-- Adapters -->
+  <text x="425" y="110" text-anchor="middle" class="lane">ADAPTERS</text>
+  <rect x="340" y="130" width="170" height="100" rx="10" fill="#e6f4f4" stroke="#0f766e"/>
+  <text x="425" y="170" text-anchor="middle" class="t" font-weight="700">MCP proxy</text>
+  <text x="425" y="190" text-anchor="middle" class="s">stdio · HTTP /mcp</text>
+  <rect x="340" y="250" width="170" height="100" rx="10" fill="#e6f4f4" stroke="#0f766e"/>
+  <text x="425" y="290" text-anchor="middle" class="t" font-weight="700">OpenAI proxy</text>
+  <text x="425" y="310" text-anchor="middle" class="s">/v1/chat/completions</text>
+  <rect x="340" y="370" width="170" height="100" rx="10" fill="#e6f4f4" stroke="#0f766e"/>
+  <text x="425" y="410" text-anchor="middle" class="t" font-weight="700">Guard API</text>
+  <text x="425" y="430" text-anchor="middle" class="s">/v1/guard · /v1/tools</text>
+
+  <!-- Call path -->
+  <rect x="535" y="98" width="565" height="170" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="5 4"/>
+  <text x="550" y="120" class="lane">① CALL PATH — before the tool runs</text>
+  <rect x="550" y="148" width="118" height="100" rx="10" fill="#0b1f3a"/>
+  <text x="609" y="186" text-anchor="middle" class="w" font-size="13" font-weight="700">Policy</text>
+  <text x="609" y="203" text-anchor="middle" class="w" font-size="13" font-weight="700">engine</text>
+  <text x="609" y="224" text-anchor="middle" font-size="10.5" fill="#cbd5e1">YAML · per-param</text>
+  <rect x="680" y="148" width="92" height="100" rx="10" fill="#0b1f3a"/>
+  <text x="726" y="194" text-anchor="middle" class="w" font-size="13" font-weight="700">Rate</text>
+  <text x="726" y="211" text-anchor="middle" class="w" font-size="13" font-weight="700">limiter</text>
+  <rect x="784" y="148" width="110" height="100" rx="10" fill="#0b1f3a"/>
+  <text x="839" y="186" text-anchor="middle" class="w" font-size="13" font-weight="700">Taint</text>
+  <text x="839" y="203" text-anchor="middle" class="w" font-size="13" font-weight="700">tracker</text>
+  <text x="839" y="224" text-anchor="middle" font-size="10.5" fill="#cbd5e1">data provenance</text>
+  <rect x="906" y="148" width="86" height="100" rx="10" fill="#0f766e"/>
+  <text x="949" y="186" text-anchor="middle" class="w" font-size="13" font-weight="700">Decide</text>
+  <text x="949" y="205" text-anchor="middle" font-size="10.5" fill="#ccfbf1">deny-</text>
+  <text x="949" y="219" text-anchor="middle" font-size="10.5" fill="#ccfbf1">overrides</text>
+  <rect x="1004" y="148" width="90" height="100" rx="10" fill="#f59e0b"/>
+  <text x="1049" y="186" text-anchor="middle" font-size="13" font-weight="700" fill="#1f1300">Human</text>
+  <text x="1049" y="203" text-anchor="middle" font-size="13" font-weight="700" fill="#1f1300">approval</text>
+  <text x="1049" y="224" text-anchor="middle" font-size="10.5" fill="#3b2300">high-risk only</text>
+  <g stroke="#334155" stroke-width="1.8" fill="none" marker-end="url(#a)">
+    <path d="M668,198 H678"/><path d="M772,198 H782"/><path d="M894,198 H904"/><path d="M992,198 H1002"/>
+  </g>
+
+  <!-- Result path -->
+  <rect x="535" y="290" width="565" height="170" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="5 4"/>
+  <text x="550" y="312" class="lane">② RESULT PATH — before the model sees it</text>
+  <rect x="550" y="340" width="168" height="100" rx="10" fill="#0b1f3a"/>
+  <text x="634" y="380" text-anchor="middle" class="w" font-size="13" font-weight="700">Taint labelling</text>
+  <text x="634" y="402" text-anchor="middle" font-size="10.5" fill="#cbd5e1">trust · sensitivity · values</text>
+  <rect x="734" y="340" width="168" height="100" rx="10" fill="#0b1f3a"/>
+  <text x="818" y="380" text-anchor="middle" class="w" font-size="13" font-weight="700">Sanitise &amp; spotlight</text>
+  <text x="818" y="402" text-anchor="middle" font-size="10.5" fill="#cbd5e1">remove / mark untrusted</text>
+  <rect x="918" y="340" width="176" height="100" rx="10" fill="#be123c"/>
+  <text x="1006" y="376" text-anchor="middle" class="w" font-size="13" font-weight="700">Injection detector</text>
+  <text x="1006" y="396" text-anchor="middle" font-size="11" fill="#ffe4e6">Arabic · English · mixed</text>
+  <text x="1006" y="414" text-anchor="middle" font-size="10.5" fill="#ffe4e6">rules + n-gram ML</text>
+  <g stroke="#334155" stroke-width="1.8" fill="none" marker-end="url(#a)">
+    <path d="M918,390 H904"/><path d="M734,390 H720"/>
+  </g>
+
+  <!-- Services -->
+  <text x="550" y="490" class="lane">SHARED SERVICES</text>
+  <rect x="550" y="500" width="168" height="80" rx="10" fill="#e6f4f4" stroke="#0f766e"/>
+  <text x="634" y="534" text-anchor="middle" class="t" font-weight="700">Audit log</text>
+  <text x="634" y="553" text-anchor="middle" class="s">HMAC hash chain · replay</text>
+  <rect x="734" y="500" width="168" height="80" rx="10" fill="#e6f4f4" stroke="#0f766e"/>
+  <text x="818" y="534" text-anchor="middle" class="t" font-weight="700">Admin REST API</text>
+  <text x="818" y="553" text-anchor="middle" class="s">JWT roles · SSE stream</text>
+  <rect x="918" y="500" width="176" height="80" rx="10" fill="#fff7ed" stroke="#f59e0b"/>
+  <text x="1006" y="534" text-anchor="middle" class="t" font-weight="700">Approval service</text>
+  <text x="1006" y="553" text-anchor="middle" class="s">EN/AR summaries · push</text>
+
+  <!-- Gateway internal flows -->
+  <g stroke="#334155" stroke-width="1.8" fill="none" marker-end="url(#a)">
+    <path d="M510,180 C530,180 530,198 548,198"/>
+    <path d="M510,300 C530,300 530,206 548,206"/>
+    <path d="M510,420 C528,420 528,214 548,214"/>
+    <path d="M550,390 H512"/>
+  </g>
+  <path d="M1094,232 H1110 V540 H1096" stroke="#f59e0b" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#a)"/>
+  <text x="725" y="474" class="s" font-style="italic">every decision and inspection → audit (dashed)</text>
+  <path d="M609,248 C600,300 530,330 545,505" stroke="#94a3b8" stroke-width="1.4" fill="none" stroke-dasharray="4 4" marker-end="url(#a)"/>
+
+  <!-- Agents <-> adapters -->
+  <g stroke="#334155" stroke-width="2" fill="none" marker-end="url(#a)" marker-start="url(#a)">
+    <path d="M276,180 H338"/><path d="M276,300 H338"/><path d="M276,420 H338"/>
+  </g>
+  <text x="307" y="172" text-anchor="middle" class="s">calls</text>
+  <text x="307" y="412" text-anchor="middle" class="s">results</text>
+
+  <!-- Tools -->
+  <rect x="1166" y="90" width="254" height="470" rx="14" fill="#f1f5f9" stroke="#64748b" stroke-width="1.5"/>
+  <text x="1293" y="116" text-anchor="middle" class="h">Upstream tools</text>
+  <text x="1293" y="134" text-anchor="middle" class="s">MCP servers · HTTP tools</text>
+  <g>
+    <rect x="1182" y="148" width="222" height="66" rx="9" fill="#fff" stroke="#94a3b8"/>
+    <text x="1196" y="174" class="t" font-weight="700">✉ Email</text><text x="1196" y="194" class="s">read: untrusted · send: dynamic sink</text>
+    <rect x="1182" y="224" width="222" height="66" rx="9" fill="#fff" stroke="#94a3b8"/>
+    <text x="1196" y="250" class="t" font-weight="700">👥 CRM</text><text x="1196" y="270" class="s">confidential · export ≤ 50</text>
+    <rect x="1182" y="300" width="222" height="66" rx="9" fill="#fff" stroke="#94a3b8"/>
+    <text x="1196" y="326" class="t" font-weight="700">🌐 Web fetch</text><text x="1196" y="346" class="s">untrusted · external sink</text>
+    <rect x="1182" y="376" width="222" height="66" rx="9" fill="#fff" stroke="#94a3b8"/>
+    <text x="1196" y="402" class="t" font-weight="700">📄 Documents</text><text x="1196" y="422" class="s">untrusted uploads scanned</text>
+    <rect x="1182" y="452" width="222" height="66" rx="9" fill="#fff" stroke="#94a3b8"/>
+    <text x="1196" y="478" class="t" font-weight="700">💳 Payments · delete</text><text x="1196" y="498" class="s">critical · always approval</text>
+  </g>
+  <path d="M1096,198 H1164" stroke="#16a34a" stroke-width="2.2" fill="none" marker-end="url(#a)"/>
+  <text x="1140" y="188" text-anchor="middle" font-size="11" fill="#166534" font-weight="700">allowed</text>
+  <path d="M1164,390 H1096" stroke="#be123c" stroke-width="2.2" fill="none" marker-end="url(#a)"/>
+  <text x="1140" y="380" text-anchor="middle" font-size="11" fill="#9f1239" font-weight="700">raw</text>
+
+  <!-- Attacker -->
+  <rect x="1166" y="590" width="254" height="62" rx="10" fill="#fee2e2" stroke="#dc2626" stroke-dasharray="6 4"/>
+  <text x="1293" y="616" text-anchor="middle" font-size="13" font-weight="700" fill="#7f1d1d">🕵 Attacker-controlled content</text>
+  <text x="1293" y="636" text-anchor="middle" font-size="11" fill="#7f1d1d">hidden instructions in mail, pages, files</text>
+  <path d="M1293,590 V562" stroke="#dc2626" stroke-width="2" fill="none" stroke-dasharray="5 4" marker-end="url(#r)"/>
+
+  <!-- Bottom external -->
+  <rect x="550" y="650" width="168" height="90" rx="12" fill="#fff" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="634" y="688" text-anchor="middle" class="t" font-weight="700">🗄 Database</text>
+  <text x="634" y="708" text-anchor="middle" class="s">PostgreSQL / SQLite</text>
+  <rect x="734" y="650" width="168" height="90" rx="12" fill="#fff" stroke="#0f766e" stroke-width="1.5"/>
+  <text x="818" y="688" text-anchor="middle" class="t" font-weight="700">🖥 Admin dashboard</text>
+  <text x="818" y="708" text-anchor="middle" class="s">React · EN/AR · RTL</text>
+  <rect x="918" y="650" width="176" height="90" rx="12" fill="#fff" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="1006" y="688" text-anchor="middle" class="t" font-weight="700">📱 Approver app</text>
+  <text x="1006" y="708" text-anchor="middle" class="s">installable PWA · push</text>
+  <g stroke="#334155" stroke-width="1.8" fill="none" marker-end="url(#a)" marker-start="url(#a)">
+    <path d="M634,582 V648"/><path d="M818,582 V648"/><path d="M1006,582 V648"/>
+  </g>
+</svg>
+</div></body></html>

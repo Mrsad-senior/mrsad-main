@@ -1,0 +1,121 @@
+{
+  "seq": 33,
+  "ts": 1791721103.512392,
+  "event_type": "tool_call.decision",
+  "session_id": "smoke-1791721103",
+  "agent_id": "email-crm-assistant",
+  "tool": "send_email",
+  "call_id": "call_s1",
+  "action": "require_approval",
+  "risk": "high",
+  "policy_version": "6ca37e7980e428ee5079d305d98200df658b2e3bcc234edc692cef310cb61012",
+  "payload": {
+    "call": {
+      "agent_id": "email-crm-assistant",
+      "arguments": {
+        "body": "Attached.",
+        "subject": "Price list",
+        "to": "buyer@other.example"
+      },
+      "call_id": "call_s1",
+      "session_id": "smoke-******1103",
+      "tool": "send_email",
+      "ts": 1791721103.511414
+    },
+    "enforced": true,
+    "latency_ms": 0.256,
+    "principal": "demo-agent",
+    "profile": {
+      "allowed": true,
+      "approval": "on_risk",
+      "matched_rule": "send_email",
+      "risk": "medium",
+      "scan": false,
+      "sensitivity": "internal",
+      "sink": "dynamic",
+      "sink_params": [
+        "to",
+        "cc",
+        "bcc"
+      ],
+      "tool": "send_email",
+      "trust": "trusted"
+    },
+    "rate_counts": {
+      "rl:agent=email-crm-assistant;tool=send_email": 2
+    },
+    "reasons": [
+      {
+        "action": "allow",
+        "code": "TOOL_RISK",
+        "evidence": {
+          "risk": "medium",
+          "risk_score": 0.3,
+          "tool": "send_email"
+        },
+        "layer": "policy",
+        "message": "Tool 'send_email' is classified as medium risk (score 0.3).",
+        "message_ar": "الأداة 'send_email' مصنّفة بدرجة خطورة متوسطة (الدرجة 0.3).",
+        "risk_score": 0.3,
+        "rule_id": null
+      },
+      {
+        "action": "require_approval",
+        "code": "CONSTRAINT_VIOLATION",
+        "evidence": {
+          "actual": "other.example",
+          "expected": [
+            "najd-trading.example"
+          ],
+          "operator": "domain_in",
+          "param": "to"
+        },
+        "layer": "policy",
+        "message": "Argument 'to' sends data to 'other.example', outside the allowed domains ['najd-trading.example'].",
+        "message_ar": "الحقل 'to' يرسل البيانات إلى 'other.example'، وهو خارج النطاقات المسموح بها ['najd-trading.example'].",
+        "risk_score": 0.5,
+        "rule_id": "constraint:to.domain_in"
+      },
+      {
+        "action": "require_approval",
+        "code": "TAINT_UNTRUSTED_TO_EXTERNAL",
+        "evidence": {
+          "field": null,
+          "sink": "external",
+          "source_call_id": "call_r1",
+          "source_count": 1,
+          "source_tool": "read_email",
+          "sources": [
+            {
+              "call_id": "call_r1",
+              "tool": "read_email"
+            }
+          ],
+          "tool": "send_email"
+        },
+        "layer": "taint",
+        "message": "⁨send_email⁩ would send data outside the organisation, and earlier in this conversation the assistant read content from an untrusted source (⁨read_email⁩). Instructions hidden in that content could be steering the assistant.",
+        "message_ar": "الأداة ⁨send_email⁩ سترسل بيانات إلى خارج المنظمة، وقد قرأ المساعد في وقت سابق من هذه المحادثة محتوى من مصدر غير موثوق (⁨read_email⁩). قد يحتوي ذلك المحتوى على تعليمات مخفية توجّه المساعد.",
+        "risk_score": 0.6,
+        "rule_id": "taint.untrusted_to_external_sink"
+      }
+    ],
+    "returned_action": "require_approval",
+    "risk_score": 0.6,
+    "sink": "external",
+    "snapshot": {
+      "agent_id": "email-crm-assistant",
+      "call_count": 1,
+      "injection_detected": false,
+      "max_sensitivity": "internal",
+      "session_id": "smoke-******1103",
+      "untrusted_sources": [
+        "read_email:call_r1"
+      ],
+      "values": []
+    },
+    "wait_for_approval": true
+  },
+  "prev_hash": "08cf15b12576b40d144430ae6dfa0663da1af6bc0339c41288f2b7bbf01730d7",
+  "hash": "7d443d18641969b11042d98047ce4d31721c9ccb84fb008b2dc6f2daec139284"
+}

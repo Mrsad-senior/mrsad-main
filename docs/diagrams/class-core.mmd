@@ -1,0 +1,143 @@
+classDiagram
+  direction LR
+
+  class Gateway {
+    +policy: PolicyEngine
+    +set_policy(engine)
+    +check_call(call) Decision
+    +inspect_result(result) InspectionOutcome
+    +execute(call, executor) GatewayResponse
+    +replay(seq) ReplayReport
+  }
+  class PolicyEngine {
+    +version: str
+    +mode: str
+    +tool_profile(agent, tool) ToolProfile
+    +resolve_sink(call, profile) SinkKind
+    +evaluate_call(call) PolicyEvaluation
+    +approval_required(profile, risk, taint) bool
+    +visible_tools(agent, tools) list
+  }
+  class RateLimiter {
+    +hit(key, window, now) int
+    +peek(key, window, now) int
+  }
+  class ToolProfile {
+    <<model>>
+    +allowed: bool
+    +trust: Trust
+    +sensitivity: Sensitivity
+    +sink: str
+    +risk: Risk
+    +approval: str
+  }
+  class ApprovalService {
+    +request(call, decision) ApprovalRecord
+    +wait(id, timeout) ApprovalRecord
+    +decide(id, approve, user) ApprovalRecord
+    +expire_overdue() int
+  }
+  class Notifier {
+    +subscribe() Subscription
+    +publish(event, data)
+    +web_push(subscriptions, payload) int
+  }
+  class ApprovalRecord {
+    <<model>>
+    +id: str
+    +status: ApprovalStatus
+    +expires_at: float
+  }
+  class Decision {
+    <<model>>
+    +action: Action
+    +risk_score: float
+    +policy_version: str
+    +audit_seq: int
+  }
+  class Reason {
+    <<model>>
+    +layer: str
+    +code: str
+    +action: Action
+    +risk_score: float
+    +evidence: dict
+  }
+  class InjectionDetector {
+    +mode: str
+    +scan(text) DetectionResult
+    +scan_structured(value) DetectionResult
+  }
+  class DetectionResult {
+    <<model>>
+    +score: float
+    +label: str
+    +spans: list
+  }
+  class InspectionOutcome {
+    <<model>>
+    +action: str
+    +content: str
+  }
+  class TaintTracker {
+    +snapshot(session, agent) SessionSnapshot
+    +register_result(result, profile, detection)
+    +evaluate_call(call, profile, sink) list~Reason~
+    +note_call(call)
+  }
+  class SessionSnapshot {
+    <<model>>
+    +untrusted_sources: list
+    +injection_detected: bool
+  }
+  class TaintedValue {
+    <<model>>
+    +value: str
+    +kind: str
+    +source_tool: str
+    +source_call_id: str
+  }
+  class UpstreamManager {
+    +list_tools() list~UpstreamTool~
+    +call(call) ToolResult
+  }
+  class ToolCall {
+    <<model>>
+    +session_id: str
+    +agent_id: str
+    +tool: str
+    +arguments: dict
+  }
+  class AuditLog {
+    +append(event_type, payload) AuditEvent
+    +verify(anchor) AuditVerifyReport
+    +query(filters) list~AuditEvent~
+    +export(fmt) str
+  }
+  class AuditEvent {
+    <<model>>
+    +seq: int
+    +payload: dict
+    +prev_hash: str
+    +hash: str
+  }
+
+  Gateway o-- PolicyEngine
+  Gateway o-- TaintTracker
+  Gateway o-- InjectionDetector
+  Gateway o-- AuditLog
+  Gateway o-- ApprovalService
+  Gateway ..> UpstreamManager : executor
+  PolicyEngine *-- RateLimiter
+  PolicyEngine ..> ToolProfile
+  ApprovalService o-- Notifier
+  TaintTracker *-- SessionSnapshot
+  SessionSnapshot *-- TaintedValue
+  InjectionDetector ..> DetectionResult
+  AuditLog *-- AuditEvent
+  ApprovalService *-- ApprovalRecord
+  ApprovalRecord *-- Decision
+  Decision *-- Reason
+  InspectionOutcome *-- DetectionResult
+  Gateway ..> ToolCall
+  Gateway ..> InspectionOutcome

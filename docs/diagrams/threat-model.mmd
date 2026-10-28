@@ -1,0 +1,26 @@
+flowchart LR
+  subgraph TB1["Trust boundary A — untrusted internet content"]
+    EXT["External emails · web pages · uploaded documents"]
+  end
+  subgraph TB2["Trust boundary B — agent runtime (LLM may be hijacked)"]
+    LLM["LLM agent"]
+  end
+  subgraph TB3["Trust boundary C — Mirsad gateway (enforcement point)"]
+    GW["Gateway pipeline"]
+    LOG[("Audit log · HMAC chain")]
+    DB[("Policies · users · keys")]
+  end
+  subgraph TB4["Trust boundary D — enterprise systems"]
+    TOOLS["Email · CRM · Payments · Files"]
+  end
+  subgraph TB5["Trust boundary E — human approvers"]
+    PWA["Approver PWA"]
+  end
+  EXT -- "T: injected instructions" --> TOOLS
+  TOOLS -- "results" --> GW -- "sanitised data" --> LLM
+  LLM -- "tool calls (S, T, E)" --> GW -- "permitted calls" --> TOOLS
+  GW -- "R, I" --> LOG
+  GW <-- "S, D: approval channel" --> PWA
+  ADM["Administrator"] -- "S, E: policy changes" --> DB
+  classDef red fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+  class EXT red

@@ -1,0 +1,43 @@
+# Mirsad deployment: `docker compose up -d` (gateway + PostgreSQL).
+# Optional local LLM for the demo agent: `docker compose --profile demo up -d`.
+services:
+  mirsad:
+    build: .
+    image: mirsad:1.0.0
+    restart: unless-stopped
+    ports:
+      - "8700:8700"
+    environment:
+      MIRSAD_DATABASE_URL: postgresql+psycopg://mirsad:${POSTGRES_PASSWORD:-change-me}@db:5432/mirsad
+      MIRSAD_SECRET_KEY: ${MIRSAD_SECRET_KEY:?set MIRSAD_SECRET_KEY in .env}
+      MIRSAD_ADMIN_PASSWORD: ${MIRSAD_ADMIN_PASSWORD:?set MIRSAD_ADMIN_PASSWORD in .env}
+      MIRSAD_ENABLE_DEMO: ${MIRSAD_ENABLE_DEMO:-false}
+      MIRSAD_LLM_BASE_URL: http://ollama:11434/v1
+    volumes:
+      - mirsad-data:/data
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mirsad
+      POSTGRES_USER: mirsad
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mirsad -d mirsad"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["demo"]
+    volumes:
+      - ollama-models:/root/.ollama
+volumes:
+  mirsad-data:
+  pg-data:
+  ollama-models:

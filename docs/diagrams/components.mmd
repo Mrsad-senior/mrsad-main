@@ -1,0 +1,64 @@
+flowchart TB
+  subgraph EXT["Clients"]
+    WEB["web/ (React + TypeScript)<br/>dashboard · approver PWA"]
+    SDK["mirsad.sdk<br/>MirsadClient · guard()"]
+    AGENT["AI agent<br/>MCP host or OpenAI-style client"]
+  end
+
+  subgraph ENTRY["Entry points"]
+    CLI["mirsad.cli<br/>serve · policy · audit · scan"]
+    API["mirsad.api<br/>create_app · routers · deps · static"]
+    ADP["mirsad.adapters<br/>mcp_proxy · openai_proxy · upstreams"]
+  end
+
+  GW["mirsad.gateway<br/>Gateway: check_call · inspect_result<br/>execute · replay"]
+
+  subgraph LAYERS["Defence layers"]
+    POL["mirsad.policy<br/>schema · engine · constraints<br/>ratelimit · regex_guard"]
+    TNT["mirsad.taint<br/>extract · rules · tracker"]
+    DET["mirsad.detector<br/>normalize · rules · model<br/>sanitize · train"]
+  end
+
+  subgraph ACC["Accountability"]
+    AUD["mirsad.audit<br/>log (HMAC chain) · redact"]
+    APR["mirsad.approvals<br/>service · notifier · summary"]
+    AUTH["mirsad.auth<br/>scrypt · JWT · agent keys"]
+  end
+
+  subgraph FOUND["Foundation"]
+    MOD["mirsad.models<br/>shared pydantic types"]
+    CFG["mirsad.config<br/>mirsad.textutil"]
+    STO["mirsad.storage<br/>Database · ORM tables"]
+  end
+
+  DEMO["demo/<br/>World · workspace MCP server<br/>DemoAgent"]
+  DB[("SQLite / PostgreSQL")]
+
+  AGENT -- "MCP · OpenAI API" --> ADP
+  AGENT -.-> SDK
+  SDK -- "Guard API" --> API
+  WEB -- "REST + SSE" --> API
+  API -- "mounts" --> ADP
+  ADP --> GW
+  API --> GW
+  CLI --> GW
+  ADP -...->|"in-process upstream (demo)"| DEMO
+  GW -. "injected" .-> POL
+  GW -. "injected" .-> TNT
+  GW -. "injected" .-> DET
+  GW -. "injected" .-> AUD
+  GW -. "injected" .-> APR
+  API --> AUTH
+  TNT --> POL
+  APR --> AUD
+  AUD --> STO
+  APR --> STO
+  AUTH --> STO
+  STO --> DB
+  POL ~~~ MOD
+  DET ~~~ CFG
+
+  classDef core fill:#0b1f3a,stroke:#0b1f3a,color:#ffffff
+  classDef outside fill:#fff7ed,stroke:#f59e0b,color:#7c2d12
+  class GW core
+  class AGENT,SDK,WEB,DEMO outside

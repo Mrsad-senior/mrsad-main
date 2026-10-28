@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-14T06:51:13+00:00",
+  "calls": 1000,
+  "warmup_calls": 50,
+  "concurrent_sessions": 50,
+  "policy": "default.yaml",
+  "detector_mode": "rules_only",
+  "python": "3.12.15",
+  "platform": "macOS-26.5.1-arm64-arm-64bit",
+  "machine": "arm64",
+  "call_mix": [
+    "get_customer",
+    "list_documents",
+    "list_emails",
+    "read_document",
+    "read_email",
+    "search_customers"
+  ],
+  "direct_ms": {
+    "n": 1000,
+    "p50": 0.001,
+    "p95": 0.036,
+    "p99": 0.039,
+    "mean": 0.005,
+    "max": 0.063
+  },
+  "sequential": {
+    "http_ms": {
+      "n": 1000,
+      "p50": 2.661,
+      "p95": 5.995,
+      "p99": 6.154,
+      "mean": 3.141,
+      "max": 9.637
+    },
+    "gateway_ms": {
+      "n": 1000,
+      "p50": 2.058,
+      "p95": 5.334,
+      "p99": 5.426,
+      "mean": 2.52,
+      "max": 9.029
+    },
+    "added_ms": {
+      "n": 1000,
+      "p50": 2.661,
+      "p95": 5.958,
+      "p99": 6.118,
+      "mean": 3.136,
+      "max": 9.634
+    },
+    "non_allow": 0,
+    "http_errors": 0,
+    "throughput_rps": 316.6
+  },
+  "concurrent": {
+    "http_ms": {
+      "n": 1000,
+      "p50": 165.511,
+      "p95": 207.982,
+      "p99": 216.102,
+      "mean": 166.066,
+      "max": 239.07
+    },
+    "gateway_ms": {
+      "n": 1000,
+      "p50": 159.479,
+      "p95": 202.758,
+      "p99": 210.952,
+      "mean": 159.089,
+      "max": 235.452
+    },
+    "added_ms": {
+      "n": 1000,
+      "p50": 165.511,
+      "p95": 207.979,
+      "p99": 216.067,
+      "mean": 166.062,
+      "max": 239.07
+    },
+    "non_allow": 0,
+    "http_errors": 0,
+    "wall_s": 3.441,
+    "throughput_rps": 290.6
+  },
+  "audit_chain_ok": true,
+  "server": "separate process",
+  "command": "python -m bench.latency --server-process --out reports/bench/latency-process.json --figure reports/bench/figures/latency-process.png",
+  "figure": "reports/bench/figures/latency-process.png"
+}

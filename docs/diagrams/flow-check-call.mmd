@@ -1,0 +1,26 @@
+flowchart TD
+  start([Tool call received]) --> auth{Agent key valid?}
+  auth -- no --> deny401[Reject 401]
+  auth -- yes --> prof[Resolve tool profile from policy<br/>exact name › longest glob › *]
+  prof --> allowed{Tool allowed<br/>for this agent?}
+  allowed -- no --> D1[DENY · TOOL_NOT_ALLOWED]
+  allowed -- yes --> cons[Check parameter constraints<br/>max · pattern · domain_in · …]
+  cons --> rl[Sliding-window rate limit]
+  rl --> rules[Global rules]
+  rules --> sink[Resolve sink<br/>none / internal / external]
+  sink --> taint[Taint rules<br/>untrusted→external · confidential→external<br/>untrusted destination · after injection]
+  taint --> comb[Combine reasons<br/>deny-overrides, max risk]
+  comb --> appr{Approval required?<br/>always / on_risk}
+  appr -- yes --> human[Ask approver · wait ≤ timeout]
+  human -- approved --> ALLOW
+  human -- denied / expired --> DENY
+  appr -- no --> fin{Combined action}
+  fin -- allow --> ALLOW([ALLOW → execute tool])
+  fin -- deny --> DENY([DENY → explain to agent])
+  D1 --> DENY
+  ALLOW --> audit[(Audit: hash-chained event)]
+  DENY --> audit
+  classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef no fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+  class ALLOW ok
+  class DENY,D1,deny401 no
