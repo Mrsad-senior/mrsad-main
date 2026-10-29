@@ -27,8 +27,8 @@ import re
 import sys
 import uuid
 from dataclasses import dataclass
-from pathlib import Path
 from datetime import date
+from pathlib import Path
 from typing import Any
 
 import httpx
@@ -581,9 +581,10 @@ def build_demo_gateway(world: World, *, auto_approve: bool = False, policy_yaml:
         return bool(auto_approve)
 
     approvals = ApprovalService(db, notifier, timeout_s=5.0, auto_decider=_decider)
-    from mirsad.security.monitor import SecurityMonitor
-    from mirsad.security.intent import OllamaIntentJudge
     import os
+
+    from mirsad.security.intent import OllamaIntentJudge
+    from mirsad.security.monitor import SecurityMonitor
     judge = OllamaIntentJudge(model=os.getenv('MIRSAD_JUDGE_MODEL', 'qwen2.5:3b')) if os.getenv('MIRSAD_INTENT_JUDGE_ENABLED') == '1' else None
     gateway = Gateway(
         security_monitor=SecurityMonitor(intent_judge=judge),

@@ -7,8 +7,9 @@ from __future__ import annotations
 
 import json
 import math
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Callable, Protocol
+from typing import Protocol
 
 import httpx
 
@@ -71,7 +72,7 @@ class EmbeddingSimilarity:
         self._reference: list[list[float]] | None = None
 
     @classmethod
-    def local(cls, model_name: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2") -> 'EmbeddingSimilarity':
+    def local(cls, model_name: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2") -> EmbeddingSimilarity:
         try:
             from sentence_transformers import SentenceTransformer
         except ImportError as exc:
@@ -91,7 +92,7 @@ class EmbeddingSimilarity:
         def cosine(a: list[float], b: list[float]) -> float:
             if len(a) != len(b):
                 raise ValueError("Embedding dimensions differ")
-            dot = sum(x * y for x, y in zip(a, b))
+            dot = sum(x * y for x, y in zip(a, b, strict=True))
             norm = math.sqrt(sum(x*x for x in a) * sum(y*y for y in b))
             return dot / norm if norm else 0.0
         best_i, similarity = max(enumerate(cosine(query, ref) for ref in self._reference),

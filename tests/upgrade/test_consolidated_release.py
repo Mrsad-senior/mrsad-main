@@ -4,7 +4,8 @@ from __future__ import annotations
 import json
 
 import httpx
-from mirsad.detector.layered import DEFAULT_ATTACK_EXAMPLES, OllamaJudge, EmbeddingSimilarity
+
+from mirsad.detector.layered import DEFAULT_ATTACK_EXAMPLES, EmbeddingSimilarity, OllamaJudge
 
 
 def test_reference_library_is_bilingual_and_distinct():

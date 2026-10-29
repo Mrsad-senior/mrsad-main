@@ -57,7 +57,9 @@ class SecurityMonitor:
         Never learn from unreviewed or adversarial sessions.
         """
         with self._lock:
-            self.benign_transitions = {pair for trace in traces for pair in zip(trace, trace[1:])}
+            self.benign_transitions = {
+                pair for trace in traces for pair in zip(trace, trace[1:], strict=False)
+            }
 
     def bind_task(self, session_id: str, agent_id: str, task: str) -> None:
         if not task or not task.strip():

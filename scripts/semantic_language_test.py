@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Development smoke tests for Arabic/English example prompts.
 
 These eight examples have already been used during manual development. They are

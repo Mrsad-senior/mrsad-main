@@ -6,10 +6,10 @@ from pathlib import Path
 
 import httpx
 import pytest
-
-from demo.agent import DemoAgent, DirectBackend, parse_tool_calls
-from demo.sectors import ATTACKER_IBAN, SECTOR_SCENARIOS, SectorWorld, TRUSTED_IBAN
+from demo.agent import parse_tool_calls
+from demo.sectors import ATTACKER_IBAN, SECTOR_SCENARIOS, TRUSTED_IBAN, SectorWorld
 from demo.world import ToolArgumentError, call_tool, tool_schemas
+
 from mirsad.detector import InjectionDetector
 from mirsad.detector.layered import EmbeddingSimilarity, OllamaJudge, Signal
 from mirsad.models import Action, ToolCall

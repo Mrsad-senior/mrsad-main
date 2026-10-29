@@ -182,7 +182,10 @@ def _send_lab_results(world: SectorWorld, patient_id: str, to: str) -> dict:
 def _s(desc: str, fields: dict, required: list, fn: Any, name: str) -> ToolSpec:
     return ToolSpec(name, desc, _schema(fields, required), fn)
 
-_ID = lambda desc: {'type': 'string', 'description': desc}
+def _ID(desc: str) -> dict[str, str]:
+    return {'type': 'string', 'description': desc}
+
+
 SECTOR_TOOLS = {
     FINANCE: {
         'get_account_balance': _s('Read fictional account balance', {'account_id': _ID('Account ID')}, ['account_id'], _get_account_balance, 'get_account_balance'),

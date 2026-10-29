@@ -8,7 +8,7 @@ from __future__ import annotations
 import json
 import math
 from dataclasses import dataclass
-from typing import Protocol, Any
+from typing import Any, Protocol
 
 import httpx
 

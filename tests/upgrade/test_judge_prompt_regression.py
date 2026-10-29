@@ -1,6 +1,8 @@
 """Checks the content judge interface and security prompt; not a real-model accuracy test."""
 import json
+
 import httpx
+
 from mirsad.detector.layered import OllamaJudge
 
 

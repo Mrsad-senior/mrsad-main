@@ -83,13 +83,14 @@ def _demo_gateway(request: Request, sector: str) -> Any:
         return request.app.state.gateway
     gateway = getattr(request.app.state, 'sector_demo_gateway', None)
     if gateway is None:
+        import os
         from pathlib import Path
+
         from mirsad.gateway import Gateway
         from mirsad.policy import PolicyEngine
-        from mirsad.taint import TaintTracker
-        from mirsad.security.monitor import SecurityMonitor
         from mirsad.security.intent import OllamaIntentJudge
-        import os
+        from mirsad.security.monitor import SecurityMonitor
+        from mirsad.taint import TaintTracker
         judge = OllamaIntentJudge(model=os.getenv('MIRSAD_JUDGE_MODEL', 'qwen2.5:3b')) if os.getenv('MIRSAD_INTENT_JUDGE_ENABLED') == '1' else None
         path = Path(__file__).resolve().parents[4] / 'configs' / 'policies' / 'sectors.yaml'
         # Source deployments and wheels may place the policy elsewhere: explicit
@@ -230,8 +231,8 @@ async def custom_content(
     body: CustomContentRequest,
     request: Request,
     sector: Literal["finance", "healthcare"],
-    _user=Depends(any_user),
-) -> dict[str, Any]:  # noqa: B008
+    _user=Depends(any_user),  # noqa: B008
+) -> dict[str, Any]:
     """Reset fake data and plant an unseen attack for a controlled experiment."""
     world = _world(sector)
     async with _lock(request):
