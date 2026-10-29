@@ -476,6 +476,7 @@ export class ApiClient {
     const body: DemoChatRequest = { message: req.message, protected: req.protected };
     if (req.session_id) body.session_id = req.session_id;
     if (req.lang) body.lang = req.lang;
+    if (req.sector) body.sector = req.sector;
     const res = await this.request<DemoChatResponse>('POST', '/api/demo/chat', { body, signal });
     return {
       reply: res?.reply ?? '',
@@ -487,21 +488,26 @@ export class ApiClient {
     };
   }
 
-  demoReset(): Promise<DemoState> {
-    return this.request('POST', '/api/demo/reset');
+  /** Plant an arbitrary, previously unseen note in a fake invoice or patient record. */
+  demoCustomContent(payload: string, sector: 'finance' | 'healthcare'): Promise<{ state: DemoState }> {
+    return this.request('POST', `/api/demo/custom-content?sector=${encodeURIComponent(sector)}`, { body: { payload } });
   }
 
-  demoState(signal?: AbortSignal): Promise<DemoState> {
-    return this.get('/api/demo/state', undefined, signal);
+  demoReset(sector = 'general'): Promise<DemoState> {
+    return this.request('POST', `/api/demo/reset?sector=${encodeURIComponent(sector)}`);
   }
 
-  async demoScenarios(signal?: AbortSignal): Promise<DemoScenario[]> {
-    return asArray<DemoScenario>(await this.get('/api/demo/scenarios', undefined, signal), 'scenarios', 'items');
+  demoState(signal?: AbortSignal, sector = 'general'): Promise<DemoState> {
+    return this.get(`/api/demo/state?sector=${encodeURIComponent(sector)}`, undefined, signal);
+  }
+
+  async demoScenarios(signal?: AbortSignal, sector = 'general'): Promise<DemoScenario[]> {
+    return asArray<DemoScenario>(await this.get(`/api/demo/scenarios?sector=${encodeURIComponent(sector)}`, undefined, signal), 'scenarios', 'items');
   }
 
   /** Resets the demo world and plants the scenario's content (the "load scenario" action). */
-  applyDemoScenario(id: string): Promise<{ scenario: DemoScenario; state: DemoState }> {
-    return this.request('POST', `/api/demo/scenarios/${encodeURIComponent(id)}/apply`);
+  applyDemoScenario(id: string, sector = 'general'): Promise<{ scenario: DemoScenario; state: DemoState }> {
+    return this.request('POST', `/api/demo/scenarios/${encodeURIComponent(id)}/apply?sector=${encodeURIComponent(sector)}`);
   }
 }
 

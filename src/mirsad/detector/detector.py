@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import os
 import threading
 import time
 from collections.abc import Sequence
@@ -13,6 +14,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 from mirsad.detector.language import detect_language
+from mirsad.detector.layered import ContentLayer, EmbeddingSimilarity, OllamaJudge
 from mirsad.detector.model import EnsembleConfig, LinearTextModel, Window, combine_scores
 from mirsad.detector.normalize import NormalizedText, normalize
 from mirsad.detector.rules import RuleHit, RuleSet, rule_score
@@ -70,7 +72,9 @@ class InjectionDetector:
 
     def __init__(self, model_dir: str | Path | None = None, *, window_chars: int = 600,
                  stride_chars: int = 300, rules: RuleSet | None = None,
-                 model: LinearTextModel | None = None) -> None:
+                 model: LinearTextModel | None = None,
+                 semantic: ContentLayer | None = None,
+                 judge: ContentLayer | None = None) -> None:
         if window_chars < 50 or stride_chars < 50 or stride_chars > window_chars:
             raise ValueError("need 50 <= stride_chars <= window_chars")
         self.window_chars = window_chars
@@ -79,12 +83,18 @@ class InjectionDetector:
         self.model_dir = Path(model_dir) if model_dir is not None else None
         self.model = model if model is not None else (load_model(model_dir) if model_dir is not None else None)
         self.ensemble = self.model.meta.ensemble if self.model is not None else EnsembleConfig()
+        self.semantic = semantic
+        self.judge = judge
         self._version = _fingerprint(self.rules, self.model)
 
     @classmethod
     def default(cls) -> InjectionDetector:
         """Detector with the packaged model (``mirsad/detector/model/``), rules-only if it is absent."""
-        return cls(DEFAULT_MODEL_DIR)
+        # Optional providers require explicit enablement. Missing enabled providers
+        # raise rather than silently downgrade security to keyword-only scanning.
+        semantic = EmbeddingSimilarity.local() if os.getenv('MIRSAD_SEMANTIC_ENABLED') == '1' else None
+        judge = OllamaJudge(model=os.getenv('MIRSAD_JUDGE_MODEL', 'qwen2.5:3b')) if os.getenv('MIRSAD_JUDGE_ENABLED') == '1' else None
+        return cls(DEFAULT_MODEL_DIR, semantic=semantic, judge=judge)
 
     @property
     def mode(self) -> Mode:
@@ -99,6 +109,8 @@ class InjectionDetector:
         """Configuration summary for the dashboard / audit."""
         return {
             "mode": self.mode,
+            "content_layers": ["rules", *( ["linear_ml"] if self.model else []),
+                               *( ["semantic"] if self.semantic else []), *( ["llm_judge"] if self.judge else [])],
             "version": self.version,
             "rules": len(self.rules),
             "window_chars": self.window_chars,
@@ -115,7 +127,7 @@ class InjectionDetector:
         start = time.perf_counter()
         text = _as_text(text)
         analysis = self._analyze([text])[0]
-        result = self._result(text, analysis)
+        result = self._enrich(text, self._result(text, analysis))
         result.latency_ms = (time.perf_counter() - start) * 1000.0
         return result
 
@@ -124,7 +136,7 @@ class InjectionDetector:
         start = time.perf_counter()
         items = [_as_text(t) for t in texts]
         analyses = self._analyze(items)
-        results = [self._result(t, a) for t, a in zip(items, analyses, strict=True)]
+        results = [self._enrich(t, self._result(t, a)) for t, a in zip(items, analyses, strict=True)]
         per = (time.perf_counter() - start) * 1000.0 / max(1, len(results))
         for r in results:
             r.latency_ms = per
@@ -145,22 +157,58 @@ class InjectionDetector:
         best_score = best_model = best_rule = 0.0
         spans: list[DetectionSpan] = []
         signals: set[str] = set()
+        layer_scores: dict[str, float] = {}
+        layer_reasons: dict[str, str] = {}
         for leaf, analysis in zip(leaves, analyses, strict=True):
             leaf_result = self._result(leaf.text, analysis, detect_lang=False)
             best_score = max(best_score, leaf_result.score)
             best_model = max(best_model, leaf_result.model_score)
             best_rule = max(best_rule, leaf_result.rule_score)
             signals.update(leaf_result.signals)
+            for name, value in leaf_result.layer_scores.items():
+                if value >= layer_scores.get(name, -1):
+                    layer_scores[name] = value
+                    layer_reasons[name] = leaf_result.layer_reasons.get(name, '')
             for s in leaf_result.spans:
                 a, b = leaf.positions[s.start], leaf.positions[s.end]
                 spans.append(DetectionSpan(start=a, end=b, text=dump[a:b], rule_id=s.rule_id, score=s.score))
         spans.sort(key=lambda s: (s.start, s.end))
         language = detect_language("\n".join(texts)) if texts else "other"
-        return DetectionResult(
+        result = DetectionResult(
             score=round(best_score, 6), label=self._label(best_score), language=language, spans=spans,
             signals=sorted(signals), model_score=round(best_model, 6), rule_score=round(best_rule, 6),
-            latency_ms=(time.perf_counter() - start) * 1000.0,
+            layer_scores=layer_scores, layer_reasons=layer_reasons,
         )
+        # Judge the whole structured document ONCE, not once per JSON leaf.
+        result = self._enrich(dump, result)
+        result.latency_ms = (time.perf_counter() - start) * 1000.0
+        return result
+
+    def _enrich(self, text: str, result: DetectionResult) -> DetectionResult:
+        """Merge independent layer evidence with existing score without weakening it.
+
+        Max aggregation is deliberately conservative. It is a heuristic risk
+        ranking, not a calibrated attack probability; formal calibration remains
+        part of the benchmark deliverable.
+        """
+        scores = {'keywords': result.rule_score}
+        reasons = {'keywords': 'Rules/patterns matched' if result.rule_score else 'No rule matched'}
+        if self.model is not None:
+            scores['linear_ml'] = result.model_score
+            reasons['linear_ml'] = 'Trained linear text classifier score'
+        for name, layer in (('semantic', self.semantic), ('llm_judge', self.judge)):
+            if layer is not None and text.strip():
+                signal = layer.score(text)  # failure propagates; gateway blocks the untrusted result
+                if not 0 <= signal.score <= 1:
+                    raise ValueError(f'{name} returned invalid risk score')
+                scores[name] = round(signal.score, 6)
+                reasons[name] = signal.reason[:250]
+        value = max((result.score, *scores.values()))
+        result.score = round(value, 6)
+        result.label = self._label(value)
+        result.layer_scores = scores
+        result.layer_reasons = reasons
+        return result
 
     # ------------------------------------------------------------------ internals
 

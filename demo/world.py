@@ -865,6 +865,8 @@ def call_tool(world: World, name: str, arguments: dict[str, Any]) -> Any:
     Returns a JSON-serialisable value (dict, list or str). Raises
     :class:`ToolArgumentError` for an unknown tool or invalid arguments.
     """
+    if hasattr(world, "invoke"):
+        return world.invoke(name, arguments)
     spec = TOOLS.get(name)
     if spec is None:
         raise ToolArgumentError(f"unknown tool '{name}'")
@@ -872,8 +874,10 @@ def call_tool(world: World, name: str, arguments: dict[str, Any]) -> Any:
     return spec.fn(world, **clean)
 
 
-def tool_schemas() -> list[dict[str, Any]]:
-    """OpenAI function-calling tool schemas for every workspace tool."""
+def tool_schemas(world: Any | None = None) -> list[dict[str, Any]]:
+    """OpenAI function-calling tool schemas for the selected workspace."""
+    if hasattr(world, "schemas"):
+        return world.schemas()
     return [
         {
             "type": "function",

@@ -281,6 +281,7 @@ async def run_benchmark(args: argparse.Namespace, suite: Suite) -> dict[str, Any
                     audit_checks.append(check)
                     with (out_dir / "audit_checks.jsonl").open("a", encoding="utf-8") as fh:
                         fh.write(json.dumps(check) + "\n")
+                await runtime.aclose()
 
     episodes = read_episodes(episodes_path)
     summary = summarize(episodes)

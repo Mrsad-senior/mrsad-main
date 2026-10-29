@@ -201,6 +201,7 @@ class Gateway:
         executor_timeout_s: float | None = 120.0,
         sanitizer: Callable[..., str] | None = None,
         spotlighter: Callable[..., str] | None = None,
+        security_monitor: Any | None = None,
     ) -> None:
         self._policy = policy
         self.taint = taint
@@ -214,6 +215,7 @@ class Gateway:
         self.executor_timeout_s = executor_timeout_s
         self._sanitizer = sanitizer
         self._spotlighter = spotlighter
+        self.security_monitor = security_monitor
         self._lock = threading.RLock()
         self._waiting: set[str] = set()
         self._replay_engines: OrderedDict[str, Any] = OrderedDict()
@@ -301,6 +303,11 @@ class Gateway:
         elif live and hasattr(self.taint, "minimal_snapshot"):
             # Only the values the taint rules consulted: keeps audit payloads small, replay exact.
             snap = self.taint.minimal_snapshot(call, evaluation.profile, evaluation.sink, taint_settings)
+        # Trusted-intent and behavioral control: runs before tool execution.
+        # Replay uses its recorded reasons; it never guesses the historical user task.
+        if live and self.security_monitor is not None:
+            sector = {'finance-assistant': 'finance', 'healthcare-assistant': 'healthcare'}.get(call.agent_id)
+            reasons.extend(self.security_monitor.check(call, sector=sector))
         action, _ = combine_reasons(reasons)
         # A taint rule an admin downgraded to "allow" stays visible as evidence but must not raise the risk
         # score or count as "taint fired"; otherwise it would still force approval through approval: on_risk.
@@ -382,8 +389,10 @@ class Gateway:
             if not needs_human:
                 try:
                     self.taint.note_call(call)
+                    if self.security_monitor is not None and returned == Action.ALLOW:
+                        self.security_monitor.note(call)
                 except Exception:
-                    log.exception("taint.note_call failed for %s", call.call_id)
+                    log.exception("session tracking failed for %s", call.call_id)
         return _Core(decision=decision, needs_human=needs_human, check_ms=check_ms)
 
     async def _await_human(self, call: ToolCall, decision: Decision, policy: PolicyEngine,
@@ -535,7 +544,8 @@ class Gateway:
                 risk_score=detection.score,
                 evidence={"spans": [s.model_dump(mode="json") for s in detection.spans[:20]],
                           "signals": detection.signals[:20], "model_score": detection.model_score,
-                          "rule_score": detection.rule_score, "language": detection.language}))
+                          "rule_score": detection.rule_score, "language": detection.language,
+                          "layer_scores": detection.layer_scores, "layer_reasons": detection.layer_reasons}))
 
         action: InspectionAction
         content = raw
@@ -547,6 +557,13 @@ class Gateway:
                 content += self._truncation_note(omitted)
         else:
             action = would_be
+            # Embeddings and LLM judgments are non-localising: removing only
+            # keyword spans could leave the novel malicious instruction intact.
+            if action == "sanitize" and detection is not None and any(
+                detection.layer_scores.get(name, 0) >= float(_setting(dsettings, 'block_threshold', 0.8))
+                for name in ('semantic', 'llm_judge')
+            ):
+                action = "block"
             if action == "sanitize" and detection is not None:
                 content, out_structured, ok = await asyncio.to_thread(
                     self._sanitize, raw, structured, detection, source, dsettings)
@@ -755,6 +772,12 @@ class Gateway:
             action, risk_score, reasons, profile, sink, _, _ = self._evaluate(
                 call, engine, snapshot, dict(payload.get("rate_counts") or {}))
         original_codes = [r.get("code") for r in payload.get("reasons", []) if isinstance(r, dict)]
+        runtime_codes = {'TASK_INTENT_MISMATCH', 'UNBOUND_TASK', 'NEW_BENEFICIARY',
+                         'UNUSUAL_READ_THEN_SEND', 'REPEATED_EXPORT', 'HEALTH_DATA_EXTERNAL',
+                         'SENSITIVE_OUTBOUND'}
+        if runtime_codes.intersection(original_codes):
+            notes.append('Trusted-task and session-behavior evidence was recorded at decision time; '
+                         'historical state is not reconstructed by policy-only replay.')
         replayed_codes = [r.code for r in reasons]
         call_text = json.dumps(payload["call"], ensure_ascii=False).lower()
         if "redacted" in call_text or "***" in call_text:

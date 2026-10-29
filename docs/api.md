@@ -211,9 +211,9 @@ KEY=mk_xxxxxxxx_...        # agent key (shown once on creation)
 
 | Method & path | Body → Response |
 |---|---|
-| `POST /v1/guard/tool-call` | `{session_id, tool, arguments, call_id?, wait?=true}` → `Decision` |
+| `POST /v1/guard/tool-call` | `{session_id, tool, arguments, call_id?, wait?=true, original_task?}` → `Decision` |
 | `POST /v1/guard/tool-result` | `{session_id, call_id, tool, content, structured?, is_error?}` → `InspectionOutcome`. `content` may be text or any JSON value; JSON text is parsed so that taint tracking can see field names. |
-| `POST /v1/tools/{tool}/invoke` | `{session_id, arguments, call_id?}` → `GatewayResponse` (check → run upstream → inspect) |
+| `POST /v1/tools/{tool}/invoke` | `{session_id, arguments, call_id?, original_task?}` → `GatewayResponse` (check → run upstream → inspect) |
 | `GET /v1/tools` | The tools visible to the agent: `[{name, description, input_schema, profile}]` |
 | `POST /v1/chat/completions` | OpenAI-compatible proxy (adapters area) |
 | `/mcp` | MCP streamable HTTP (adapters area) |

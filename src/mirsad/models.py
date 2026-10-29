@@ -173,6 +173,8 @@ class DetectionResult(BaseModel):
     signals: list[str] = Field(default_factory=list)
     model_score: float = 0.0
     rule_score: float = 0.0
+    layer_scores: dict[str, float] = Field(default_factory=dict)
+    layer_reasons: dict[str, str] = Field(default_factory=dict)
     latency_ms: float = 0.0
 
 

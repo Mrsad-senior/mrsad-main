@@ -229,8 +229,14 @@ def build_components(settings: Settings, overrides: dict[str, Any] | None = None
     if "gateway" in o:
         gateway = o["gateway"]
     else:
+        import os
+
+        from mirsad.security.intent import OllamaIntentJudge
+        from mirsad.security.monitor import SecurityMonitor
+        judge = OllamaIntentJudge(model=os.getenv('MIRSAD_JUDGE_MODEL', 'qwen2.5:3b')) if os.getenv('MIRSAD_INTENT_JUDGE_ENABLED') == '1' else None
         gateway = Gateway(
             policy=policy, taint=taint, detector=detector, audit=audit, approvals=approvals,
+            security_monitor=SecurityMonitor(intent_judge=judge),
             agent_names=policy_agent_names(policy), policy_store=getattr(policy_store, "get_yaml", None),
             max_result_chars=settings.max_result_chars, sanitizer=o.get("sanitizer"),
             spotlighter=o.get("spotlighter"))

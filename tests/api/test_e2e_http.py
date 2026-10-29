@@ -154,10 +154,13 @@ def _new_agent(e2e: dict[str, Any], admin: dict[str, str], agent_id: str) -> dic
 
 
 def _invoke(e2e: dict[str, Any], agent: dict[str, str], tool: str, args: dict[str, Any], session: str,
-            client: httpx.Client | None = None, call_id: str | None = None) -> dict[str, Any]:
+            client: httpx.Client | None = None, call_id: str | None = None,
+            original_task: str | None = None) -> dict[str, Any]:
     body: dict[str, Any] = {"session_id": session, "arguments": args}
     if call_id:
         body["call_id"] = call_id
+    if original_task:
+        body["original_task"] = original_task
     r = (client or e2e["client"]).post(f"/v1/tools/{tool}/invoke", headers=agent, json=body)
     assert r.status_code == 200, r.text
     return r.json()
@@ -171,7 +174,9 @@ def test_init_demo_then_login_and_overview(e2e):
     c = e2e["client"]
     assert c.get("/healthz").json()["status"] == "ok"
     creds = e2e["data_dir"] / "credentials.txt"
-    assert str(creds) in e2e["init_output"] and (creds.stat().st_mode & 0o777) == 0o600
+    assert str(creds) in e2e["init_output"]
+    if os.name != "nt":
+        assert (creds.stat().st_mode & 0o777) == 0o600
 
     admin = _login(e2e)
     me = c.get("/api/auth/me", headers=admin).json()
@@ -222,7 +227,8 @@ def test_agent_tool_calls_follow_the_default_policy(e2e):
     assert "CONSTRAINT_VIOLATION" in _codes(too_many["decision"])
 
     internal = _invoke(e2e, agent, "send_email", {"to": "sales@najd-trading.example", "subject": "Weekly summary",
-                                                  "body": "The weekly summary is attached."}, "e2e-internal")
+                                                  "body": "The weekly summary is attached."}, "e2e-internal",
+                       original_task="Send the weekly summary to sales@najd-trading.example")
     assert internal["decision"]["action"] == "allow", internal["decision"]
     assert internal["decision"]["sink"] == "internal"
     assert any(m["to"] == "sales@najd-trading.example" for m in world.outbox)
@@ -238,10 +244,12 @@ def test_agent_tool_calls_follow_the_default_policy(e2e):
 
     # decisions only (wait=false): approval-always and amount limits from the same policy
     delete = c.post("/v1/guard/tool-call", headers=agent, json={
-        "session_id": "e2e-guard", "tool": "delete_customer", "arguments": {"customer_id": "C001"}, "wait": False})
+        "session_id": "e2e-guard", "tool": "delete_customer", "arguments": {"customer_id": "C001"},
+        "original_task": "Delete customer C001", "wait": False})
     assert delete.json()["action"] == "require_approval" and "APPROVAL_ALWAYS" in _codes(delete.json())
     transfer = c.post("/v1/guard/tool-call", headers=agent, json={
         "session_id": "e2e-guard", "tool": "transfer_funds", "wait": False,
+        "original_task": "Transfer SAR 20,000 to SA4420000001234567891234",
         "arguments": {"to_iban": "SA4420000001234567891234", "amount_sar": 20000}})
     assert transfer.json()["action"] == "deny"
     unknown = c.post("/v1/guard/tool-call", headers=agent, json={
@@ -260,7 +268,8 @@ def test_external_email_waits_for_an_approval_sent_from_a_second_process(e2e):
         with httpx.Client(base_url=e2e["base"], timeout=90) as own:
             try:
                 outcome["response"] = _invoke(e2e, agent, "send_email", args, "e2e-approval", client=own,
-                                              call_id="call_e2e_external")
+                                              call_id="call_e2e_external",
+                                              original_task="Send the purchase order to orders@gulf-supplies.example")
             except BaseException as exc:  # surfaced by the main thread
                 outcome["error"] = exc
 

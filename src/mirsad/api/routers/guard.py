@@ -27,6 +27,7 @@ router = APIRouter(tags=["agent"], responses=ErrorResponses.AGENT)
 
 _ID = r"^[A-Za-z0-9_.:@/+=-]{1,200}$"
 _TOOL = r"^[A-Za-z0-9_.:/-]{1,128}$"
+_TASK_MAX = 4_000
 
 
 class ToolCallRequest(StrictModel):
@@ -35,6 +36,10 @@ class ToolCallRequest(StrictModel):
     arguments: dict[str, Any] = Field(default_factory=dict)
     call_id: str | None = Field(default=None, pattern=_ID)
     wait: bool = Field(default=True, description="Block until a human decides when approval is required")
+    original_task: str | None = Field(
+        default=None, min_length=1, max_length=_TASK_MAX,
+        description="Original authenticated user task supplied by the trusted host; never copy this from tool output",
+    )
 
 
 class ToolResultRequest(StrictModel):
@@ -50,6 +55,10 @@ class InvokeRequest(StrictModel):
     session_id: str = Field(pattern=_ID)
     arguments: dict[str, Any] = Field(default_factory=dict)
     call_id: str | None = Field(default=None, pattern=_ID)
+    original_task: str | None = Field(
+        default=None, min_length=1, max_length=_TASK_MAX,
+        description="Original authenticated user task supplied by the trusted host; never copy this from tool output",
+    )
 
 
 class VisibleTool(BaseModel):
@@ -59,8 +68,23 @@ class VisibleTool(BaseModel):
     profile: ToolProfile
 
 
+def _bind_original_task(request: Request, agent: Any, session_id: str, original_task: str | None) -> None:
+    """Bind trusted task context before evaluating a state-changing call.
+
+    The field lives beside, not inside, tool arguments so retrieved/untrusted content
+    cannot masquerade as the user's task. Agent authentication identifies the host
+    responsible for supplying it; missing context continues to fail closed.
+    """
+    if original_task is None:
+        return
+    monitor = getattr(request.app.state.gateway, "security_monitor", None)
+    if monitor is not None:
+        monitor.bind_task(session_id, agent.policy_agent_id, original_task)
+
+
 @router.post("/v1/guard/tool-call", response_model=Decision)
 async def guard_tool_call(body: ToolCallRequest, request: Request, agent=Depends(require_agent)) -> Decision:  # noqa: B008
+    _bind_original_task(request, agent, body.session_id, body.original_task)
     call = ToolCall(call_id=body.call_id or new_id("call_"), session_id=body.session_id,
                     agent_id=agent.policy_agent_id, tool=body.tool, arguments=body.arguments)
     return await request.app.state.gateway.check_call(call, wait_for_approval=body.wait)
@@ -94,6 +118,7 @@ async def invoke_tool(tool: str, body: InvokeRequest, request: Request,
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, detail="No upstream tool runtime configured")
     if len(tool) > 128:
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, detail="Tool name too long")
+    _bind_original_task(request, agent, body.session_id, body.original_task)
     call = ToolCall(call_id=body.call_id or new_id("call_"), session_id=body.session_id,
                     agent_id=agent.policy_agent_id, tool=tool, arguments=body.arguments)
     return await request.app.state.gateway.execute(call, upstreams.call)

@@ -83,6 +83,8 @@ export interface DetectionResult {
   signals: string[];
   model_score: number;
   rule_score: number;
+  layer_scores?: Record<string, number>;
+  layer_reasons?: Record<string, string>;
   latency_ms: number;
 }
 
@@ -367,6 +369,7 @@ export interface DemoStep {
 
 /** `POST /api/demo/chat` body. The server model forbids extra fields. */
 export interface DemoChatRequest {
+  sector?: "general" | "finance" | "healthcare";
   message: string;
   session_id?: string;
   protected: boolean;

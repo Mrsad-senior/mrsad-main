@@ -133,6 +133,7 @@ async def test_benign_internal_flow_is_allowed(real):
     assert listing["decision"]["action"] == "allow" and listing["result"]["action"] in ("pass", "flag")
     sent = (await c.post("/v1/guard/tool-call", headers=agent, json={
         "session_id": "it-3", "tool": "send_email", "wait": False,
+        "original_task": "Send the weekly summary to sales@najd-trading.example",
         "arguments": {"to": "sales@najd-trading.example", "subject": "Hi", "body": "Weekly summary attached."}})).json()
     assert sent["action"] == "allow", sent
     stats = (await c.get("/api/stats/overview", headers=real["admin"])).json()
