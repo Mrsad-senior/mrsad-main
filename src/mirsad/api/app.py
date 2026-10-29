@@ -97,6 +97,9 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         if listener is not None:
             comps.audit.remove_listener(listener)
             app.state.audit_events_via_notifier = False
+        if hasattr(comps.db, "dispose"):
+            with contextlib.suppress(Exception):
+                await run_in_threadpool(comps.db.dispose)
 
 
 async def _maintenance(app: FastAPI) -> None:

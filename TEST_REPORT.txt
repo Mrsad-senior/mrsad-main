@@ -1,0 +1,33 @@
+MIRSAD CONSOLIDATED SOURCE RELEASE — 2026-10-29
+
+Project snapshot: Full Mirsad Dynamic Sectors Source, with later patches layered in order:
+- Step 42 indirect instruction LLM Judge prompt
+- Step 51 Arabic user-response logic and custom unseen attack sandbox
+- Step 75 Healthcare authority-laundering detector
+- Step 93 English-only LLM Judge reasons
+- Step 98 reference library expanded from 8 to 20 synthetic Arabic/English families
+- Step 100 consolidated updates: non-English explanation fallback; Vite 7.3.7 pin + lockfile,
+  eight-example local diagnostic script, additional mocked regression checks, setup guide
+
+TESTED HERE:
+- 683 passed in 16.90s, on Python 3.13, running:
+  PYTHONPATH=<repo>/src:<repo> python -m pytest tests/upgrade tests/detector
+     tests/policy tests/taint tests/demo/test_agent.py tests/demo/test_world.py
+     --override-ini addopts='' -q --disable-warnings --maxfail=1
+- Python syntax compilation of src/mirsad/detector/layered.py passed.
+- Vite package and package-lock metadata both pin 7.3.7.
+
+NOT VALIDATED HERE:
+- Full API integration tests: environment cannot install sse-starlette/mcp/pywebpush.
+- JavaScript compilation: npm dependency installation stalled due unavailable network/cache.
+- End-to-end Ollama inference and downloads: local Qwen and multilingual embeddings
+  are not installed in this evaluation container.
+- The original prebuilt static dashboard in src/mirsad/static is STALE. You MUST run
+  cd web; npm ci; npm run build on Windows before launching dashboard.
+
+IMPORTANT LIMITATIONS:
+- Semantic evidence scores are not calibrated probabilities. The 20 synthetic reference
+  examples are not a model trained to recognize all prompt injections.
+- Existing eight example cases were exposed during development; do not report test results
+  on them as independent holdout performance. A separate blind test set is required.
+- Do not deploy in production or test against real patient or bank data.

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import stat
 from pathlib import Path
 from typing import Any
@@ -40,7 +41,8 @@ def test_init_writes_private_credentials_file_and_prints_only_its_path(cli):
     assert r.exit_code == 0, r.output
     path = cli.settings.data_dir.resolve() / "credentials.txt"
     assert f"Credentials written to {path}" in r.output
-    assert stat.S_IMODE(path.stat().st_mode) == 0o600
+    if os.name != "nt":
+        assert stat.S_IMODE(path.stat().st_mode) == 0o600
     content = path.read_text()
     from mirsad import auth
 
@@ -107,7 +109,8 @@ def test_user_and_agent_create(cli, tmp_path):
     hidden = cli("agent", "create", "Other", "--policy-agent", "test-agent", "--id", "other-bot",
                  "--key-file", str(key_file))
     assert "mk_" not in hidden.output and key_file.read_text().startswith("mk_")
-    assert stat.S_IMODE(key_file.stat().st_mode) == 0o600
+    if os.name != "nt":
+        assert stat.S_IMODE(key_file.stat().st_mode) == 0o600
 
 
 def test_audit_verify_detects_tampering_and_export(cli, tmp_path):

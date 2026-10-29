@@ -103,3 +103,7 @@ Abdullah Naif Abdullah Al-Orabi
 
 Apache-2.0 (see `LICENSE` and `NOTICE`). An AI coding and writing assistant (Anthropic's Claude) was used
 during development; see Section 3.6 of the final report for the full disclosure.
+
+## Prototype: dynamic detection and industry packs
+
+See [docs/DYNAMIC_SECTOR_UPGRADE.md](docs/DYNAMIC_SECTOR_UPGRADE.md) for the optional multilingual/LLM detection layers, trusted-task and behavior checks, Finance and Healthcare fake-data demo packs, test coverage, configuration and limitations. Model downloads and a web rebuild are needed to activate the full upgraded experience.

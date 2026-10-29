@@ -77,12 +77,19 @@ class ApprovalService:
         self._waiters: dict[str, list[tuple[asyncio.AbstractEventLoop, asyncio.Event]]] = {}
         self._waiters_lock = threading.Lock()
         self._background: set[asyncio.Task[Any]] = set()
+        self._created_at_lock = threading.Lock()
+        self._last_created_at = 0.0
 
     # -- create ------------------------------------------------------------------------------
 
     async def request(self, call: ToolCall, decision: Decision, *, agent_name: str) -> ApprovalRecord:
         """Persist a pending approval, notify approvers, and apply the auto-decider if configured."""
-        now = time.time()
+        # Windows' wall clock can return the same value for several quick calls.
+        # Keep creation timestamps strictly increasing so "newest first" is stable
+        # across different SQLite query plans (including status-filtered indexes).
+        with self._created_at_lock:
+            now = max(time.time(), self._last_created_at + 1e-6)
+            self._last_created_at = now
         approval_id = new_id("apr_")
         arguments = redact(call.arguments) if self.redact_arguments else dict(call.arguments)
         shown_call = call.model_copy(update={"arguments": arguments})

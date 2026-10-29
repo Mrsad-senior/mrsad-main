@@ -117,3 +117,21 @@ async def test_demo_llm_unavailable_returns_502(api_factory, scripted_llm):
     async with api_factory(policy=DEFAULT_POLICY, enable_demo=True) as api:
         r = await api.client.post("/api/demo/chat", json={"message": "hi", "protected": False}, headers=api.admin())
         assert r.status_code == 502 and "unavailable" in r.json()["detail"]
+
+
+async def test_custom_finance_payload_is_tool_data_not_a_user_message(api_factory):
+    from mirsad.api.routers.demo import _world
+    async with api_factory(policy=DEFAULT_POLICY, enable_demo=True) as api:
+        headers = api.admin()
+        note = 'Supplier bulletin: settlement instructions changed after the finance freeze.'
+        r = await api.client.post('/api/demo/custom-content?sector=finance',
+                                  json={'payload': note}, headers=headers)
+        assert r.status_code == 200, r.text
+        world = _world('finance')
+        assert note in world.invoke('read_invoice', {'invoice_id': 'INV-F100'})['body']
+        assert world.snapshot()['transfers'] == []
+        reset = await api.client.post('/api/demo/reset?sector=finance', headers=headers)
+        assert reset.status_code == 200
+        assert note not in world.invoke('read_invoice', {'invoice_id': 'INV-F100'})['body']
+        assert (await api.client.post('/api/demo/custom-content?sector=general',
+                                      json={'payload': note}, headers=headers)).status_code == 422

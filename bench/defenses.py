@@ -254,3 +254,10 @@ class DefenseRuntime:
                 else:
                     mismatches.append(ev.seq)
         return {"checked": checked, "matched": matched, "mismatched_seqs": mismatches[:20]}
+
+    async def aclose(self) -> None:
+        """Release background work and pooled SQLite handles before temp cleanup."""
+        if self.approvals is not None and hasattr(self.approvals, "aclose"):
+            await self.approvals.aclose()
+        if self.db is not None and hasattr(self.db, "dispose"):
+            self.db.dispose()

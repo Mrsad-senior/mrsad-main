@@ -35,6 +35,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+semantic = ["sentence-transformers>=3.0"]
 postgres = ["psycopg[binary]>=3.2"]
 dev = [
   "pytest>=8.3",
