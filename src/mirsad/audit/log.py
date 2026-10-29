@@ -16,6 +16,7 @@ import hmac
 import io
 import json
 import logging
+import random
 import threading
 import time
 from collections.abc import Callable, Iterable, Iterator
@@ -35,7 +36,11 @@ log = logging.getLogger("mirsad.audit")
 
 GENESIS_HASH = "0" * 64
 EXPORT_FORMAT = "mirsad-audit-export/1"
-_MAX_APPEND_RETRIES = 5
+_MAX_APPEND_RETRIES = 30
+# Jittered exponential backoff between seq-conflict retries: without it two writers re-read the head in
+# lockstep and keep colliding until one of them gives up.
+_RETRY_BASE_DELAY_S = 0.001
+_RETRY_MAX_DELAY_S = 0.05
 _VERIFY_BATCH = 1000
 _MIN_STRING_BUDGET = 64
 _CSV_FORMULA_PREFIXES = ("=", "+", "-", "@", "\t", "\r")
@@ -296,8 +301,10 @@ class AuditLog:
                     event = self._append_locked(fields, clean, payload_json)
                     break
                 except IntegrityError:
-                    # Another process appended the same seq first: re-read the head and retry.
+                    # Another process appended the same seq first: back off, re-read the head and retry.
                     log.info("audit seq conflict, retrying (attempt %d)", attempt + 1)
+                    delay = min(_RETRY_MAX_DELAY_S, _RETRY_BASE_DELAY_S * 2**attempt)
+                    time.sleep(random.uniform(0, delay))  # noqa: S311  # nosec B311 - timing jitter, not crypto
             else:
                 raise RuntimeError("could not append audit event after repeated seq conflicts")
 
