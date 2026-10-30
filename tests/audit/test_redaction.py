@@ -93,6 +93,12 @@ def test_iban_masked_except_country_and_last_four():
     assert redact_text("to SA0380000000608010167519 now") == "to SA" + "*" * 18 + "7519 now"
 
 
+def test_dashed_and_dotted_ibans_are_masked_too():
+    # Found during incident #3: separators other than spaces left the IBAN in the audit log in clear.
+    assert redact_text("IBAN SA03-8000-0000-6080-1016-7519.") == "IBAN SA**-****-****-****-****-7519."
+    assert redact_text("IBAN SA03.8000.0000.6080.1016.7519") == "IBAN SA**.****.****.****.****.7519"
+
+
 def test_secret_keys_redacted_in_nested_structures():
     data = {
         "user": "noura",

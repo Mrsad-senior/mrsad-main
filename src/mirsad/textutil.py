@@ -30,7 +30,8 @@ LATIN_CHAR_RE = re.compile("[A-Za-z]")
 
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}")
 URL_RE = re.compile(r"\bhttps?://[^\s<>\"'()\]]+", re.IGNORECASE)
-IBAN_RE = re.compile(r"\b[A-Z]{2}\d{2}(?:\s?[A-Z0-9]{4}){3,7}(?:\s?[A-Z0-9]{1,4})?\b")
+# Groups may be separated by a space, dash or dot ("SA03-8000-..." is common on invoices).
+IBAN_RE = re.compile(r"\b[A-Z]{2}\d{2}(?:\s?[-.]?\s?[A-Z0-9]{4}){3,7}(?:\s?[-.]?\s?[A-Z0-9]{1,4})?\b")
 PHONE_RE = re.compile(r"(?<!\d)(?:\+?966|00966|0)?5\d(?:[\s-]?\d){7}(?!\d)|(?<!\d)\+\d{1,3}(?:[\s-]?\d){7,12}(?!\d)")
 
 

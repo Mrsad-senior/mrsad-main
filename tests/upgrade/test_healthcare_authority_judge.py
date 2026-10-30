@@ -9,13 +9,15 @@ import json
 import httpx
 import pytest
 
-from mirsad.detector.layered import OllamaJudge
+from mirsad.detector.layered import ACTION_EXTRACTION_SYSTEM, OllamaJudge
 
 
 def _test_client(verdict, assert_prompt):
     def handler(request):
         body = json.loads(request.content)
         system = body['messages'][0]['content']
+        if system == ACTION_EXTRACTION_SYSTEM:
+            return httpx.Response(200, json={'choices': [{'message': {'content': '{"actions": []}'}}]})
         example = json.loads(body['messages'][1]['content'])['tool_output']
         assert_prompt(system, example)
         return httpx.Response(200, json={

@@ -25,19 +25,63 @@ _MAX_VALUE_CHARS = 80
 _MAX_DESTINATIONS = 3
 _DEST_PARAMS = ("to", "cc", "bcc", "recipient", "recipients", "url", "webhook", "endpoint", "to_iban", "iban")
 
-# Higher first: the reasons an approver most needs to understand.
+# Higher first: the reasons an approver most needs to understand. Only two fit in a summary, so the
+# security monitor's fraud signals (unrequested action, new payee, patient data leaving) rank near the top.
 _REASON_PRIORITY = {
     "TAINT_UNTRUSTED_DESTINATION": 0,
+    "HEALTH_DATA_EXTERNAL": 0.2,
+    "TASK_INTENT_MISMATCH": 0.4,
+    "SEMANTIC_TASK_MISMATCH": 0.4,
+    "UNBOUND_TASK": 0.4,
+    "NEW_BENEFICIARY": 0.6,
     "TAINT_AFTER_INJECTION": 1,
     "TAINT_CONFIDENTIAL_TO_EXTERNAL": 2,
+    "SENSITIVE_OUTBOUND": 2.5,
     "TAINT_UNTRUSTED_TO_EXTERNAL": 3,
+    "UNUSUAL_READ_THEN_SEND": 3.5,
+    "REPEATED_EXPORT": 3.5,
     "RULE_MATCH": 4,
+    "UNSEEN_TOOL_SEQUENCE": 4.5,
     "CONSTRAINT_VIOLATION": 5,
     "TOOL_NOT_ALLOWED": 6,
     "UNKNOWN_AGENT": 6,
     "RATE_LIMIT": 7,
     "APPROVAL_ALWAYS": 8,
     "APPROVAL_POLICY": 9,
+}
+
+_MONEY_TOOLS = ("transfer_funds", "approve_payment")
+
+# Security-monitor reasons carry English messages only; these are the approver-facing phrases.
+# Arabic phrases follow «لأن», so each starts with a noun.
+_MONITOR_PHRASE = {
+    "NEW_BENEFICIARY": (
+        "this account has never been paid before and is not on the registered beneficiary list",
+        "الحساب المستفيد غير مسجَّل في قائمة المستفيدين ولم يُحوَّل إليه من قبل"),
+    "TASK_INTENT_MISMATCH": (
+        "the user's original request did not ask for this kind of action",
+        "طلب المستخدم الأصلي لم يتضمن هذا النوع من الإجراءات"),
+    "SEMANTIC_TASK_MISMATCH": (
+        "an intent check found that the user's original request did not ask for this action",
+        "فحص النية وجد أن طلب المستخدم الأصلي لم يتضمن هذا الإجراء"),
+    "UNBOUND_TASK": (
+        "no verified user request is attached to this action",
+        "غياب طلب مستخدم موثَّق مرتبط بهذا الإجراء"),
+    "HEALTH_DATA_EXTERNAL": (
+        "patient information would leave the hospital",
+        "معلومات المريض ستخرج من المستشفى"),
+    "SENSITIVE_OUTBOUND": (
+        "the outgoing data contains sensitive personal or financial details",
+        "البيانات الصادرة تحتوي تفاصيل شخصية أو مالية حساسة"),
+    "UNUSUAL_READ_THEN_SEND": (
+        "the agent read many records just before this outgoing action",
+        "قراءة الوكيل عدداً كبيراً من السجلات قبل هذا الإجراء الصادر مباشرة"),
+    "REPEATED_EXPORT": (
+        "this is a repeated bulk export in the same session",
+        "تكرار التصدير الجماعي في الجلسة نفسها"),
+    "UNSEEN_TOOL_SEQUENCE": (
+        "this sequence of actions has not been seen in reviewed normal use",
+        "تسلسل الإجراءات هذا غير مألوف في الاستخدام الطبيعي المراجَع"),
 }
 
 _RISK_WORD = {
@@ -52,6 +96,19 @@ _RISK_WORD = {
 def _clean(value: Any, limit: int = _MAX_VALUE_CHARS) -> str:
     text = re.sub(r"\s+", " ", str(value)).strip()
     return text if len(text) <= limit else text[: limit - 1] + "…"
+
+
+def _num(value: Any, limit: int = 20) -> str:
+    """``9500`` -> ``9,500`` and ``10000.0`` -> ``10,000``; anything non-numeric is shown as is."""
+    if isinstance(value, bool):
+        return _clean(value, limit)
+    try:
+        number = float(str(value).replace(",", ""))
+    except ValueError:
+        return _clean(value, limit)
+    if number != number or number in (float("inf"), float("-inf")):
+        return _clean(value, limit)
+    return f"{number:,.0f}" if number == int(number) else f"{number:,.2f}"
 
 
 def _flatten(value: Any) -> list[str]:
@@ -127,6 +184,10 @@ def _sources(evidence: dict[str, Any]) -> list[dict[str, str]]:
 
 def _source_kind(tool: str) -> str:
     t = tool.lower()
+    if "invoice" in t:
+        return "invoice"
+    if "patient" in t:
+        return "patient"
     if "mail" in t:
         return "email"
     if any(k in t for k in ("url", "web", "fetch", "browse", "http", "search_web")):
@@ -140,13 +201,16 @@ def _source_kind(tool: str) -> str:
 
 _SOURCE_PHRASE = {
     ("en", True): {"email": "an untrusted email", "web": "an untrusted web page", "document": "an untrusted document",
-                   "crm": "an untrusted CRM record", "other": "untrusted tool output"},
+                   "crm": "an untrusted CRM record", "invoice": "an untrusted supplier invoice",
+                   "patient": "a patient record containing outside notes", "other": "untrusted tool output"},
     ("en", False): {"email": "an email", "web": "a web page", "document": "a document",
-                    "crm": "a confidential customer record", "other": "tool output"},
+                    "crm": "a confidential customer record", "invoice": "an invoice",
+                    "patient": "a confidential patient record", "other": "tool output"},
     ("ar", True): {"email": "بريد إلكتروني غير موثوق", "web": "صفحة ويب غير موثوقة", "document": "مستند غير موثوق",
-                   "crm": "سجل عميل غير موثوق", "other": "مخرجات أداة غير موثوقة"},
+                   "crm": "سجل عميل غير موثوق", "invoice": "فاتورة مورّد غير موثوقة",
+                   "patient": "سجل مريض يحتوي ملاحظات خارجية", "other": "مخرجات أداة غير موثوقة"},
     ("ar", False): {"email": "بريد إلكتروني", "web": "صفحة ويب", "document": "مستند",
-                    "crm": "سجل عميل سري", "other": "مخرجات أداة"},
+                    "crm": "سجل عميل سري", "invoice": "فاتورة", "patient": "سجل مريض سري", "other": "مخرجات أداة"},
 }
 
 
@@ -168,12 +232,24 @@ def _param_phrase(param: str | None, lang: Lang) -> str:
         return "عنوان الويب" if lang == "ar" else "the web address"
     if p in ("to_iban", "iban"):
         return "رقم الحساب البنكي (IBAN) المستفيد" if lang == "ar" else "the destination bank account (IBAN)"
+    if p in ("amount_sar", "amount"):
+        return "المبلغ" if lang == "ar" else "the amount"
     if not p:
         return "إحدى القيم" if lang == "ar" else "a value"
     return f"قيمة «{param}»" if lang == "ar" else f"the value of “{param}”"
 
 
 # ----------------------------------------------------------------------------- sentence 1: intent
+
+
+def _payee(decision: Decision, lang: Lang) -> str:
+    """Payee status for money tools, put in the first sentence (the part a lock screen shows)."""
+    codes = {r.code for r in decision.reasons}
+    if "NEW_BENEFICIARY" in codes:
+        return "مستفيد جديد غير مسجَّل " if lang == "ar" else "a NEW, unregistered beneficiary "
+    if "KNOWN_BENEFICIARY" in codes:
+        return "المستفيد المسجَّل " if lang == "ar" else "the registered beneficiary "
+    return ""
 
 
 def _intent(call: ToolCall, decision: Decision, agent_name: str, lang: Lang,
@@ -184,16 +260,24 @@ def _intent(call: ToolCall, decision: Decision, agent_name: str, lang: Lang,
     dest_text = _join(dests, lang) if dests else ""
     outside = decision.sink == SinkKind.EXTERNAL
     agent = _clean(agent_name or call.agent_id, 60)
+    payee = _payee(decision, lang) if call.tool in _MONEY_TOOLS else ""
+    patient = _clean(args.get("patient_id", "?"), 40)
 
     if lang == "ar":
         org = org_name_ar or "المؤسسة"
-        where = f" إلى {dest_text}" if dest_text else ""
+        where = f" إلى {payee}{dest_text}" if dest_text else ""
         if outside and dest_text:
             where += f" (خارج {org})"
         verbs = {
             "send_email": f"إرسال بريد إلكتروني{where}",
             "fetch_url": f"فتح الرابط {dest_text}" + (f" (خارج {org})" if outside and dest_text else ""),
-            "transfer_funds": f"تحويل {_clean(args.get('amount_sar', '?'), 20)} ريال سعودي{where}",
+            "transfer_funds": f"تحويل {_num(args.get('amount_sar', '?'))} ريال سعودي{where}",
+            "approve_payment": f"اعتماد الدفعة {_clean(args.get('transfer_id', '?'), 40)}",
+            "send_lab_results": f"إرسال نتائج تحاليل المريض {patient}{where}",
+            "update_prescription": f"تغيير وصفة المريض {patient} إلى «{_clean(args.get('prescription', '?'), 60)}»",
+            "book_appointment": f"حجز موعد للمريض {patient} في {_clean(args.get('slot', '?'), 30)}",
+            "read_invoice": f"قراءة الفاتورة {_clean(args.get('invoice_id', '?'), 40)}",
+            "get_patient_record": f"فتح سجل المريض {patient}",
             "export_customers": f"تصدير {_clean(args.get('count', '?'), 12)} من سجلات العملاء",
             "delete_customer": f"حذف سجل العميل {_clean(args.get('customer_id', '?'), 40)}",
             "update_customer_note": f"تعديل الملاحظة على سجل العميل {_clean(args.get('customer_id', '?'), 40)}",
@@ -210,13 +294,19 @@ def _intent(call: ToolCall, decision: Decision, agent_name: str, lang: Lang,
         return f"يريد الوكيل «{agent}» تشغيل الأداة {tool}{target}."
 
     org = org_name or "the organisation"
-    where = f" to {dest_text}" if dest_text else ""
+    where = f" to {payee}{dest_text}" if dest_text else ""
     if outside and dest_text:
         where += f" (outside {org})"
     verbs = {
         "send_email": f"send an email{where}",
         "fetch_url": f"open the web address {dest_text}" + (f" (outside {org})" if outside and dest_text else ""),
-        "transfer_funds": f"transfer {_clean(args.get('amount_sar', '?'), 20)} SAR{where}",
+        "transfer_funds": f"transfer {_num(args.get('amount_sar', '?'))} SAR{where}",
+        "approve_payment": f"approve payment {_clean(args.get('transfer_id', '?'), 40)}",
+        "send_lab_results": f"send the lab results of patient {patient}{where}",
+        "update_prescription": f"change the prescription of patient {patient} to “{_clean(args.get('prescription', '?'), 60)}”",
+        "book_appointment": f"book an appointment for patient {patient} at {_clean(args.get('slot', '?'), 30)}",
+        "read_invoice": f"read invoice {_clean(args.get('invoice_id', '?'), 40)}",
+        "get_patient_record": f"open the record of patient {patient}",
         "export_customers": f"export {_clean(args.get('count', '?'), 12)} customer records",
         "delete_customer": f"delete customer record {_clean(args.get('customer_id', '?'), 40)}",
         "update_customer_note": f"change the note on customer {_clean(args.get('customer_id', '?'), 40)}",
@@ -241,8 +331,9 @@ def _constraint_phrase(ev: dict[str, Any], lang: Lang) -> str:
     op = str(ev.get("operator") or ev.get("op") or "")
     expected = ev.get("expected")
     actual = ev.get("actual")
-    exp_text = _join([_clean(x, 40) for x in _flatten(expected)], lang) if expected is not None else ""
-    act_text = _clean(actual, 60) if actual is not None else ""
+    fmt = _num if op in ("max", "min") else _clean
+    exp_text = _join([fmt(x, 40) for x in _flatten(expected)], lang) if expected is not None else ""
+    act_text = fmt(actual, 60) if actual is not None else ""
     subject = _param_phrase(param, lang)
     if lang == "ar":
         # Gender-invariant predicates: the subject may be masculine or feminine.
@@ -278,11 +369,15 @@ def _constraint_phrase(ev: dict[str, Any], lang: Lang) -> str:
     return f"{subject} breaks a policy constraint"
 
 
-def _reason_phrase(reason: Reason, decision: Decision, lang: Lang, injection: bool) -> str:
+def _reason_phrase(reason: Reason, decision: Decision, lang: Lang, injection: bool, tool: str = "") -> str:
     ev = reason.evidence or {}
     code = reason.code
     ar = lang == "ar"
     sources = _sources(ev)
+    money = tool in _MONEY_TOOLS
+
+    if code in _MONITOR_PHRASE:
+        return _MONITOR_PHRASE[code][1 if ar else 0]
 
     # Arabic phrases follow «لأن», so each one starts with a noun and avoids gendered predicates.
     if code == "TAINT_UNTRUSTED_DESTINATION":
@@ -295,9 +390,11 @@ def _reason_phrase(reason: Reason, decision: Decision, lang: Lang, injection: bo
     if code == "TAINT_UNTRUSTED_TO_EXTERNAL":
         if ar:
             src = _describe_sources(sources, lang, untrusted=True) if sources else "محتوى غير موثوق"
-            return f"الوكيل اطّلع في هذه الجلسة على {src}، وهذا الإجراء يرسل بيانات إلى خارج المؤسسة"
+            what = "يحوّل أموالاً" if money else "يرسل بيانات"
+            return f"الوكيل اطّلع في هذه الجلسة على {src}، وهذا الإجراء {what} إلى خارج المؤسسة"
         src = _describe_sources(sources, lang, untrusted=True) if sources else "untrusted content"
-        return f"the agent read {src} earlier in this session, and this action sends data outside the organisation"
+        what = "this payment sends money" if money else "this action sends data"
+        return f"the agent read {src} earlier in this session, and {what} outside the organisation"
     if code == "TAINT_CONFIDENTIAL_TO_EXTERNAL":
         src = _describe_sources(sources, lang, untrusted=False) if sources else ""
         if ar:
@@ -329,15 +426,16 @@ def _reason_phrase(reason: Reason, decision: Decision, lang: Lang, injection: bo
         return "هذا الوكيل غير مسجل في السياسة" if ar else "this agent is not registered in the policy"
     # Unknown code (e.g. added by another layer later): fall back to the layer's own message.
     if ar:
-        text = _clean(reason.message_ar or reason.message, 200).rstrip(".")
-        return f"الفحص أشار إلى ما يلي: {text}" if text else code
+        # Never put an English-only message inside an Arabic card.
+        text = _clean(reason.message_ar, 200).rstrip(".") if reason.message_ar else ""
+        return f"الفحص أشار إلى ما يلي: {text}" if text else "فحصاً أمنياً إضافياً اعترض على هذا الإجراء"
     text = _clean(reason.message, 200).rstrip(".")
     if len(text) > 1 and text[0].isupper() and text[1].islower():
         text = text[0].lower() + text[1:]
     return text or code
 
 
-def _why(decision: Decision, lang: Lang) -> str:
+def _why(decision: Decision, lang: Lang, tool: str = "") -> str:
     objecting = [r for r in decision.reasons if r.action != Action.ALLOW]
     objecting.sort(key=lambda r: (_REASON_PRIORITY.get(r.code, 50), -r.risk_score))
     injection = any(
@@ -350,7 +448,7 @@ def _why(decision: Decision, lang: Lang) -> str:
         # The destination phrase already says the source "contained suspected instructions".
         if reason.code == "TAINT_AFTER_INJECTION" and "TAINT_UNTRUSTED_DESTINATION" in codes:
             continue
-        phrase = _reason_phrase(reason, decision, lang, injection)
+        phrase = _reason_phrase(reason, decision, lang, injection, tool)
         if phrase and phrase not in phrases:
             phrases.append(phrase)
         if len(phrases) == 2:
@@ -374,7 +472,7 @@ def summarize(call: ToolCall, decision: Decision, *, agent_name: str, lang: Lite
         raise ValueError("lang must be 'en' or 'ar'")
     parts = [_intent(call, decision, agent_name, lang, org_name, org_name_ar)]
     if decision.action != Action.ALLOW:
-        parts.append(_why(decision, lang))
+        parts.append(_why(decision, lang, call.tool))
     risk: Risk = decision.risk
     if lang == "ar":
         parts.append(f"مستوى الخطورة: {_RISK_WORD['ar'][risk.value]}.")
