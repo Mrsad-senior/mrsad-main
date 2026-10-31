@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 import pytest
 from bench.loader import (
     ATTACKS_DIR,
@@ -101,10 +103,20 @@ def test_attack_lists_rejected_in_task_files(tmp_path):
     assert any("only allowed in bench/scenarios/attacks" in e for e in exc.value.errors)
 
 
-def test_repository_attacks_folder_holds_no_attack_files(suite):
-    assert ATTACKS_DIR.is_dir()
-    assert list(ATTACKS_DIR.glob("*.yaml")) == [] and list(ATTACKS_DIR.glob("*.yml")) == []
-    assert not suite.has_attacks and suite.injection_tasks == [] and suite.attack_templates == []
+def test_repository_redteam_pairs_resolve_to_valid_scenarios(suite):
+    pairs = json.loads((ATTACKS_DIR.parent / "mohammed_pairs.json").read_text())
+    assert len(pairs) == 60
+    assert len({p["id"] for p in pairs}) == 60
+    tasks = {t.id for t in suite.user_tasks}
+    templates = {t.id for t in suite.attack_templates}
+    injections = {t.id for t in suite.injection_tasks}
+    assert suite.has_attacks
+    for pair in pairs:
+        assert pair["task"] in tasks
+        assert pair["template"] in templates
+        assert pair["injection"] in injections
+    assert {p["family"] for p in pairs} == {"override", "authority", "hidden", "split", "encoding", "arabic"}
+    assert all(sum(p["family"] == family for p in pairs) == 10 for family in {p["family"] for p in pairs})
 
 
 def test_attack_files_are_validated_with_neutral_placeholders(tmp_path):
