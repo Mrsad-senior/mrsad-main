@@ -18,3 +18,7 @@ htmlcov/
 # Cloudflare Wrangler local secrets and state.
 .dev.vars*
 .wrangler/
+
+.mcp.json
+
+.mcp.json
