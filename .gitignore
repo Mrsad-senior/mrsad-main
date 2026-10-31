@@ -3,11 +3,18 @@ __pycache__/
 .venv/
 .mirsad/
 *.db
-web/node_modules/
-web/dist/
+node_modules/
+dist/
 .pytest_cache/
 .ruff_cache/
 .coverage
 htmlcov/
-.env
 .DS_Store
+
+# Secrets: every .env file at any depth, except the committed template.
+.env
+.env.*
+!.env.example
+# Cloudflare Wrangler local secrets and state.
+.dev.vars*
+.wrangler/

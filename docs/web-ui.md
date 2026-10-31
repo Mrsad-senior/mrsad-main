@@ -8,8 +8,8 @@ Mirsad ships two browser front ends from one React 18 + TypeScript + Vite code b
 | Approver PWA | `/approve` | approvers on a phone (installable) | `web/approve.html` → `web/src/approver/` |
 
 Both talk only to the REST API of the gateway (`/api/...`, see `docs/api.md`) and share one layer in
-`web/src/shared/` (API client, live stream, i18n, styles, components). `npm run build` writes the static
-files to `src/mirsad/static/`, which FastAPI serves (`src/mirsad/api/static.py`): `/` and any unknown
+`web/src/shared/` (API client, live stream, i18n, styles, components). `npm run build:gateway` writes the
+static files to `src/mirsad/static/`, which FastAPI serves (`src/mirsad/api/static.py`): `/` and any unknown
 path return the dashboard, `/approve` returns the PWA, `/assets/*` holds the hashed bundles and
 `/approve-sw.js` is the service worker. No CDN, no inline scripts, no `data:` URIs: everything is
 same-origin so the strict CSP set by the API (`script-src 'self'`) holds.
@@ -22,10 +22,18 @@ npm ci                     # Node >= 20.19 (developed on Node 24)
 npm run dev                # Vite on :5173, proxies /api, /v1, /healthz to MIRSAD_API (default http://127.0.0.1:8700)
 npm test                   # vitest + jsdom (194 tests)
 npm run typecheck          # tsc --noEmit (strict)
-npm run build              # typecheck, vite build -> ../src/mirsad/static, then a size report
+npm run build              # typecheck, vite build -> dist/ (deployed to Cloudflare), then a size report
+npm run build:gateway      # the same, but into ../src/mirsad/static for FastAPI
 ```
 
-`npm run build` ends with `scripts/report-sizes.mjs`, which lists every emitted file (raw and gzip) and
+`web/wrangler.jsonc` deploys `dist/` to Cloudflare Workers as static assets only (no Worker script), so
+only the built files are ever published. Cloudflare build settings: root directory `web`, build command
+`npm run build`, deploy command `npx wrangler deploy`, Worker name `mirsad-main`, and the build
+variables `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (Vite inlines them at build time; without
+them the Cloudflare build shows a "not configured" page). Node 22 comes from `web/.node-version`.
+
+Both builds end with `scripts/report-sizes.mjs`, which fails if any `.ts`/`.tsx` source reached the
+output, then lists every emitted file (raw and gzip) and
 the initial payload of each page. Current numbers (gzip, level 9):
 
 | | Initial payload | Notes |

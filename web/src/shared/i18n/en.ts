@@ -70,6 +70,8 @@ export const en = {
   'roles.auditor': 'Auditor',
 
   // errors -------------------------------------------------------------
+  'errors.configMissing': 'This site is not configured',
+  'errors.configMissingBody': 'It was built without these settings. Add them as build variables and deploy again:',
   'errors.conflict': 'This item was already changed. Refresh and try again.',
   'errors.forbidden': 'You do not have permission for this.',
   'errors.generic': 'Something went wrong.',

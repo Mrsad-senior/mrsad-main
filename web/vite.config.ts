@@ -72,7 +72,9 @@ export default defineConfig({
   base: '/',
   plugins: [react(), approverServiceWorker(), devApproveRoute()],
   build: {
-    outDir: resolve(root, '../src/mirsad/static'),
+    // `npm run build` writes ./dist, the only folder deployed to Cloudflare (wrangler.jsonc).
+    // `npm run build:gateway` overrides this with ../src/mirsad/static, which FastAPI serves.
+    outDir: resolve(root, 'dist'),
     emptyOutDir: true,
     assetsDir: 'assets',
     // CSP is `self` only (img-src excludes data:), so never inline assets as data: URIs.

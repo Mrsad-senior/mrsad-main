@@ -33,7 +33,7 @@ def install_static(app: FastAPI, static_dir: Path) -> None:
         if not index.is_file():
             return JSONResponse({
                 "name": "Mirsad", "detail": "The web dashboard has not been built.",
-                "hint": "cd web && npm install && npm run build  (outputs to src/mirsad/static/)",
+                "hint": "cd web && npm install && npm run build:gateway  (outputs to src/mirsad/static/)",
                 "api_docs": "/docs", "health": "/healthz"})
         if full_path:
             candidate = (root / full_path).resolve()
