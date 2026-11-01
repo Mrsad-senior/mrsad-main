@@ -2,10 +2,11 @@ import { createContext, type ReactNode, useCallback, useContext, useEffect, useM
 import { ApiClient, ApiError } from '../api/client';
 import type { Role, User } from '../api/types';
 import { hasStoredLang, useI18n } from '../i18n';
+import { apiBaseUrl } from './config';
 import { useToast } from './toast';
 
 /** One client per page; tests pass their own through <ApiProvider client={...}>. */
-export const defaultClient = new ApiClient();
+export const defaultClient = new ApiClient({ baseUrl: apiBaseUrl() });
 
 const ApiContext = createContext<ApiClient>(defaultClient);
 
