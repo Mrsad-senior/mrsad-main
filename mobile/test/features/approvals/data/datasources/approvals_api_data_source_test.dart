@@ -29,16 +29,20 @@ void main() {
 
   tearDown(() => source.dispose());
 
-  test('GET /approvals/pending feeds watchPending', () async {
-    adapter.on('GET', '/approvals/pending', body: [approvalJson()]);
+  test('GET /api/approvals?status=pending feeds watchPending', () async {
+    adapter.on('GET', '/api/approvals', body: [approvalJson()]);
 
     final pending = await source.watchPending().first;
 
     expect(pending.single.id, 'apr_7f3c2a');
+    expect(adapter.requests.single.queryParameters, {
+      'status': 'pending',
+      'limit': 100,
+    });
   });
 
   test('refreshPending pushes a new list to watchers', () async {
-    adapter.on('GET', '/approvals/pending', body: [approvalJson()]);
+    adapter.on('GET', '/api/approvals', body: [approvalJson()]);
     final counts = <int>[];
     final firstFetch = Completer<void>();
     final subscription = source.watchPending().listen((list) {
@@ -47,7 +51,7 @@ void main() {
     });
     await firstFetch.future;
 
-    adapter.on('GET', '/approvals/pending', body: <Object>[]);
+    adapter.on('GET', '/api/approvals', body: <Object>[]);
     await source.refreshPending();
     await Future<void>.delayed(Duration.zero);
 
@@ -55,33 +59,33 @@ void main() {
     await subscription.cancel();
   });
 
-  test('GET /approvals/{id} returns one approval', () async {
-    adapter.on('GET', '/approvals/apr_7f3c2a', body: approvalJson());
+  test('GET /api/approvals/{id} returns one approval', () async {
+    adapter.on('GET', '/api/approvals/apr_7f3c2a', body: approvalJson());
     expect((await source.getApproval('apr_7f3c2a')).tool, 'transfer_funds');
   });
 
-  test('POST /approvals/{id} sends the decision and note', () async {
+  test('POST /api/approvals/{id}/decision sends the decision', () async {
     adapter
       ..on(
         'POST',
-        '/approvals/apr_7f3c2a',
-        body: approvalJson(status: 'rejected'),
+        '/api/approvals/apr_7f3c2a/decision',
+        body: approvalJson(status: 'denied'),
       )
-      ..on('GET', '/approvals/pending', body: <Object>[]);
+      ..on('GET', '/api/approvals', body: <Object>[]);
 
     final updated = await source.submitDecision('apr_7f3c2a', _reject);
 
     expect(updated.status, ApprovalStatus.rejected);
     final post = adapter.requests.firstWhere((r) => r.method == 'POST');
-    expect(post.data, {'decision': 'reject', 'note': 'Unknown IBAN'});
+    expect(post.data, {'approve': false, 'note': 'Unknown IBAN'});
   });
 
   test('a 409 from the gateway is a ConflictException', () async {
     adapter.on(
       'POST',
-      '/approvals/apr_7f3c2a',
+      '/api/approvals/apr_7f3c2a/decision',
       status: 409,
-      body: {'detail': 'Approval is no longer held'},
+      body: {'detail': 'approval apr_7f3c2a is already denied'},
     );
     await expectLater(
       source.submitDecision('apr_7f3c2a', _reject),

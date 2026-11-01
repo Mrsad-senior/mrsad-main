@@ -19,17 +19,32 @@ void main() {
 
   tearDown(() => source.dispose());
 
-  test('GET /events asks for 100 events and parses them', () async {
-    adapter.on('GET', '/events', body: [eventJson(), eventJson()]);
+  test('GET /api/audit/events asks for 100 decision events', () async {
+    adapter.on(
+      'GET',
+      '/api/audit/events',
+      body: {
+        'items': [eventJson(), eventJson()],
+        'total': 2,
+      },
+    );
 
     final events = await source.watchEvents().first;
 
     expect(events, hasLength(2));
-    expect(adapter.requests.single.queryParameters, {'limit': 100});
+    expect(adapter.requests.single.queryParameters, {
+      'event_type': 'tool_call.decision',
+      'limit': 100,
+    });
   });
 
-  test('a 401 from the gateway is an UnauthorizedException', () async {
-    adapter.on('GET', '/events', status: 401, body: {'detail': 'expired'});
+  test('a 403 for an approver is an UnauthorizedException', () async {
+    adapter.on(
+      'GET',
+      '/api/audit/events',
+      status: 403,
+      body: {'detail': 'Requires role: admin or auditor'},
+    );
 
     await expectLater(
       source.watchEvents(),

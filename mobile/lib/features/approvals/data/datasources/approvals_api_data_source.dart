@@ -6,16 +6,21 @@ import 'package:mirsad/core/network/dio_error_mapping.dart';
 import 'package:mirsad/core/network/polling_stream.dart';
 import 'package:mirsad/features/approvals/data/datasources/approvals_data_source.dart';
 import 'package:mirsad/features/approvals/data/models/approval_model.dart';
+import 'package:mirsad/features/approvals/data/models/approval_wire_values.dart';
 import 'package:mirsad/features/approvals/data/models/decision_request_model.dart';
 
-/// Approvals from the Mirsad gateway (see docs/API_CONTRACT.md). The API has
-/// no push updates, so the pending list is polled.
+/// Approvals from the Mirsad gateway (docs/api.md, "Approvals"). The gateway
+/// only shows them to approvers and admins. The pending list is polled; the
+/// gateway's `GET /api/stream` (Server-Sent Events) could replace that later.
 class ApprovalsApiDataSource
     implements ApprovalsReadDataSource, ApprovalDecisionDataSource {
   ApprovalsApiDataSource(
     this._dio, {
     this.pollInterval = const Duration(seconds: 15),
   });
+
+  static const path = '/api/approvals';
+  static const pageSize = 100;
 
   final Dio _dio;
   final Duration pollInterval;
@@ -49,7 +54,7 @@ class ApprovalsApiDataSource
   ) async {
     final updated = await callGateway(() async {
       final response = await _dio.post<Map<String, dynamic>>(
-        _path(id),
+        '${_path(id)}/decision',
         data: request.toJson(),
       );
       return ApprovalModel.fromJson(_body(response));
@@ -64,7 +69,10 @@ class ApprovalsApiDataSource
 
   Future<List<ApprovalModel>> _fetchPending() {
     return callGateway(() async {
-      final response = await _dio.get<List<dynamic>>('/approvals/pending');
+      final response = await _dio.get<List<dynamic>>(
+        path,
+        queryParameters: {'status': pendingStatus, 'limit': pageSize},
+      );
       return [
         for (final item in response.data ?? const <dynamic>[])
           ApprovalModel.fromJson(item as Map<String, dynamic>),
@@ -72,7 +80,7 @@ class ApprovalsApiDataSource
     });
   }
 
-  String _path(String id) => '/approvals/${Uri.encodeComponent(id)}';
+  String _path(String id) => '$path/${Uri.encodeComponent(id)}';
 
   Map<String, dynamic> _body(Response<Map<String, dynamic>> response) {
     return response.data ??

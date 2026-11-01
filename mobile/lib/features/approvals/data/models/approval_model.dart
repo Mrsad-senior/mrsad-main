@@ -1,83 +1,85 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mirsad/features/approvals/data/models/approval_reason_model.dart';
+import 'package:mirsad/core/network/epoch_seconds.dart';
 import 'package:mirsad/features/approvals/data/models/approval_wire_values.dart';
+import 'package:mirsad/features/approvals/data/models/call_decision_model.dart';
 import 'package:mirsad/features/approvals/domain/entities/approval.dart';
 import 'package:mirsad/features/approvals/domain/entities/approval_status.dart';
-import 'package:mirsad/features/approvals/domain/entities/sector.dart';
 
 part 'approval_model.g.dart';
 
-/// An approval as the gateway API and the Supabase `approvals` table send it.
-@JsonSerializable()
+/// An approval record as `GET /api/approvals` and `GET /api/approvals/{id}`
+/// send it (`ApprovalRecord` in src/mirsad/models.py). Only the fields the
+/// app uses are read.
+///
+/// The gateway stores the arguments redacted: an IBAN keeps its country code
+/// and last four characters (`SA******************1234`).
+@JsonSerializable(createToJson: false)
 class ApprovalModel {
   const ApprovalModel({
     required this.id,
     required this.agentId,
-    required this.sector,
     required this.tool,
     required this.arguments,
     required this.status,
-    required this.riskScore,
-    required this.tainted,
-    required this.userTask,
-    required this.reasons,
+    required this.decision,
     required this.createdAt,
     required this.expiresAt,
+    this.originalTask,
   });
 
   factory ApprovalModel.fromJson(Map<String, dynamic> json) =>
       _$ApprovalModelFromJson(json);
 
   final String id;
-  final String agentId;
 
-  @JsonKey(fromJson: sectorFromJson, toJson: sectorToJson)
-  final Sector sector;
+  /// The policy agent id, e.g. `finance-assistant`.
+  final String agentId;
 
   final String tool;
   final Map<String, dynamic> arguments;
 
-  @JsonKey(fromJson: approvalStatusFromJson, toJson: approvalStatusToJson)
+  @JsonKey(fromJson: approvalStatusFromJson)
   final ApprovalStatus status;
 
-  final double riskScore;
-  final bool tainted;
-  final String userTask;
-  final List<ApprovalReasonModel> reasons;
+  final CallDecisionModel decision;
+
+  @JsonKey(fromJson: dateTimeFromEpochSeconds)
   final DateTime createdAt;
+
+  @JsonKey(fromJson: dateTimeFromEpochSeconds)
   final DateTime expiresAt;
 
-  Map<String, dynamic> toJson() => _$ApprovalModelToJson(this);
+  /// What the user asked the agent to do. Proposed in docs/API_CONTRACT.md:
+  /// the gateway does not send it yet.
+  final String? originalTask;
 
   ApprovalModel copyWith({ApprovalStatus? status}) {
     return ApprovalModel(
       id: id,
       agentId: agentId,
-      sector: sector,
       tool: tool,
       arguments: arguments,
       status: status ?? this.status,
-      riskScore: riskScore,
-      tainted: tainted,
-      userTask: userTask,
-      reasons: reasons,
+      decision: decision,
       createdAt: createdAt,
       expiresAt: expiresAt,
+      originalTask: originalTask,
     );
   }
 
   Approval toEntity() {
+    final objections = decision.reasons.where((reason) => reason.objects);
     return Approval(
       id: id,
       agentId: agentId,
-      sector: sector,
+      sector: sectorForAgent(agentId),
       tool: tool,
       arguments: Map.unmodifiable(arguments),
       status: status,
-      riskScore: riskScore,
-      tainted: tainted,
-      userTask: userTask,
-      reasons: List.unmodifiable(reasons.map((reason) => reason.toEntity())),
+      riskScore: decision.riskScore,
+      tainted: objections.any((reason) => reason.untrustedInput),
+      userTask: originalTask ?? '',
+      reasons: List.unmodifiable(objections.map((reason) => reason.toEntity())),
       createdAt: createdAt,
       expiresAt: expiresAt,
     );

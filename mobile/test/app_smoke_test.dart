@@ -16,7 +16,7 @@ void main() {
       const AppConfig(
         useMock: true,
         readSource: ReadSource.supabase,
-        apiBaseUrl: 'http://10.0.2.2:8000',
+        apiBaseUrl: 'http://10.0.2.2:8700',
         supabaseUrl: '',
         supabaseAnonKey: '',
       ),

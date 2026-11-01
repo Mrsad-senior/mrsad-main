@@ -6,7 +6,7 @@ AppConfig _config({required bool useMock, ReadSource? readSource}) {
   return AppConfig(
     useMock: useMock,
     readSource: readSource,
-    apiBaseUrl: 'http://10.0.2.2:8000',
+    apiBaseUrl: 'http://10.0.2.2:8700',
     supabaseUrl: 'https://project.supabase.co',
     supabaseAnonKey: 'anon-key',
   );
@@ -31,12 +31,13 @@ void main() {
     expect(sources.auth, DataSourceKind.supabase);
   });
 
-  test('API reads use the gateway for everything but sign-in', () {
+  test('API reads use the gateway for everything, sign-in included', () {
     final sources = DataSources.from(
       _config(useMock: false, readSource: ReadSource.api),
     );
     expect(sources.reads, DataSourceKind.api);
     expect(sources.gateway, DataSourceKind.api);
-    expect(sources.auth, DataSourceKind.supabase);
+    expect(sources.auth, DataSourceKind.api);
+    expect(sources.usesSupabase, isFalse);
   });
 }

@@ -1,7 +1,7 @@
 import 'package:mirsad/features/auth/data/models/reviewer_model.dart';
 
-/// Reviewer sign-in. Implemented by the mock and Supabase sources; the
-/// gateway does not sign anyone in. Methods throw `AppException`s.
+/// Reviewer sign-in. Implemented by the mock, API (gateway accounts) and
+/// Supabase sources. Methods throw `AppException`s.
 abstract interface class AuthDataSource {
   ReviewerModel? get currentReviewer;
 

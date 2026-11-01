@@ -9,10 +9,6 @@ part of 'audit_chain_status_model.dart';
 AuditChainStatusModel _$AuditChainStatusModelFromJson(
   Map<String, dynamic> json,
 ) => AuditChainStatusModel(
-  valid: json['valid'] as bool,
-  brokenAt: (json['broken_at'] as num?)?.toInt(),
+  auditOk: json['audit_ok'] as bool?,
+  auditFirstBadSeq: (json['audit_first_bad_seq'] as num?)?.toInt(),
 );
-
-Map<String, dynamic> _$AuditChainStatusModelToJson(
-  AuditChainStatusModel instance,
-) => <String, dynamic>{'valid': instance.valid, 'broken_at': instance.brokenAt};

@@ -7,21 +7,47 @@ import 'package:mirsad/features/audit/domain/entities/audit_chain_status.dart';
 
 import '../../../helpers/fake_http_adapter.dart';
 
+/// `GET /api/stats/overview`, trimmed to the fields around the audit status.
+Map<String, dynamic> _overview({bool? auditOk = true, int? firstBadSeq}) {
+  return {
+    'hours': 1.0,
+    'total_calls': 2,
+    'allowed': 1,
+    'denied': 1,
+    'approvals_pending': 0,
+    'audit_ok': auditOk,
+    'audit_head_seq': 5,
+    'audit_first_bad_seq': ?firstBadSeq,
+    'by_tool': <Object>[],
+    'by_layer': <Object>[],
+  };
+}
+
 void main() {
   group('AuditChainStatusModel', () {
-    test('parses a broken chain', () {
-      final status = AuditChainStatusModel.fromJson(const {
-        'valid': false,
-        'broken_at': 1287,
-      }).toEntity();
+    test('reads an intact chain', () {
+      final status = AuditChainStatusModel.fromJson(_overview()).toEntity();
+      expect(status, const AuditChainStatus.intact());
+    });
+
+    test('reads a broken chain without an entry, as the gateway sends it', () {
+      final status = AuditChainStatusModel.fromJson(
+        _overview(auditOk: false),
+      ).toEntity();
+      expect(status, const AuditChainStatus(valid: false));
+    });
+
+    test('reads the broken entry once the gateway sends it', () {
+      final status = AuditChainStatusModel.fromJson(
+        _overview(auditOk: false, firstBadSeq: 1287),
+      ).toEntity();
       expect(status, const AuditChainStatus(valid: false, brokenAt: 1287));
     });
 
-    test('ignores broken_at when the chain is valid', () {
-      final status = AuditChainStatusModel.fromJson(const {
-        'valid': true,
-        'broken_at': 3,
-      }).toEntity();
+    test('ignores the broken entry when the chain is valid', () {
+      final status = AuditChainStatusModel.fromJson(
+        _overview(firstBadSeq: 3),
+      ).toEntity();
       expect(status, const AuditChainStatus.intact());
     });
   });
@@ -31,18 +57,37 @@ void main() {
 
     setUp(() => adapter = FakeHttpAdapter());
 
-    test('GET /audit/verify returns the chain status', () async {
-      adapter.on(
-        'GET',
-        '/audit/verify',
-        body: {'valid': false, 'broken_at': 42},
-      );
+    test('reads the status from GET /api/stats/overview', () async {
+      adapter.on('GET', '/api/stats/overview', body: _overview(auditOk: false));
+
       final model = await AuditApiDataSource(fakeDio(adapter)).verify();
-      expect(model.brokenAt, 42);
+
+      expect(model.auditOk, isFalse);
+      expect(adapter.requests.single.queryParameters, {'hours': 1});
     });
 
+    test(
+      'a status the gateway could not compute is a ServerException',
+      () async {
+        adapter.on(
+          'GET',
+          '/api/stats/overview',
+          body: _overview(auditOk: null),
+        );
+        await expectLater(
+          AuditApiDataSource(fakeDio(adapter)).verify(),
+          throwsA(isA<ServerException>()),
+        );
+      },
+    );
+
     test('a 500 is a ServerException', () async {
-      adapter.on('GET', '/audit/verify', status: 500, body: {'detail': 'x'});
+      adapter.on(
+        'GET',
+        '/api/stats/overview',
+        status: 500,
+        body: {'detail': 'Internal server error'},
+      );
       await expectLater(
         AuditApiDataSource(fakeDio(adapter)).verify(),
         throwsA(isA<ServerException>()),
@@ -53,7 +98,7 @@ void main() {
   test('the mock reports an intact chain unless told otherwise', () async {
     const intact = AuditMockDataSource(latency: Duration.zero);
     const broken = AuditMockDataSource(brokenAt: 7, latency: Duration.zero);
-    expect((await intact.verify()).valid, isTrue);
-    expect((await broken.verify()).brokenAt, 7);
+    expect((await intact.verify()).toEntity().valid, isTrue);
+    expect((await broken.verify()).toEntity().brokenAt, 7);
   });
 }

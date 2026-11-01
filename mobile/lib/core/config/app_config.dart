@@ -21,7 +21,7 @@ class AppConfig {
       ),
       apiBaseUrl: const String.fromEnvironment(
         'API_BASE_URL',
-        defaultValue: 'http://10.0.2.2:8000',
+        defaultValue: 'http://10.0.2.2:8700',
       ),
       supabaseUrl: const String.fromEnvironment('SUPABASE_URL'),
       supabaseAnonKey: const String.fromEnvironment('SUPABASE_ANON_KEY'),
@@ -48,9 +48,9 @@ class AppConfig {
     if (readSource == null) {
       return 'READ_SOURCE must be "supabase" or "api".';
     }
-    if (!hasSupabase) {
-      return 'USE_MOCK is false, so SUPABASE_URL and SUPABASE_ANON_KEY are '
-          'required: reviewers sign in with Supabase Auth.';
+    if (readSource == ReadSource.supabase && !hasSupabase) {
+      return 'READ_SOURCE is "supabase", so SUPABASE_URL and '
+          'SUPABASE_ANON_KEY are required.';
     }
     final apiUri = Uri.tryParse(apiBaseUrl);
     if (apiUri == null || !apiUri.hasScheme || apiUri.host.isEmpty) {

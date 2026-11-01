@@ -9,6 +9,6 @@ part of 'decision_request_model.dart';
 Map<String, dynamic> _$DecisionRequestModelToJson(
   DecisionRequestModel instance,
 ) => <String, dynamic>{
-  'decision': reviewDecisionToJson(instance.decision),
+  'approve': reviewDecisionToJson(instance.decision),
   'note': ?instance.note,
 };

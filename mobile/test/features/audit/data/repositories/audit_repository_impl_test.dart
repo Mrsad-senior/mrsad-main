@@ -20,7 +20,8 @@ void main() {
 
   test('maps the model to an entity', () async {
     when(() => source.verify()).thenAnswer(
-      (_) async => const AuditChainStatusModel(valid: false, brokenAt: 9),
+      (_) async =>
+          const AuditChainStatusModel(auditOk: false, auditFirstBadSeq: 9),
     );
 
     expect(

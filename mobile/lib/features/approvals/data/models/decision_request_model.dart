@@ -4,12 +4,13 @@ import 'package:mirsad/features/approvals/domain/entities/review_decision.dart';
 
 part 'decision_request_model.g.dart';
 
-/// Body of `POST /approvals/{id}`.
+/// Body of `POST /api/approvals/{id}/decision`: `{"approve": bool, "note"?}`.
+/// The gateway rejects unknown fields and notes over 2000 characters.
 @JsonSerializable(createFactory: false, includeIfNull: false)
 class DecisionRequestModel {
   const DecisionRequestModel({required this.decision, this.note});
 
-  @JsonKey(toJson: reviewDecisionToJson)
+  @JsonKey(name: 'approve', toJson: reviewDecisionToJson)
   final ReviewDecision decision;
 
   final String? note;

@@ -22,12 +22,13 @@ class DataSources {
         auth: DataSourceKind.mock,
       );
     }
+    final apiReads = config.readSource == ReadSource.api;
     return DataSources(
-      reads: config.readSource == ReadSource.api
-          ? DataSourceKind.api
-          : DataSourceKind.supabase,
+      reads: apiReads ? DataSourceKind.api : DataSourceKind.supabase,
       gateway: DataSourceKind.api,
-      auth: DataSourceKind.supabase,
+      // The gateway signs reviewers in with its own accounts and does not
+      // accept Supabase tokens, so Supabase Auth only goes with Supabase reads.
+      auth: apiReads ? DataSourceKind.api : DataSourceKind.supabase,
     );
   }
 
@@ -38,7 +39,7 @@ class DataSources {
   /// chain): mock or API.
   final DataSourceKind gateway;
 
-  /// Reviewer sign-in: mock or Supabase.
+  /// Reviewer sign-in: mock, API (gateway accounts) or Supabase.
   final DataSourceKind auth;
 
   bool get usesSupabase =>

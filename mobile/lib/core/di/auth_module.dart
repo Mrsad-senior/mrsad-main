@@ -1,5 +1,8 @@
 import 'package:get_it/get_it.dart';
+import 'package:mirsad/core/config/app_config.dart';
 import 'package:mirsad/core/config/data_sources.dart';
+import 'package:mirsad/core/network/dio_client.dart';
+import 'package:mirsad/features/auth/data/datasources/auth_api_data_source.dart';
 import 'package:mirsad/features/auth/data/datasources/auth_data_source.dart';
 import 'package:mirsad/features/auth/data/datasources/auth_mock_data_source.dart';
 import 'package:mirsad/features/auth/data/datasources/auth_supabase_data_source.dart';
@@ -17,13 +20,16 @@ void registerAuthModule(GetIt getIt, DataSources sources) {
     ..registerLazySingleton<AuthDataSource>(
       () => switch (sources.auth) {
         DataSourceKind.mock => AuthMockDataSource(),
-        DataSourceKind.supabase => AuthSupabaseDataSource(getIt()),
-        DataSourceKind.api => throw StateError(
-          'Reviewers sign in with Supabase Auth, not the gateway.',
+        DataSourceKind.api => AuthApiDataSource(
+          createLoginDio(baseUrl: getIt<AppConfig>().apiBaseUrl),
         ),
+        DataSourceKind.supabase => AuthSupabaseDataSource(getIt()),
       },
-      dispose: (source) =>
-          source is AuthMockDataSource ? source.dispose() : null,
+      dispose: (source) => switch (source) {
+        AuthMockDataSource() => source.dispose(),
+        AuthApiDataSource() => source.dispose(),
+        _ => null,
+      },
     )
     ..registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(getIt()))
     ..registerLazySingleton(() => GetCurrentReviewer(getIt()))

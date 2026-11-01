@@ -4,62 +4,72 @@ import 'package:mirsad/features/approvals/domain/entities/reason_layer.dart';
 import 'package:mirsad/features/approvals/domain/entities/review_decision.dart';
 import 'package:mirsad/features/approvals/domain/entities/sector.dart';
 
-// The JSON spelling of each enum value, as listed in docs/API_CONTRACT.md.
-// Kept here so the domain enums stay free of JSON concerns.
+// How the gateway's values (docs/api.md, src/mirsad/models.py) map onto the
+// domain enums. Kept here so the domain enums stay free of JSON concerns.
 
-const Map<Sector, String> _sectors = {
-  Sector.finance: 'finance',
-  Sector.healthcare: 'healthcare',
-  Sector.general: 'general',
+/// The gateway's name for a held approval.
+const String pendingStatus = 'pending';
+
+/// A reason whose `action` is this did not object to the call.
+const String allowAction = 'allow';
+
+const Map<String, ApprovalStatus> _statuses = {
+  pendingStatus: ApprovalStatus.held,
+  'approved': ApprovalStatus.approved,
+  'denied': ApprovalStatus.rejected,
+  'expired': ApprovalStatus.expired,
+  // Withdrawn by the gateway, e.g. because the agent's session ended. Like an
+  // expired approval, nobody can decide it any more.
+  'cancelled': ApprovalStatus.expired,
 };
 
-const Map<ApprovalStatus, String> _statuses = {
-  ApprovalStatus.held: 'held',
-  ApprovalStatus.approved: 'approved',
-  ApprovalStatus.rejected: 'rejected',
-  ApprovalStatus.expired: 'expired',
-};
-
-const Map<ReasonLayer, String> _layers = {
-  ReasonLayer.policy: 'policy',
-  ReasonLayer.taint: 'taint',
-  ReasonLayer.intent: 'intent',
-  ReasonLayer.llmJudge: 'llm_judge',
-  ReasonLayer.keywords: 'keywords',
-  ReasonLayer.other: 'other',
-};
-
-const Map<ReviewDecision, String> _decisions = {
-  ReviewDecision.approve: 'approve',
-  ReviewDecision.reject: 'reject',
-};
-
-Sector sectorFromJson(String value) => _decode(_sectors, value, 'sector');
-
-String sectorToJson(Sector value) => _sectors[value]!;
-
-ApprovalStatus approvalStatusFromJson(String value) =>
-    _decode(_statuses, value, 'status');
-
-String approvalStatusToJson(ApprovalStatus value) => _statuses[value]!;
-
-/// Unknown layers become [ReasonLayer.other], so a new gateway layer does not
-/// break the app.
-ReasonLayer reasonLayerFromJson(String value) =>
-    _lookup(_layers, value) ?? ReasonLayer.other;
-
-String reasonLayerToJson(ReasonLayer value) => _layers[value]!;
-
-String reviewDecisionToJson(ReviewDecision value) => _decisions[value]!;
-
-T _decode<T>(Map<T, String> values, String wire, String field) {
-  return _lookup(values, wire) ??
-      (throw DataFormatException('Unknown $field "$wire"'));
+ApprovalStatus approvalStatusFromJson(String value) {
+  return _statuses[value] ??
+      (throw DataFormatException('Unknown status "$value"'));
 }
 
-T? _lookup<T>(Map<T, String> values, String wire) {
-  for (final MapEntry(:key, :value) in values.entries) {
-    if (value == wire) return key;
-  }
-  return null;
+/// The gateway reports its task-intent checks under the `system` layer, so
+/// the code says which check fired (src/mirsad/security/monitor.py).
+const Map<String, ReasonLayer> _systemCodes = {
+  'TASK_INTENT_MISMATCH': ReasonLayer.intent,
+  'UNBOUND_TASK': ReasonLayer.intent,
+  'SEMANTIC_TASK_MISMATCH': ReasonLayer.llmJudge,
+  'NEW_BENEFICIARY': ReasonLayer.policy,
+  'HEALTH_DATA_EXTERNAL': ReasonLayer.policy,
+  'SENSITIVE_OUTBOUND': ReasonLayer.policy,
+};
+
+/// Unknown layers and codes become [ReasonLayer.other], so a new gateway
+/// check does not break the app.
+ReasonLayer reasonLayerFromWire(String layer, String code) {
+  return switch (layer) {
+    'policy' || 'ratelimit' || 'approval' => ReasonLayer.policy,
+    'taint' => ReasonLayer.taint,
+    'detector' => ReasonLayer.keywords,
+    'system' => _systemCodes[code] ?? ReasonLayer.other,
+    _ => ReasonLayer.other,
+  };
 }
+
+/// Taint codes meaning that untrusted content (an email, a document, a web
+/// page) reached the call. `TAINT_CONFIDENTIAL_TO_EXTERNAL` is about
+/// confidential data leaving, not untrusted input, so it is not listed.
+const Set<String> untrustedTaintCodes = {
+  'TAINT_UNTRUSTED_DESTINATION',
+  'TAINT_UNTRUSTED_TO_EXTERNAL',
+  'TAINT_AFTER_INJECTION',
+};
+
+/// Approval records have no sector. The gateway picks it from the policy
+/// agent id in the same way (src/mirsad/gateway.py).
+Sector sectorForAgent(String agentId) {
+  return switch (agentId) {
+    'finance-assistant' => Sector.finance,
+    'healthcare-assistant' => Sector.healthcare,
+    _ => Sector.general,
+  };
+}
+
+/// The `approve` flag of a decision request.
+bool reviewDecisionToJson(ReviewDecision value) =>
+    value == ReviewDecision.approve;

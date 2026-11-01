@@ -4,7 +4,7 @@ import 'package:mirsad/core/config/app_config.dart';
 AppConfig _config({
   bool useMock = false,
   ReadSource? readSource = ReadSource.supabase,
-  String apiBaseUrl = 'http://10.0.2.2:8000',
+  String apiBaseUrl = 'http://10.0.2.2:8700',
   String supabaseUrl = 'https://project.supabase.co',
   String supabaseAnonKey = 'anon-key',
 }) {
@@ -33,8 +33,17 @@ void main() {
       expect(_config().validate(), isNull);
     });
 
-    test('requires Supabase when mocks are off', () {
+    test('requires Supabase for Supabase reads', () {
       expect(_config(supabaseAnonKey: '').validate(), contains('SUPABASE'));
+    });
+
+    test('needs no Supabase when everything goes through the gateway', () {
+      final config = _config(
+        readSource: ReadSource.api,
+        supabaseUrl: '',
+        supabaseAnonKey: '',
+      );
+      expect(config.validate(), isNull);
     });
 
     test('rejects an unknown READ_SOURCE', () {
@@ -43,7 +52,7 @@ void main() {
 
     test('rejects an API_BASE_URL without a scheme', () {
       expect(
-        _config(apiBaseUrl: 'localhost:8000').validate(),
+        _config(apiBaseUrl: 'localhost:8700').validate(),
         contains('API_BASE_URL'),
       );
     });
@@ -58,7 +67,7 @@ void main() {
   test('fromEnvironment defaults to mock mode on the emulator URL', () {
     final config = AppConfig.fromEnvironment();
     expect(config.useMock, isTrue);
-    expect(config.apiBaseUrl, 'http://10.0.2.2:8000');
+    expect(config.apiBaseUrl, 'http://10.0.2.2:8700');
     expect(config.validate(), isNull);
   });
 }

@@ -16,6 +16,9 @@ class AuditMockDataSource implements AuditDataSource {
   @override
   Future<AuditChainStatusModel> verify() async {
     await Future<void>.delayed(latency);
-    return AuditChainStatusModel(valid: brokenAt == null, brokenAt: brokenAt);
+    return AuditChainStatusModel(
+      auditOk: brokenAt == null,
+      auditFirstBadSeq: brokenAt,
+    );
   }
 }

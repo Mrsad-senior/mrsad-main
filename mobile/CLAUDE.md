@@ -16,9 +16,9 @@ This is a university senior project. The current goal is a solid, scalable found
 
 ## Repository rules
 
-- The repo root holds `mobile/` (this app) and `docs/`. The gateway code will live elsewhere in the repo.
+- The repo root holds `mobile/` (this app), `docs/`, the gateway (`src/`, documented in `docs/api.md`) and the web UI (`web/`).
 - **Only modify files inside `mobile/` and `docs/`.** Never write or change backend code.
-- When the gateway code is available, read it, and follow the real code wherever it differs from `docs/API_CONTRACT.md` (then update the doc and say what changed).
+- Follow the real gateway code in `src/` and `docs/api.md`. `docs/API_CONTRACT.md` lists what the app calls and what it still needs (marked proposed); update it when that changes.
 - Do not commit. After each feature, give the user the exact git commands to commit it.
 - Keep `env/dev.json` and `env/prod.json` out of git. Only `env/example.json` is committed.
 - Never put a Supabase `service_role` key in the app. Only the anon key belongs here.
@@ -78,7 +78,7 @@ Features: `auth`, `approvals`, `activity`, `audit`.
 Every repository is backed by one of three implementations:
 
 1. **Mock**: realistic fake finance data, used now.
-2. **API**: the Mirsad gateway over Dio (`docs/API_CONTRACT.md`).
+2. **API**: the Mirsad gateway over Dio (`docs/api.md`; what the app uses is in `docs/API_CONTRACT.md`).
 3. **Supabase**: reads tables and listens to realtime changes.
 
 The plan: reviewers sign in with Supabase Auth. The app **reads** approvals and events from Supabase (realtime, so new held actions appear instantly) and **sends** decisions through the gateway API, because the gateway must resume or cancel the agent's action.
@@ -89,9 +89,9 @@ The plan: reviewers sign in with Supabase Auth. The app **reads** approvals and 
 |------------------------------------|---------------------------|----------------------------|----------|
 | `USE_MOCK=true`                    | mock                      | mock                       | mock     |
 | `USE_MOCK=false`, `READ_SOURCE=supabase` | Supabase            | API                        | Supabase |
-| `USE_MOCK=false`, `READ_SOURCE=api`      | API                 | API                        | Supabase |
+| `USE_MOCK=false`, `READ_SOURCE=api`      | API                 | API                        | API      |
 
-Audit has no Supabase source (verifying the hash chain is the gateway's job). Auth has no API source (sign-in is Supabase Auth). The API client sends the Supabase access token as `Authorization: Bearer <token>`.
+Audit has no Supabase source (verifying the hash chain is the gateway's job). The gateway signs reviewers in with its own accounts (`POST /api/auth/login`) and does not accept Supabase tokens, so `READ_SOURCE=api` is the mode that works with it today; the Supabase mode needs the gateway changes proposed in `docs/API_CONTRACT.md`. The API client sends the signed-in reviewer's token as `Authorization: Bearer <token>`.
 
 ### Environment config
 
@@ -101,13 +101,13 @@ Builds read `--dart-define-from-file=env/<name>.json`:
 |---------------------|---------------------------------------------------------------|
 | `USE_MOCK`          | `true` uses mock data and mock sign-in everywhere             |
 | `READ_SOURCE`       | `supabase` or `api`; where reads come from when not mocking   |
-| `API_BASE_URL`      | Gateway URL. Dev: `http://10.0.2.2:8000` (Android emulator). Prod: `https://api.<our-domain>` later |
-| `SUPABASE_URL`      | Supabase project URL                                          |
+| `API_BASE_URL`      | Gateway URL. Dev: `http://10.0.2.2:8700` (Android emulator; the gateway's default port). Prod: `https://api.<our-domain>` later |
+| `SUPABASE_URL`      | Supabase project URL (only for `READ_SOURCE=supabase`)        |
 | `SUPABASE_ANON_KEY` | Supabase anon key, or the newer "publishable" key (never the service_role / secret key) |
 
-Without a file the app defaults to `USE_MOCK=true`. When mocks are off, a missing Supabase config shows a configuration error screen instead of crashing.
+Without a file the app defaults to `USE_MOCK=true`. With `READ_SOURCE=supabase`, a missing Supabase config shows a configuration error screen instead of crashing.
 
-## Domain model (from the brief)
+## Domain model (from the brief; the data layer maps the gateway's records onto it, see `docs/API_CONTRACT.md`)
 
 **Approval**: `id`, `agent_id`, `sector` (finance | healthcare | general), `tool`, `arguments` (map), `status` (held | approved | rejected | expired), `risk_score` (0-1), `tainted` (bool), `user_task` (the user's original request), `reasons` (list of `{layer: policy | taint | intent | llm_judge | keywords, message}`), `created_at`, `expires_at`.
 
@@ -115,7 +115,7 @@ Without a file the app defaults to `USE_MOCK=true`. When mocks are off, a missin
 
 **Audit**: `{valid: bool, broken_at: int?}`.
 
-Held actions auto-reject after 5 minutes. The gateway does the auto-reject; the app only shows the countdown from `expires_at`.
+Held actions expire after the gateway's `MIRSAD_APPROVAL_TIMEOUT_S` (120 s by default). The gateway does the expiry; the app only shows the countdown from `expires_at`.
 
 ## Mock data (finance, fake only)
 
@@ -178,7 +178,12 @@ flutter_bloc, go_router, dio, get_it, equatable, fpdart, json_annotation, json_s
 
 ## Open items
 
-- As of 2026-10-29 the gateway code was not in this repository. `docs/API_CONTRACT.md` is written from the brief. Reconcile it with the real gateway once it is available.
+- 2026-11-02: the data layer now follows the real gateway. Gaps the data layer cannot close (details in `docs/API_CONTRACT.md`):
+  - The gateway does not send the user's original task, so "The user asked" is empty against the real API (proposed `original_task`).
+  - Approvers get `403` on the activity feed (`/api/audit/events` is admin/auditor only); proposed an approver-readable feed. A `403` currently shows as "session expired".
+  - Sign-in asks for an email, but gateway usernames need not be emails (the default `approver` account is not); reviewers need email-style usernames until the form accepts plain usernames.
+  - Server text is shown in English only; reasons also carry `message_ar` and approvals `summary_ar`.
+  - The finance demo's `transfer_funds` sends `amount_sar`, which `Approval.amount` does not read, and real tool names (`export_customers`, `read_invoice`, `approve_payment`) have no labels in `tool_labels.dart`.
 - The chosen language is not persisted between launches (it would need `shared_preferences`).
 - A gateway `401` shows "session expired" but does not sign the reviewer out automatically yet.
 - iOS: talking to a local `http://` gateway from the simulator needs an App Transport Security exception; not set up.

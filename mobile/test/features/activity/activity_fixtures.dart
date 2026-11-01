@@ -19,15 +19,47 @@ ActivityEvent activityEvent({
   );
 }
 
-/// The example event from docs/API_CONTRACT.md.
-Map<String, dynamic> eventJson({String decision = 'denied'}) {
+/// A `tool_call.decision` audit event shaped like the gateway's
+/// (`AuditEvent` in src/mirsad/models.py). [payload] replaces the default.
+Map<String, dynamic> eventJson({
+  String action = 'deny',
+  Map<String, dynamic>? payload,
+}) {
+  final ts = DateTime.utc(2026, 10, 29, 9, 12, 44);
   return {
-    'id': 'evt_0193',
-    'agent_id': 'banking-assistant',
+    'seq': 193,
+    'ts': ts.millisecondsSinceEpoch / Duration.millisecondsPerSecond,
+    'event_type': 'tool_call.decision',
+    'session_id': 'conv-1',
+    'agent_id': 'finance-assistant',
     'tool': 'update_beneficiary',
-    'decision': decision,
-    'summary': 'Blocked an instruction hidden in an invoice note.',
-    'risk_score': 0.95,
-    'created_at': '2026-10-29T09:12:44Z',
+    'call_id': 'call_4dd7b47cc4144ffa',
+    'action': action,
+    'risk': 'critical',
+    'policy_version': '6ca37e79',
+    'payload':
+        payload ??
+        {
+          'risk_score': 0.95,
+          'latency_ms': 1.17,
+          'reasons': [
+            _reason('allow', "Tool 'update_beneficiary' is high risk."),
+            _reason('require_approval', 'Untrusted content was read earlier.'),
+            _reason('deny', 'The IBAN only appears in an invoice note.'),
+            _reason('deny', 'A second denial, not the summary.'),
+          ],
+        },
+    'prev_hash': '0' * 64,
+    'hash': 'f' * 64,
+  };
+}
+
+Map<String, dynamic> _reason(String action, String message) {
+  return {
+    'layer': 'taint',
+    'code': 'TAINT_UNTRUSTED_DESTINATION',
+    'action': action,
+    'message': message,
+    'message_ar': null,
   };
 }

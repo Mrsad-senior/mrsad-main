@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mirsad/core/errors/exceptions.dart';
 import 'package:mirsad/features/approvals/data/datasources/approvals_mock_data_source.dart';
+import 'package:mirsad/features/approvals/data/datasources/mock/demo_approvals.dart';
 import 'package:mirsad/features/approvals/data/models/decision_request_model.dart';
 import 'package:mirsad/features/approvals/domain/entities/approval_status.dart';
 import 'package:mirsad/features/approvals/domain/entities/review_decision.dart';
@@ -27,6 +28,12 @@ void main() {
     expect(pending.first.arguments['amount'], 50000);
   });
 
+  test('stores the IBAN redacted, as the gateway does', () async {
+    final transfer = await source.getApproval(_transferId);
+    expect(transfer.toEntity().recipient, 'SA******************1234');
+    expect(transfer.toEntity().tainted, isTrue);
+  });
+
   test('a decision removes the approval from the pending list', () async {
     final counts = source.watchPending().map((list) => list.length);
     final expectation = expectLater(counts, emitsInOrder([2, 1]));
@@ -46,8 +53,8 @@ void main() {
     );
   });
 
-  test('held approvals expire after five minutes', () async {
-    clock.advance(const Duration(minutes: 5));
+  test('held approvals expire after the approval window', () async {
+    clock.advance(approvalWindow);
 
     expect(await source.watchPending().first, isEmpty);
     expect(
@@ -61,7 +68,7 @@ void main() {
   });
 
   test('refreshing an empty list brings the demo back', () async {
-    clock.advance(const Duration(minutes: 5));
+    clock.advance(approvalWindow);
     await source.refreshPending();
     expect(await source.watchPending().first, hasLength(2));
   });

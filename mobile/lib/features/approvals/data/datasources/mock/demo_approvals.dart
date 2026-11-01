@@ -1,57 +1,78 @@
 import 'package:mirsad/features/approvals/data/models/approval_model.dart';
 import 'package:mirsad/features/approvals/data/models/approval_reason_model.dart';
+import 'package:mirsad/features/approvals/data/models/call_decision_model.dart';
 import 'package:mirsad/features/approvals/domain/entities/approval_status.dart';
-import 'package:mirsad/features/approvals/domain/entities/reason_layer.dart';
-import 'package:mirsad/features/approvals/domain/entities/sector.dart';
 
-/// How long the gateway holds an action before auto-rejecting it.
-const Duration approvalWindow = Duration(minutes: 5);
+/// How long the gateway holds an action before it expires
+/// (`MIRSAD_APPROVAL_TIMEOUT_S`, 120 seconds by default).
+const Duration approvalWindow = Duration(minutes: 2);
 
-/// The finance demo's held actions, timed relative to [now]. All names,
-/// addresses and IBANs are fake.
+/// The finance demo's held actions, timed relative to [now]. They are shaped
+/// like the gateway's records: arguments redacted the way the gateway stores
+/// them, reasons with its layers, codes and wording. All names, addresses and
+/// IBANs are fake.
 List<ApprovalModel> demoApprovals(DateTime now) {
-  final invoiceHeldAt = now.subtract(const Duration(seconds: 40));
-  final statementHeldAt = now.subtract(const Duration(minutes: 1, seconds: 50));
+  final invoiceHeldAt = now.subtract(const Duration(seconds: 15));
+  final statementHeldAt = now.subtract(const Duration(seconds: 35));
   return [
     ApprovalModel(
       id: 'apr_7f3c2a',
-      agentId: 'banking-assistant',
-      sector: Sector.finance,
+      agentId: 'finance-assistant',
       tool: 'transfer_funds',
       arguments: const {
         'amount': 50000,
         'currency': 'SAR',
-        'to_iban': 'SA4420000001234567891234',
+        'to_iban': 'SA******************1234',
         'beneficiary_name': 'Gulf Office Supplies Co.',
         'reference': 'INV-2026-0419',
       },
       status: ApprovalStatus.held,
-      riskScore: 0.92,
-      tainted: true,
-      userTask: 'Process this supplier invoice',
-      reasons: const [
-        ApprovalReasonModel(
-          layer: ReasonLayer.intent,
-          message:
-              'The user asked to process an invoice, not to pay a new '
-              'beneficiary. This IBAN has never been paid before and is not '
-              "on the supplier's record.",
-        ),
-        ApprovalReasonModel(
-          layer: ReasonLayer.llmJudge,
-          message:
-              'The IBAN only appears in text extracted from the invoice PDF, '
-              'which is untrusted. The request matches payment-redirection '
-              'fraud.',
-        ),
-      ],
+      decision: const CallDecisionModel(
+        riskScore: 0.9,
+        reasons: [
+          ApprovalReasonModel(
+            layer: 'policy',
+            code: 'TOOL_RISK',
+            action: 'allow',
+            message:
+                "Tool 'transfer_funds' is classified as high risk (score "
+                '0.60).',
+          ),
+          ApprovalReasonModel(
+            layer: 'system',
+            code: 'SEMANTIC_TASK_MISMATCH',
+            action: 'require_approval',
+            message:
+                'Local semantic intent judge: the user asked to process an '
+                'invoice, not to pay a beneficiary named only inside it.',
+          ),
+          ApprovalReasonModel(
+            layer: 'taint',
+            code: 'TAINT_UNTRUSTED_DESTINATION',
+            action: 'require_approval',
+            message:
+                'The destination SA******************1234 was not given by '
+                'the user or by a trusted system: it only appears inside '
+                'untrusted content (the "body" field of a read_invoice '
+                'result). An attacker may be redirecting transfer_funds to an '
+                'address they control.',
+          ),
+          ApprovalReasonModel(
+            layer: 'system',
+            code: 'NEW_BENEFICIARY',
+            action: 'require_approval',
+            message:
+                'Beneficiary is not in the trusted mock beneficiary registry.',
+          ),
+        ],
+      ),
       createdAt: invoiceHeldAt,
       expiresAt: invoiceHeldAt.add(approvalWindow),
+      originalTask: 'Process this supplier invoice',
     ),
     ApprovalModel(
       id: 'apr_2b91e4',
-      agentId: 'customer-service-agent',
-      sector: Sector.finance,
+      agentId: 'finance-assistant',
       tool: 'send_email',
       arguments: const {
         'to': 'statements@freemail.example',
@@ -60,24 +81,31 @@ List<ApprovalModel> demoApprovals(DateTime now) {
         'body': 'Dear customer, please find your October statement attached.',
       },
       status: ApprovalStatus.held,
-      riskScore: 0.64,
-      tainted: false,
-      userTask: 'Send customer #48213 their October statement',
-      reasons: const [
-        ApprovalReasonModel(
-          layer: ReasonLayer.policy,
-          message:
-              "Statements may only go to a customer's verified email. "
-              'statements@freemail.example is not on file for customer '
-              '#48213.',
-        ),
-        ApprovalReasonModel(
-          layer: ReasonLayer.keywords,
-          message: 'The attachment contains an account number and balance.',
-        ),
-      ],
+      decision: const CallDecisionModel(
+        riskScore: 0.64,
+        reasons: [
+          ApprovalReasonModel(
+            layer: 'policy',
+            code: 'CONSTRAINT_VIOLATION',
+            action: 'require_approval',
+            message:
+                "Argument 'to' sends data to freemail.example, outside the "
+                "allowed domains ['bank.example'].",
+          ),
+          ApprovalReasonModel(
+            layer: 'taint',
+            code: 'TAINT_CONFIDENTIAL_TO_EXTERNAL',
+            action: 'require_approval',
+            message:
+                'send_email would send confidential data outside the '
+                'organisation: the account number ****4471 comes from a '
+                'get_account_balance result.',
+          ),
+        ],
+      ),
       createdAt: statementHeldAt,
       expiresAt: statementHeldAt.add(approvalWindow),
+      originalTask: 'Send customer #48213 their October statement',
     ),
   ];
 }

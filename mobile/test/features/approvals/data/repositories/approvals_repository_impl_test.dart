@@ -79,7 +79,7 @@ void main() {
   group('decide', () {
     test('sends the decision and note to the gateway source', () async {
       when(() => decisions.submitDecision(any(), any())).thenAnswer(
-        (_) async => ApprovalModel.fromJson(approvalJson(status: 'rejected')),
+        (_) async => ApprovalModel.fromJson(approvalJson(status: 'denied')),
       );
 
       final result = await repository.decide(

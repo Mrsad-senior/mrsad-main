@@ -18,17 +18,17 @@ void main() {
 
   test('covers every decision in the finance demo', () async {
     final events = await source.watchEvents().first;
-    final decisions = events.map((e) => e.decision).toSet();
+    final decisions = events.map((e) => e.action).toSet();
     expect(decisions, GatewayDecision.values.toSet());
   });
 
-  test('includes the Arabic injection that was denied', () async {
+  test('denies the export that followed an injected email', () async {
     final events = await source.watchEvents().first;
     final export = events.singleWhere(
       (e) => e.tool == 'export_customer_records',
     );
-    expect(export.decision, GatewayDecision.denied);
-    expect(export.summary, contains('تجاهل التعليمات السابقة'));
+    expect(export.toEntity().decision, GatewayDecision.denied);
+    expect(export.toEntity().summary, contains('prompt-injection attempt'));
   });
 
   test('refresh re-emits the feed', () async {
