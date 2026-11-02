@@ -8,8 +8,8 @@ PYTHON REGRESSION:
   Command: python -m pytest --override-ini addopts='' -q --disable-warnings --maxfail=1
 
 FRONTEND:
-  196 tests passed across 10 files in 3.27 seconds
-  Production build passed: 684 modules transformed in 3.43 seconds
+  199 tests passed across 10 files in 4.09 seconds
+  Production build passed: 684 modules transformed in 5.23 seconds
   npm install audit: 0 vulnerabilities reported
 
 LINT:
@@ -19,6 +19,8 @@ LIVE-DEMO HARDENING:
   Arabic scenarios now keep Arabic prompts and responses on the English dashboard.
   English scenarios now keep English prompts and responses on the Arabic dashboard.
   This applies to General, Finance and Healthcare scenarios.
+  Free chat and custom planted attacks now follow the language of the typed text,
+  independently of the dashboard language.
   Sector approval decisions now produce one approval.decided audit event, not a duplicate.
 
 FINAL BILINGUAL HOLDOUT WITH LOCAL qwen2.5:7b:

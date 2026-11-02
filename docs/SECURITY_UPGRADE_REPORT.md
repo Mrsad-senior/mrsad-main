@@ -14,7 +14,7 @@ The final independent bilingual holdout contained 14 authorization cases: six at
 
 These are small synthetic results, not a production-accuracy guarantee.
 
-The live-demo follow-up also fixed two presentation issues. Each General, Finance and Healthcare scenario now declares its own language, so an Arabic scenario stays Arabic on the English dashboard and an English scenario stays English on the Arabic dashboard. Sector approvals also now use the correct gateway when checking whether a call is still waiting, preventing a duplicate `approval.decided` audit event.
+The live-demo follow-up also fixed presentation issues. Each General, Finance and Healthcare scenario now declares its own language, so an Arabic scenario stays Arabic on the English dashboard and an English scenario stays English on the Arabic dashboard. Free-chat messages and custom planted attacks detect the language of the typed text instead of inheriting the dashboard language. Sector approvals also now use the correct gateway when checking whether a call is still waiting, preventing a duplicate `approval.decided` audit event.
 
 ## Requested changes and evidence
 
@@ -33,6 +33,7 @@ The live-demo follow-up also fixed two presentation issues. Each General, Financ
 | Audit decision and execution | Audit now records `tool_call.decision`, approval events, explicit `tool_call.executed`, and `tool_result.inspection` | gateway execution tests |
 | Repeatable Arabic/English comparison | Added a fixed case file and `scripts/sector_security_eval.py`; it writes JSON and Markdown with attacks, false blocks, controls, latency and failures | `reports/security-upgrade/` |
 | Scenario language follows the selected case | General, Finance and Healthcare scenarios carry an explicit `en` or `ar` language; the prompt and model request use it independently of the dashboard language | dashboard helper/UI tests and live browser verification |
+| Free chat follows the typed language | Free-chat messages and custom planted attacks detect Arabic or English from the text; the safe prompt and model request use that language rather than the dashboard language | dashboard helper and UI integration tests |
 | One sector approval decision event | The API checks both the main and sector demo gateways before treating a waiting call as orphaned | API guard regression test and live audit verification |
 
 ## Evaluation results
@@ -72,8 +73,8 @@ The first real-model evaluation blocked all attacks and allowed all normal cases
 | Check | Result |
 |---|---|
 | Python suite | 1,333 passed in 89.49 seconds |
-| Frontend suite | 196 passed across 10 files in 3.27 seconds |
-| Frontend production build | Passed; 684 modules transformed in 3.43 seconds |
+| Frontend suite | 199 passed across 10 files in 4.09 seconds |
+| Frontend production build | Passed; 684 modules transformed in 5.23 seconds |
 | Python lint | Ruff passed |
 | npm dependency audit during install | 0 vulnerabilities reported |
 
