@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+from types import SimpleNamespace
 
 from mirsad.models import Action, Decision, ToolCall
 
@@ -90,6 +91,25 @@ async def test_orphaned_approval_decision_is_audited_by_the_api(api):
     assert (await api.client.get("/api/approvals/apr_missing", headers=headers)).status_code == 404
     assert (await api.client.post("/api/approvals/apr_missing/decision", json={"approve": True},
                                   headers=headers)).status_code == 404
+
+
+def test_sector_gateway_waiting_is_not_treated_as_orphaned():
+    from mirsad.api.routers.approvals import _gateway_is_waiting
+
+    class Gateway:
+        def __init__(self, waiting):
+            self.waiting = waiting
+
+        def is_waiting_for(self, approval_id):
+            return self.waiting and approval_id == "apr_sector"
+
+    request = SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(
+        gateway=Gateway(False),
+        sector_demo_gateway=Gateway(True),
+    )))
+
+    assert _gateway_is_waiting(request, "apr_sector") is True
+    assert _gateway_is_waiting(request, "apr_other") is False
 
 
 async def test_approval_list_status_filter(api):

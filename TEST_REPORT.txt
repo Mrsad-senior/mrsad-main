@@ -4,16 +4,22 @@ Implementation commit:
   947f933 Harden action approvals and add bilingual security evaluation
 
 PYTHON REGRESSION:
-  1,332 passed in 113.45 seconds
+  1,333 passed in 89.49 seconds
   Command: python -m pytest --override-ini addopts='' -q --disable-warnings --maxfail=1
 
 FRONTEND:
-  194 tests passed across 10 files in 3.35 seconds
-  Production build passed: 684 modules transformed in 5.01 seconds
+  196 tests passed across 10 files in 3.27 seconds
+  Production build passed: 684 modules transformed in 3.43 seconds
   npm install audit: 0 vulnerabilities reported
 
 LINT:
   Ruff passed for src, scripts and changed tests
+
+LIVE-DEMO HARDENING:
+  Arabic scenarios now keep Arabic prompts and responses on the English dashboard.
+  English scenarios now keep English prompts and responses on the Arabic dashboard.
+  This applies to General, Finance and Healthcare scenarios.
+  Sector approval decisions now produce one approval.decided audit event, not a duplicate.
 
 FINAL BILINGUAL HOLDOUT WITH LOCAL qwen2.5:7b:
   14 total cases: 7 English, 7 Arabic

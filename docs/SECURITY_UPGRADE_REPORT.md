@@ -14,6 +14,8 @@ The final independent bilingual holdout contained 14 authorization cases: six at
 
 These are small synthetic results, not a production-accuracy guarantee.
 
+The live-demo follow-up also fixed two presentation issues. Each General, Finance and Healthcare scenario now declares its own language, so an Arabic scenario stays Arabic on the English dashboard and an English scenario stays English on the Arabic dashboard. Sector approvals also now use the correct gateway when checking whether a call is still waiting, preventing a duplicate `approval.decided` audit event.
+
 ## Requested changes and evidence
 
 | Requested change | Implementation | Evidence |
@@ -30,6 +32,8 @@ These are small synthetic results, not a production-accuracy guarantee.
 | Approval applies once to one action | Approval is bound to `call_id`, tool and arguments; only one conditional `pending` transition can win; identical new calls need a new approval | single-use/concurrency approval tests |
 | Audit decision and execution | Audit now records `tool_call.decision`, approval events, explicit `tool_call.executed`, and `tool_result.inspection` | gateway execution tests |
 | Repeatable Arabic/English comparison | Added a fixed case file and `scripts/sector_security_eval.py`; it writes JSON and Markdown with attacks, false blocks, controls, latency and failures | `reports/security-upgrade/` |
+| Scenario language follows the selected case | General, Finance and Healthcare scenarios carry an explicit `en` or `ar` language; the prompt and model request use it independently of the dashboard language | dashboard helper/UI tests and live browser verification |
+| One sector approval decision event | The API checks both the main and sector demo gateways before treating a waiting call as orphaned | API guard regression test and live audit verification |
 
 ## Evaluation results
 
@@ -67,9 +71,9 @@ The first real-model evaluation blocked all attacks and allowed all normal cases
 
 | Check | Result |
 |---|---|
-| Python suite | 1,332 passed in 113.45 seconds |
-| Frontend suite | 194 passed across 10 files in 3.35 seconds |
-| Frontend production build | Passed; 684 modules transformed in 5.01 seconds |
+| Python suite | 1,333 passed in 89.49 seconds |
+| Frontend suite | 196 passed across 10 files in 3.27 seconds |
+| Frontend production build | Passed; 684 modules transformed in 3.43 seconds |
 | Python lint | Ruff passed |
 | npm dependency audit during install | 0 vulnerabilities reported |
 
@@ -97,8 +101,8 @@ The updated discussion diagram is in `docs/SECURITY_UPGRADE_ARCHITECTURE.md`. Th
 | AI-detection requirement | Not verified and no detector score can be guaranteed | Use original team writing, proper citations and the university-approved checker; revise honestly rather than trying to bypass detection |
 | Final Presentation | PPTX exists, but it predates this upgrade | Replace metrics and add one slide for the new authorization/approval flow |
 | Project Poster | PPTX/preview exists, but it predates this upgrade | Update the results box and architecture diagram |
-| Source/GitHub | Local commit `947f933` is ready | Team review, then push the branch and update the pull request only with permission |
+| Source/GitHub | The security upgrade and live-demo follow-up are committed locally on `codex/finance-healthcare-integration` | Team review, then push the branch and update the pull request only with permission |
 | Test cases/results | Complete for this upgrade | Submit the v2 JSON case file, final JSON report and human-readable Markdown report |
-| Live demonstration | Existing server runs from the old extracted ZIP | After team review, deploy the Git-connected copy and repeat the four safe demo flows |
+| Live demonstration | Verified from the Git-connected copy with local `qwen2.5:7b`; Finance, Healthcare, Arabic, English, approval denial and audit-chain flows passed | Repeat the prepared safe flow during the meeting |
 
 No code or credentials were pushed or exposed while producing this report.

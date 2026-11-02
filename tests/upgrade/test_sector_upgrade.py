@@ -143,6 +143,7 @@ def test_sector_tool_sets_and_fake_data(sector, tools):
     assert actual >= tools
     assert all('synthetic' in str(world.data).lower() or 'fictional' in str(world.data).lower() for _ in [0])
     assert len(SECTOR_SCENARIOS[sector]) >= 2
+    assert {scenario['lang'] for scenario in SECTOR_SCENARIOS[sector]} == {'en', 'ar'}
 
 
 def test_finance_policy_transfer_threshold():

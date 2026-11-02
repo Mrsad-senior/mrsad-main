@@ -173,6 +173,7 @@ describe('approver PWA', () => {
 describe('demo console', () => {
   const scenario = {
     id: 'sample-scenario',
+    lang: 'en' as const,
     title_en: 'Summarise the sample e-mail',
     title_ar: 'تلخيص الرسالة التجريبية',
     user_prompt_en: 'Read e-mail E001 and summarise it.',
@@ -234,6 +235,42 @@ describe('demo console', () => {
       </Providers>,
     );
     expect(await screen.findByText('Demo mode is not enabled on this server.')).toBeTruthy();
+  });
+
+  it('loads and sends an Arabic scenario in Arabic while the dashboard is English', async () => {
+    const arabicScenario = {
+      ...scenario,
+      id: 'sample-ar',
+      lang: 'ar' as const,
+      title_en: 'Sample attack (Arabic)',
+      user_prompt_en: 'Read the Arabic sample.',
+      user_prompt_ar: 'اقرأ العينة العربية.',
+    };
+    const { client, calls } = makeClient({
+      'GET /api/demo/scenarios': () => json([arabicScenario]),
+      'GET /api/demo/state': () => json({ world: emptyWorld, attacker_inbox: [] }),
+      'POST /api/demo/scenarios/sample-ar/apply': () => json({ scenario: arabicScenario, state: { world: emptyWorld, attacker_inbox: [] } }),
+      'POST /api/demo/chat': () => json({
+        reply: 'تم حجب المحتوى.', session_id: 'demo-ar', protected: true,
+        stopped_reason: 'content_withheld', steps: [], attacker_inbox: [],
+      }),
+    });
+    render(
+      <Providers client={client}>
+        <Demo />
+      </Providers>,
+    );
+
+    const select = await screen.findByLabelText('Attack scenario');
+    fireEvent.change(select, { target: { value: 'sample-ar' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Load scenario' }));
+    const input = (await screen.findByDisplayValue('اقرأ العينة العربية.')) as HTMLTextAreaElement;
+    fireEvent.submit(input.closest('form') as HTMLFormElement);
+
+    expect(await screen.findByText('تم حجب المحتوى.')).toBeTruthy();
+    expect(calls.find((c) => c.url.endsWith('/api/demo/chat'))?.body).toEqual({
+      message: 'اقرأ العينة العربية.', protected: true, lang: 'ar', sector: 'general',
+    });
   });
 });
 

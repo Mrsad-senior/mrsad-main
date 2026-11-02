@@ -38,8 +38,13 @@ export function scenarioLabel(s: DemoScenario, lang: Lang): string {
 }
 
 /** The benign request a user would type; the planted content is never shown in the UI. */
-export function scenarioPrompt(s: DemoScenario, lang: Lang): string {
-  return pick(lang, s.user_prompt_en, s.user_prompt_ar);
+export function scenarioLanguage(s: DemoScenario, fallback: Lang): Lang {
+  return s.lang === 'en' || s.lang === 'ar' ? s.lang : fallback;
+}
+
+/** Scenario prompts follow the scenario language, never the dashboard language. */
+export function scenarioPrompt(s: DemoScenario, fallback: Lang): string {
+  return pick(scenarioLanguage(s, fallback), s.user_prompt_en, s.user_prompt_ar);
 }
 
 /** Abstract description of what the planted content tries to make the agent do. */
@@ -115,10 +120,11 @@ export default function Demo() {
     try {
       const res = await api.applyDemoScenario(selected.id, sector);
       startFresh();
-      setLoadedScenario(selected);
+      const loaded = res?.scenario ?? selected;
+      setLoadedScenario(loaded);
       setInbox(Array.isArray(res?.state?.attacker_inbox) ? res.state.attacker_inbox : []);
       setWorld(res?.state?.world ?? null);
-      setInput(scenarioPrompt(selected, lang));
+      setInput(scenarioPrompt(loaded, lang));
       toast.success(t('demo.scenarioLoaded', { title: scenarioLabel(selected, lang) }));
     } catch (err) {
       toast.error(err);
@@ -162,7 +168,8 @@ export default function Demo() {
     controller.current?.abort();
     controller.current = new AbortController();
     try {
-      const res = await api.demoChat({ message, session_id: sessionId, protected: isProtected, lang, sector }, controller.current.signal);
+      const chatLang = loadedScenario ? scenarioLanguage(loadedScenario, lang) : lang;
+      const res = await api.demoChat({ message, session_id: sessionId, protected: isProtected, lang: chatLang, sector }, controller.current.signal);
       setSessionId(res.session_id || sessionId);
       setInbox(res.attacker_inbox);
       setMessages((m) => [

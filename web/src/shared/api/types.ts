@@ -423,6 +423,8 @@ export interface DemoState {
  */
 export interface DemoScenario {
   id: string;
+  /** Language used by the scenario's user request and model response, independent of the UI language. */
+  lang?: "en" | "ar";
   title_en?: string;
   title_ar?: string;
   user_prompt_en?: string;
