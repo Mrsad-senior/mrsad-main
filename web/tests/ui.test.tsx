@@ -16,6 +16,7 @@ import { LiveProvider } from '../src/shared/app/live';
 import { ThemeProvider } from '../src/shared/app/theme';
 import { ToastProvider } from '../src/shared/app/toast';
 import { I18nProvider } from '../src/shared/i18n';
+import { ScoreGauge } from '../src/shared/components/Gauge';
 import { memoryStore } from '../src/shared/lib/storage';
 import { fakeFetch, json } from './helpers';
 
@@ -42,6 +43,23 @@ function Providers({ client, children }: { client: ApiClient; children: ReactNod
     </ApiProvider>
   );
 }
+
+describe('score gauge', () => {
+  it('keeps an 0.80 fill on the same semicircle as the track', async () => {
+    const { client } = makeClient({});
+    render(
+      <Providers client={client}>
+        <ScoreGauge value={0.8} label="Injection score" />
+      </Providers>,
+    );
+
+    const meter = await screen.findByRole('meter', { name: 'Injection score' });
+    const track = meter.querySelector('.gauge__track');
+    const fill = meter.querySelector('.gauge__fill');
+    expect(track?.getAttribute('d')).toContain(' A 80 80 0 0 1 ');
+    expect(fill?.getAttribute('d')).toContain(' A 80 80 0 0 1 ');
+  });
+});
 
 function pendingRecord(): ApprovalRecord {
   const now = Date.now() / 1000;

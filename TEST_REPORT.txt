@@ -8,8 +8,8 @@ PYTHON REGRESSION:
   Command: python -m pytest --override-ini addopts='' -q --disable-warnings --maxfail=1
 
 FRONTEND:
-  199 tests passed across 10 files in 4.09 seconds
-  Production build passed: 684 modules transformed in 5.23 seconds
+  200 tests passed across 10 files in 5.99 seconds
+  Production build passed: 684 modules transformed in 5.45 seconds
   npm install audit: 0 vulnerabilities reported
 
 LINT:
@@ -21,6 +21,8 @@ LIVE-DEMO HARDENING:
   This applies to General, Finance and Healthcare scenarios.
   Free chat and custom planted attacks now follow the language of the typed text,
   independently of the dashboard language.
+  Detection scores above 0.50 now fill the same semicircle as the gauge track;
+  the 0.50 flag and 0.80 block threshold ticks remain visible by design.
   Sector approval decisions now produce one approval.decided audit event, not a duplicate.
 
 FINAL BILINGUAL HOLDOUT WITH LOCAL qwen2.5:7b:
