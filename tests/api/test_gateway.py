@@ -312,6 +312,10 @@ async def test_execute_runs_allowed_tool_and_inspects_result():
 
     resp = await ns.g.execute(call("echo", {"text": "hi"}), executor)
     assert resp.decision.allowed and resp.result.content == "echo: hi" and resp.error is None and len(seen) == 1
+    executed = ns.audit.by_type("tool_call.executed")[0]
+    assert executed.payload["succeeded"] is True
+    assert executed.payload["result_chars"] == len("echo: hi")
+    assert len(executed.payload["result_sha256"]) == 64
 
 
 async def test_execute_denied_call_never_reaches_tool():
@@ -336,6 +340,8 @@ async def test_execute_executor_exception_returns_safe_error_and_is_audited():
     assert "secret" not in resp.result.content and "audit log" in resp.result.content
     err = ns.audit.by_type("tool_call.error")[0]
     assert err.payload["error_type"] == "RuntimeError" and "refused" in err.payload["error"]
+    executed = ns.audit.by_type("tool_call.executed")[0]
+    assert executed.payload["succeeded"] is False and executed.payload["is_error"] is True
 
 
 async def test_execute_times_out_slow_tools():

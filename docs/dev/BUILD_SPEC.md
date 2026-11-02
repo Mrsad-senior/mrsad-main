@@ -71,7 +71,7 @@ organization:
   internal_domains: [najd-trading.example]
 defaults:
   decision: deny            # tools not matched by any agent tool entry
-  approval_timeout_s: 120
+  approval_timeout_s: 300
 detector:                   # global defaults; tools/agents may override `detector:` keys
   flag_threshold: 0.5       # score >= flag  -> label suspicious, action "flag"
   block_threshold: 0.8      # score >= block -> on_detect action
@@ -337,7 +337,7 @@ def summarize(call: ToolCall, decision: Decision, *, agent_name: str, lang: Lite
     # plain-language 1–3 sentences: what the agent wants, why Mirsad paused it, where the data came from
 
 class ApprovalService:
-    def __init__(self, db: Database, notifier: Notifier, *, timeout_s: float = 120.0,
+    def __init__(self, db: Database, notifier: Notifier, *, timeout_s: float = 300.0,
                  auto_decider: Callable[[ApprovalRecord], bool | None] | None = None)   # auto_decider used by bench/tests
     async def request(self, call: ToolCall, decision: Decision, *, agent_name: str) -> ApprovalRecord
     async def wait(self, approval_id: str, timeout_s: float | None = None) -> ApprovalRecord  # expires -> EXPIRED
@@ -435,7 +435,7 @@ Session id: header `X-Mirsad-Session` else hash of the first user message. Non-s
 ### 7.4 SDK (`mirsad.sdk`)
 ```python
 class MirsadClient:
-    def __init__(self, base_url: str, api_key: str, *, session_id: str | None = None, timeout: float = 150)
+    def __init__(self, base_url: str, api_key: str, *, session_id: str | None = None, timeout: float = 330)
     def check_call(self, tool: str, arguments: dict, *, call_id: str | None = None) -> Decision
     def inspect_result(self, tool: str, call_id: str, content: str | Any) -> InspectionOutcome
     def invoke(self, tool: str, arguments: dict) -> GatewayResponse

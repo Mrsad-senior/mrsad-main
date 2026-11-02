@@ -221,6 +221,36 @@ def test_semantic_intent_judge_flags_novel_indirect_attack():
     assert any(r.code == 'SEMANTIC_TASK_MISMATCH' and r.action == Action.DENY for r in reasons)
 
 
+@pytest.mark.parametrize('task', [
+    'Summarize the customer record only.',
+    'لخص سجل العميل فقط دون تصدير البيانات.',
+])
+def test_unauthorized_export_is_denied_from_original_task(task):
+    monitor = SecurityMonitor()
+    monitor.bind_task('export-session', 'email-crm-assistant', task)
+    reasons = monitor.check(ToolCall(
+        session_id='export-session', agent_id='email-crm-assistant',
+        tool='export_customers', arguments={'count': 25},
+    ))
+    assert any(r.code == 'TASK_INTENT_MISMATCH' and r.action == Action.DENY for r in reasons)
+
+
+def test_intent_judge_assessment_is_structured_in_reason_evidence():
+    monitor = SecurityMonitor(intent_judge=MockIntentJudge())
+    monitor.bind_task('structured', 'finance-assistant', 'Pay vendor invoice INV-F100')
+    [reason] = [r for r in monitor.check(ToolCall(
+        session_id='structured', agent_id='finance-assistant', tool='transfer_funds',
+        arguments={'amount_sar': 12, 'to_iban': TRUSTED_IBAN},
+    ), sector='finance') if r.code == 'SEMANTIC_TASK_MISMATCH']
+    assessment = reason.evidence['structured_assessment']
+    assert assessment == {
+        'authorized': False,
+        'confidence': .98,
+        'risk_level': 'high',
+        'reason': 'Not relevant to the original task',
+    }
+
+
 def test_required_intent_model_error_fails_closed_via_gateway():
     monitor = SecurityMonitor(intent_judge=FailingIntentJudge())
     monitor.bind_task('s', 'healthcare-assistant', 'Send lab results internally')
@@ -245,9 +275,39 @@ def test_mock_ollama_intent_judge_returns_explanation():
     def handler(request: httpx.Request) -> httpx.Response:
         payload = json.loads(request.content)
         assert 'trusted_user_task' in payload['messages'][1]['content']
+        system = payload['messages'][0]['content']
+        assert 'not an automatic reason to reject' in system
+        assert 'hard policy may still require human approval' in system
         return httpx.Response(200, json={'choices': [{'message': {'content': json.dumps({
-            'authorized': False, 'confidence': .92, 'reason': 'Summary task does not authorize transfers'})}}]})
+            'authorized': False, 'confidence': .92, 'risk_level': 'critical',
+            'reason': 'Summary task does not authorize transfers'})}}]})
     with httpx.Client(transport=httpx.MockTransport(handler)) as client:
         result = OllamaIntentJudge(client=client).assess('Summarize this invoice', 'transfer_funds', {'amount_sar': 500})
     assert result.authorized is False and result.confidence == .92
+    assert result.risk_level == 'critical'
     assert 'Summary' in result.reason
+
+
+def test_mock_ollama_intent_judge_keeps_authorization_separate_from_policy_approval():
+    from mirsad.security.intent import OllamaIntentJudge
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        payload = json.loads(request.content)
+        data = json.loads(payload['messages'][1]['content'])
+        assert data['trusted_user_task'].startswith('Transfer 725 SAR')
+        assert data['untrusted_tool_arguments']['amount_sar'] == 725
+        return httpx.Response(200, json={'choices': [{'message': {'content': json.dumps({
+            'authorized': True,
+            'confidence': .96,
+            'risk_level': 'low',
+            'reason': 'The amount and beneficiary match the original user request',
+        })}}]})
+
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        result = OllamaIntentJudge(client=client).assess(
+            'Transfer 725 SAR to SA9900000000000000000001.',
+            'transfer_funds',
+            {'amount_sar': 725, 'to_iban': 'SA9900000000000000000001'},
+        )
+    assert result.authorized is True
+    assert result.risk_level == 'low'

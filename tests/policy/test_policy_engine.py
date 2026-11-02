@@ -419,7 +419,7 @@ def test_simple_accessors(engine):
     assert engine.agent_ids() == [AGENT]
     assert engine.agent_names() == {AGENT: "Email & CRM Assistant"}
     assert engine.internal_domains() == ["najd-trading.example"]
-    assert engine.approval_timeout_s == 120
+    assert engine.approval_timeout_s == 300
 
 
 # --------------------------------------------------------------------------- monitor mode

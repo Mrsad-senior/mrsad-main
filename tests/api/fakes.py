@@ -137,7 +137,7 @@ class FakePolicyEngine:
 
     @property
     def approval_timeout_s(self) -> float:
-        return float(self.data.get("defaults", {}).get("approval_timeout_s", 120))
+        return float(self.data.get("defaults", {}).get("approval_timeout_s", 300))
 
     def _agent(self, agent_id: str) -> dict[str, Any] | None:
         return next((a for a in self.data.get("agents", []) if a["id"] == agent_id), None)

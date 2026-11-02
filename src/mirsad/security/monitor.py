@@ -18,14 +18,16 @@ from mirsad.security.sensitive import find_sensitive
 
 _READ = {'read_email', 'list_emails', 'fetch_url', 'read_document', 'list_documents',
          'get_account_balance', 'get_customer_profile', 'get_patient_record', 'search_customers',
-         'get_customer', 'export_customers'}
+         'get_customer'}
 _WRITE = {'transfer_funds', 'approve_payment', 'update_prescription', 'delete_customer',
-          'update_customer_note', 'send_email', 'send_lab_results', 'book_appointment'}
+          'update_customer_note', 'send_email', 'send_lab_results', 'book_appointment',
+          'export_customers'}
 _SUMMARIZE = ('summar', 'review', 'read', 'explain', 'look up', 'check', 'show', 'what is',
               'ملخص', 'لخص', 'تلخيص', 'اقرأ', 'اعرض', 'استعرض', 'راجع', 'تفاصيل')
 _TRANSFER = ('transfer', 'pay ', 'payment', 'تحويل', 'حوّل', 'ادفع', 'سدد', 'تسديد')
 _SEND = ('send', 'email', 'share', 'forward', 'أرسل', 'ارسل', 'شارك')
 _PRESCRIBE = ('prescri', 'medication', 'دواء', 'وصفة', 'علاج')
+_EXPORT = ('export', 'download customer', 'customer list', 'تصدير', 'نزّل', 'قائمة العملاء')
 
 
 def _reason(code: str, action: Action, detail: str, score: float, **evidence: Any) -> Reason:
@@ -100,6 +102,7 @@ class SecurityMonitor:
                     or (tool == 'update_prescription' and any(k in task for k in _PRESCRIBE)
                         and any(k in task for k in ('update', 'change', 'modify', 'غير', 'عدل', 'تعديل')))
                     or (tool in {'delete_customer', 'update_customer_note'} and any(k in task for k in ('delete', 'update', 'حذف', 'تعديل')))
+                    or (tool == 'export_customers' and any(k in task for k in _EXPORT))
                 )
                 if read_only:
                     requested = False
@@ -112,10 +115,18 @@ class SecurityMonitor:
                 # which denies the action and audits the failure.
                 judgment = self.intent_judge.assess(sess.task, tool, call.arguments)
                 if not judgment.authorized:
-                    action = Action.DENY if judgment.confidence >= 0.85 else Action.REQUIRE_APPROVAL
+                    action = (Action.DENY if judgment.risk_level in {'high', 'critical'}
+                              or judgment.confidence >= 0.85 else Action.REQUIRE_APPROVAL)
                     reasons.append(_reason('SEMANTIC_TASK_MISMATCH', action,
                                           'Local semantic intent judge: ' + judgment.reason,
-                                          judgment.confidence, judge='local_llm'))
+                                          judgment.confidence, judge='local_llm',
+                                          risk_level=judgment.risk_level,
+                                          structured_assessment={
+                                              'authorized': judgment.authorized,
+                                              'confidence': judgment.confidence,
+                                              'risk_level': judgment.risk_level,
+                                              'reason': judgment.reason,
+                                          }))
             if (tool in _WRITE and sess.calls and self.benign_transitions is not None
                     and (sess.calls[-1], tool) not in self.benign_transitions):
                 reasons.append(_reason('UNSEEN_TOOL_SEQUENCE', Action.REQUIRE_APPROVAL,

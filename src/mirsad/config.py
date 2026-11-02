@@ -25,7 +25,8 @@ class Settings(BaseSettings):
 
     secret_key: str = ""  # JWT signing + audit HMAC; generated and persisted in data_dir if empty
     token_ttl_hours: int = 12
-    approval_timeout_s: float = 120.0
+    # Human approvals are valid for exactly five minutes by default.
+    approval_timeout_s: float = 300.0
     max_result_chars: int = 200_000
     audit_payload_max_chars: int = 20_000
 

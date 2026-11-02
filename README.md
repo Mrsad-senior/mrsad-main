@@ -87,12 +87,18 @@ make security    # Bandit, pip-audit, npm audit
 make bench       # Mirsad-Bench benign runs for every defence configuration
 make latency     # added latency over HTTP
 ./scripts/run_evidence.sh   # regenerate all evidence and reports/results_summary.json
+python scripts/sector_security_eval.py              # fixed Arabic/English holdout, hard controls
+python scripts/sector_security_eval.py --intent-judge  # same cases with local Qwen intent judge
 ```
 
 Current measured results are collected in `reports/results_summary.json`. The detector's F1 score and the
 attack-success-rate evaluation require attack-labelled data, which the team supplies under
 `data/detector/raw/` and `bench/scenarios/attacks/` (see `docs/detector.md` and
 `bench/scenarios/attacks/README.md`); then run `make detector` and `make bench`.
+
+The sector evaluation writes both machine-readable JSON and a discussion-ready Markdown report under
+`reports/security-upgrade/`. Its final cases are separate from the development regression tests and report
+attack success, normal requests blocked by mistake, approval controls, latency and every failed case.
 
 ## Team
 

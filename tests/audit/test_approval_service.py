@@ -40,12 +40,38 @@ async def test_request_persists_pending_record_and_publishes(service, notifier):
     assert event == "approval.requested" and data["id"] == record.id and data["status"] == "pending"
 
 
+async def test_default_approval_deadline_is_exactly_five_minutes(db, notifier):
+    default_service = ApprovalService(db, notifier)
+    record = await _request(default_service)
+    assert record.expires_at == pytest.approx(record.created_at + 300)
+
+
 async def test_request_redacts_secret_arguments(service):
     record = await _request(service, tool="call_api",
                             arguments={"url": "https://api.evil.example", "api_key": "sk-proj-AbCdEf0123456789GhIj"})
     assert record.arguments["api_key"] == "[REDACTED]"
     assert "AbCdEf0123456789" not in record.summary_en
     assert service.get(record.id).arguments["url"] == "https://api.evil.example"
+
+
+async def test_reviewer_sees_exact_amount_beneficiary_and_destination(service):
+    record = await _request(
+        service,
+        tool="transfer_funds",
+        arguments={
+            "amount_sar": 9500,
+            "to_iban": "SA0380000000608010167519",
+            "memo": "Invoice contains customer national ID 1012345678",
+            "api_key": "sk-proj-AbCdEf0123456789GhIj",
+        },
+    )
+    assert record.tool == "transfer_funds"
+    assert record.arguments["amount_sar"] == 9500
+    assert record.arguments["to_iban"] == "SA0380000000608010167519"
+    assert record.arguments["api_key"] == "[REDACTED]"
+    assert "1012345678" not in str(record.arguments["memo"])
+    assert "9500" in record.summary_en
+    assert "SA0380000000608010167519" in record.summary_en
 
 
 async def test_approve_wakes_waiter(service, notifier):
@@ -95,6 +121,29 @@ async def test_decide_twice_raises_value_error(service):
     with pytest.raises(ValueError, match="already approved"):
         await service.decide(record.id, approve=False, user="bader")
     assert service.get(record.id).decided_by == "noura"
+
+
+async def test_approval_is_single_use_and_bound_to_one_exact_call(service):
+    first = await _request(
+        service,
+        call_id="call_transfer_1",
+        tool="transfer_funds",
+        arguments={"amount_sar": 9500, "to_iban": "SA0380000000608010167519"},
+    )
+    await service.decide(first.id, approve=True, user="noura", note="checked exact transfer")
+    with pytest.raises(ValueError, match="already approved"):
+        await service.decide(first.id, approve=True, user="noura")
+
+    # Even identical arguments on a new call require a new approval record.
+    second = await _request(
+        service,
+        call_id="call_transfer_2",
+        tool="transfer_funds",
+        arguments={"amount_sar": 9500, "to_iban": "SA0380000000608010167519"},
+    )
+    assert second.id != first.id
+    assert second.call_id == "call_transfer_2"
+    assert second.status == ApprovalStatus.PENDING
 
 
 async def test_decide_unknown_or_without_user(service):

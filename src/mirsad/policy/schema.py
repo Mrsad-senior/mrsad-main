@@ -187,7 +187,7 @@ class Organization(_Strict):
 
 class Defaults(_Strict):
     decision: Action = Action.DENY
-    approval_timeout_s: float = Field(120.0, gt=0, le=86_400)
+    approval_timeout_s: float = Field(300.0, gt=0, le=86_400)
 
 
 # --------------------------------------------------------------------------- tools & constraints

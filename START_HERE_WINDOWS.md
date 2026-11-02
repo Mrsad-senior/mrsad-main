@@ -53,6 +53,7 @@ Do not paste passwords into chat or upload `.mirsad/` to GitHub.
    ```powershell
    $env:MIRSAD_JUDGE_ENABLED="1"
    $env:MIRSAD_JUDGE_MODEL="qwen2.5:7b"
+   $env:MIRSAD_INTENT_JUDGE_ENABLED="1"
    $env:MIRSAD_SEMANTIC_ENABLED="1"
    .\.venv\Scripts\mirsad.exe serve --demo
    ```
@@ -85,6 +86,7 @@ Do not paste passwords into chat or upload `.mirsad/` to GitHub.
 ```powershell
 .\.venv\Scripts\python.exe scripts/semantic_language_test.py
 .\.venv\Scripts\python.exe -m pytest tests/upgrade -q
+.\.venv\Scripts\python.exe scripts/sector_security_eval.py --intent-judge
 ```
 
 `scripts/semantic_language_test.py` contains the eight examples used during
