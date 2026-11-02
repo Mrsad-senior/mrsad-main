@@ -93,7 +93,8 @@ class InjectionDetector:
         # Optional providers require explicit enablement. Missing enabled providers
         # raise rather than silently downgrade security to keyword-only scanning.
         semantic = EmbeddingSimilarity.local() if os.getenv('MIRSAD_SEMANTIC_ENABLED') == '1' else None
-        judge = OllamaJudge(model=os.getenv('MIRSAD_JUDGE_MODEL', 'qwen2.5:3b')) if os.getenv('MIRSAD_JUDGE_ENABLED') == '1' else None
+        judge = OllamaJudge(model=os.getenv('MIRSAD_JUDGE_MODEL', 'qwen2.5:3b'),
+                            extraction=os.getenv('MIRSAD_JUDGE_EXTRACTION', 'flag')) if os.getenv('MIRSAD_JUDGE_ENABLED') == '1' else None
         return cls(DEFAULT_MODEL_DIR, semantic=semantic, judge=judge)
 
     @property

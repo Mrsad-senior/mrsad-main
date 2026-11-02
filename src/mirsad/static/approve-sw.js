@@ -6,11 +6,11 @@
  * API (so the last known queue is visible offline); cache-first for hashed /assets/*;
  * the SSE stream and every non-GET request bypass the worker entirely.
  */
-const VERSION = '4721217777b5';
+const VERSION = '234d7f2749e8';
 const SHELL_CACHE = `mirsad-shell-${VERSION}`;
 const API_CACHE = 'mirsad-api-v1';
 const PREFS_CACHE = 'mirsad-prefs-v1';
-const PRECACHE = ["/approve","/assets/manifest.webmanifest","/assets/icons/icon-192.png","/assets/favicon.svg","/assets/approve-DfdRfI8P.css","/assets/approve-WXjymBek.js","/assets/modulepreload-polyfill-B5Qt9EMX.js","/assets/react-DqJZAsTa.js","/assets/shared-D_XyEuUO.js","/assets/shared-kDDY3Qbn.css"];
+const PRECACHE = ["/approve","/assets/manifest.webmanifest","/assets/icons/icon-192.png","/assets/favicon.svg","/assets/approve-BTASvc4_.js","/assets/approve-DfdRfI8P.css","/assets/modulepreload-polyfill-B5Qt9EMX.js","/assets/react-DqJZAsTa.js","/assets/shared-DlfVw8LN.js","/assets/shared-kDDY3Qbn.css"];
 // Only approval data is kept for offline viewing; it is cleared on sign-out.
 const CACHEABLE_API = [/^\/api\/approvals(\/|$|\?)/, /^\/api\/auth\/me$/];
 

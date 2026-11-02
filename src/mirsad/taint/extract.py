@@ -141,7 +141,7 @@ def canonical_phone(raw: str) -> str:
 
 
 def canonical_iban(raw: str) -> str | None:
-    tokens = raw.split()
+    tokens = [t for t in re.split(r"[\s.-]+", raw) if t]
     # Matching on upper-cased text can swallow a following word ("... 7519 please").
     while len(tokens) > 1 and tokens[-1].isalpha():
         tokens.pop()

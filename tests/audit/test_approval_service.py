@@ -70,7 +70,7 @@ async def test_reviewer_sees_exact_amount_beneficiary_and_destination(service):
     assert record.arguments["to_iban"] == "SA0380000000608010167519"
     assert record.arguments["api_key"] == "[REDACTED]"
     assert "1012345678" not in str(record.arguments["memo"])
-    assert "9500" in record.summary_en
+    assert "9,500" in record.summary_en
     assert "SA0380000000608010167519" in record.summary_en
 
 

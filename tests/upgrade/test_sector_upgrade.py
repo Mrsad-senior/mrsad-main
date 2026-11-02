@@ -97,6 +97,49 @@ def test_intent_detects_indirect_finance_attack_without_keywords():
     assert codes['NEW_BENEFICIARY'] == Action.REQUIRE_APPROVAL
 
 
+def _send_authorized(task: str) -> bool:
+    monitor = SecurityMonitor()
+    monitor.bind_task('t', 'email-crm-assistant', task)
+    reasons = monitor.check(ToolCall(session_id='t', agent_id='email-crm-assistant', tool='send_email',
+                                     arguments={'to': 'khalid@najd-trading.example'}))
+    return not any(r.code == 'TASK_INTENT_MISMATCH' for r in reasons)
+
+
+# Day-one finding: the noun "email" authorized send_email, so "summarise the email" let the agent send mail.
+@pytest.mark.parametrize('task', [
+    'Summarise the latest email for me.',
+    'Summarise the delivery update email from Al-Rimal Logistics (E101) for me.',
+    'Read the complaint email E003 and draft a helpful reply.',
+    'Who is the sender of email E002?',
+    'What does the e-mail from accounts say?',
+])
+def test_reading_or_mentioning_email_does_not_authorize_sending(task):
+    assert not _send_authorized(task)
+
+
+@pytest.mark.parametrize('task', [
+    'Send the weekly summary to sales@najd-trading.example',
+    'Look up customer C045 and email their tier and current balance to accounts@najd-trading.example.',
+    'Email the Q4 report to khalid@najd-trading.example',
+    'Please e-mail Khalid the meeting notes.',
+    'Read email E103 and reply to them confirming the delivery date.',
+    'Read the complaint in email E008 and forward a short summary of it to support-lead@najd-trading.example.',
+    'Share the price list with the sales team.',
+    'أرسل ملخص البريد إلى خالد.',
+])
+def test_explicit_send_requests_still_authorize_sending(task):
+    assert _send_authorized(task)
+
+
+def test_registered_beneficiary_is_reported_for_the_approval_card():
+    monitor = SecurityMonitor()
+    monitor.bind_task('t', 'finance-assistant', 'Transfer SAR 300 to the supplier.')
+    codes = {r.code: r.action for r in monitor.check(ToolCall(
+        session_id='t', agent_id='finance-assistant', tool='transfer_funds',
+        arguments={'to_iban': TRUSTED_IBAN, 'amount_sar': 300}), sector='finance')}
+    assert codes == {'KNOWN_BENEFICIARY': Action.ALLOW}
+
+
 def test_negated_payment_does_not_authorize_transfer():
     monitor = SecurityMonitor()
     monitor.bind_task('t', 'finance-assistant', 'Summarize invoice only; do not make a payment.')

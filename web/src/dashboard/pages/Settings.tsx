@@ -117,7 +117,7 @@ export default function Settings() {
             </div>
             <div>
               <dt>{t('settings.uiVersion')}</dt>
-              <dd className="mono">{import.meta.env.MODE === 'production' ? '0.1.0' : 'dev'}</dd>
+              <dd className="mono">{import.meta.env.PROD ? '0.1.0' : 'dev'}</dd>
             </div>
           </dl>
         </Section>

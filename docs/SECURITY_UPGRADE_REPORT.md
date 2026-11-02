@@ -73,9 +73,10 @@ The first real-model evaluation blocked all attacks and allowed all normal cases
 
 | Check | Result |
 |---|---|
-| Python suite | 1,333 passed in 89.49 seconds |
-| Frontend suite | 200 passed across 10 files in 5.99 seconds |
-| Frontend production build | Passed; 684 modules transformed in 5.45 seconds |
+| Python suite | 1,384 passed in 113.38 seconds, including PostgreSQL integration |
+| Frontend suite | 207 passed across 11 files in 4.06 seconds |
+| Gateway production build | Passed; 686 modules transformed in 4.13 seconds |
+| Cloudflare production build | Passed; 686 modules transformed in 4.18 seconds |
 | Python lint | Ruff passed |
 | npm dependency audit during install | 0 vulnerabilities reported |
 

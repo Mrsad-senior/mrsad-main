@@ -1,0 +1,11 @@
+// Cloudflare Workers deployment of the Mirsad web UI: static assets only, no Worker script.
+// Only the built `dist/` folder (from `npm run build`) is uploaded, never the source or the
+// rest of the repository.
+{
+  "name": "mirsad-main",
+  "compatibility_date": "2026-10-31",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}

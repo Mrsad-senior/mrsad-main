@@ -8,7 +8,7 @@ setup:            ## create .venv, install backend + dev deps, install web deps
 	./scripts/setup.sh
 
 web:              ## build dashboard + approver PWA into src/mirsad/static
-	cd web && $(NPM) ci && $(NPM) run build
+	cd web && $(NPM) ci && $(NPM) run build:gateway
 
 test:             ## fast test suite (no LLM)
 	$(PY) -m pytest -m "not llm" --cov=mirsad --cov-report=term-missing

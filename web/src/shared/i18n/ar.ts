@@ -73,6 +73,8 @@ export const ar: Record<MessageKey, string> = {
   'roles.auditor': 'مدقّق',
 
   // errors -------------------------------------------------------------
+  'errors.configMissing': 'هذا الموقع غير مُهيّأ',
+  'errors.configMissingBody': 'تم بناؤه دون هذه الإعدادات. أضِفها كمتغيرات بناء ثم أعِد النشر:',
   'errors.conflict': 'تم تعديل هذا العنصر مسبقًا. حدّث الصفحة ثم حاول مجددًا.',
   'errors.forbidden': 'ليست لديك صلاحية لهذا الإجراء.',
   'errors.generic': 'حدث خطأ ما.',

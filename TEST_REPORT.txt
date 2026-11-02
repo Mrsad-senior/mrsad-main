@@ -4,12 +4,13 @@ Implementation commit:
   947f933 Harden action approvals and add bilingual security evaluation
 
 PYTHON REGRESSION:
-  1,333 passed in 89.49 seconds
+  1,384 passed in 113.38 seconds
   Command: python -m pytest --override-ini addopts='' -q --disable-warnings --maxfail=1
 
 FRONTEND:
-  200 tests passed across 10 files in 5.99 seconds
-  Production build passed: 684 modules transformed in 5.45 seconds
+  207 tests passed across 11 files in 4.06 seconds
+  Gateway production build passed: 686 modules transformed in 4.13 seconds
+  Cloudflare production build passed: 686 modules transformed in 4.18 seconds
   npm install audit: 0 vulnerabilities reported
 
 LINT:
@@ -24,6 +25,7 @@ LIVE-DEMO HARDENING:
   Detection scores above 0.50 now fill the same semicircle as the gauge track;
   the 0.50 flag and 0.80 block threshold ticks remain visible by design.
   Sector approval decisions now produce one approval.decided audit event, not a duplicate.
+  Latest origin/main blue-team and Cloudflare changes were merged before the final run.
 
 FINAL BILINGUAL HOLDOUT WITH LOCAL qwen2.5:7b:
   14 total cases: 7 English, 7 Arabic

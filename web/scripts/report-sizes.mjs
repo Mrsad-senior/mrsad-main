@@ -5,7 +5,10 @@
  * Prints every emitted JS/CSS file with raw and gzip sizes, then the *initial* payload of each
  * entry page (the scripts, module preloads and stylesheets referenced by index.html and
  * approve.html). Lazy-loaded dashboard pages are listed but not counted as initial.
- * Budgets are advisory: exceeding one prints a warning, it never fails the build.
+ * Budgets are advisory: exceeding one prints a warning, it never fails the build. A TypeScript
+ * source file in the output does fail it, because the output folder is published as-is.
+ *
+ * Usage: node scripts/report-sizes.mjs <build folder, relative to web/>   (default: dist)
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
@@ -13,7 +16,7 @@ import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
-const OUT = resolve(here, '../../src/mirsad/static');
+const OUT = resolve(here, '..', process.argv[2] ?? 'dist');
 // Advisory, set just above the current size so growth is noticed (React alone is ~45 kB gzip).
 const BUDGET_GZIP_KB = { 'index.html': 120, 'approve.html': 105 };
 
@@ -35,6 +38,12 @@ try {
   files = walk(OUT).filter((f) => /\.(js|css|html|webmanifest|json)$/.test(f));
 } catch {
   console.error(`report-sizes: build output not found at ${OUT}`);
+  process.exit(1);
+}
+
+const sources = walk(OUT).filter((f) => /\.tsx?$/.test(f));
+if (sources.length > 0) {
+  console.error(`report-sizes: TypeScript sources in the build output:\n  ${sources.map((f) => relative(OUT, f)).join('\n  ')}`);
   process.exit(1);
 }
 

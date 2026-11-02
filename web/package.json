@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "vite",
     "icons": "node scripts/gen-icons.mjs",
-    "build": "tsc --noEmit && vite build && node scripts/report-sizes.mjs",
+    "build": "tsc --noEmit && vite build --mode cloudflare && node scripts/report-sizes.mjs dist",
+    "build:gateway": "tsc --noEmit && vite build --outDir ../src/mirsad/static && node scripts/report-sizes.mjs ../src/mirsad/static",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

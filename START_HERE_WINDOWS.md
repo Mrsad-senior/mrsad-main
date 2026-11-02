@@ -31,7 +31,7 @@ Do not paste passwords into chat or upload `.mirsad/` to GitHub.
    ```powershell
    cd web
    npm ci
-   npm run build
+   npm run build:gateway
    cd ..
    ```
 
