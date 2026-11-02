@@ -1,7 +1,7 @@
 # Mirsad bilingual sector security evaluation
 
-Run: `2026-11-02T18:39:45.029737+00:00`  
-Suite: `sector-security-final-holdout-v2`  
+Run: `2026-11-02T18:39:45.029737+00:00`
+Suite: `sector-security-final-holdout-v2`
 Intent judge: `ollama:qwen2.5:7b`
 
 ## Scope

@@ -1,33 +1,37 @@
-MIRSAD CONSOLIDATED SOURCE RELEASE — 2026-10-29
+MIRSAD SECURITY UPGRADE - VERIFIED RESULTS - 2026-11-02
 
-Project snapshot: Full Mirsad Dynamic Sectors Source, with later patches layered in order:
-- Step 42 indirect instruction LLM Judge prompt
-- Step 51 Arabic user-response logic and custom unseen attack sandbox
-- Step 75 Healthcare authority-laundering detector
-- Step 93 English-only LLM Judge reasons
-- Step 98 reference library expanded from 8 to 20 synthetic Arabic/English families
-- Step 100 consolidated updates: non-English explanation fallback; Vite 7.3.7 pin + lockfile,
-  eight-example local diagnostic script, additional mocked regression checks, setup guide
+Implementation commit:
+  947f933 Harden action approvals and add bilingual security evaluation
 
-TESTED HERE:
-- 683 passed in 16.90s, on Python 3.13, running:
-  PYTHONPATH=<repo>/src:<repo> python -m pytest tests/upgrade tests/detector
-     tests/policy tests/taint tests/demo/test_agent.py tests/demo/test_world.py
-     --override-ini addopts='' -q --disable-warnings --maxfail=1
-- Python syntax compilation of src/mirsad/detector/layered.py passed.
-- Vite package and package-lock metadata both pin 7.3.7.
+PYTHON REGRESSION:
+  1,332 passed in 113.45 seconds
+  Command: python -m pytest --override-ini addopts='' -q --disable-warnings --maxfail=1
 
-NOT VALIDATED HERE:
-- Full API integration tests: environment cannot install sse-starlette/mcp/pywebpush.
-- JavaScript compilation: npm dependency installation stalled due unavailable network/cache.
-- End-to-end Ollama inference and downloads: local Qwen and multilingual embeddings
-  are not installed in this evaluation container.
-- The original prebuilt static dashboard in src/mirsad/static is STALE. You MUST run
-  cd web; npm ci; npm run build on Windows before launching dashboard.
+FRONTEND:
+  194 tests passed across 10 files in 3.35 seconds
+  Production build passed: 684 modules transformed in 5.01 seconds
+  npm install audit: 0 vulnerabilities reported
 
-IMPORTANT LIMITATIONS:
-- Semantic evidence scores are not calibrated probabilities. The 20 synthetic reference
-  examples are not a model trained to recognize all prompt injections.
-- Existing eight example cases were exposed during development; do not report test results
-  on them as independent holdout performance. A separate blind test set is required.
-- Do not deploy in production or test against real patient or bank data.
+LINT:
+  Ruff passed for src, scripts and changed tests
+
+FINAL BILINGUAL HOLDOUT WITH LOCAL qwen2.5:7b:
+  14 total cases: 7 English, 7 Arabic
+  6 attack cases: 100% successful without Mirsad, 0% successful with Mirsad
+  5 benign cases: 0 false blocks
+  3 approval controls: 3 correct
+  0 failed expected results
+  Gateway latency including local intent judge: p50 1705.864 ms, p95 2364.299 ms
+
+HARD-CONTROL RUN WITHOUT INTENT LLM:
+  0 successful attacks, 0 false blocks, 3/3 approval controls
+  Gateway latency: p50 3.908 ms, p95 11.390 ms
+
+EVIDENCE:
+  reports/security-upgrade/sector-evaluation-final.json
+  reports/security-upgrade/sector-evaluation-final.md
+  docs/SECURITY_UPGRADE_REPORT.md
+  docs/SECURITY_UPGRADE_ARCHITECTURE.md
+
+LIMITATION:
+  These are small synthetic authorization-stage tests, not a production accuracy guarantee.

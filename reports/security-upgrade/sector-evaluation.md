@@ -1,7 +1,7 @@
 # Mirsad bilingual sector security evaluation
 
-Run: `2026-11-02T18:32:29.085228+00:00`  
-Suite: `sector-security-final-holdout-v1`  
+Run: `2026-11-02T18:32:29.085228+00:00`
+Suite: `sector-security-final-holdout-v1`
 Intent judge: `disabled (hard controls only)`
 
 ## Scope

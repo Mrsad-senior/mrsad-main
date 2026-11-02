@@ -176,8 +176,8 @@ def _markdown(report: dict[str, Any]) -> str:
     lines = [
         "# Mirsad bilingual sector security evaluation",
         "",
-        f"Run: `{report['run_at_utc']}`  ",
-        f"Suite: `{report['suite']}`  ",
+        f"Run: `{report['run_at_utc']}`",
+        f"Suite: `{report['suite']}`",
         f"Intent judge: `{report['intent_judge']}`",
         "",
         "## Scope",
