@@ -299,4 +299,141 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get liveReconnecting => 'جارٍ إعادة الاتصال…';
+
+  @override
+  String get navHome => 'الرئيسية';
+
+  @override
+  String get navAccount => 'الحساب';
+
+  @override
+  String get homeTitle => 'نظرة عامة';
+
+  @override
+  String homeWindow(String hours) {
+    return 'آخر $hours ساعة';
+  }
+
+  @override
+  String get homeCalls => 'استدعاءات فُحصت';
+
+  @override
+  String get homeAllowed => 'مسموح بها';
+
+  @override
+  String get homeDenied => 'مرفوضة';
+
+  @override
+  String get homeHeld => 'أُوقفت للمراجعة';
+
+  @override
+  String get homeWaiting => 'بانتظار القرار الآن';
+
+  @override
+  String get homeInjections => 'حقن تعليمات اكتُشف';
+
+  @override
+  String get homeAuditOk => 'سلسلة التدقيق سليمة';
+
+  @override
+  String get homeAuditBroken => 'سلسلة التدقيق مكسورة';
+
+  @override
+  String get homeAuditUnknown => 'لم يُتحقق من سلسلة التدقيق';
+
+  @override
+  String homeLatency(String median, String p95) {
+    return 'يقرّر خلال $median م.ث (p95: $p95 م.ث)';
+  }
+
+  @override
+  String get homeBusiestTools => 'الأدوات الأكثر استخدامًا';
+
+  @override
+  String get homeToolsTitle => 'استكشف';
+
+  @override
+  String get homeDetectorSubtitle => 'افحص نصًا بحثًا عن حقن التعليمات.';
+
+  @override
+  String get homeChatSubtitle => 'تحدّث مع الوكيل التجريبي الذي يحميه مرصاد.';
+
+  @override
+  String get accountTitle => 'الحساب';
+
+  @override
+  String get accountRole => 'الدور';
+
+  @override
+  String get accountLanguage => 'اللغة';
+
+  @override
+  String get languageName => 'العربية';
+
+  @override
+  String get roleAdmin => 'مسؤول';
+
+  @override
+  String get roleApprover => 'معتمِد';
+
+  @override
+  String get roleAuditor => 'مدقّق';
+
+  @override
+  String get detectorTitle => 'ساحة تجربة الكاشف';
+
+  @override
+  String get detectorHint =>
+      'الصق نصًا قد يقرؤه الوكيل، مثل رسالة بريد أو صفحة ويب، لترى حكم كاشف مرصاد عليه.';
+
+  @override
+  String get detectorInputLabel => 'النص المراد فحصه';
+
+  @override
+  String get detectorScan => 'افحص';
+
+  @override
+  String detectorScore(String score) {
+    return 'الدرجة $score';
+  }
+
+  @override
+  String get detectorLabelBenign => 'يبدو آمنًا';
+
+  @override
+  String get detectorLabelSuspicious => 'مريب';
+
+  @override
+  String get detectorLabelInjection => 'حقن تعليمات';
+
+  @override
+  String get detectorLanguageEn => 'الإنجليزية';
+
+  @override
+  String get detectorLanguageAr => 'العربية';
+
+  @override
+  String get detectorLanguageMixed => 'لغات مختلطة';
+
+  @override
+  String get detectorLanguageOther => 'لغة أخرى';
+
+  @override
+  String get detectorSignals => 'الإشارات';
+
+  @override
+  String get detectorSpans => 'مقاطع مُعلَّمة';
+
+  @override
+  String get detectorNoSpans => 'لم يُعلَّم أي مقطع.';
+
+  @override
+  String get chatTitle => 'محادثة تجريبية';
+
+  @override
+  String get chatNotEnabledTitle => 'الوكيل التجريبي غير مفعّل بعد';
+
+  @override
+  String get chatNotEnabledMessage =>
+      'يمكن للمسؤول تفعيله في البوابة (MIRSAD_ENABLE_DEMO). ستظهر المحادثة هنا بعد تفعيله.';
 }

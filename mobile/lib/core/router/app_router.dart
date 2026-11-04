@@ -20,6 +20,8 @@ import 'package:mirsad/features/audit/presentation/pages/audit_page.dart';
 import 'package:mirsad/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mirsad/features/auth/presentation/cubit/sign_in_cubit.dart';
 import 'package:mirsad/features/auth/presentation/pages/sign_in_page.dart';
+import 'package:mirsad/features/home/presentation/cubit/home_cubit.dart';
+import 'package:mirsad/features/home/presentation/pages/home_page.dart';
 
 /// Builds the app's routes. Pages get their cubits here, from `getIt`.
 /// Signed-out reviewers are sent to sign-in and back again afterwards, and
@@ -31,7 +33,7 @@ GoRouter createAppRouter({
   final rootNavigatorKey = GlobalKey<NavigatorState>();
   return GoRouter(
     navigatorKey: rootNavigatorKey,
-    initialLocation: AppRoutes.approvals,
+    initialLocation: AppRoutes.home,
     refreshListenable: StreamListenable(authCubit.stream),
     redirect: (context, state) => authRedirect(
       status: authCubit.state.status,
@@ -52,6 +54,20 @@ GoRouter createAppRouter({
           child: AppShell(navigationShell: shell),
         ),
         branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.home,
+                builder: (context, state) => BlocProvider(
+                  create: (_) => getIt<HomeCubit>()..start(),
+                  child: HomePage(
+                    showDetector:
+                        authCubit.state.reviewer?.role.canUseDetector ?? false,
+                  ),
+                ),
+              ),
+            ],
+          ),
           StatefulShellBranch(
             routes: [
               GoRoute(

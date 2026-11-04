@@ -9,6 +9,7 @@ void main() {
 
   test('approvers do not see Activity', () {
     expect(AppShellTab.visibleFor(ReviewerRole.approver), [
+      AppShellTab.home,
       AppShellTab.approvals,
       AppShellTab.audit,
     ]);
@@ -16,6 +17,7 @@ void main() {
 
   test('auditors do not see Approvals', () {
     expect(AppShellTab.visibleFor(ReviewerRole.auditor), [
+      AppShellTab.home,
       AppShellTab.activity,
       AppShellTab.audit,
     ]);

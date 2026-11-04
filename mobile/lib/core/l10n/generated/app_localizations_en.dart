@@ -300,4 +300,141 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get liveReconnecting => 'Reconnecting…';
+
+  @override
+  String get navHome => 'Home';
+
+  @override
+  String get navAccount => 'Account';
+
+  @override
+  String get homeTitle => 'Overview';
+
+  @override
+  String homeWindow(String hours) {
+    return 'Last $hours hours';
+  }
+
+  @override
+  String get homeCalls => 'Calls checked';
+
+  @override
+  String get homeAllowed => 'Allowed';
+
+  @override
+  String get homeDenied => 'Denied';
+
+  @override
+  String get homeHeld => 'Held for review';
+
+  @override
+  String get homeWaiting => 'Waiting now';
+
+  @override
+  String get homeInjections => 'Injections caught';
+
+  @override
+  String get homeAuditOk => 'Audit chain intact';
+
+  @override
+  String get homeAuditBroken => 'Audit chain broken';
+
+  @override
+  String get homeAuditUnknown => 'Audit chain not checked';
+
+  @override
+  String homeLatency(String median, String p95) {
+    return 'Decides in $median ms (p95 $p95 ms)';
+  }
+
+  @override
+  String get homeBusiestTools => 'Busiest tools';
+
+  @override
+  String get homeToolsTitle => 'Explore';
+
+  @override
+  String get homeDetectorSubtitle => 'Check text for prompt injection.';
+
+  @override
+  String get homeChatSubtitle => 'Talk to the demo agent behind Mirsad.';
+
+  @override
+  String get accountTitle => 'Account';
+
+  @override
+  String get accountRole => 'Role';
+
+  @override
+  String get accountLanguage => 'Language';
+
+  @override
+  String get languageName => 'English';
+
+  @override
+  String get roleAdmin => 'Administrator';
+
+  @override
+  String get roleApprover => 'Approver';
+
+  @override
+  String get roleAuditor => 'Auditor';
+
+  @override
+  String get detectorTitle => 'Detector playground';
+
+  @override
+  String get detectorHint =>
+      'Paste text an agent might read, such as an email or a web page, to see what Mirsad\'s detector makes of it.';
+
+  @override
+  String get detectorInputLabel => 'Text to scan';
+
+  @override
+  String get detectorScan => 'Scan';
+
+  @override
+  String detectorScore(String score) {
+    return 'Score $score';
+  }
+
+  @override
+  String get detectorLabelBenign => 'Looks safe';
+
+  @override
+  String get detectorLabelSuspicious => 'Suspicious';
+
+  @override
+  String get detectorLabelInjection => 'Prompt injection';
+
+  @override
+  String get detectorLanguageEn => 'English';
+
+  @override
+  String get detectorLanguageAr => 'Arabic';
+
+  @override
+  String get detectorLanguageMixed => 'Mixed languages';
+
+  @override
+  String get detectorLanguageOther => 'Other language';
+
+  @override
+  String get detectorSignals => 'Signals';
+
+  @override
+  String get detectorSpans => 'Flagged passages';
+
+  @override
+  String get detectorNoSpans => 'Nothing was flagged.';
+
+  @override
+  String get chatTitle => 'Demo chat';
+
+  @override
+  String get chatNotEnabledTitle => 'The demo agent isn\'t enabled yet';
+
+  @override
+  String get chatNotEnabledMessage =>
+      'An admin can turn it on in the gateway (MIRSAD_ENABLE_DEMO). The chat will appear here once it is.';
 }

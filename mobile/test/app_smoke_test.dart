@@ -6,8 +6,8 @@ import 'package:mirsad/core/di/injection.dart';
 import 'package:mirsad/core/router/app_router.dart';
 import 'package:mirsad/features/auth/presentation/cubit/auth_cubit.dart';
 
-/// Boots the real app in mock mode and walks the demo: sign in, see the held
-/// transfer, open it.
+/// Boots the real app in mock mode and walks the demo: sign in, see the
+/// overview, then the held transfer, and open it.
 void main() {
   Future<void> bootAndSignIn(WidgetTester tester, String username) async {
     await configureDependencies(
@@ -43,6 +43,11 @@ void main() {
   ) async {
     await bootAndSignIn(tester, 'reviewer@bank.example');
 
+    expect(find.text('Overview'), findsOneWidget);
+    expect(find.text('Calls checked'), findsOneWidget);
+
+    await tester.tap(tab('Approvals'));
+    await tester.pumpAndSettle();
     expect(find.text('Pending approvals'), findsOneWidget);
     expect(find.text('Transfer funds'), findsOneWidget);
     expect(find.text('50,000 SAR'), findsOneWidget);
@@ -63,13 +68,11 @@ void main() {
     expect(tab('Audit'), findsOneWidget);
   });
 
-  testWidgets('an auditor gets no Approvals tab and lands on Audit', (
-    tester,
-  ) async {
+  testWidgets('an auditor gets no Approvals tab', (tester) async {
     await bootAndSignIn(tester, 'auditor');
 
+    expect(tab('Home'), findsOneWidget);
     expect(tab('Approvals'), findsNothing);
     expect(tab('Activity'), findsOneWidget);
-    expect(find.text('Audit log'), findsOneWidget);
   });
 }

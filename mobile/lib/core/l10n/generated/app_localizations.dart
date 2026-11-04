@@ -643,6 +643,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reconnecting…'**
   String get liveReconnecting;
+
+  /// No description provided for @navHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get navHome;
+
+  /// No description provided for @navAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get navAccount;
+
+  /// No description provided for @homeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get homeTitle;
+
+  /// No description provided for @homeWindow.
+  ///
+  /// In en, this message translates to:
+  /// **'Last {hours} hours'**
+  String homeWindow(String hours);
+
+  /// No description provided for @homeCalls.
+  ///
+  /// In en, this message translates to:
+  /// **'Calls checked'**
+  String get homeCalls;
+
+  /// No description provided for @homeAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed'**
+  String get homeAllowed;
+
+  /// No description provided for @homeDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Denied'**
+  String get homeDenied;
+
+  /// No description provided for @homeHeld.
+  ///
+  /// In en, this message translates to:
+  /// **'Held for review'**
+  String get homeHeld;
+
+  /// No description provided for @homeWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting now'**
+  String get homeWaiting;
+
+  /// No description provided for @homeInjections.
+  ///
+  /// In en, this message translates to:
+  /// **'Injections caught'**
+  String get homeInjections;
+
+  /// No description provided for @homeAuditOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit chain intact'**
+  String get homeAuditOk;
+
+  /// No description provided for @homeAuditBroken.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit chain broken'**
+  String get homeAuditBroken;
+
+  /// No description provided for @homeAuditUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit chain not checked'**
+  String get homeAuditUnknown;
+
+  /// No description provided for @homeLatency.
+  ///
+  /// In en, this message translates to:
+  /// **'Decides in {median} ms (p95 {p95} ms)'**
+  String homeLatency(String median, String p95);
+
+  /// No description provided for @homeBusiestTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Busiest tools'**
+  String get homeBusiestTools;
+
+  /// No description provided for @homeToolsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore'**
+  String get homeToolsTitle;
+
+  /// No description provided for @homeDetectorSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check text for prompt injection.'**
+  String get homeDetectorSubtitle;
+
+  /// No description provided for @homeChatSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Talk to the demo agent behind Mirsad.'**
+  String get homeChatSubtitle;
+
+  /// No description provided for @accountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get accountTitle;
+
+  /// No description provided for @accountRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get accountRole;
+
+  /// No description provided for @accountLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get accountLanguage;
+
+  /// No description provided for @languageName.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageName;
+
+  /// No description provided for @roleAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Administrator'**
+  String get roleAdmin;
+
+  /// No description provided for @roleApprover.
+  ///
+  /// In en, this message translates to:
+  /// **'Approver'**
+  String get roleApprover;
+
+  /// No description provided for @roleAuditor.
+  ///
+  /// In en, this message translates to:
+  /// **'Auditor'**
+  String get roleAuditor;
+
+  /// No description provided for @detectorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Detector playground'**
+  String get detectorTitle;
+
+  /// No description provided for @detectorHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste text an agent might read, such as an email or a web page, to see what Mirsad\'s detector makes of it.'**
+  String get detectorHint;
+
+  /// No description provided for @detectorInputLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Text to scan'**
+  String get detectorInputLabel;
+
+  /// No description provided for @detectorScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan'**
+  String get detectorScan;
+
+  /// No description provided for @detectorScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Score {score}'**
+  String detectorScore(String score);
+
+  /// No description provided for @detectorLabelBenign.
+  ///
+  /// In en, this message translates to:
+  /// **'Looks safe'**
+  String get detectorLabelBenign;
+
+  /// No description provided for @detectorLabelSuspicious.
+  ///
+  /// In en, this message translates to:
+  /// **'Suspicious'**
+  String get detectorLabelSuspicious;
+
+  /// No description provided for @detectorLabelInjection.
+  ///
+  /// In en, this message translates to:
+  /// **'Prompt injection'**
+  String get detectorLabelInjection;
+
+  /// No description provided for @detectorLanguageEn.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get detectorLanguageEn;
+
+  /// No description provided for @detectorLanguageAr.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic'**
+  String get detectorLanguageAr;
+
+  /// No description provided for @detectorLanguageMixed.
+  ///
+  /// In en, this message translates to:
+  /// **'Mixed languages'**
+  String get detectorLanguageMixed;
+
+  /// No description provided for @detectorLanguageOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other language'**
+  String get detectorLanguageOther;
+
+  /// No description provided for @detectorSignals.
+  ///
+  /// In en, this message translates to:
+  /// **'Signals'**
+  String get detectorSignals;
+
+  /// No description provided for @detectorSpans.
+  ///
+  /// In en, this message translates to:
+  /// **'Flagged passages'**
+  String get detectorSpans;
+
+  /// No description provided for @detectorNoSpans.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was flagged.'**
+  String get detectorNoSpans;
+
+  /// No description provided for @chatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo chat'**
+  String get chatTitle;
+
+  /// No description provided for @chatNotEnabledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The demo agent isn\'t enabled yet'**
+  String get chatNotEnabledTitle;
+
+  /// No description provided for @chatNotEnabledMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'An admin can turn it on in the gateway (MIRSAD_ENABLE_DEMO). The chat will appear here once it is.'**
+  String get chatNotEnabledMessage;
 }
 
 class _AppLocalizationsDelegate

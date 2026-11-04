@@ -135,5 +135,65 @@
   "mockSignInHint": "Mock mode: any username and a password of 6 or more characters works. Sign in as \"approver\" or \"auditor\" to try those roles; anyone else is an admin.",
   "summaryTitle": "In short",
   "liveOnline": "Online",
-  "liveReconnecting": "Reconnecting…"
+  "liveReconnecting": "Reconnecting…",
+
+  "navHome": "Home",
+  "navAccount": "Account",
+  "homeTitle": "Overview",
+  "homeWindow": "Last {hours} hours",
+  "@homeWindow": {
+    "placeholders": {
+      "hours": { "type": "String", "example": "24" }
+    }
+  },
+  "homeCalls": "Calls checked",
+  "homeAllowed": "Allowed",
+  "homeDenied": "Denied",
+  "homeHeld": "Held for review",
+  "homeWaiting": "Waiting now",
+  "homeInjections": "Injections caught",
+  "homeAuditOk": "Audit chain intact",
+  "homeAuditBroken": "Audit chain broken",
+  "homeAuditUnknown": "Audit chain not checked",
+  "homeLatency": "Decides in {median} ms (p95 {p95} ms)",
+  "@homeLatency": {
+    "placeholders": {
+      "median": { "type": "String", "example": "1.4" },
+      "p95": { "type": "String", "example": "6.8" }
+    }
+  },
+  "homeBusiestTools": "Busiest tools",
+  "homeToolsTitle": "Explore",
+  "homeDetectorSubtitle": "Check text for prompt injection.",
+  "homeChatSubtitle": "Talk to the demo agent behind Mirsad.",
+  "accountTitle": "Account",
+  "accountRole": "Role",
+  "accountLanguage": "Language",
+  "languageName": "English",
+  "roleAdmin": "Administrator",
+  "roleApprover": "Approver",
+  "roleAuditor": "Auditor",
+  "detectorTitle": "Detector playground",
+  "detectorHint": "Paste text an agent might read, such as an email or a web page, to see what Mirsad's detector makes of it.",
+  "detectorInputLabel": "Text to scan",
+  "detectorScan": "Scan",
+  "detectorScore": "Score {score}",
+  "@detectorScore": {
+    "placeholders": {
+      "score": { "type": "String", "example": "0.83" }
+    }
+  },
+  "detectorLabelBenign": "Looks safe",
+  "detectorLabelSuspicious": "Suspicious",
+  "detectorLabelInjection": "Prompt injection",
+  "detectorLanguageEn": "English",
+  "detectorLanguageAr": "Arabic",
+  "detectorLanguageMixed": "Mixed languages",
+  "detectorLanguageOther": "Other language",
+  "detectorSignals": "Signals",
+  "detectorSpans": "Flagged passages",
+  "detectorNoSpans": "Nothing was flagged.",
+  "chatTitle": "Demo chat",
+  "chatNotEnabledTitle": "The demo agent isn't enabled yet",
+  "chatNotEnabledMessage": "An admin can turn it on in the gateway (MIRSAD_ENABLE_DEMO). The chat will appear here once it is."
 }

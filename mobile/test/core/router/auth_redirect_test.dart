@@ -28,23 +28,26 @@ void main() {
     );
   });
 
-  test('sends signed-in reviewers from sign-in to their first tab', () {
-    expect(
-      _signedIn(ReviewerRole.approver, AppRoutes.signIn),
-      AppRoutes.approvals,
-    );
-    expect(
-      _signedIn(ReviewerRole.admin, AppRoutes.signIn),
-      AppRoutes.approvals,
-    );
-    expect(_signedIn(ReviewerRole.auditor, AppRoutes.signIn), AppRoutes.audit);
-    expect(_signedIn(ReviewerRole.approver, AppRoutes.audit), isNull);
+  test('sends every signed-in role from sign-in to Home', () {
+    for (final role in ReviewerRole.values) {
+      expect(_signedIn(role, AppRoutes.signIn), AppRoutes.home);
+      expect(_signedIn(role, AppRoutes.home), isNull);
+      expect(_signedIn(role, AppRoutes.audit), isNull);
+      expect(_signedIn(role, AppRoutes.account), isNull);
+      expect(_signedIn(role, AppRoutes.chat), isNull);
+    }
+  });
+
+  test('lets every role open the detector, as the gateway does', () {
+    for (final role in ReviewerRole.values) {
+      expect(_signedIn(role, AppRoutes.detector), isNull);
+    }
   });
 
   test('keeps approvers off the activity feed (audit is admin/auditor)', () {
     expect(
       _signedIn(ReviewerRole.approver, AppRoutes.activity),
-      AppRoutes.approvals,
+      AppRoutes.home,
     );
     expect(_signedIn(ReviewerRole.auditor, AppRoutes.activity), isNull);
     expect(_signedIn(ReviewerRole.admin, AppRoutes.activity), isNull);
@@ -53,7 +56,7 @@ void main() {
   test('keeps auditors off approvals and their details', () {
     expect(
       _signedIn(ReviewerRole.auditor, AppRoutes.approvalDetails('apr_1')),
-      AppRoutes.audit,
+      AppRoutes.home,
     );
     expect(
       _signedIn(ReviewerRole.approver, AppRoutes.approvalDetails('apr_1')),
