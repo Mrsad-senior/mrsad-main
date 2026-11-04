@@ -22,6 +22,7 @@ import 'package:mirsad/features/audit/presentation/pages/audit_page.dart';
 import 'package:mirsad/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mirsad/features/auth/presentation/cubit/sign_in_cubit.dart';
 import 'package:mirsad/features/auth/presentation/pages/sign_in_page.dart';
+import 'package:mirsad/features/chat/presentation/pages/chat_page.dart';
 import 'package:mirsad/features/detector/presentation/cubit/detector_cubit.dart';
 import 'package:mirsad/features/detector/presentation/pages/detector_page.dart';
 import 'package:mirsad/features/home/presentation/cubit/home_cubit.dart';
@@ -77,6 +78,11 @@ GoRouter createAppRouter({
                       create: (_) => getIt<DetectorCubit>(),
                       child: const DetectorPage(),
                     ),
+                  ),
+                  GoRoute(
+                    path: _lastSegment(AppRoutes.chat),
+                    parentNavigatorKey: rootNavigatorKey,
+                    builder: (context, state) => const ChatPage(),
                   ),
                 ],
               ),

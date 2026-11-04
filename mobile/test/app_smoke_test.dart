@@ -57,6 +57,12 @@ void main() {
     await tester.pageBack();
     await tester.pumpAndSettle();
 
+    await tester.tap(find.text('Demo chat'));
+    await tester.pumpAndSettle();
+    expect(find.text("The demo agent isn't enabled yet"), findsOneWidget);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+
     await tester.tap(tab('Approvals'));
     await tester.pumpAndSettle();
     expect(find.text('Pending approvals'), findsOneWidget);
