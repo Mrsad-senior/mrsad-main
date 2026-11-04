@@ -47,7 +47,7 @@ lib/
   core/
     config/            AppConfig (dart-defines) and DataSources (the one switch)
     di/                get_it registration, one module file per feature
-    network/           Dio client, auth interceptor, Dio error mapping, polling
+    network/           Dio client, auth interceptor, Dio error mapping, live/ (SSE stream, refresh-or-poll lists, status cubit)
     errors/            AppException (data layer), Failure (domain), guard helpers
     router/            GoRouter, route paths, bottom-nav shell
     theme/             design tokens (colors, typography, spacing, radii), light + dark
@@ -151,7 +151,8 @@ Bottom navigation: Approvals, Activity, Audit, filtered by role (`core/router/ap
 
 - Toolchain: Flutter 3.44, Dart 3.12. Material lives in the `material_ui` package; still import `package:flutter/material.dart`. Component themes use the `*ThemeData` classes (`AppBarThemeData`, `CardThemeData`, `InputDecorationThemeData`).
 - Private named constructor parameters are allowed and the lint prefers them: `Foo({required this._bar})`, called as `Foo(bar: ...)`.
-- Live lists are streams: repositories expose `watch...()` plus a `refresh...()` that pushes onto the same stream. The API sources poll with `core/network/polling_stream.dart`.
+- Live lists are streams: repositories expose `watch...()` plus a `refresh...()` that pushes onto the same stream. The API sources use `core/network/live/live_refresh_stream.dart`: fetch on listen, fetch again on each relevant `GET /api/stream` event, and poll every 15 s only while the stream is down.
+- `SseLiveUpdates` holds the one SSE connection (`Authorization` header from the gateway Dio; reconnects with 1-2-4-8-16-30 s backoff; 45 s without a byte counts as dropped, the gateway pings every 15 s). `core/di/live_session.dart` opens it while someone is signed in. The shell's app bar shows Online / Reconnecting from `LiveStatusCubit`. Mock mode uses `MockLiveUpdates` (always online, no events).
 - A data source implementing both reads and decisions (mock, API) refreshes its own pending list after a decision; the repository does not.
 - Tests: `test/helpers/pump_app.dart` (theme, l10n, fake clock), `fake_http_adapter.dart` (real Dio against canned responses), `either.dart` (`rightOf`). `test/architecture_test.dart` enforces the layer rules; `test/app_smoke_test.dart` boots the real app in mock mode.
 - Android debug builds allow plain HTTP only to `10.0.2.2` / `localhost` (`android/app/src/debug/res/xml/network_security_config.xml`). Release builds are HTTPS only.

@@ -101,5 +101,7 @@
   "usernameInvalid": "أدخل اسم المستخدم بدون مسافات.",
   "passwordRequired": "أدخل كلمة المرور.",
   "mockSignInHint": "وضع التجربة: يعمل أي اسم مستخدم مع كلمة مرور من 6 أحرف أو أكثر. ادخل باسم \"approver\" أو \"auditor\" لتجربة هذين الدورين، وأي اسم آخر يدخل كمسؤول.",
-  "summaryTitle": "باختصار"
+  "summaryTitle": "باختصار",
+  "liveOnline": "متصل",
+  "liveReconnecting": "جارٍ إعادة الاتصال…"
 }

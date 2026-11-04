@@ -3,19 +3,22 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:mirsad/core/errors/exceptions.dart';
 import 'package:mirsad/core/network/dio_error_mapping.dart';
-import 'package:mirsad/core/network/polling_stream.dart';
+import 'package:mirsad/core/network/live/live_refresh_stream.dart';
+import 'package:mirsad/core/network/live/live_updates.dart';
 import 'package:mirsad/features/approvals/data/datasources/approvals_data_source.dart';
 import 'package:mirsad/features/approvals/data/models/approval_model.dart';
 import 'package:mirsad/features/approvals/data/models/approval_wire_values.dart';
 import 'package:mirsad/features/approvals/data/models/decision_request_model.dart';
 
 /// Approvals from the Mirsad gateway (docs/api.md, "Approvals"). The gateway
-/// only shows them to approvers and admins. The pending list is polled; the
-/// gateway's `GET /api/stream` (Server-Sent Events) could replace that later.
+/// only shows them to approvers and admins. The pending list is fetched
+/// again on every `approval.requested` / `approval.decided` event from the
+/// live stream, and polled while the stream is down.
 class ApprovalsApiDataSource
     implements ApprovalsReadDataSource, ApprovalDecisionDataSource {
   ApprovalsApiDataSource(
-    this._dio, {
+    this._dio,
+    this._live, {
     this.pollInterval = const Duration(seconds: 15),
   });
 
@@ -23,15 +26,20 @@ class ApprovalsApiDataSource
   static const pageSize = 100;
 
   final Dio _dio;
+  final LiveUpdates _live;
+
+  /// How often to poll while the live stream is down.
   final Duration pollInterval;
   final StreamController<List<ApprovalModel>> _updates =
       StreamController.broadcast();
 
   @override
   Stream<List<ApprovalModel>> watchPending() {
-    return pollingStream(
+    return liveRefreshStream(
       fetch: _fetchPending,
-      interval: pollInterval,
+      live: _live,
+      isRelevant: (event) => event.isApproval,
+      fallbackInterval: pollInterval,
       updates: _updates.stream,
     );
   }
@@ -59,8 +67,8 @@ class ApprovalsApiDataSource
       );
       return ApprovalModel.fromJson(_body(response));
     });
-    // Drop the decided approval from the list now instead of at the next
-    // poll. A failure here only delays that, so it is ignored.
+    // Drop the decided approval from the list now instead of waiting for
+    // the stream's `approval.decided`. A failure here is ignored.
     unawaited(refreshPending().catchError((Object _) {}));
     return updated;
   }

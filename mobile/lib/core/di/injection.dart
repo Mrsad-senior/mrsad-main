@@ -8,6 +8,9 @@ import 'package:mirsad/core/di/audit_module.dart';
 import 'package:mirsad/core/di/auth_module.dart';
 import 'package:mirsad/core/l10n/locale_cubit.dart';
 import 'package:mirsad/core/network/dio_client.dart';
+import 'package:mirsad/core/network/live/live_status_cubit.dart';
+import 'package:mirsad/core/network/live/live_updates.dart';
+import 'package:mirsad/core/network/live/sse_live_updates.dart';
 import 'package:mirsad/core/utils/clock.dart';
 import 'package:mirsad/features/auth/data/datasources/auth_data_source.dart';
 
@@ -23,13 +26,21 @@ Future<void> configureDependencies(AppConfig config) async {
     ..registerLazySingleton<LocaleCubit>(LocaleCubit.new);
 
   if (sources.usesApi) {
-    getIt.registerLazySingleton<Dio>(
-      () => createGatewayDio(
-        baseUrl: config.apiBaseUrl,
-        readToken: () => getIt<AuthDataSource>().accessToken(),
-      ),
-    );
+    getIt
+      ..registerLazySingleton<Dio>(
+        () => createGatewayDio(
+          baseUrl: config.apiBaseUrl,
+          readToken: () => getIt<AuthDataSource>().accessToken(),
+        ),
+      )
+      ..registerLazySingleton<LiveUpdates>(
+        () => SseLiveUpdates(getIt()),
+        dispose: (live) => (live as SseLiveUpdates).dispose(),
+      );
+  } else {
+    getIt.registerLazySingleton<LiveUpdates>(MockLiveUpdates.new);
   }
+  getIt.registerFactory(() => LiveStatusCubit(getIt()));
 
   registerAuthModule(getIt, sources);
   registerApprovalsModule(getIt, sources);

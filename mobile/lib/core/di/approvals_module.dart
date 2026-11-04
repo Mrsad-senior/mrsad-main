@@ -21,7 +21,7 @@ void registerApprovalsModule(GetIt getIt, DataSources sources) {
       dispose: (source) => source.dispose(),
     )
     ..registerLazySingleton<ApprovalsApiDataSource>(
-      () => ApprovalsApiDataSource(getIt()),
+      () => ApprovalsApiDataSource(getIt(), getIt()),
       dispose: (source) => source.dispose(),
     )
     ..registerLazySingleton<ApprovalsReadDataSource>(

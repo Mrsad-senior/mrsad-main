@@ -294,4 +294,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get summaryTitle => 'In short';
+
+  @override
+  String get liveOnline => 'Online';
+
+  @override
+  String get liveReconnecting => 'Reconnecting…';
 }

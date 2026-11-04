@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mirsad/core/di/injection.dart';
+import 'package:mirsad/core/network/live/live_status_cubit.dart';
 import 'package:mirsad/core/router/app_routes.dart';
 import 'package:mirsad/core/router/app_shell.dart';
 import 'package:mirsad/core/router/auth_redirect.dart';
@@ -46,7 +47,10 @@ GoRouter createAppRouter({
         ),
       ),
       StatefulShellRoute.indexedStack(
-        builder: (context, state, shell) => AppShell(navigationShell: shell),
+        builder: (context, state, shell) => BlocProvider(
+          create: (_) => getIt<LiveStatusCubit>(),
+          child: AppShell(navigationShell: shell),
+        ),
         branches: [
           StatefulShellBranch(
             routes: [

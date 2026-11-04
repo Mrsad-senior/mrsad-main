@@ -8,6 +8,7 @@ import 'package:mirsad/features/approvals/domain/entities/approval_status.dart';
 import 'package:mirsad/features/approvals/domain/entities/review_decision.dart';
 
 import '../../../../helpers/fake_http_adapter.dart';
+import '../../../../helpers/fake_live_updates.dart';
 import '../../approval_fixtures.dart';
 
 const _reject = DecisionRequestModel(
@@ -17,17 +18,23 @@ const _reject = DecisionRequestModel(
 
 void main() {
   late FakeHttpAdapter adapter;
+  late FakeLiveUpdates live;
   late ApprovalsApiDataSource source;
 
   setUp(() {
     adapter = FakeHttpAdapter();
+    live = FakeLiveUpdates();
     source = ApprovalsApiDataSource(
       fakeDio(adapter),
+      live,
       pollInterval: const Duration(hours: 1),
     );
   });
 
-  tearDown(() => source.dispose());
+  tearDown(() async {
+    await source.dispose();
+    await live.close();
+  });
 
   test('GET /api/approvals?status=pending feeds watchPending', () async {
     adapter.on('GET', '/api/approvals', body: [approvalJson()]);
@@ -56,6 +63,22 @@ void main() {
     await Future<void>.delayed(Duration.zero);
 
     expect(counts, [1, 0]);
+    await subscription.cancel();
+  });
+
+  test('fetches again when the stream reports an approval', () async {
+    adapter.on('GET', '/api/approvals', body: [approvalJson()]);
+    final subscription = source.watchPending().listen((_) {});
+    await eventually(() => adapter.requests.length == 1);
+
+    live.emit('audit.event');
+    await Future<void>.delayed(const Duration(milliseconds: 20));
+    expect(adapter.requests, hasLength(1));
+
+    live.emit('approval.requested');
+    await eventually(() => adapter.requests.length == 2);
+    live.emit('approval.decided');
+    await eventually(() => adapter.requests.length == 3);
     await subscription.cancel();
   });
 

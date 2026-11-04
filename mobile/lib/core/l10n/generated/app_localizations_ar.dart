@@ -293,4 +293,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get summaryTitle => 'باختصار';
+
+  @override
+  String get liveOnline => 'متصل';
+
+  @override
+  String get liveReconnecting => 'جارٍ إعادة الاتصال…';
 }

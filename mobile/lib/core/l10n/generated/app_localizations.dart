@@ -631,6 +631,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'In short'**
   String get summaryTitle;
+
+  /// No description provided for @liveOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get liveOnline;
+
+  /// No description provided for @liveReconnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnecting…'**
+  String get liveReconnecting;
 }
 
 class _AppLocalizationsDelegate

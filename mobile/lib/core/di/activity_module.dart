@@ -14,7 +14,7 @@ void registerActivityModule(GetIt getIt, DataSources sources) {
     ..registerLazySingleton<ActivityDataSource>(
       () => switch (sources.kind) {
         DataSourceKind.mock => ActivityMockDataSource(clock: getIt()),
-        DataSourceKind.api => ActivityApiDataSource(getIt()),
+        DataSourceKind.api => ActivityApiDataSource(getIt(), getIt()),
       },
       dispose: (source) => switch (source) {
         ActivityMockDataSource() => source.dispose(),

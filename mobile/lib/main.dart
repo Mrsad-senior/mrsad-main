@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mirsad/app.dart';
 import 'package:mirsad/core/config/app_config.dart';
 import 'package:mirsad/core/di/injection.dart';
+import 'package:mirsad/core/di/live_session.dart';
 import 'package:mirsad/core/router/app_router.dart';
 import 'package:mirsad/core/widgets/config_error_app.dart';
 import 'package:mirsad/features/auth/presentation/cubit/auth_cubit.dart';
@@ -20,6 +21,7 @@ Future<void> main() async {
   // Read the session before building the router, so the first screen is
   // already the right one.
   final authCubit = getIt<AuthCubit>()..start();
+  connectLiveUpdatesToSession(auth: authCubit, live: getIt());
   runApp(
     MirsadApp(
       router: createAppRouter(
