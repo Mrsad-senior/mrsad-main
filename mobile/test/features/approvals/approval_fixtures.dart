@@ -11,6 +11,8 @@ Approval transferApproval({
   String id = 'apr_7f3c2a',
   ApprovalStatus status = ApprovalStatus.held,
   DateTime? expiresAt,
+  String summaryEn = 'The banking assistant wants to transfer 50,000 SAR.',
+  String summaryAr = 'يريد المساعد المصرفي تحويل 50,000 ريال.',
 }) {
   return Approval(
     id: id,
@@ -40,6 +42,8 @@ Approval transferApproval({
     createdAt: testNow.subtract(const Duration(seconds: 40)),
     expiresAt:
         expiresAt ?? testNow.add(const Duration(minutes: 4, seconds: 20)),
+    summaryEn: summaryEn,
+    summaryAr: summaryAr,
   );
 }
 

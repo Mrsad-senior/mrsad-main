@@ -625,6 +625,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mock mode: any username and a password of 6 or more characters works. Sign in as \"approver\" or \"auditor\" to try those roles; anyone else is an admin.'**
   String get mockSignInHint;
+
+  /// No description provided for @summaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'In short'**
+  String get summaryTitle;
 }
 
 class _AppLocalizationsDelegate

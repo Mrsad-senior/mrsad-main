@@ -26,6 +26,17 @@ void main() {
     expect(approval.expiresAt, DateTime.utc(2026, 10, 29, 9, 43, 7, 250));
   });
 
+  test('reads both summaries, empty when the gateway sends none', () {
+    final approval = ApprovalModel.fromJson(approvalJson()).toEntity();
+    expect(approval.summaryEn, startsWith('The Finance Sandbox Agent'));
+    expect(approval.summaryAr, 'يريد الوكيل تحويل أموال.');
+
+    final bare = approvalJson()
+      ..remove('summary_en')
+      ..remove('summary_ar');
+    expect(ApprovalModel.fromJson(bare).summaryEn, isEmpty);
+  });
+
   test('shows only the reasons that objected to the call', () {
     final approval = ApprovalModel.fromJson(approvalJson()).toEntity();
 

@@ -141,6 +141,32 @@ void main() {
     expect(find.text('Rejected'), findsOneWidget);
   });
 
+  testWidgets('shows the gateway summary in the app language', (tester) async {
+    await pumpPage(tester);
+    expect(find.text('In short'), findsOneWidget);
+    expect(
+      find.text('The banking assistant wants to transfer 50,000 SAR.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('shows the Arabic summary in Arabic', (tester) async {
+    await pumpPage(tester, locale: const Locale('ar'));
+    expect(
+      find.text('يريد المساعد المصرفي تحويل 50,000 ريال.'),
+      findsOneWidget,
+    );
+    expect(
+      find.text('The banking assistant wants to transfer 50,000 SAR.'),
+      findsNothing,
+    );
+  });
+
+  testWidgets('leaves the summary out when there is none', (tester) async {
+    await pumpPage(tester, approval: transferApproval(summaryEn: ''));
+    expect(find.text('In short'), findsNothing);
+  });
+
   testWidgets('lays out right to left in Arabic', (tester) async {
     await pumpPage(tester, locale: const Locale('ar'));
 

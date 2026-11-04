@@ -24,6 +24,8 @@ class ApprovalModel {
     required this.decision,
     required this.createdAt,
     required this.expiresAt,
+    this.summaryEn = '',
+    this.summaryAr = '',
     this.originalTask,
   });
 
@@ -49,6 +51,14 @@ class ApprovalModel {
   @JsonKey(fromJson: dateTimeFromEpochSeconds)
   final DateTime expiresAt;
 
+  /// The gateway's plain-language summary in English and Arabic
+  /// (src/mirsad/approvals/summary.py). Empty when it has none.
+  @JsonKey(defaultValue: '')
+  final String summaryEn;
+
+  @JsonKey(defaultValue: '')
+  final String summaryAr;
+
   /// What the user asked the agent to do. Proposed in docs/API_CONTRACT.md:
   /// the gateway does not send it yet.
   final String? originalTask;
@@ -63,6 +73,8 @@ class ApprovalModel {
       decision: decision,
       createdAt: createdAt,
       expiresAt: expiresAt,
+      summaryEn: summaryEn,
+      summaryAr: summaryAr,
       originalTask: originalTask,
     );
   }
@@ -82,6 +94,8 @@ class ApprovalModel {
       reasons: List.unmodifiable(objections.map((reason) => reason.toEntity())),
       createdAt: createdAt,
       expiresAt: expiresAt,
+      summaryEn: summaryEn,
+      summaryAr: summaryAr,
     );
   }
 }

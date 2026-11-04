@@ -68,6 +68,15 @@ List<ApprovalModel> demoApprovals(DateTime now) {
       ),
       createdAt: invoiceHeldAt,
       expiresAt: invoiceHeldAt.add(approvalWindow),
+      summaryEn:
+          'The finance assistant wants to transfer 50,000 SAR to '
+          'SA******************1234. Mirsad paused it because that account '
+          'only appears inside an invoice it read, and the beneficiary is '
+          'new. Risk: critical.',
+      summaryAr:
+          'يريد المساعد المالي تحويل 50,000 ريال إلى الحساب '
+          'SA******************1234. أوقفه مرصاد لأن هذا الحساب ورد فقط داخل '
+          'فاتورة قرأها، والمستفيد جديد. مستوى الخطر: حرج.',
       originalTask: 'Process this supplier invoice',
     ),
     ApprovalModel(
@@ -105,6 +114,15 @@ List<ApprovalModel> demoApprovals(DateTime now) {
       ),
       createdAt: statementHeldAt,
       expiresAt: statementHeldAt.add(approvalWindow),
+      summaryEn:
+          'The finance assistant wants to email a customer statement to '
+          'statements@freemail.example. Mirsad paused it because the address '
+          'is outside the bank and the email carries an account number. '
+          'Risk: medium.',
+      summaryAr:
+          'يريد المساعد المالي إرسال كشف حساب عميل بالبريد إلى '
+          'statements@freemail.example. أوقفه مرصاد لأن العنوان خارج البنك '
+          'والرسالة تحمل رقم حساب. مستوى الخطر: متوسط.',
       originalTask: 'Send customer #48213 their October statement',
     ),
   ];

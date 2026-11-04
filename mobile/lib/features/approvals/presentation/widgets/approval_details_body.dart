@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mirsad/core/l10n/l10n.dart';
+import 'package:mirsad/core/theme/theme_context.dart';
 import 'package:mirsad/core/theme/tokens/app_spacing.dart';
 import 'package:mirsad/core/widgets/section_card.dart';
 import 'package:mirsad/features/approvals/domain/entities/approval.dart';
@@ -17,11 +18,21 @@ class ApprovalDetailsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final summary = approval.summaryFor(
+      Localizations.localeOf(context).languageCode,
+    );
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.lg),
       children: [
         ApprovalHeader(approval: approval),
         const SizedBox(height: AppSpacing.lg),
+        if (summary != null) ...[
+          SectionCard(
+            title: l10n.summaryTitle,
+            child: Text(summary, style: context.textStyles.bodyLarge),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+        ],
         TaskComparison(approval: approval),
         const SizedBox(height: AppSpacing.lg),
         SectionCard(

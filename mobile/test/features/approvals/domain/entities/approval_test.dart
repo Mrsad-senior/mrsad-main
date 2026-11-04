@@ -12,6 +12,13 @@ void main() {
     expect(approval.recipient, 'SA4420000001234567891234');
   });
 
+  test('picks the summary in the app language, or none', () {
+    final approval = transferApproval();
+    expect(approval.summaryFor('en'), approval.summaryEn);
+    expect(approval.summaryFor('ar'), approval.summaryAr);
+    expect(transferApproval(summaryAr: '  ').summaryFor('ar'), isNull);
+  });
+
   test('is open while held and before it expires', () {
     final approval = transferApproval();
     expect(approval.isOpenAt(testNow), isTrue);

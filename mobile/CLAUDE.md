@@ -165,7 +165,7 @@ flutter_bloc, go_router, dio, get_it, equatable, fpdart, json_annotation, json_s
 - 2026-11-02: the data layer now follows the real gateway. Gaps the data layer cannot close (details in `docs/API_CONTRACT.md`):
   - The gateway does not send the user's original task, so "The user asked" is empty against the real API (proposed `original_task`).
   - `/api/audit/events` is admin/auditor only, so approvers get no Activity tab (and auditors no Approvals tab); the role comes from the login response. `docs/API_CONTRACT.md` still proposes an approver-readable feed.
-  - Server text is shown in English only; reasons also carry `message_ar` and approvals `summary_ar`.
+  - Approval details show the gateway's `summary_en` / `summary_ar` in the app language. Reason messages are still English only (they also carry `message_ar`).
   - The finance demo's `transfer_funds` sends `amount_sar`, which `Approval.amount` does not read, and real tool names (`export_customers`, `read_invoice`, `approve_payment`) have no labels in `tool_labels.dart`.
 - The chosen language is not persisted between launches (it would need `shared_preferences`).
 - A gateway `401` shows "session expired" but does not sign the reviewer out automatically yet.

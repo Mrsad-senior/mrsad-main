@@ -18,5 +18,7 @@ ApprovalModel _$ApprovalModelFromJson(Map<String, dynamic> json) =>
       ),
       createdAt: dateTimeFromEpochSeconds(json['created_at'] as num),
       expiresAt: dateTimeFromEpochSeconds(json['expires_at'] as num),
+      summaryEn: json['summary_en'] as String? ?? '',
+      summaryAr: json['summary_ar'] as String? ?? '',
       originalTask: json['original_task'] as String?,
     );

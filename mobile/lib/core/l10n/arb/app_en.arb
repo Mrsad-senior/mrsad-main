@@ -132,5 +132,6 @@
   "signInButton": "Sign in",
   "usernameInvalid": "Enter your username, without spaces.",
   "passwordRequired": "Enter your password.",
-  "mockSignInHint": "Mock mode: any username and a password of 6 or more characters works. Sign in as \"approver\" or \"auditor\" to try those roles; anyone else is an admin."
+  "mockSignInHint": "Mock mode: any username and a password of 6 or more characters works. Sign in as \"approver\" or \"auditor\" to try those roles; anyone else is an admin.",
+  "summaryTitle": "In short"
 }

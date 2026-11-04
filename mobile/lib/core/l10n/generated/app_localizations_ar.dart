@@ -290,4 +290,7 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get mockSignInHint =>
       'وضع التجربة: يعمل أي اسم مستخدم مع كلمة مرور من 6 أحرف أو أكثر. ادخل باسم \"approver\" أو \"auditor\" لتجربة هذين الدورين، وأي اسم آخر يدخل كمسؤول.';
+
+  @override
+  String get summaryTitle => 'باختصار';
 }

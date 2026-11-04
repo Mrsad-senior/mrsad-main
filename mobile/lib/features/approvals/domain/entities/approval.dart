@@ -18,6 +18,8 @@ class Approval extends Equatable {
     required this.reasons,
     required this.createdAt,
     required this.expiresAt,
+    this.summaryEn = '',
+    this.summaryAr = '',
   });
 
   /// Argument keys that hold the recipient of money or a message, in the
@@ -51,6 +53,11 @@ class Approval extends Equatable {
   /// When the gateway auto-rejects the action if nobody decides.
   final DateTime expiresAt;
 
+  /// The gateway's plain-language summary of the action and why it was
+  /// held, in English and Arabic. Empty when the gateway sent none.
+  final String summaryEn;
+  final String summaryAr;
+
   /// The amount of money the action moves, if it has one.
   num? get amount {
     final value = arguments['amount'];
@@ -69,6 +76,13 @@ class Approval extends Equatable {
       if (value is String && value.isNotEmpty) return value;
     }
     return null;
+  }
+
+  /// The summary for [languageCode] (`ar` or anything else for English), or
+  /// null when the gateway sent none in that language.
+  String? summaryFor(String languageCode) {
+    final summary = languageCode == 'ar' ? summaryAr : summaryEn;
+    return summary.trim().isEmpty ? null : summary;
   }
 
   /// Whether a reviewer can still approve or reject it at [now].
@@ -95,5 +109,7 @@ class Approval extends Equatable {
     reasons,
     createdAt,
     expiresAt,
+    summaryEn,
+    summaryAr,
   ];
 }
