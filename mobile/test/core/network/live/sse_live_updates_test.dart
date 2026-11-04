@@ -149,13 +149,16 @@ void main() {
   });
 
   test('stop closes the stream and stops retrying', () async {
-    adapter.script.addAll([500, 500]);
+    // Keeps failing, so without stop() requests would keep coming.
+    adapter.script.addAll(List.filled(10000, 500));
     live.start();
-    await until(() => adapter.requests.isNotEmpty);
+    await until(() => adapter.requests.length >= 2);
 
     await live.stop();
+    // A request Dio had already queued may still land; then nothing more.
+    await Future<void>.delayed(const Duration(milliseconds: 20));
     final made = adapter.requests.length;
-    await Future<void>.delayed(const Duration(milliseconds: 30));
+    await Future<void>.delayed(const Duration(milliseconds: 60));
 
     expect(live.status, LiveStatus.offline);
     expect(adapter.requests.length, made);

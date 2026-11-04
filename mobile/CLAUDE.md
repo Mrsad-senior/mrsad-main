@@ -60,7 +60,7 @@ lib/
     presentation/      cubits + states, pages, widgets
 ```
 
-Features: `auth`, `approvals`, `activity`, `audit`.
+Features: `auth`, `home`, `approvals`, `activity`, `audit`, `account`, `detector`, `chat` (presentation only until the gateway's demo is enabled).
 
 ### Layer rules
 
@@ -114,13 +114,17 @@ Use `.example` domains and obviously fake IBANs and names. Pull to refresh on an
 
 ## Screens
 
-1. Sign in (mock auth for now).
-2. Pending approvals: tool, amount/recipient if present, risk badge, countdown to auto-reject, pull to refresh.
-3. Approval details: the user's original task vs what the agent is trying to do, arguments, each layer's reason, Approve / Reject with confirmation and an optional note.
-4. Activity feed: decisions colour-coded allowed / denied / held, filterable.
-5. Audit status: chain valid, or broken at entry N.
+1. Sign in with a gateway username (`admin` or `noura@bank.example`) and password; mock sign-in in mock mode.
+2. Home: the last 24 hours from `/api/stats/overview` (decisions, held and waiting actions, injections, audit chain, decision time, busiest tools), plus links to the detector and the chat.
+3. Pending approvals: tool, amount/recipient if present, risk badge, countdown to auto-reject, pull to refresh.
+4. Approval details: the gateway's summary in the app language, the user's original task vs what the agent is trying to do, arguments, each layer's reason, Approve / Reject with confirmation and an optional note.
+5. Activity feed: decisions colour-coded allowed / denied / held, filterable.
+6. Audit status: chain valid, or broken at entry N.
+7. Account: `/api/auth/me` (name, username, role), language toggle, sign out.
+8. Detector playground (from Home): `POST /api/detector/scan`.
+9. Demo chat (from Home): a placeholder until the gateway runs with `MIRSAD_ENABLE_DEMO=true`.
 
-Bottom navigation: Approvals, Activity, Audit, filtered by role (`core/router/app_shell_tab.dart`, `auth_redirect.dart`). Mock sign-in as `approver` or `auditor` to try those roles.
+Bottom navigation: Home, Approvals, Activity, Audit, Account, filtered by role (`core/router/app_shell_tab.dart`, `auth_redirect.dart`): approvers have no Activity tab, auditors no Approvals tab. Everyone lands on Home. The app bar shows the live stream's Online / Reconnecting status. Mock sign-in as `approver` or `auditor` to try those roles; any other username is an admin.
 
 ## UI rules
 
@@ -168,6 +172,7 @@ flutter_bloc, go_router, dio, get_it, equatable, fpdart, json_annotation, json_s
   - `/api/audit/events` is admin/auditor only, so approvers get no Activity tab (and auditors no Approvals tab); the role comes from the login response. `docs/API_CONTRACT.md` still proposes an approver-readable feed.
   - Approval details show the gateway's `summary_en` / `summary_ar` in the app language. Reason messages are still English only (they also carry `message_ar`).
   - The finance demo's `transfer_funds` sends `amount_sar`, which `Approval.amount` does not read, and real tool names (`export_customers`, `read_invoice`, `approve_payment`) have no labels in `tool_labels.dart`.
-- The chosen language is not persisted between launches (it would need `shared_preferences`).
-- A gateway `401` shows "session expired" but does not sign the reviewer out automatically yet.
+- The chosen language is not persisted between launches (it would need `shared_preferences`), and the account's own `lang` from the gateway is not applied.
+- The demo chat needs `/api/demo/chat`, which the hosted gateway does not mount (`MIRSAD_ENABLE_DEMO=false`).
+- A gateway `401` shows "session expired" but does not sign the reviewer out automatically yet; the live stream keeps retrying with backoff.
 - iOS: talking to a local `http://` gateway from the simulator needs an App Transport Security exception; not set up.
