@@ -68,6 +68,21 @@ void main() {
     expect(tab('Audit'), findsOneWidget);
   });
 
+  testWidgets('the Account tab shows the session and signs out', (
+    tester,
+  ) async {
+    await bootAndSignIn(tester, 'approver');
+
+    await tester.tap(tab('Account'));
+    await tester.pumpAndSettle();
+    expect(find.text('Approver'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(FilledButton, 'Sign out'));
+    await tester.pumpAndSettle();
+    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.textContaining('Mock mode'), findsOneWidget);
+  });
+
   testWidgets('an auditor gets no Approvals tab', (tester) async {
     await bootAndSignIn(tester, 'auditor');
 

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mirsad/core/config/app_config.dart';
 import 'package:mirsad/core/config/data_sources.dart';
+import 'package:mirsad/core/di/account_module.dart';
 import 'package:mirsad/core/di/activity_module.dart';
 import 'package:mirsad/core/di/approvals_module.dart';
 import 'package:mirsad/core/di/audit_module.dart';
@@ -48,4 +49,5 @@ Future<void> configureDependencies(AppConfig config) async {
   registerActivityModule(getIt, sources);
   registerAuditModule(getIt, sources);
   registerHomeModule(getIt, sources);
+  registerAccountModule(getIt, sources);
 }

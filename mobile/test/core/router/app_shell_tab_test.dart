@@ -12,6 +12,7 @@ void main() {
       AppShellTab.home,
       AppShellTab.approvals,
       AppShellTab.audit,
+      AppShellTab.account,
     ]);
   });
 
@@ -20,6 +21,7 @@ void main() {
       AppShellTab.home,
       AppShellTab.activity,
       AppShellTab.audit,
+      AppShellTab.account,
     ]);
   });
 

@@ -24,7 +24,8 @@ enum AppShellTab {
     branch: 3,
     icon: Icons.verified_user_outlined,
     selectedIcon: Icons.verified_user,
-  );
+  ),
+  account(branch: 4, icon: Icons.person_outline, selectedIcon: Icons.person);
 
   const AppShellTab({
     required this.branch,
@@ -42,7 +43,7 @@ enum AppShellTab {
     home => true,
     approvals => role?.canReviewApprovals ?? false,
     activity => role?.canReadAudit ?? false,
-    audit => true,
+    audit || account => true,
   };
 
   String label(AppLocalizations l10n) => switch (this) {
@@ -50,6 +51,7 @@ enum AppShellTab {
     approvals => l10n.navApprovals,
     activity => l10n.navActivity,
     audit => l10n.navAudit,
+    account => l10n.navAccount,
   };
 
   String title(AppLocalizations l10n) => switch (this) {
@@ -57,6 +59,7 @@ enum AppShellTab {
     approvals => l10n.approvalsTitle,
     activity => l10n.activityTitle,
     audit => l10n.auditTitle,
+    account => l10n.accountTitle,
   };
 
   static List<AppShellTab> visibleFor(ReviewerRole? role) => [

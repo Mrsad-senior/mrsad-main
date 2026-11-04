@@ -9,6 +9,8 @@ import 'package:mirsad/core/router/app_routes.dart';
 import 'package:mirsad/core/router/app_shell.dart';
 import 'package:mirsad/core/router/auth_redirect.dart';
 import 'package:mirsad/core/router/stream_listenable.dart';
+import 'package:mirsad/features/account/presentation/cubit/account_cubit.dart';
+import 'package:mirsad/features/account/presentation/pages/account_page.dart';
 import 'package:mirsad/features/activity/presentation/cubit/activity_cubit.dart';
 import 'package:mirsad/features/activity/presentation/pages/activity_page.dart';
 import 'package:mirsad/features/approvals/presentation/cubit/approval_details_cubit.dart';
@@ -119,6 +121,21 @@ GoRouter createAppRouter({
                     return cubit;
                   },
                   child: const AuditPage(),
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.account,
+                builder: (context, state) => BlocProvider(
+                  create: (_) {
+                    final cubit = getIt<AccountCubit>();
+                    unawaited(cubit.load());
+                    return cubit;
+                  },
+                  child: AccountPage(onSignOut: authCubit.signOut),
                 ),
               ),
             ],
