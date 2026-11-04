@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mirsad/core/errors/exceptions.dart';
 import 'package:mirsad/features/auth/data/datasources/auth_mock_data_source.dart';
+import 'package:mirsad/features/auth/domain/entities/reviewer_role.dart';
 
 void main() {
   late AuthMockDataSource source;
@@ -23,6 +24,24 @@ void main() {
     expect(reviewer.username, 'reviewer@bank.example');
     expect(source.currentReviewer, isNotNull);
     expect(await source.accessToken(), AuthMockDataSource.token);
+  });
+
+  test('the username picks the role, admin by default', () async {
+    expect(AuthMockDataSource.roleFor('approver'), ReviewerRole.approver);
+    expect(
+      AuthMockDataSource.roleFor('Auditor@bank.example'),
+      ReviewerRole.auditor,
+    );
+    expect(
+      AuthMockDataSource.roleFor('reviewer@bank.example'),
+      ReviewerRole.admin,
+    );
+
+    final reviewer = await source.signIn(
+      username: 'approver',
+      password: 'secret123',
+    );
+    expect(reviewer.role, ReviewerRole.approver);
   });
 
   test('refuses a short password', () async {

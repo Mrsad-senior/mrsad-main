@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mirsad/core/errors/exceptions.dart';
 import 'package:mirsad/features/auth/data/datasources/auth_api_data_source.dart';
+import 'package:mirsad/features/auth/domain/entities/reviewer_role.dart';
 
 import '../../../helpers/fake_http_adapter.dart';
 
@@ -45,12 +46,25 @@ void main() {
     );
 
     expect(reviewer.username, _username);
+    expect(reviewer.role, ReviewerRole.approver);
     expect(source.currentReviewer?.id, _username);
     expect(await source.accessToken(), 'gateway-jwt');
     expect(adapter.requests.single.data, {
       'username': _username,
       'password': 'a-strong-passphrase',
     });
+  });
+
+  test('refuses a role the app does not know', () async {
+    final response = _loginResponse();
+    (response['user'] as Map<String, dynamic>)['role'] = 'superuser';
+    adapter.on('POST', '/api/auth/login', body: response);
+
+    await expectLater(
+      source.signIn(username: _username, password: 'a-strong-passphrase'),
+      throwsA(isA<FormatException>()),
+    );
+    expect(source.currentReviewer, isNull);
   });
 
   test('a 401 means wrong credentials and stays signed out', () async {

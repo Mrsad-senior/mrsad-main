@@ -623,7 +623,7 @@ abstract class AppLocalizations {
   /// No description provided for @mockSignInHint.
   ///
   /// In en, this message translates to:
-  /// **'Mock mode: any username and a password of 6 or more characters works.'**
+  /// **'Mock mode: any username and a password of 6 or more characters works. Sign in as \"approver\" or \"auditor\" to try those roles; anyone else is an admin.'**
   String get mockSignInHint;
 }
 

@@ -5,11 +5,16 @@ import 'package:mirsad/core/errors/failure.dart';
 import 'package:mirsad/features/auth/data/models/reviewer_model.dart';
 import 'package:mirsad/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:mirsad/features/auth/domain/entities/reviewer.dart';
+import 'package:mirsad/features/auth/domain/entities/reviewer_role.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../auth_mocks.dart';
 
-const _model = ReviewerModel(id: 'rev_1', username: 'reviewer@bank.example');
+const _model = ReviewerModel(
+  id: 'rev_1',
+  username: 'reviewer@bank.example',
+  role: ReviewerRole.approver,
+);
 
 void main() {
   late MockAuthDataSource source;

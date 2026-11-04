@@ -1,7 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mirsad/core/router/app_routes.dart';
 import 'package:mirsad/core/router/auth_redirect.dart';
+import 'package:mirsad/features/auth/domain/entities/reviewer_role.dart';
 import 'package:mirsad/features/auth/presentation/cubit/auth_cubit.dart';
+
+String? _signedIn(ReviewerRole role, String location) => authRedirect(
+  status: AuthStatus.authenticated,
+  location: location,
+  role: role,
+);
 
 void main() {
   test('sends signed-out reviewers to sign-in', () {
@@ -21,16 +28,35 @@ void main() {
     );
   });
 
-  test('sends signed-in reviewers from sign-in to their approvals', () {
+  test('sends signed-in reviewers from sign-in to their first tab', () {
     expect(
-      authRedirect(
-        status: AuthStatus.authenticated,
-        location: AppRoutes.signIn,
-      ),
+      _signedIn(ReviewerRole.approver, AppRoutes.signIn),
       AppRoutes.approvals,
     );
     expect(
-      authRedirect(status: AuthStatus.authenticated, location: AppRoutes.audit),
+      _signedIn(ReviewerRole.admin, AppRoutes.signIn),
+      AppRoutes.approvals,
+    );
+    expect(_signedIn(ReviewerRole.auditor, AppRoutes.signIn), AppRoutes.audit);
+    expect(_signedIn(ReviewerRole.approver, AppRoutes.audit), isNull);
+  });
+
+  test('keeps approvers off the activity feed (audit is admin/auditor)', () {
+    expect(
+      _signedIn(ReviewerRole.approver, AppRoutes.activity),
+      AppRoutes.approvals,
+    );
+    expect(_signedIn(ReviewerRole.auditor, AppRoutes.activity), isNull);
+    expect(_signedIn(ReviewerRole.admin, AppRoutes.activity), isNull);
+  });
+
+  test('keeps auditors off approvals and their details', () {
+    expect(
+      _signedIn(ReviewerRole.auditor, AppRoutes.approvalDetails('apr_1')),
+      AppRoutes.audit,
+    );
+    expect(
+      _signedIn(ReviewerRole.approver, AppRoutes.approvalDetails('apr_1')),
       isNull,
     );
   });

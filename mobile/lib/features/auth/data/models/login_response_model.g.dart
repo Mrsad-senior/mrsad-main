@@ -9,5 +9,5 @@ part of 'login_response_model.dart';
 LoginResponseModel _$LoginResponseModelFromJson(Map<String, dynamic> json) =>
     LoginResponseModel(
       accessToken: json['access_token'] as String,
-      username: _readUsername(json, 'username') as String,
+      user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
     );

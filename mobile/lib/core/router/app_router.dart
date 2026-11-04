@@ -21,7 +21,8 @@ import 'package:mirsad/features/auth/presentation/cubit/sign_in_cubit.dart';
 import 'package:mirsad/features/auth/presentation/pages/sign_in_page.dart';
 
 /// Builds the app's routes. Pages get their cubits here, from `getIt`.
-/// Signed-out reviewers are sent to sign-in and back again afterwards.
+/// Signed-out reviewers are sent to sign-in and back again afterwards, and
+/// nobody is left on a tab their role cannot use.
 GoRouter createAppRouter({
   required AuthCubit authCubit,
   required bool showMockSignInHint,
@@ -34,6 +35,7 @@ GoRouter createAppRouter({
     redirect: (context, state) => authRedirect(
       status: authCubit.state.status,
       location: state.matchedLocation,
+      role: authCubit.state.reviewer?.role,
     ),
     routes: [
       GoRoute(

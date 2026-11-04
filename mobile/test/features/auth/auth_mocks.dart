@@ -1,5 +1,6 @@
 import 'package:mirsad/features/auth/data/datasources/auth_data_source.dart';
 import 'package:mirsad/features/auth/domain/entities/reviewer.dart';
+import 'package:mirsad/features/auth/domain/entities/reviewer_role.dart';
 import 'package:mirsad/features/auth/domain/repositories/auth_repository.dart';
 import 'package:mirsad/features/auth/domain/usecases/get_current_reviewer.dart';
 import 'package:mirsad/features/auth/domain/usecases/sign_in.dart';
@@ -19,4 +20,8 @@ class MockWatchReviewer extends Mock implements WatchReviewer {}
 
 class MockGetCurrentReviewer extends Mock implements GetCurrentReviewer {}
 
-const reviewer = Reviewer(id: 'rev_1', username: 'reviewer@bank.example');
+const reviewer = Reviewer(
+  id: 'rev_1',
+  username: 'reviewer@bank.example',
+  role: ReviewerRole.approver,
+);

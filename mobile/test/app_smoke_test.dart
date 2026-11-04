@@ -9,9 +9,7 @@ import 'package:mirsad/features/auth/presentation/cubit/auth_cubit.dart';
 /// Boots the real app in mock mode and walks the demo: sign in, see the held
 /// transfer, open it.
 void main() {
-  testWidgets('mock mode: sign in, then review the held transfer', (
-    tester,
-  ) async {
+  Future<void> bootAndSignIn(WidgetTester tester, String username) async {
     await configureDependencies(
       const AppConfig(useMock: true, apiBaseUrl: 'http://10.0.2.2:8700'),
     );
@@ -29,22 +27,49 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('Mock mode'), findsOneWidget);
-    await tester.enterText(
-      find.byType(TextFormField).first,
-      'reviewer@bank.example',
-    );
+    await tester.enterText(find.byType(TextFormField).first, username);
     await tester.enterText(find.byType(TextFormField).last, 'secret123');
     await tester.tap(find.widgetWithText(FilledButton, 'Sign in'));
     await tester.pumpAndSettle();
+  }
+
+  Finder tab(String label) => find.descendant(
+    of: find.byType(NavigationBar),
+    matching: find.text(label),
+  );
+
+  testWidgets('mock mode: sign in, then review the held transfer', (
+    tester,
+  ) async {
+    await bootAndSignIn(tester, 'reviewer@bank.example');
 
     expect(find.text('Pending approvals'), findsOneWidget);
     expect(find.text('Transfer funds'), findsOneWidget);
     expect(find.text('50,000 SAR'), findsOneWidget);
+    expect(tab('Activity'), findsOneWidget);
 
     await tester.tap(find.text('Transfer funds'));
     await tester.pumpAndSettle();
 
     expect(find.text('Review action'), findsOneWidget);
     expect(find.text('Process this supplier invoice'), findsOneWidget);
+  });
+
+  testWidgets('an approver gets no Activity tab', (tester) async {
+    await bootAndSignIn(tester, 'approver');
+
+    expect(tab('Approvals'), findsOneWidget);
+    expect(tab('Activity'), findsNothing);
+    expect(tab('Audit'), findsOneWidget);
+  });
+
+  testWidgets('an auditor gets no Approvals tab and lands on Audit', (
+    tester,
+  ) async {
+    await bootAndSignIn(tester, 'auditor');
+
+    expect(tab('Approvals'), findsNothing);
+    expect(tab('Activity'), findsOneWidget);
+    expect(find.text('Audit log'), findsOneWidget);
   });
 }

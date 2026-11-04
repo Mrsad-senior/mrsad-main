@@ -290,5 +290,5 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mockSignInHint =>
-      'Mock mode: any username and a password of 6 or more characters works.';
+      'Mock mode: any username and a password of 6 or more characters works. Sign in as \"approver\" or \"auditor\" to try those roles; anyone else is an admin.';
 }
