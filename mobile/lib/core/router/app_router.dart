@@ -22,6 +22,8 @@ import 'package:mirsad/features/audit/presentation/pages/audit_page.dart';
 import 'package:mirsad/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:mirsad/features/auth/presentation/cubit/sign_in_cubit.dart';
 import 'package:mirsad/features/auth/presentation/pages/sign_in_page.dart';
+import 'package:mirsad/features/detector/presentation/cubit/detector_cubit.dart';
+import 'package:mirsad/features/detector/presentation/pages/detector_page.dart';
 import 'package:mirsad/features/home/presentation/cubit/home_cubit.dart';
 import 'package:mirsad/features/home/presentation/pages/home_page.dart';
 
@@ -67,6 +69,16 @@ GoRouter createAppRouter({
                         authCubit.state.reviewer?.role.canUseDetector ?? false,
                   ),
                 ),
+                routes: [
+                  GoRoute(
+                    path: _lastSegment(AppRoutes.detector),
+                    parentNavigatorKey: rootNavigatorKey,
+                    builder: (context, state) => BlocProvider(
+                      create: (_) => getIt<DetectorCubit>(),
+                      child: const DetectorPage(),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -145,3 +157,6 @@ GoRouter createAppRouter({
     ],
   );
 }
+
+/// `/home/detector` -> `detector`, for a route nested under `/home`.
+String _lastSegment(String path) => path.substring(path.lastIndexOf('/') + 1);

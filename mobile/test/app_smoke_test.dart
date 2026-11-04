@@ -46,6 +46,17 @@ void main() {
     expect(find.text('Overview'), findsOneWidget);
     expect(find.text('Calls checked'), findsOneWidget);
 
+    await tester.dragUntilVisible(
+      find.text('Detector playground'),
+      find.byType(ListView).first,
+      const Offset(0, -300),
+    );
+    await tester.tap(find.text('Detector playground'));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(FilledButton, 'Scan'), findsOneWidget);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+
     await tester.tap(tab('Approvals'));
     await tester.pumpAndSettle();
     expect(find.text('Pending approvals'), findsOneWidget);

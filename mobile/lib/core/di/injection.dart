@@ -7,6 +7,7 @@ import 'package:mirsad/core/di/activity_module.dart';
 import 'package:mirsad/core/di/approvals_module.dart';
 import 'package:mirsad/core/di/audit_module.dart';
 import 'package:mirsad/core/di/auth_module.dart';
+import 'package:mirsad/core/di/detector_module.dart';
 import 'package:mirsad/core/di/home_module.dart';
 import 'package:mirsad/core/l10n/locale_cubit.dart';
 import 'package:mirsad/core/network/dio_client.dart';
@@ -50,4 +51,5 @@ Future<void> configureDependencies(AppConfig config) async {
   registerAuditModule(getIt, sources);
   registerHomeModule(getIt, sources);
   registerAccountModule(getIt, sources);
+  registerDetectorModule(getIt, sources);
 }
