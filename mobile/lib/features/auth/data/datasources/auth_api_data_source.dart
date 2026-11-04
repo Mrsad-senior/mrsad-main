@@ -9,7 +9,7 @@ import 'package:mirsad/features/auth/data/models/login_response_model.dart';
 import 'package:mirsad/features/auth/data/models/reviewer_model.dart';
 
 /// Sign-in with a gateway account (`POST /api/auth/login`). The gateway signs
-/// its own tokens and does not accept Supabase ones.
+/// its own tokens.
 ///
 /// The session lives in memory only, so closing the app signs the reviewer
 /// out, as in the web approver app. The gateway has no sign-out endpoint;

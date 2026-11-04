@@ -15,8 +15,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Stream<Reviewer?> watchReviewer() {
-    // An error here (e.g. a failed token refresh) keeps the current state.
-    // If the session is really gone, Supabase emits a sign-out by itself.
+    // An error here keeps the current state; a real sign-out arrives as a
+    // null reviewer.
     return _source
         .watchReviewer()
         .map((model) => model?.toEntity())

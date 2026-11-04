@@ -13,13 +13,7 @@ void main() {
     tester,
   ) async {
     await configureDependencies(
-      const AppConfig(
-        useMock: true,
-        readSource: ReadSource.supabase,
-        apiBaseUrl: 'http://10.0.2.2:8700',
-        supabaseUrl: '',
-        supabaseAnonKey: '',
-      ),
+      const AppConfig(useMock: true, apiBaseUrl: 'http://10.0.2.2:8700'),
     );
     addTearDown(getIt.reset);
     final authCubit = getIt<AuthCubit>()..start();

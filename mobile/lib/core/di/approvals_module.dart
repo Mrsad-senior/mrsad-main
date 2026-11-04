@@ -3,7 +3,6 @@ import 'package:mirsad/core/config/data_sources.dart';
 import 'package:mirsad/features/approvals/data/datasources/approvals_api_data_source.dart';
 import 'package:mirsad/features/approvals/data/datasources/approvals_data_source.dart';
 import 'package:mirsad/features/approvals/data/datasources/approvals_mock_data_source.dart';
-import 'package:mirsad/features/approvals/data/datasources/approvals_supabase_data_source.dart';
 import 'package:mirsad/features/approvals/data/repositories/approvals_repository_impl.dart';
 import 'package:mirsad/features/approvals/domain/repositories/approvals_repository.dart';
 import 'package:mirsad/features/approvals/domain/usecases/decide_approval.dart';
@@ -26,19 +25,15 @@ void registerApprovalsModule(GetIt getIt, DataSources sources) {
       dispose: (source) => source.dispose(),
     )
     ..registerLazySingleton<ApprovalsReadDataSource>(
-      () => switch (sources.reads) {
+      () => switch (sources.kind) {
         DataSourceKind.mock => getIt<ApprovalsMockDataSource>(),
         DataSourceKind.api => getIt<ApprovalsApiDataSource>(),
-        DataSourceKind.supabase => ApprovalsSupabaseDataSource(getIt()),
       },
     )
     ..registerLazySingleton<ApprovalDecisionDataSource>(
-      () => switch (sources.gateway) {
+      () => switch (sources.kind) {
         DataSourceKind.mock => getIt<ApprovalsMockDataSource>(),
         DataSourceKind.api => getIt<ApprovalsApiDataSource>(),
-        DataSourceKind.supabase => throw StateError(
-          'Decisions must go through the gateway, not Supabase.',
-        ),
       },
     )
     ..registerLazySingleton<ApprovalsRepository>(

@@ -12,7 +12,7 @@ Mirsad is a security firewall for AI agents. It sits between an agent and its to
 
 This app is where that human reviewer works. The demo is in the **finance** sector. Example: a poisoned invoice tricks a banking agent into transferring 50,000 SAR to a new IBAN. Mirsad holds it, and the reviewer rejects it in this app.
 
-This is a university senior project. The current goal is a solid, scalable foundation, not the final UI. Figma designs, Supabase and the hosted API come later, and must plug in without restructuring.
+This is a university senior project. The current goal is a solid, scalable foundation, not the final UI. Figma designs come later and must plug in without restructuring. The app talks only to the gateway; it has no Supabase client (the gateway owns the database).
 
 ## Repository rules
 
@@ -21,8 +21,7 @@ This is a university senior project. The current goal is a solid, scalable found
 - Follow the real gateway code in `src/` and `docs/api.md`. `docs/API_CONTRACT.md` lists what the app calls and what it still needs (marked proposed); update it when that changes.
 - Do not commit. After each feature, give the user the exact git commands to commit it.
 - Keep `env/dev.json` and `env/prod.json` out of git. Only `env/example.json` is committed.
-- Never put a Supabase `service_role` key in the app. Only the anon key belongs here.
-- The Supabase project ref is `zrwffxwlyapqgporsobf` (URL `https://zrwffxwlyapqgporsobf.supabase.co`). A Supabase MCP server is configured in `.mcp.json` at the repo root. Use it to read the schema, docs and keys. Do not create tables, run migrations, change RLS or deploy functions through it without the user's explicit OK: the database belongs to the backend team.
+- Never put a Supabase key of any kind in the app. The gateway's database is Supabase Postgres, but the app reaches it only through the gateway API.
 
 ## Commands (run from `mobile/`)
 
@@ -48,7 +47,7 @@ lib/
   core/
     config/            AppConfig (dart-defines) and DataSources (the one switch)
     di/                get_it registration, one module file per feature
-    network/           Dio client, auth interceptor, Dio/Supabase error mapping, polling
+    network/           Dio client, auth interceptor, Dio error mapping, polling
     errors/            AppException (data layer), Failure (domain), guard helpers
     router/            GoRouter, route paths, bottom-nav shell
     theme/             design tokens (colors, typography, spacing, radii), light + dark
@@ -75,23 +74,12 @@ Features: `auth`, `approvals`, `activity`, `audit`.
 
 ### Data sources
 
-Every repository is backed by one of three implementations:
+Every repository is backed by one of two implementations:
 
-1. **Mock**: realistic fake finance data, used now.
-2. **API**: the Mirsad gateway over Dio (`docs/api.md`; what the app uses is in `docs/API_CONTRACT.md`).
-3. **Supabase**: reads tables and listens to realtime changes.
+1. **Mock**: realistic fake finance data and mock sign-in (`USE_MOCK=true`).
+2. **API**: the Mirsad gateway over Dio (`docs/api.md`; what the app uses is in `docs/API_CONTRACT.md`) for everything, sign-in included (`USE_MOCK=false`).
 
-The plan: reviewers sign in with Supabase Auth. The app **reads** approvals and events from Supabase (realtime, so new held actions appear instantly) and **sends** decisions through the gateway API, because the gateway must resume or cancel the agent's action.
-
-`core/config/data_sources.dart` is the one switch:
-
-| Setting                            | Reads (approvals, events) | Gateway (decisions, audit) | Auth     |
-|------------------------------------|---------------------------|----------------------------|----------|
-| `USE_MOCK=true`                    | mock                      | mock                       | mock     |
-| `USE_MOCK=false`, `READ_SOURCE=supabase` | Supabase            | API                        | Supabase |
-| `USE_MOCK=false`, `READ_SOURCE=api`      | API                 | API                        | API      |
-
-Audit has no Supabase source (verifying the hash chain is the gateway's job). The gateway signs reviewers in with its own accounts (`POST /api/auth/login`) and does not accept Supabase tokens, so `READ_SOURCE=api` is the mode that works with it today; the Supabase mode needs the gateway changes proposed in `docs/API_CONTRACT.md`. The API client sends the signed-in reviewer's token as `Authorization: Bearer <token>`.
+`core/config/data_sources.dart` is the one switch (`DataSources.kind`). The gateway signs reviewers in with its own accounts (`POST /api/auth/login`); the API client sends that token as `Authorization: Bearer <token>`.
 
 ### Environment config
 
@@ -99,13 +87,10 @@ Builds read `--dart-define-from-file=env/<name>.json`:
 
 | Key                 | Meaning                                                       |
 |---------------------|---------------------------------------------------------------|
-| `USE_MOCK`          | `true` uses mock data and mock sign-in everywhere             |
-| `READ_SOURCE`       | `supabase` or `api`; where reads come from when not mocking   |
-| `API_BASE_URL`      | Gateway URL. Dev: `http://10.0.2.2:8700` (Android emulator; the gateway's default port). Prod: `https://api.<our-domain>` later |
-| `SUPABASE_URL`      | Supabase project URL (only for `READ_SOURCE=supabase`)        |
-| `SUPABASE_ANON_KEY` | Supabase anon key, or the newer "publishable" key (never the service_role / secret key) |
+| `USE_MOCK`          | `true` uses mock data and mock sign-in everywhere; `false` uses the gateway |
+| `API_BASE_URL`      | Gateway URL. Local: `http://10.0.2.2:8700` (Android emulator; the gateway's default port). Hosted: `https://api.mirsad-app.com` |
 
-Without a file the app defaults to `USE_MOCK=true`. With `READ_SOURCE=supabase`, a missing Supabase config shows a configuration error screen instead of crashing.
+Without a file the app defaults to `USE_MOCK=true`. An `API_BASE_URL` that is not an absolute URL shows a configuration error screen instead of crashing.
 
 ## Domain model (from the brief; the data layer maps the gateway's records onto it, see `docs/API_CONTRACT.md`)
 
@@ -155,7 +140,7 @@ Bottom navigation: Approvals, Activity, Audit.
 ## Adding a feature or screen
 
 1. `domain/`: entity, repository interface, one use case per action.
-2. `data/`: model with `fromJson`/`toEntity`, a data source interface plus mock / API / Supabase implementations, the repository implementation wrapping calls in `guard` / `guardStream`.
+2. `data/`: model with `fromJson`/`toEntity`, a data source interface plus mock and API implementations, the repository implementation wrapping calls in `guard` / `guardStream`.
 3. `presentation/`: cubit + `part` state file (Equatable, explicit status enum), page, widgets.
 4. Register it in `core/di/<feature>_module.dart`; pick the data source with a `switch` on `DataSources`.
 5. Add the route in `core/router/app_router.dart`, creating the cubit there.
@@ -166,15 +151,14 @@ Bottom navigation: Approvals, Activity, Audit.
 
 - Toolchain: Flutter 3.44, Dart 3.12. Material lives in the `material_ui` package; still import `package:flutter/material.dart`. Component themes use the `*ThemeData` classes (`AppBarThemeData`, `CardThemeData`, `InputDecorationThemeData`).
 - Private named constructor parameters are allowed and the lint prefers them: `Foo({required this._bar})`, called as `Foo(bar: ...)`.
-- `Supabase.initialize` takes `publishableKey:` (`anonKey:` is deprecated).
-- Live lists are streams: repositories expose `watch...()` plus a `refresh...()` that pushes onto the same stream. The API sources poll with `core/network/polling_stream.dart`; Supabase uses realtime.
+- Live lists are streams: repositories expose `watch...()` plus a `refresh...()` that pushes onto the same stream. The API sources poll with `core/network/polling_stream.dart`.
 - A data source implementing both reads and decisions (mock, API) refreshes its own pending list after a decision; the repository does not.
 - Tests: `test/helpers/pump_app.dart` (theme, l10n, fake clock), `fake_http_adapter.dart` (real Dio against canned responses), `either.dart` (`rightOf`). `test/architecture_test.dart` enforces the layer rules; `test/app_smoke_test.dart` boots the real app in mock mode.
 - Android debug builds allow plain HTTP only to `10.0.2.2` / `localhost` (`android/app/src/debug/res/xml/network_security_config.xml`). Release builds are HTTPS only.
 
 ## Packages
 
-flutter_bloc, go_router, dio, get_it, equatable, fpdart, json_annotation, json_serializable, build_runner, intl, flutter_localizations, supabase_flutter. Dev only: bloc_test, mocktail. Ask before adding anything else.
+flutter_bloc, go_router, dio, get_it, equatable, fpdart, json_annotation, json_serializable, build_runner, intl, flutter_localizations. Dev only: bloc_test, mocktail. Ask before adding anything else.
 
 ## Open items
 

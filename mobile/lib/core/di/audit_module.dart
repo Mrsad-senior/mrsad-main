@@ -11,12 +11,9 @@ import 'package:mirsad/features/audit/presentation/cubit/audit_cubit.dart';
 void registerAuditModule(GetIt getIt, DataSources sources) {
   getIt
     ..registerLazySingleton<AuditDataSource>(
-      () => switch (sources.gateway) {
+      () => switch (sources.kind) {
         DataSourceKind.mock => const AuditMockDataSource(),
         DataSourceKind.api => AuditApiDataSource(getIt()),
-        DataSourceKind.supabase => throw StateError(
-          'Only the gateway can verify the audit chain.',
-        ),
       },
     )
     ..registerLazySingleton<AuditRepository>(() => AuditRepositoryImpl(getIt()))
