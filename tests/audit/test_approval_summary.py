@@ -59,8 +59,90 @@ def test_transfer_funds_summary(lang):
         Reason(layer="policy", code="APPROVAL_ALWAYS", action=Action.REQUIRE_APPROVAL, message="always"),
     ])
     text = summarize(call, decision, agent_name="Finance Bot", lang=lang)
-    assert "9500" in text and "SA** **** 7519" in text and "transfer_funds" in text
+    assert "9,500" in text and "SA** **** 7519" in text and "transfer_funds" in text
     assert ("every use of this tool" in text) if lang == "en" else ("كل استخدام لهذه الأداة" in text)
+
+
+# Approver-card review (blue team, after incident #3): a fraudulent transfer must be recognisable on a
+# lock screen, where only the start of the summary is visible.
+def _monitor(code, action=Action.REQUIRE_APPROVAL, message="Beneficiary is not in the trusted mock beneficiary registry."):
+    return Reason(layer="system", code=code, action=action, message=message, risk_score=0.9)
+
+
+INVOICE_TAINT = Reason(layer="taint", code="TAINT_UNTRUSTED_TO_EXTERNAL", action=Action.REQUIRE_APPROVAL,
+                       message="m", risk_score=0.6, evidence={"untrusted_sources": ["read_invoice:call_6hw2"]})
+
+
+@pytest.mark.parametrize("lang", ["en", "ar"])
+def test_fraudulent_transfer_card_leads_with_new_payee_and_money(lang):
+    call = make_call(agent_id="finance-assistant", tool="transfer_funds",
+                     arguments={"to_iban": "SA** **** **** **** **** 0001", "amount_sar": 9500})
+    decision = make_decision(call, reasons=[INVOICE_TAINT, _monitor("NEW_BENEFICIARY")])
+    text = summarize(call, decision, agent_name="Finance Sandbox Agent", lang=lang)
+    first, why = text.split(". ", 1)
+    if lang == "en":
+        assert "transfer 9,500 SAR to a NEW, unregistered beneficiary SA** **** **** **** **** 0001" in first
+        assert why.index("never been paid before") < why.index("supplier invoice")
+        assert "sends money outside" in why and "sends data" not in why
+    else:
+        assert "إلى مستفيد جديد غير مسجَّل" in first and "9,500" in first
+        assert "غير مسجَّل في قائمة المستفيدين" in why and "فاتورة مورّد غير موثوقة" in why
+        assert "يحوّل أموالاً" in why
+        assert "Beneficiary" not in text  # no English reason text inside the Arabic card
+    assert _sentences(text) == 3
+
+
+@pytest.mark.parametrize("lang", ["en", "ar"])
+def test_registered_payee_card_is_distinguishable_and_readable(lang):
+    call = make_call(agent_id="finance-assistant", tool="transfer_funds",
+                     arguments={"to_iban": "SA******************9012", "amount_sar": 12000})
+    decision = make_decision(call, risk=Risk.HIGH, reasons=[
+        _monitor("KNOWN_BENEFICIARY", Action.ALLOW, "Beneficiary is in the trusted mock beneficiary registry."),
+        Reason(layer="policy", code="CONSTRAINT_VIOLATION", action=Action.REQUIRE_APPROVAL, message="m",
+               evidence={"param": "amount_sar", "operator": "max", "expected": 10000.0, "actual": 12000})])
+    text = summarize(call, decision, agent_name="Finance Sandbox Agent", lang=lang)
+    if lang == "en":
+        assert "to the registered beneficiary SA******************9012" in text
+        assert "the amount (12,000) is above the allowed maximum of 10,000" in text
+        assert "NEW" not in text and "amount_sar" not in text and "10000.0" not in text
+    else:
+        assert "إلى المستفيد المسجَّل" in text and "المبلغ (12,000)" in text and "(10,000)" in text
+
+
+MONITOR_CODES = ["NEW_BENEFICIARY", "TASK_INTENT_MISMATCH", "SEMANTIC_TASK_MISMATCH", "UNBOUND_TASK",
+                 "HEALTH_DATA_EXTERNAL", "SENSITIVE_OUTBOUND", "UNUSUAL_READ_THEN_SEND", "REPEATED_EXPORT",
+                 "UNSEEN_TOOL_SEQUENCE"]
+
+
+@pytest.mark.parametrize("lang", ["en", "ar"])
+@pytest.mark.parametrize("code", MONITOR_CODES)
+def test_security_monitor_reasons_have_plain_bilingual_wording(code, lang):
+    call = make_call()
+    reason = _monitor(code, message="RAW-ENGLISH-MONITOR-MESSAGE")
+    text = summarize(call, make_decision(call, reasons=[reason]), agent_name=AGENT, lang=lang)
+    assert "RAW-ENGLISH-MONITOR-MESSAGE" not in text
+    assert _sentences(text) == 3
+
+
+def test_monitor_reason_outranks_generic_taint_in_the_two_reason_limit():
+    call = make_call(tool="send_lab_results", agent_id="healthcare-assistant",
+                     arguments={"patient_id": "PAT-001", "to": "archive@najd-health.example.net"})
+    decision = make_decision(call, action=Action.DENY, reasons=[
+        Reason(layer="taint", code="TAINT_UNTRUSTED_TO_EXTERNAL", action=Action.REQUIRE_APPROVAL, message="m",
+               evidence={"untrusted_sources": ["get_patient_record:call_1"]}),
+        Reason(layer="policy", code="RATE_LIMIT", action=Action.DENY, message="m"),
+        _monitor("HEALTH_DATA_EXTERNAL", Action.DENY), _monitor("TASK_INTENT_MISMATCH", Action.DENY)])
+    text = summarize(call, decision, agent_name="Healthcare Sandbox Agent", lang="en")
+    assert "send the lab results of patient PAT-001 to archive@najd-health.example.net" in text
+    assert "patient information would leave the hospital" in text
+    assert "did not ask for this kind of action" in text
+
+
+def test_arabic_card_never_falls_back_to_english_text():
+    call = make_call(tool="custom_tool", arguments={})
+    reason = Reason(layer="system", code="SOMETHING_NEW", action=Action.REQUIRE_APPROVAL, message="English only.")
+    text = summarize(call, make_decision(call, reasons=[reason]), agent_name=AGENT, lang="ar")
+    assert "English only" not in text and "فحصاً أمنياً إضافياً" in text
 
 
 def test_constraint_violation_and_confidential_reasons_en():

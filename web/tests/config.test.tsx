@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { missingEnv } from '../src/shared/app/config';
+import { apiBaseUrl, missingEnv } from '../src/shared/app/config';
 import { ConfigError } from '../src/shared/components/ConfigError';
 import { I18nProvider } from '../src/shared/i18n';
 
@@ -25,6 +25,24 @@ describe('missingEnv', () => {
         VITE_SUPABASE_ANON_KEY: 'anon-key',
       }),
     ).toEqual([]);
+  });
+});
+
+describe('apiBaseUrl', () => {
+  it('stays same-origin outside the Cloudflare build', () => {
+    expect(apiBaseUrl({ MODE: 'production', VITE_API_BASE_URL: 'https://api.example.com' })).toBe('');
+    expect(apiBaseUrl({ MODE: 'test', VITE_API_BASE_URL: 'https://api.example.com' })).toBe('');
+  });
+
+  it('uses VITE_API_BASE_URL in the Cloudflare build, without a trailing slash', () => {
+    expect(apiBaseUrl({ MODE: 'cloudflare', VITE_API_BASE_URL: ' https://api.example.com/ ' })).toBe(
+      'https://api.example.com',
+    );
+  });
+
+  it('falls back to same-origin /api when it is empty', () => {
+    expect(apiBaseUrl({ MODE: 'cloudflare', VITE_API_BASE_URL: '  ' })).toBe('');
+    expect(apiBaseUrl({ MODE: 'cloudflare' })).toBe('');
   });
 });
 

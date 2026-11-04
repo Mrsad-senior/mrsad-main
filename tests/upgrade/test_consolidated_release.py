@@ -5,7 +5,12 @@ import json
 
 import httpx
 
-from mirsad.detector.layered import DEFAULT_ATTACK_EXAMPLES, EmbeddingSimilarity, OllamaJudge
+from mirsad.detector.layered import (
+    ACTION_EXTRACTION_SYSTEM,
+    DEFAULT_ATTACK_EXAMPLES,
+    EmbeddingSimilarity,
+    OllamaJudge,
+)
 
 
 def test_reference_library_is_bilingual_and_distinct():
@@ -27,6 +32,8 @@ def _mock_response(verdict):
     def handler(request):
         payload = json.loads(request.content)
         system = payload['messages'][0]['content']
+        if system == ACTION_EXTRACTION_SYSTEM:
+            return httpx.Response(200, json={'choices': [{'message': {'content': '{"actions": []}'}}]})
         assert "English" in system and "reason" in system
         return httpx.Response(200, json={'choices': [{'message': {'content': json.dumps(verdict, ensure_ascii=False)}}]})
     return httpx.Client(transport=httpx.MockTransport(handler))

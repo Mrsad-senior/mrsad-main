@@ -54,6 +54,17 @@ def test_iban_spacing_and_case_normalised_and_lookalikes_rejected():
     assert kinds(values, "iban") == ["SA0380000000608010167519"]
 
 
+@pytest.mark.parametrize("shown", ["SA03-8000-0000-6080-1016-7519", "SA03.8000.0000.6080.1016.7519",
+                                   "SA03 - 8000 - 0000 - 6080 - 1016 - 7519"])
+def test_iban_with_dash_or_dot_separators_is_still_linked(shown):
+    # Incident #3 probe: a dashed IBAN in an invoice was not linked to the transfer, so taint
+    # downgraded from deny (untrusted destination) to approval.
+    values = extract_values(f"Pay the balance to {shown}.", trusted_fields=[])
+    assert kinds(values, "iban") == ["SA0380000000608010167519"]
+    (item,) = destination_items("to_iban", shown)
+    assert item.kind == "iban" and item.value == "SA0380000000608010167519"
+
+
 @pytest.mark.parametrize(
     "text",
     ["+966 55 123 4567", "0551234567", "966551234567", "00966551234567", "055-123-4567", "٠٥٥١٢٣٤٥٦٧"],

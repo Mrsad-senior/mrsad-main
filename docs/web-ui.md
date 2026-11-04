@@ -30,7 +30,10 @@ npm run build:gateway      # the same, but into ../src/mirsad/static for FastAPI
 only the built files are ever published. Cloudflare build settings: root directory `web`, build command
 `npm run build`, deploy command `npx wrangler deploy`, Worker name `mirsad-main`, and the build
 variables `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (Vite inlines them at build time; without
-them the Cloudflare build shows a "not configured" page). Node 22 comes from `web/.node-version`.
+them the Cloudflare build shows a "not configured" page). `VITE_API_BASE_URL` (e.g.
+`https://api.example.com`) is the gateway the Cloudflare build calls; left empty it calls `/api` on
+its own origin. Only the Cloudflare build reads it: the builds the gateway serves stay same-origin.
+Node 22 comes from `web/.node-version`.
 
 Both builds end with `scripts/report-sizes.mjs`, which fails if any `.ts`/`.tsx` source reached the
 output, then lists every emitted file (raw and gzip) and

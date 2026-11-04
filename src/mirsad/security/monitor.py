@@ -8,6 +8,7 @@ is denied (not silently assumed legitimate).
 from __future__ import annotations
 
 import json
+import re
 import threading
 from dataclasses import dataclass, field
 from typing import Any
@@ -24,7 +25,12 @@ _WRITE = {'transfer_funds', 'approve_payment', 'update_prescription', 'delete_cu
 _SUMMARIZE = ('summar', 'review', 'read', 'explain', 'look up', 'check', 'show', 'what is',
               'ملخص', 'لخص', 'تلخيص', 'اقرأ', 'اعرض', 'استعرض', 'راجع', 'تفاصيل')
 _TRANSFER = ('transfer', 'pay ', 'payment', 'تحويل', 'حوّل', 'ادفع', 'سدد', 'تسديد')
-_SEND = ('send', 'email', 'share', 'forward', 'أرسل', 'ارسل', 'شارك')
+_SEND = ('أرسل', 'ارسل', 'شارك')
+# Whole words only ("sender" is not "send"). "email"/"reply" are usually nouns ("summarise the latest email"),
+# so they count only in command position: at the start, after punctuation, or after and/then/please/to/also.
+_SEND_RE = re.compile(
+    r"\b(?:send|sending|forward|share)\b"
+    r"|(?:^|[.,;:!?]\s*|\b(?:and|then|please|to|also)\s+)(?:e-?mail|reply)\b", re.IGNORECASE)
 _PRESCRIBE = ('prescri', 'medication', 'دواء', 'وصفة', 'علاج')
 
 
@@ -95,7 +101,8 @@ class SecurityMonitor:
             if tool in _WRITE:
                 requested = (
                     (tool in {'transfer_funds', 'approve_payment'} and any(k in task for k in _TRANSFER))
-                    or (tool in {'send_email', 'send_lab_results'} and any(k in task for k in _SEND))
+                    or (tool in {'send_email', 'send_lab_results'}
+                        and (bool(_SEND_RE.search(task)) or any(k in task for k in _SEND)))
                     or (tool == 'book_appointment' and any(k in task for k in ('appointment', 'book', 'schedule', 'موعد', 'احجز')) )
                     or (tool == 'update_prescription' and any(k in task for k in _PRESCRIBE)
                         and any(k in task for k in ('update', 'change', 'modify', 'غير', 'عدل', 'تعديل')))
@@ -136,6 +143,10 @@ class SecurityMonitor:
                 if beneficiary and beneficiary not in trusted_beneficiaries:
                     reasons.append(_reason('NEW_BENEFICIARY', Action.REQUIRE_APPROVAL,
                                            'Beneficiary is not in the trusted mock beneficiary registry.', 0.9))
+                elif beneficiary:
+                    # Informational: lets the approval card tell a registered payee from a new one.
+                    reasons.append(_reason('KNOWN_BENEFICIARY', Action.ALLOW,
+                                           'Beneficiary is in the trusted mock beneficiary registry.', 0.0))
             if sector == 'healthcare' and tool == 'send_lab_results':
                 to = str(call.arguments.get('to') or '').lower()
                 if not to.endswith('@najd-health.example'):

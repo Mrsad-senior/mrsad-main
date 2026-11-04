@@ -107,3 +107,9 @@ during development; see Section 3.6 of the final report for the full disclosure.
 ## Prototype: dynamic detection and industry packs
 
 See [docs/DYNAMIC_SECTOR_UPGRADE.md](docs/DYNAMIC_SECTOR_UPGRADE.md) for the optional multilingual/LLM detection layers, trusted-task and behavior checks, Finance and Healthcare fake-data demo packs, test coverage, configuration and limitations. Model downloads and a web rebuild are needed to activate the full upgraded experience.
+
+## Blue-team hardening
+
+See [docs/BLUE_TEAM_HARDENING.md](docs/BLUE_TEAM_HARDENING.md) for fixes from incident response (judge second
+pass, IBAN taint/redaction, send-intent matching, approval cards), their measurements, the SOC triage and
+judge evaluation scripts, and known limitations.
