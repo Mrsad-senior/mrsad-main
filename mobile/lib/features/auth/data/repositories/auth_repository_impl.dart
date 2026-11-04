@@ -25,12 +25,14 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, Reviewer>> signIn({
-    required String email,
+    required String username,
     required String password,
   }) {
     return guard(
-      () async =>
-          (await _source.signIn(email: email, password: password)).toEntity(),
+      () async => (await _source.signIn(
+        username: username,
+        password: password,
+      )).toEntity(),
     );
   }
 

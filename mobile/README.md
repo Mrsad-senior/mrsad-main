@@ -11,7 +11,7 @@ flutter pub get
 flutter run --dart-define-from-file=env/dev.json
 ```
 
-`env/example.json` has `USE_MOCK: true`, so the app runs on fake finance data with mock sign-in: any email and a password of 6 or more characters.
+`env/example.json` has `USE_MOCK: true`, so the app runs on fake finance data with mock sign-in: any username and a password of 6 or more characters.
 
 To talk to a gateway, set `USE_MOCK` to `false` and `API_BASE_URL` to the gateway: `http://10.0.2.2:8700` for a gateway on your machine from the Android emulator, or `https://api.mirsad-app.com` for the hosted one. Reviewers then sign in with a gateway account (e.g. `mirsad user create noura@bank.example --role approver`).
 

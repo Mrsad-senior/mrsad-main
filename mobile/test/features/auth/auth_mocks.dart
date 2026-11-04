@@ -19,4 +19,4 @@ class MockWatchReviewer extends Mock implements WatchReviewer {}
 
 class MockGetCurrentReviewer extends Mock implements GetCurrentReviewer {}
 
-const reviewer = Reviewer(id: 'rev_1', email: 'reviewer@bank.example');
+const reviewer = Reviewer(id: 'rev_1', username: 'reviewer@bank.example');

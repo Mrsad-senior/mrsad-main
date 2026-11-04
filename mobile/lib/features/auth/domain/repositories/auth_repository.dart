@@ -10,7 +10,7 @@ abstract interface class AuthRepository {
   Stream<Reviewer?> watchReviewer();
 
   Future<Either<Failure, Reviewer>> signIn({
-    required String email,
+    required String username,
     required String password,
   });
 

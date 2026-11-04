@@ -40,7 +40,7 @@ final class ConflictException extends AppException {
   const ConflictException([super.message]);
 }
 
-/// Sign-in was refused because the email or password is wrong.
+/// Sign-in was refused because the username or password is wrong.
 final class InvalidCredentialsException extends AppException {
   const InvalidCredentialsException([super.message]);
 }

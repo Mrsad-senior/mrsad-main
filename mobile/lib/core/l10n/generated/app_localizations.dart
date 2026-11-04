@@ -209,7 +209,7 @@ abstract class AppLocalizations {
   /// No description provided for @errorInvalidCredentials.
   ///
   /// In en, this message translates to:
-  /// **'Wrong email or password.'**
+  /// **'Wrong username or password.'**
   String get errorInvalidCredentials;
 
   /// No description provided for @errorDataFormat.
@@ -590,11 +590,11 @@ abstract class AppLocalizations {
   /// **'Review the actions Mirsad has held for you.'**
   String get signInSubtitle;
 
-  /// No description provided for @emailLabel.
+  /// No description provided for @usernameLabel.
   ///
   /// In en, this message translates to:
-  /// **'Email'**
-  String get emailLabel;
+  /// **'Username'**
+  String get usernameLabel;
 
   /// No description provided for @passwordLabel.
   ///
@@ -608,22 +608,22 @@ abstract class AppLocalizations {
   /// **'Sign in'**
   String get signInButton;
 
-  /// No description provided for @emailInvalid.
+  /// No description provided for @usernameInvalid.
   ///
   /// In en, this message translates to:
-  /// **'Enter a valid email.'**
-  String get emailInvalid;
+  /// **'Enter your username, without spaces.'**
+  String get usernameInvalid;
 
-  /// No description provided for @passwordTooShort.
+  /// No description provided for @passwordRequired.
   ///
   /// In en, this message translates to:
-  /// **'Use at least 6 characters.'**
-  String get passwordTooShort;
+  /// **'Enter your password.'**
+  String get passwordRequired;
 
   /// No description provided for @mockSignInHint.
   ///
   /// In en, this message translates to:
-  /// **'Mock mode: any email and a password of 6 or more characters works.'**
+  /// **'Mock mode: any username and a password of 6 or more characters works.'**
   String get mockSignInHint;
 }
 

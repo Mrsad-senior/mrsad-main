@@ -21,7 +21,7 @@
   "errorUnauthorized": "Your session has expired. Sign in again.",
   "errorNotFound": "This item no longer exists.",
   "errorConflict": "This action was already decided or has expired.",
-  "errorInvalidCredentials": "Wrong email or password.",
+  "errorInvalidCredentials": "Wrong username or password.",
   "errorDataFormat": "The gateway sent data the app doesn't understand.",
   "errorUnexpected": "Something went wrong. Try again.",
 
@@ -127,10 +127,10 @@
 
   "signInTitle": "Sign in",
   "signInSubtitle": "Review the actions Mirsad has held for you.",
-  "emailLabel": "Email",
+  "usernameLabel": "Username",
   "passwordLabel": "Password",
   "signInButton": "Sign in",
-  "emailInvalid": "Enter a valid email.",
-  "passwordTooShort": "Use at least 6 characters.",
-  "mockSignInHint": "Mock mode: any email and a password of 6 or more characters works."
+  "usernameInvalid": "Enter your username, without spaces.",
+  "passwordRequired": "Enter your password.",
+  "mockSignInHint": "Mock mode: any username and a password of 6 or more characters works."
 }

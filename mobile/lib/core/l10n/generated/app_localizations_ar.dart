@@ -65,7 +65,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get errorInvalidCredentials =>
-      'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+      'اسم المستخدم أو كلمة المرور غير صحيحة.';
 
   @override
   String get errorDataFormat => 'أرسلت البوابة بيانات لا يفهمها التطبيق.';
@@ -273,7 +273,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'راجع الإجراءات التي أوقفها مرصاد بانتظار قرارك.';
 
   @override
-  String get emailLabel => 'البريد الإلكتروني';
+  String get usernameLabel => 'اسم المستخدم';
 
   @override
   String get passwordLabel => 'كلمة المرور';
@@ -282,12 +282,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get signInButton => 'دخول';
 
   @override
-  String get emailInvalid => 'أدخل بريدًا إلكترونيًا صالحًا.';
+  String get usernameInvalid => 'أدخل اسم المستخدم بدون مسافات.';
 
   @override
-  String get passwordTooShort => 'استخدم 6 أحرف على الأقل.';
+  String get passwordRequired => 'أدخل كلمة المرور.';
 
   @override
   String get mockSignInHint =>
-      'وضع التجربة: يعمل أي بريد إلكتروني مع كلمة مرور من 6 أحرف أو أكثر.';
+      'وضع التجربة: يعمل أي اسم مستخدم مع كلمة مرور من 6 أحرف أو أكثر.';
 }

@@ -37,11 +37,11 @@ class AuthApiDataSource implements AuthDataSource {
 
   @override
   Future<ReviewerModel> signIn({
-    required String email,
+    required String username,
     required String password,
   }) async {
     final request = LoginRequestModel(
-      username: email.trim(),
+      username: username.trim(),
       password: password,
     );
     final LoginResponseModel login;

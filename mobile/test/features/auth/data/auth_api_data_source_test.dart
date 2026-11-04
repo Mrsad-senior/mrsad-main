@@ -40,11 +40,11 @@ void main() {
     adapter.on('POST', '/api/auth/login', body: _loginResponse());
 
     final reviewer = await source.signIn(
-      email: ' $_username ',
+      username: ' $_username ',
       password: 'a-strong-passphrase',
     );
 
-    expect(reviewer.email, _username);
+    expect(reviewer.username, _username);
     expect(source.currentReviewer?.id, _username);
     expect(await source.accessToken(), 'gateway-jwt');
     expect(adapter.requests.single.data, {
@@ -62,7 +62,7 @@ void main() {
     );
 
     await expectLater(
-      source.signIn(email: _username, password: 'wrong-password'),
+      source.signIn(username: _username, password: 'wrong-password'),
       throwsA(isA<InvalidCredentialsException>()),
     );
     expect(source.currentReviewer, isNull);
@@ -71,14 +71,14 @@ void main() {
 
   test('reports sign-in and sign-out to watchers', () async {
     adapter.on('POST', '/api/auth/login', body: _loginResponse());
-    final emails = source.watchReviewer().map((r) => r?.email);
+    final usernames = source.watchReviewer().map((r) => r?.username);
     final expectation = expectLater(
-      emails,
+      usernames,
       emitsInOrder([null, _username, null]),
     );
     await Future<void>.delayed(Duration.zero);
 
-    await source.signIn(email: _username, password: 'a-strong-passphrase');
+    await source.signIn(username: _username, password: 'a-strong-passphrase');
     await source.signOut();
 
     await expectation;

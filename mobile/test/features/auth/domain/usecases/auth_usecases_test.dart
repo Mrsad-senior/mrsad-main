@@ -16,23 +16,23 @@ void main() {
   setUp(() => repository = MockAuthRepository());
 
   group('SignIn', () {
-    test('trims the email and keeps the password as typed', () async {
+    test('trims the username and keeps the password as typed', () async {
       when(
         () => repository.signIn(
-          email: any(named: 'email'),
+          username: any(named: 'username'),
           password: any(named: 'password'),
         ),
       ).thenAnswer((_) async => const Right(reviewer));
 
       final result = await SignIn(repository)(
-        email: '  reviewer@bank.example ',
+        username: '  reviewer@bank.example ',
         password: ' secret ',
       );
 
       expect(result, const Right<Failure, Reviewer>(reviewer));
       verify(
         () => repository.signIn(
-          email: 'reviewer@bank.example',
+          username: 'reviewer@bank.example',
           password: ' secret ',
         ),
       ).called(1);
@@ -41,13 +41,13 @@ void main() {
     test('returns InvalidCredentialsFailure from the repository', () async {
       when(
         () => repository.signIn(
-          email: any(named: 'email'),
+          username: any(named: 'username'),
           password: any(named: 'password'),
         ),
       ).thenAnswer((_) async => const Left(InvalidCredentialsFailure()));
 
       expect(
-        await SignIn(repository)(email: 'a@b.example', password: 'wrong'),
+        await SignIn(repository)(username: 'a@b.example', password: 'wrong'),
         const Left<Failure, Reviewer>(InvalidCredentialsFailure()),
       );
     });

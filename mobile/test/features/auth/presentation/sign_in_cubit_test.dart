@@ -18,7 +18,7 @@ void main() {
   void whenSignIn(Either<Failure, Reviewer> result) {
     when(
       () => signIn(
-        email: any(named: 'email'),
+        username: any(named: 'username'),
         password: any(named: 'password'),
       ),
     ).thenAnswer((_) async => result);
@@ -29,13 +29,13 @@ void main() {
     setUp: () => whenSignIn(const Right(reviewer)),
     build: build,
     act: (cubit) =>
-        cubit.submit(email: 'reviewer@bank.example', password: 'secret123'),
+        cubit.submit(username: 'reviewer@bank.example', password: 'secret123'),
     expect: () => const [
       SignInState(status: SignInStatus.submitting),
       SignInState(status: SignInStatus.succeeded),
     ],
     verify: (_) => verify(
-      () => signIn(email: 'reviewer@bank.example', password: 'secret123'),
+      () => signIn(username: 'reviewer@bank.example', password: 'secret123'),
     ).called(1),
   );
 
@@ -43,7 +43,8 @@ void main() {
     'shows why sign-in failed',
     setUp: () => whenSignIn(const Left(InvalidCredentialsFailure())),
     build: build,
-    act: (cubit) => cubit.submit(email: 'a@b.example', password: 'wrong-pass'),
+    act: (cubit) =>
+        cubit.submit(username: 'a@b.example', password: 'wrong-pass'),
     expect: () => const [
       SignInState(status: SignInStatus.submitting),
       SignInState(
@@ -57,7 +58,8 @@ void main() {
     'ignores a second submit while the first is running',
     build: build,
     seed: () => const SignInState(status: SignInStatus.submitting),
-    act: (cubit) => cubit.submit(email: 'a@b.example', password: 'secret123'),
+    act: (cubit) =>
+        cubit.submit(username: 'a@b.example', password: 'secret123'),
     expect: () => const <SignInState>[],
   );
 }

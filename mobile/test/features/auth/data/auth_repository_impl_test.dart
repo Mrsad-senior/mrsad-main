@@ -9,7 +9,7 @@ import 'package:mocktail/mocktail.dart';
 
 import '../auth_mocks.dart';
 
-const _model = ReviewerModel(id: 'rev_1', email: 'reviewer@bank.example');
+const _model = ReviewerModel(id: 'rev_1', username: 'reviewer@bank.example');
 
 void main() {
   late MockAuthDataSource source;
@@ -39,12 +39,13 @@ void main() {
 
   test('signIn returns the reviewer', () async {
     when(
-      () => source.signIn(email: 'reviewer@bank.example', password: 'secret'),
+      () =>
+          source.signIn(username: 'reviewer@bank.example', password: 'secret'),
     ).thenAnswer((_) async => _model);
 
     expect(
       await repository.signIn(
-        email: 'reviewer@bank.example',
+        username: 'reviewer@bank.example',
         password: 'secret',
       ),
       const Right<Failure, Reviewer>(reviewer),
@@ -54,13 +55,13 @@ void main() {
   test('signIn maps wrong credentials to a failure', () async {
     when(
       () => source.signIn(
-        email: any(named: 'email'),
+        username: any(named: 'username'),
         password: any(named: 'password'),
       ),
     ).thenThrow(const InvalidCredentialsException());
 
     expect(
-      await repository.signIn(email: 'a@b.example', password: 'nope'),
+      await repository.signIn(username: 'a@b.example', password: 'nope'),
       const Left<Failure, Reviewer>(InvalidCredentialsFailure()),
     );
   });

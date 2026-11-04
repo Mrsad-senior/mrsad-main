@@ -65,7 +65,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorConflict => 'This action was already decided or has expired.';
 
   @override
-  String get errorInvalidCredentials => 'Wrong email or password.';
+  String get errorInvalidCredentials => 'Wrong username or password.';
 
   @override
   String get errorDataFormat =>
@@ -274,7 +274,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signInSubtitle => 'Review the actions Mirsad has held for you.';
 
   @override
-  String get emailLabel => 'Email';
+  String get usernameLabel => 'Username';
 
   @override
   String get passwordLabel => 'Password';
@@ -283,12 +283,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signInButton => 'Sign in';
 
   @override
-  String get emailInvalid => 'Enter a valid email.';
+  String get usernameInvalid => 'Enter your username, without spaces.';
 
   @override
-  String get passwordTooShort => 'Use at least 6 characters.';
+  String get passwordRequired => 'Enter your password.';
 
   @override
   String get mockSignInHint =>
-      'Mock mode: any email and a password of 6 or more characters works.';
+      'Mock mode: any username and a password of 6 or more characters works.';
 }

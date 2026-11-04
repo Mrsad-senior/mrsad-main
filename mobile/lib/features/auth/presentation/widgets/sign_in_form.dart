@@ -10,7 +10,17 @@ import 'package:mirsad/features/auth/presentation/cubit/sign_in_cubit.dart';
 class SignInForm extends StatefulWidget {
   const SignInForm({required this.showMockHint, super.key});
 
-  static const minPasswordLength = 6;
+  /// The gateway's limit (`LoginRequest` in src/mirsad/api/schemas.py).
+  static const maxUsernameLength = 128;
+
+  /// Gateway usernames are plain names (`admin`) or email-style
+  /// (`noura@bank.example`); neither has spaces.
+  static bool isValidUsername(String? value) {
+    final username = value?.trim() ?? '';
+    return username.isNotEmpty &&
+        username.length <= maxUsernameLength &&
+        !username.contains(RegExp(r'\s'));
+  }
 
   /// Explains that mock sign-in accepts anything.
   final bool showMockHint;
@@ -21,12 +31,12 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   final _formKey = GlobalKey<FormState>();
-  final _email = TextEditingController();
+  final _username = TextEditingController();
   final _password = TextEditingController();
 
   @override
   void dispose() {
-    _email.dispose();
+    _username.dispose();
     _password.dispose();
     super.dispose();
   }
@@ -34,7 +44,7 @@ class _SignInFormState extends State<SignInForm> {
   void _submit() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
     context.read<SignInCubit>().submit(
-      email: _email.text,
+      username: _username.text,
       password: _password.text,
     );
   }
@@ -51,17 +61,17 @@ class _SignInFormState extends State<SignInForm> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextFormField(
-              controller: _email,
-              keyboardType: TextInputType.emailAddress,
+              controller: _username,
+              keyboardType: TextInputType.text,
               textInputAction: TextInputAction.next,
-              autofillHints: const [AutofillHints.email],
+              autofillHints: const [AutofillHints.username],
+              autocorrect: false,
+              enableSuggestions: false,
               textDirection: TextDirection.ltr,
-              decoration: InputDecoration(labelText: l10n.emailLabel),
-              validator: (value) {
-                final email = value?.trim() ?? '';
-                final looksValid = RegExp(r'^\S+@\S+\.\S+$').hasMatch(email);
-                return looksValid ? null : l10n.emailInvalid;
-              },
+              decoration: InputDecoration(labelText: l10n.usernameLabel),
+              validator: (value) => SignInForm.isValidUsername(value)
+                  ? null
+                  : l10n.usernameInvalid,
             ),
             const SizedBox(height: AppSpacing.lg),
             TextFormField(
@@ -71,10 +81,10 @@ class _SignInFormState extends State<SignInForm> {
               autofillHints: const [AutofillHints.password],
               decoration: InputDecoration(labelText: l10n.passwordLabel),
               onFieldSubmitted: (_) => _submit(),
+              // The gateway decides whether the password is right; mock
+              // sign-in checks its own minimum length.
               validator: (value) =>
-                  (value?.length ?? 0) >= SignInForm.minPasswordLength
-                  ? null
-                  : l10n.passwordTooShort,
+                  (value?.isNotEmpty ?? false) ? null : l10n.passwordRequired,
             ),
             if (failure != null) ...[
               const SizedBox(height: AppSpacing.md),

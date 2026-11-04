@@ -12,10 +12,13 @@ class SignInCubit extends Cubit<SignInState> {
 
   final SignIn _signIn;
 
-  Future<void> submit({required String email, required String password}) async {
+  Future<void> submit({
+    required String username,
+    required String password,
+  }) async {
     if (state.isSubmitting) return;
     emit(const SignInState(status: SignInStatus.submitting));
-    final result = await _signIn(email: email, password: password);
+    final result = await _signIn(username: username, password: password);
     emit(
       result.match(
         (failure) =>

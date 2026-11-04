@@ -4,7 +4,7 @@ import 'package:mirsad/core/errors/exceptions.dart';
 import 'package:mirsad/features/auth/data/datasources/auth_data_source.dart';
 import 'package:mirsad/features/auth/data/models/reviewer_model.dart';
 
-/// Accepts any email with a password of [minPasswordLength] or more
+/// Accepts any username with a password of [minPasswordLength] or more
 /// characters. Starts signed out on every launch.
 class AuthMockDataSource implements AuthDataSource {
   AuthMockDataSource({this.latency = const Duration(milliseconds: 600)});
@@ -30,14 +30,14 @@ class AuthMockDataSource implements AuthDataSource {
 
   @override
   Future<ReviewerModel> signIn({
-    required String email,
+    required String username,
     required String password,
   }) async {
     await Future<void>.delayed(latency);
     if (password.length < minPasswordLength) {
       throw const InvalidCredentialsException('Mock password too short');
     }
-    final reviewer = ReviewerModel(id: 'mock-reviewer', email: email);
+    final reviewer = ReviewerModel(id: 'mock-reviewer', username: username);
     _set(reviewer);
     return reviewer;
   }

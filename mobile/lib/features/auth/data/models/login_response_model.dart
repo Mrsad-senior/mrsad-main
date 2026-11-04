@@ -18,9 +18,7 @@ class LoginResponseModel {
   @JsonKey(readValue: _readUsername)
   final String username;
 
-  /// Gateway accounts have a username and no email address. The sign-in
-  /// form asks for an email, so reviewers use email-style usernames.
-  ReviewerModel toReviewer() => ReviewerModel(id: username, email: username);
+  ReviewerModel toReviewer() => ReviewerModel(id: username, username: username);
 }
 
 Object? _readUsername(Map<dynamic, dynamic> json, String _) {

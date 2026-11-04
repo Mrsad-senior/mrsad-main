@@ -9,7 +9,7 @@ abstract interface class AuthDataSource {
   Stream<ReviewerModel?> watchReviewer();
 
   Future<ReviewerModel> signIn({
-    required String email,
+    required String username,
     required String password,
   });
 
