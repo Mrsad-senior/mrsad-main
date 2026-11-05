@@ -7,7 +7,7 @@
 | Code tested | `main` at `28e4b57` (gateway, web, benchmark). The Flutter app is on `feature/mobile-app` at `39c0341`, which is **not merged into `main` yet**, so it was tested from that branch. |
 | Machine | Windows 11 laptop; Python 3.14.0, Node 22.14.0, Flutter 3.44.1 (Dart 3.12.1). |
 | Who ran it | Claude Code, on Bader Alshuraie's laptop, on 5 Nov 2026. |
-| Hosted checks | Public endpoints of `https://api.mirsad-app.com` only, 5 Nov 2026 between 11:40 and 11:50 UTC. No sign-in and no server or database access. |
+| Hosted checks | Public endpoints of `https://api.mirsad-app.com` only, 5 Nov 2026 between 11:40 and 11:50 UTC, with no sign-in and no server or database access. The one database check, RLS (TC-16), was run by Bader Alshuraie in the Supabase SQL editor on 5 Nov. |
 | Rule | Every number is either **measured on 5 Nov** (marked "this run") or **quoted from a teammate's committed result**, credited with its commit and date. Nothing is estimated. A check that could not run says **NOT RUN** and why. |
 
 ---
@@ -25,7 +25,7 @@
 | Red-team pairs (Mohammed, no LLM) | Reproduced exactly: **60 / 60 → 19 / 60** attacks succeed | §2.4 |
 | Sector holdouts (Abdullah, no LLM) | **6 / 6 → 0 / 6** attacks, 0 / 5 false blocks, 3 / 3 approval controls, on both case sets | §2.4 |
 | LLM benchmark runs | **NOT RUN** | No Ollama model on this machine |
-| RLS on the database tables | **NOT RUN** | No database access in this session (§4, TC-16) |
+| RLS on the database tables | **6 / 6 tables locked** (RLS enabled) | Run by Bader Alshuraie in the Supabase SQL editor; policies not listed (§4 TC-16, §8.4) |
 
 **Targets.**
 
@@ -210,7 +210,7 @@ The suite has 108 tasks (59 English, 49 Arabic), 128 tool calls per configuratio
 | TC-13 | Audit chain verification | Verify the chain; then alter and delete rows and verify again | Valid chain reports OK; tampering is detected with the first broken sequence number | As expected. pytest `test_audit_verify_detects_tampering`, `test_audit_verify_detects_tampering_and_export`. Benchmark chains: 480 / 480 and 8 / 8 valid | Pass |
 | TC-14 | Decision replay | Re-evaluate every audited decision with its stored policy, taint and rate-limit state | 100 % replay to the same action (FR6.3) | Benign runs 512 / 512; red-team runs **1,318 / 1,384** (66 mismatches) | **Fail** |
 | TC-15 | Hosted gateway health and auth | `GET /healthz`; `GET /api/stats/overview` without a token | 200 `{"status":"ok"}`; 401 | 200 `{"status":"ok","version":"1.0.0"}`; 401. live | Pass |
-| TC-16 | RLS on the database tables | List the six gateway tables in Supabase `public` with their `relrowsecurity` flag and policies | RLS enabled on all six; no policy grants the anon or authenticated roles | **NOT RUN**: no Supabase tool in this session, and direct reading of the production database was not permitted. The query to run is in §8.4 | NOT RUN |
+| TC-16 | RLS on the database tables | In the Supabase SQL editor, list the six gateway tables in `public` with their RLS flag | RLS enabled (`locked = true`) on all six | As expected: agents, approvals, audit_events, policies, push_subscriptions and users all `locked = true`. Run by Bader Alshuraie on 5 Nov; screenshot in §8.4. Policies were not part of this check (§8.4) | Pass |
 | TC-17 | Website live feed (SSE) | Preflight `OPTIONS /api/stream` from `https://mirsad-app.com` with the headers the web client sends (`Authorization`, `Cache-Control`) | 200, request allowed | **400 "Disallowed CORS headers"**. live; see §8.1 | **Fail** |
 | TC-18 | Benchmark refuses attack mode without attack files | pytest `test_runner_rejects_attack_mode_without_files_and_bad_filters`, `test_loader_has_attacks_exit_codes` | Runner exits with "no attack episodes" | Attack files now exist, so the runner runs the full attack benchmark; the loader returns 0 instead of 3 | **Fail** (stale tests) |
 
@@ -341,7 +341,7 @@ flowchart TB
 | `api.mirsad-app.com` | Up: `/healthz` returns 200, version 1.0.0; unauthenticated API calls return 401 | live |
 | Cloudflare Tunnel to EC2 | Responses carry Cloudflare headers; the gateway has no public port | live; `deploy/ec2/compose.yml` |
 | Gateway on AWS EC2 | `mirsad` and `cloudflared` containers in Docker Compose; the local `db` service is never started | `deploy/ec2/compose.yml` (branch `deploy/ec2`, not merged) |
-| Supabase PostgreSQL | Six tables created by the gateway at start-up; Tokyo region, as reported by the team | `docs/DEPLOY_EC2.md` (branch `deploy/ec2`). Not checked directly (§8.4) |
+| Supabase PostgreSQL | Six tables created by the gateway at start-up, with RLS enabled on all six; Tokyo region, as reported by the team | `docs/DEPLOY_EC2.md` (branch `deploy/ec2`); RLS checked by Bader Alshuraie in the Supabase SQL editor on 5 Nov (§8.4) |
 | Website | `mirsad-app.com` and `mirsad-main.badmick73.workers.dev` serve the same build (`index-D0ByG9Qc.js`) | live |
 | Flutter app | Talks to `api.mirsad-app.com` over REST and `/api/stream` | `feature/mobile-app`; not run on a device for this report |
 | Demo agent | Demo API mounted on the hosted gateway (`/api/demo/scenarios` answers 401, unknown routes 404); its LLM is not deployed | live; §8.2 |
@@ -389,21 +389,33 @@ flowchart TB
 - **Not measured.** The hosted per-call latency was **not measured**: it needs an agent key, and no request was sent that would write to the production audit log.
 - **Data residency.** Audit records hold tool arguments, such as amounts and beneficiaries, and they are stored in Japan. Choosing a region close to the gateway, and to the users' data-residency requirements (for example the Saudi PDPL), is advisable.
 
-### 8.4 RLS on the database tables is unverified
+### 8.4 RLS on the database tables: verified on 5 Nov
 
-- **What the repository contains.** The gateway creates its six tables with `create_all` and contains no RLS statements. The deployment notes record RLS and the Supabase security advisor as pending, and this report could not check them.
-- **The query to run.** Run this in the Supabase SQL editor:
+**Result: Pass (TC-16).** On 5 Nov 2026 Bader Alshuraie ran an RLS check in the Supabase SQL editor on the production database. All six gateway tables show `locked = true`, meaning row-level security is enabled:
+
+| Table | locked |
+|---|---|
+| agents | true |
+| approvals | true |
+| audit_events | true |
+| policies | true |
+| push_subscriptions | true |
+| users | true |
+
+![RLS check in the Supabase SQL editor, 5 November 2026](figures/rls-verified.png)
+
+- **Why the check was needed.** The gateway creates its six tables with `create_all` and contains no RLS statements, so RLS has to be switched on in Supabase itself. The deployment notes recorded RLS and the Supabase security advisor as pending.
+- **What it means.** Supabase's `anon` and `authenticated` roles, which its public Data API uses, can read or change rows only where a policy allows it. The gateway connects as the table owner, which RLS does not restrict, so the gateway keeps working.
+- **Not covered by this check.** The screenshot shows the RLS flag only. It does not list policies, so it does not show whether a policy opens a table to the `anon` or `authenticated` roles. This query lists every policy on the six tables; no rows means none exist:
 
   ```sql
-  select c.relname, c.relrowsecurity,
-         (select count(*) from pg_policies p
-          where p.schemaname = 'public' and p.tablename = c.relname) as policies
-  from pg_class c join pg_namespace n on n.oid = c.relnamespace
-  where n.nspname = 'public' and c.relkind = 'r'
-  order by 1;
+  select tablename, policyname, roles, cmd
+  from pg_policies
+  where schemaname = 'public'
+  order by 1, 2;
   ```
 
-- **The expected answer.** `relrowsecurity = true` for users, agents, policies, audit_events, approvals and push_subscriptions. The gateway connects as the table owner, which RLS does not restrict.
+- **Still pending.** The Supabase security advisor was not checked.
 
 ### 8.5 UI contrast and Arabic translation
 
