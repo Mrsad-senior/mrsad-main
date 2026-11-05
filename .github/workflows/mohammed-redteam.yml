@@ -1,0 +1,40 @@
+name: Mohammed red-team evidence
+on:
+  pull_request:
+    paths:
+      - 'bench/scenarios/mohammed*'
+      - 'bench/scenarios/attacks/mohammed*'
+      - 'scripts/run_mohammed_redteam.py'
+      - '.github/workflows/mohammed-redteam.yml'
+permissions:
+  contents: read
+jobs:
+  redteam:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install gateway and test dependencies
+        run: pip install -e ".[dev]"
+      - name: Validate scenario schema and tool arguments
+        run: python -m bench.loader --has-attacks
+      - name: Gateway penetration regression tests
+        run: pytest tests/security tests/api/test_api_auth.py tests/audit/test_redaction.py -m "not llm" --junitxml=reports/mohammed-security.xml
+      - name: Run paired baseline, full defence and layer ablations
+        run: python scripts/run_mohammed_redteam.py
+        env:
+          PYTHONPATH: ".:src"
+      - name: Scan Python dependencies
+        if: always()
+        run: pip-audit --skip-editable --format json --output reports/mohammed-pip-audit.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mohammed-redteam-evidence
+          path: |
+            reports/mohammed-redteam
+            reports/mohammed-security.xml
+            reports/mohammed-pip-audit.json

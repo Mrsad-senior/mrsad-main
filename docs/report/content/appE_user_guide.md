@@ -74,7 +74,7 @@ Table: Environment variables and defaults {#tab:e-env widths=2.2,1.9,2.2}
 | `MIRSAD_UPSTREAMS_PATH` | `configs/upstreams.yaml` | Tool servers that Mirsad protects |
 | `MIRSAD_DETECTOR_MODEL_DIR` | `src/mirsad/detector/model` | Trained detector; rules-only mode when absent |
 | `MIRSAD_TOKEN_TTL_HOURS` | `12` | Sign-in lifetime |
-| `MIRSAD_APPROVAL_TIMEOUT_S` | `120` | Time to decide; an expired request is denied |
+| `MIRSAD_APPROVAL_TIMEOUT_S` | `300` | Five minutes to decide; an expired request is denied |
 | `MIRSAD_MAX_RESULT_CHARS` | `200000` | Longer tool results are truncated before scanning |
 | `MIRSAD_AUDIT_PAYLOAD_MAX_CHARS` | `20000` | Size limit of one audit payload |
 | `MIRSAD_ENABLE_DEMO` | `false` | Enables the Demo Console endpoints |
@@ -115,7 +115,7 @@ The command line runs the same scenarios and prints an outcome computed from the
 
 ## E.5 Administration Dashboard
 
-The sidebar shows only the pages the signed-in role may use (@tab:e-pages); the API enforces the same roles. The screenshots were captured by `scripts/capture_screenshots.py`, which starts a demo server, generates activity through the real API and photographs each page in Chrome. That server used a 900-second approval timeout, so countdowns show about 14–15 minutes instead of the default 120 seconds.
+The sidebar shows only the pages the signed-in role may use (@tab:e-pages); the API enforces the same roles. The screenshots were captured by `scripts/capture_screenshots.py`, which starts a demo server, generates activity through the real API and photographs each page in Chrome. That server used a 900-second approval timeout, so countdowns show about 14–15 minutes instead of the default 300 seconds.
 
 Table: Dashboard pages and roles {#tab:e-pages widths=1.6,1.6,2.8}
 | Page | Roles | Main actions |
@@ -237,7 +237,7 @@ mode: monitor                      # shadow mode first; change to enforce after 
 organization:
   name: Najd Trading Co.
   internal_domains: [najd-trading.example]
-defaults: {decision: deny, approval_timeout_s: 120}
+defaults: {decision: deny, approval_timeout_s: 300}
 agents:
   - id: support-assistant
     name: Customer Support Assistant
@@ -351,7 +351,7 @@ except MirsadBlocked as exc:
     text_for_model = str(exc)              # bilingual explanation for the model
 ```
 
-The decorator checks the call, runs the function only if allowed, sends the result for inspection and returns the inspected text; always give the model that text, not the raw value. `MirsadClient.from_env()` reads `MIRSAD_URL` and `MIRSAD_AGENT_KEY`; the default timeout of 150 s covers an approval wait.
+The decorator checks the call, runs the function only if allowed, sends the result for inspection and returns the inspected text; always give the model that text, not the raw value. `MirsadClient.from_env()` reads `MIRSAD_URL` and `MIRSAD_AGENT_KEY`; the default timeout of 330 s covers a five-minute approval wait.
 
 ## E.9 Command-Line Reference
 
@@ -433,7 +433,7 @@ Table: Common problems and solutions {#tab:e-troubleshooting widths=2,2,2}
 | All calls denied with `UNKNOWN_AGENT` | Policy agent not in the active policy | Add the agent to the policy |
 | Tool missing or `TOOL_NOT_ALLOWED` | No `allow: true` entry for the tool | Add it to the agent's tools |
 | 503 on `/v1/tools/.../invoke` | No upstream tool servers | Check `MIRSAD_UPSTREAMS_PATH` and the log |
-| Call hangs about two minutes, then denied | Approval expired | Enable approver alerts; raise client timeouts |
+| Call waits up to five minutes, then is denied | Approval expired | Enable approver alerts; raise client timeouts |
 | Demo Console error 502 | Ollama or model missing | `ollama pull qwen2.5:7b` |
 | "Too many attempts" at sign-in | Login throttling | Wait 5 minutes |
 | `/` shows a JSON note | Web app not built | `make web` |

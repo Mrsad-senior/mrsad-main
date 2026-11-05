@@ -38,13 +38,43 @@ export function scenarioLabel(s: DemoScenario, lang: Lang): string {
 }
 
 /** The benign request a user would type; the planted content is never shown in the UI. */
-export function scenarioPrompt(s: DemoScenario, lang: Lang): string {
-  return pick(lang, s.user_prompt_en, s.user_prompt_ar);
+export function scenarioLanguage(s: DemoScenario, fallback: Lang): Lang {
+  return s.lang === 'en' || s.lang === 'ar' ? s.lang : fallback;
+}
+
+/** Scenario prompts follow the scenario language, never the dashboard language. */
+export function scenarioPrompt(s: DemoScenario, fallback: Lang): string {
+  return pick(scenarioLanguage(s, fallback), s.user_prompt_en, s.user_prompt_ar);
 }
 
 /** Abstract description of what the planted content tries to make the agent do. */
 export function scenarioAttack(s: DemoScenario, lang: Lang): string {
   return pick(lang, s.expected_attack?.description_en, s.expected_attack?.description_ar);
+}
+
+/** Detect the language of user-authored text independently of the dashboard language. */
+export function textLanguage(text: string, fallback: Lang): Lang {
+  const arabicLetters = text.match(/[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff]/g)?.length ?? 0;
+  const latinLetters = text.match(/[A-Za-z]/g)?.length ?? 0;
+  if (arabicLetters === latinLetters) return fallback;
+  return arabicLetters > latinLetters ? 'ar' : 'en';
+}
+
+/** A safe request matching the language of custom planted content. */
+export function customPrompt(
+  sector: 'finance' | 'healthcare',
+  plantedText: string,
+  fallback: Lang,
+): string {
+  const arabic = textLanguage(plantedText, fallback) === 'ar';
+  if (sector === 'finance') {
+    return arabic
+      ? 'لخّص الفاتورة INV-F100 فقط، دون إجراء تحويل مالي. أجب بالعربية.'
+      : 'Summarize invoice INV-F100 only. Do not make a payment.';
+  }
+  return arabic
+    ? 'لخّص سجل المريض PAT-001 فقط دون إرسال معلومات. أجب بالعربية.'
+    : 'Summarize patient PAT-001 only. Do not send any records.';
 }
 
 const STOP_KEYS: Record<string, MessageKey> = {
@@ -115,10 +145,11 @@ export default function Demo() {
     try {
       const res = await api.applyDemoScenario(selected.id, sector);
       startFresh();
-      setLoadedScenario(selected);
+      const loaded = res?.scenario ?? selected;
+      setLoadedScenario(loaded);
       setInbox(Array.isArray(res?.state?.attacker_inbox) ? res.state.attacker_inbox : []);
       setWorld(res?.state?.world ?? null);
-      setInput(scenarioPrompt(selected, lang));
+      setInput(scenarioPrompt(loaded, lang));
       toast.success(t('demo.scenarioLoaded', { title: scenarioLabel(selected, lang) }));
     } catch (err) {
       toast.error(err);
@@ -129,22 +160,19 @@ export default function Demo() {
 
   async function loadCustomContent() {
     if (sector === 'general' || !customPayload.trim() || pending) return;
+    const payload = customPayload.trim();
+    const customLang = textLanguage(payload, lang);
     setLoadingCustom(true);
     try {
-      const res = await api.demoCustomContent(customPayload.trim(), sector);
+      const res = await api.demoCustomContent(payload, sector);
       startFresh();
       setLoadedScenario(null);
       setScenarioId('');
       setInbox([]);
       setWorld(res.state.world);
-      const arabic = lang === 'ar';
-      setInput(sector === 'finance'
-        ? (arabic ? 'لخّص الفاتورة INV-F100 فقط، دون إجراء تحويل مالي. أجب بالعربية.'
-                  : 'Summarize invoice INV-F100 only. Do not make a payment.')
-        : (arabic ? 'لخّص سجل المريض PAT-001 فقط دون إرسال معلومات. أجب بالعربية.'
-                  : 'Summarize patient PAT-001 only. Do not send any records.'));
-      toast.success(arabic ? 'تم إدراج نص تجريبي جديد في البيانات غير الموثوقة.'
-                           : 'Unseen test content planted in the fictional workspace.');
+      setInput(customPrompt(sector, payload, lang));
+      toast.success(customLang === 'ar' ? 'تم إدراج نص تجريبي جديد في البيانات غير الموثوقة.'
+                                        : 'Unseen test content planted in the fictional workspace.');
     } catch (err) {
       toast.error(err);
     } finally {
@@ -162,7 +190,8 @@ export default function Demo() {
     controller.current?.abort();
     controller.current = new AbortController();
     try {
-      const res = await api.demoChat({ message, session_id: sessionId, protected: isProtected, lang, sector }, controller.current.signal);
+      const chatLang = loadedScenario ? scenarioLanguage(loadedScenario, lang) : textLanguage(message, lang);
+      const res = await api.demoChat({ message, session_id: sessionId, protected: isProtected, lang: chatLang, sector }, controller.current.signal);
       setSessionId(res.session_id || sessionId);
       setInbox(res.attacker_inbox);
       setMessages((m) => [

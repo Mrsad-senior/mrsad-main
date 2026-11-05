@@ -14,7 +14,7 @@ from bench import compare, latency
 
 def test_runner_writes_outputs_and_resumes(tmp_path):
     out = tmp_path / "run1"
-    args = ["--agent", "scripted", "--defense", "none,policy_only", "--approver", "oracle",
+    args = ["--episodes", "benign", "--agent", "scripted", "--defense", "none,policy_only", "--approver", "oracle",
             "--tasks", "en-doc-read-01,ar-export-01", "--out", str(out), "--no-figures", "--replay-check"]
     assert run_main(args) == 0
     eps = read_episodes(out / "episodes.jsonl")
@@ -37,14 +37,14 @@ def test_runner_tolerates_a_torn_last_line(tmp_path):
 
 def test_runner_figures(tmp_path):
     out = tmp_path / "run2"
-    assert run_main(["--defense", "none,taint_only", "--approver", "deny", "--lang", "ar", "--limit", "2",
+    assert run_main(["--episodes", "benign", "--defense", "none,taint_only", "--approver", "deny", "--lang", "ar", "--limit", "2",
                      "--out", str(out)]) == 0
     assert (out / "figures" / "benign_by_defense.png").stat().st_size > 1000
 
 
 def test_compare_renders_rows(tmp_path):
     out = tmp_path / "run3"
-    run_main(["--defense", "none,full", "--approver", "deny", "--tasks", "en-web-read-01", "--out", str(out),
+    run_main(["--episodes", "benign", "--defense", "none,full", "--approver", "deny", "--tasks", "en-web-read-01", "--out", str(out),
               "--no-figures"])
     rows = compare.comparison_rows([compare.load_summary(out)])
     assert [r["defense"] for r in rows] == ["none", "full"]

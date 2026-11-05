@@ -18,6 +18,7 @@ def test_scenario_count_and_balance():
 
 def test_each_scenario_is_bilingual_and_complete():
     for s in list_scenarios():
+        assert s.lang in {"en", "ar"}
         assert s.title_en and s.title_ar
         assert s.user_prompt_en and s.user_prompt_ar
         assert s.setup

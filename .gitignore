@@ -6,6 +6,7 @@ __pycache__/
 node_modules/
 dist/
 .pytest_cache/
+.test-temp/
 .ruff_cache/
 .coverage
 htmlcov/

@@ -90,7 +90,7 @@ A test validates every file in `configs/policies/`, so a broken sample cannot be
 | `organization.name` | string | `""` | Display name. |
 | `organization.internal_domains` | list of domains | `[]` | Domains that count as *inside* the organisation (subdomains included). Used by `sink: dynamic`. |
 | `defaults.decision` | `deny` \| `allow` \| `require_approval` | `deny` | What happens to a tool that no entry of the agent matches. |
-| `defaults.approval_timeout_s` | number (0 < t ≤ 86400) | `120` | How long a human has to decide (exposed as `PolicyEngine.approval_timeout_s`). |
+| `defaults.approval_timeout_s` | number (0 < t ≤ 86400) | `300` | How long a human has to decide (exposed as `PolicyEngine.approval_timeout_s`). |
 | `detector` | mapping | see below | Global injection-detector settings. |
 | `taint` | mapping | see below | Global taint-tracking settings. |
 | `agents` | list | **required** (may be empty) | One entry per agent identity. |

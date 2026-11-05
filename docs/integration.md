@@ -296,7 +296,7 @@ client = OpenAI(
     base_url="http://127.0.0.1:8700/v1",     # Mirsad instead of the LLM provider
     api_key="mk_xxxxxxxx_yyyyyyyyyyyyyyyy",  # the agent key authenticates the agent to Mirsad
     default_headers={"X-Mirsad-Session": "conversation-42"},
-    timeout=180,                              # longer than the approval timeout (120 s default)
+    timeout=330,                              # longer than the approval timeout (300 s default)
 )
 reply = client.chat.completions.create(model="qwen2.5:7b", messages=messages, tools=tools)
 ```
@@ -420,7 +420,7 @@ mirsad.new_session()            # start a new taint session (new conversation)
 ```
 
 `MirsadClient.from_env()` reads `MIRSAD_URL` and `MIRSAD_AGENT_KEY`. The default timeout
-(150 s) is longer than the default approval timeout because `check_call` blocks while a human
+(330 s) is longer than the default approval timeout because `check_call` blocks while a human
 decides.
 
 ```mermaid
@@ -468,7 +468,7 @@ sequenceDiagram
 |---|---|---|
 | Upstreams file | `MIRSAD_UPSTREAMS_PATH` | `configs/upstreams.yaml` |
 | Upstream LLM | `MIRSAD_LLM_BASE_URL`, `MIRSAD_LLM_API_KEY`, `MIRSAD_LLM_MODEL` | Ollama at `127.0.0.1:11434/v1`, `qwen2.5:7b` |
-| Approval timeout | `MIRSAD_APPROVAL_TIMEOUT_S` | 120 s (client timeouts must be longer) |
+| Approval timeout | `MIRSAD_APPROVAL_TIMEOUT_S` | 300 s (client timeouts must be longer) |
 | Stdio proxy | `mirsad mcp-proxy --agent-key/$MIRSAD_AGENT_KEY --url --session-id` | `http://127.0.0.1:8700` |
 | SDK | `MIRSAD_URL`, `MIRSAD_AGENT_KEY` (`from_env`) | `http://127.0.0.1:8700` |
 | Tool list cache | `UpstreamManager(tools_ttl_s=...)` | 300 s |

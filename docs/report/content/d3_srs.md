@@ -139,7 +139,7 @@ The release includes the D6 Software User Guide (installation, administration an
 - AS-1: Agents can reach the protected tools only through Mirsad. The deploying organisation enforces this through network and credential configuration; a direct path to a tool bypasses every control.
 - AS-2: The policy correctly describes each tool's trust, sensitivity, sink and risk, and lists all of the organisation's internal domains.
 - AS-3: The server secret (used to sign JWTs and to derive the audit HMAC key) is kept from attackers and from insiders who can write to the database.
-- AS-4: Approvers are reachable within the approval timeout (120 seconds by default); otherwise requests expire and the calls are denied.
+- AS-4: Approvers are reachable within the approval timeout (300 seconds by default); otherwise requests expire and the calls are denied.
 - AS-5: Any deployment reachable from other machines terminates TLS in front of the gateway.
 - AS-6: Attackers can influence only content that the agent reads; they cannot change the agent, its system prompt, the gateway or its configuration (the threat model of the final report, Section 3.2).
 

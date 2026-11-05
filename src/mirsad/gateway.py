@@ -721,6 +721,19 @@ class Gateway:
         # An upstream must not be able to attribute its output to another call or session.
         result = raw.model_copy(update={"call_id": call.call_id, "session_id": call.session_id,
                                         "agent_id": call.agent_id, "tool": call.tool})
+        # Record the execution outcome separately from the later content inspection.  This gives
+        # reviewers an explicit approval -> execution audit trail without storing raw result data.
+        result_text = result.content or ""
+        await asyncio.to_thread(self._audit_safe, "tool_call.executed", call, {
+            "succeeded": error is None and not result.is_error,
+            "is_error": result.is_error,
+            "result_chars": len(result_text),
+            "result_sha256": hashlib.sha256(
+                result_text.encode("utf-8", "surrogatepass")
+            ).hexdigest(),
+            "approval_id": decision.approval_id,
+            "approval_status": decision.approval_status,
+        }, decision.action.value, decision.risk.value, self._policy)
         outcome = await self.inspect_result(result)
         if error is None and result.is_error:
             error = f"Tool '{call.tool}' returned an error."
@@ -772,13 +785,15 @@ class Gateway:
             action, risk_score, reasons, profile, sink, _, _ = self._evaluate(
                 call, engine, snapshot, dict(payload.get("rate_counts") or {}))
         original_codes = [r.get("code") for r in payload.get("reasons", []) if isinstance(r, dict)]
-        runtime_codes = {'TASK_INTENT_MISMATCH', 'UNBOUND_TASK', 'NEW_BENEFICIARY',
-                         'UNUSUAL_READ_THEN_SEND', 'REPEATED_EXPORT', 'HEALTH_DATA_EXTERNAL',
-                         'SENSITIVE_OUTBOUND'}
-        if runtime_codes.intersection(original_codes):
+        runtime_codes = {'TASK_INTENT_MISMATCH', 'SEMANTIC_TASK_MISMATCH', 'UNBOUND_TASK',
+                         'NEW_BENEFICIARY', 'UNSEEN_TOOL_SEQUENCE', 'UNUSUAL_READ_THEN_SEND',
+                         'REPEATED_EXPORT', 'HEALTH_DATA_EXTERNAL', 'SENSITIVE_OUTBOUND'}
+        non_replayable_codes = sorted(runtime_codes.intersection(original_codes))
+        if non_replayable_codes:
             notes.append('Trusted-task and session-behavior evidence was recorded at decision time; '
                          'historical state is not reconstructed by policy-only replay.')
         replayed_codes = [r.code for r in reasons]
+        comparable_original_codes = [code for code in original_codes if code not in runtime_codes]
         call_text = json.dumps(payload["call"], ensure_ascii=False).lower()
         if "redacted" in call_text or "***" in call_text:
             notes.append("call arguments were redacted in the audit log; replay used the redacted values")
@@ -787,9 +802,10 @@ class Gateway:
         details = {
             "policy_version": event.policy_version, "tool": call.tool, "agent_id": call.agent_id,
             "original_reasons": original_codes, "replayed_reasons": replayed_codes,
+            "non_replayable_reasons": non_replayable_codes,
             "added_reasons": sorted(set(replayed_codes) - set(original_codes)),
             "removed_reasons": sorted(set(original_codes) - set(replayed_codes)),
-            "reasons_match": sorted(original_codes) == sorted(replayed_codes),
+            "reasons_match": sorted(comparable_original_codes) == sorted(replayed_codes),
             "original_risk_score": payload.get("risk_score"), "replayed_risk_score": risk_score,
             "sink": sink.value, "enforced": payload.get("enforced", True), "notes": notes,
         }

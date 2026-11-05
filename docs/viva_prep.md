@@ -161,7 +161,7 @@ That is what `audit/redact.py` prevents. Before hashing and storing, it removes 
 `approvals/service.py` moves an approval out of `pending` with a conditional `UPDATE … WHERE status = 'pending'`, so exactly one decision wins even across processes; the loser gets HTTP 409 and the app says someone else decided. Waiters block on an `asyncio.Event` with a slow database re-check every 5 s for decisions made by another process. Test ST09 checks that decisions are attributed and final.
 
 **Q10. What stops a late approval of an action the agent was already told was denied?**
-`ApprovalService.wait` marks the approval `expired` at its deadline (the earlier of the record's expiry and the policy's `approval_timeout_s`, 120 s by default), so a tap after the deadline is refused. The gateway then returns a deny with `APPROVAL_EXPIRED`. The default is fail-safe: no answer means no action.
+`ApprovalService.wait` marks the approval `expired` at its deadline (the earlier of the record's expiry and the policy's `approval_timeout_s`, 300 s by default), so a tap after the deadline is refused. The gateway then returns a deny with `APPROVAL_EXPIRED`. The default is fail-safe: no answer means no action.
 
 **Q11. Could the approval summary itself be prompt-injected?**
 No LLM is involved. `approvals/summary.py` builds at most three sentences from the call and the decision's reasons only. Attacker-controlled values (addresses, URLs, IDs) are shown verbatim but limited to 80 characters and stripped of line breaks, so they cannot fake extra sentences. Arguments are redacted before they are stored with the approval.
@@ -204,7 +204,7 @@ Labelled semantic controls, keyboard operation, risk shown with an icon and text
 No, because the server enforces roles, not the UI. `require_user(...)` guards every route: approvers decide approvals, auditors read, verify, replay and export the audit log, and admins manage policies, agents and users. Security test ST20 calls admin actions with the other roles and expects refusal; ST21 checks that agent keys cannot use human APIs and humans cannot act as agents. The UI also renders no raw HTML (there is no `dangerouslySetInnerHTML` in `web/src`), and the back end sends a Content-Security-Policy.
 
 **Q11. Why does the screenshot show "Expires in 14:33" when the timeout is 120 s?**
-The screenshots were captured with `MIRSAD_APPROVAL_TIMEOUT_S=900` (`scripts/capture_screenshots.py`) so there was time to photograph each screen. In normal operation the deadline is the earlier of that setting and the policy's `approval_timeout_s` (120 s in `default.yaml`).
+The screenshots were captured with `MIRSAD_APPROVAL_TIMEOUT_S=900` (`scripts/capture_screenshots.py`) so there was time to photograph each screen. In normal operation the deadline is the earlier of that setting and the policy's `approval_timeout_s` (300 s in `default.yaml`).
 
 ### A.5 Abdulmalik bin Saedan – benchmark, demo, security testing, project management
 

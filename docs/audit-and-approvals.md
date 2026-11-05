@@ -294,7 +294,7 @@ grammatical gender. Provenance is read tolerantly from the evidence: `source_too
 
 | Setting | Where | Default |
 |---|---|---|
-| Approval timeout | `MIRSAD_APPROVAL_TIMEOUT_S` → `ApprovalService(timeout_s=…)`; the policy's `defaults.approval_timeout_s` can shorten the gateway's wait | 120 s |
+| Approval timeout | `MIRSAD_APPROVAL_TIMEOUT_S` → `ApprovalService(timeout_s=…)`; the policy's `defaults.approval_timeout_s` can shorten the gateway's wait | 300 s |
 | Organisation name in summaries | `ApprovalService(org_name=…, org_name_ar=…)` | "the organisation" / «المؤسسة» |
 | Redact stored arguments | `ApprovalService(redact_arguments=…)` | `True` |
 | Auto-decider | `ApprovalService(auto_decider=…)` | none (humans decide) |
@@ -416,7 +416,7 @@ assert audit.verify().ok
 anchor = audit.anchor()            # store outside the database, e.g. e-mail it to the auditors
 
 notifier = Notifier()
-approvals = ApprovalService(db, notifier, timeout_s=120, org_name="Najd Trading Co.")
+approvals = ApprovalService(db, notifier, timeout_s=300, org_name="Najd Trading Co.")
 record = await approvals.request(call, decision, agent_name="Email & CRM Assistant")
 final = await approvals.wait(record.id)          # approver calls approvals.decide(...) from the PWA
 
