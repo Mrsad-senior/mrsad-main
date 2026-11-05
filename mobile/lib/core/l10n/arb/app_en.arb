@@ -1,0 +1,199 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Mirsad",
+  "navApprovals": "Approvals",
+  "navActivity": "Activity",
+  "navAudit": "Audit",
+  "approvalsTitle": "Pending approvals",
+  "activityTitle": "Activity",
+  "auditTitle": "Audit log",
+
+  "retry": "Try again",
+  "cancel": "Cancel",
+  "switchLanguage": "Switch language",
+  "otherLanguageName": "العربية",
+  "signOut": "Sign out",
+  "configErrorTitle": "The app is not configured",
+
+  "errorNetwork": "Can't reach the Mirsad gateway. Check your connection and try again.",
+  "errorServer": "The gateway ran into a problem. Try again in a moment.",
+  "errorUnauthorized": "Your session has expired. Sign in again.",
+  "errorNotFound": "This item no longer exists.",
+  "errorConflict": "This action was already decided or has expired.",
+  "errorInvalidCredentials": "Wrong username or password.",
+  "errorDataFormat": "The gateway sent data the app doesn't understand.",
+  "errorUnexpected": "Something went wrong. Try again.",
+
+  "riskLow": "Low",
+  "riskMedium": "Medium",
+  "riskHigh": "High",
+  "riskScore": "{level} risk · {percent}%",
+  "@riskScore": {
+    "description": "Risk chip text, e.g. 'High risk · 92%'.",
+    "placeholders": {
+      "level": { "type": "String", "example": "High" },
+      "percent": { "type": "int", "example": "92" }
+    }
+  },
+
+  "statusHeld": "Held",
+  "statusApproved": "Approved",
+  "statusRejected": "Rejected",
+  "statusExpired": "Expired",
+  "decisionAllowed": "Allowed",
+  "decisionDenied": "Denied",
+  "decisionHeld": "Held",
+  "taintedInput": "Untrusted input",
+
+  "sectorFinance": "Finance",
+  "sectorHealthcare": "Healthcare",
+  "sectorGeneral": "General",
+
+  "layerPolicy": "Policy",
+  "layerTaint": "Taint tracking",
+  "layerIntent": "Intent check",
+  "layerLlmJudge": "LLM judge",
+  "layerKeywords": "Keyword scan",
+  "layerOther": "Other check",
+
+  "toolTransferFunds": "Transfer funds",
+  "toolSendEmail": "Send email",
+  "toolExportCustomerRecords": "Export customer records",
+  "toolUpdateBeneficiary": "Change beneficiary",
+  "toolGetAccountBalance": "Check balance",
+
+  "pendingEmptyTitle": "Nothing waiting for review",
+  "pendingEmptyMessage": "Held actions appear here the moment Mirsad stops them.",
+  "expiresIn": "Auto-rejects in {time}",
+  "@expiresIn": {
+    "placeholders": {
+      "time": { "type": "String", "example": "4:12" }
+    }
+  },
+  "recipient": "To {recipient}",
+  "@recipient": {
+    "placeholders": {
+      "recipient": { "type": "String", "example": "SA4420000001234567891234" }
+    }
+  },
+
+  "approvalDetailsTitle": "Review action",
+  "userAskedTitle": "What the user asked",
+  "agentWantsTitle": "What the agent is trying to do",
+  "argumentsTitle": "Arguments",
+  "reasonsTitle": "Why Mirsad held this",
+  "agentLabel": "Agent",
+  "sectorLabel": "Sector",
+  "requestedAtLabel": "Requested at",
+  "approve": "Approve",
+  "reject": "Reject",
+  "confirmApproveTitle": "Approve this action?",
+  "confirmApproveBody": "The agent will run {tool} right away.",
+  "@confirmApproveBody": {
+    "placeholders": {
+      "tool": { "type": "String", "example": "Transfer funds" }
+    }
+  },
+  "confirmRejectTitle": "Reject this action?",
+  "confirmRejectBody": "The agent's {tool} request will be cancelled.",
+  "@confirmRejectBody": {
+    "placeholders": {
+      "tool": { "type": "String", "example": "Transfer funds" }
+    }
+  },
+  "noteLabel": "Note (optional)",
+  "noteHint": "Why are you making this decision?",
+  "approvedMessage": "Action approved",
+  "rejectedMessage": "Action rejected",
+  "noLongerHeld": "This action is no longer waiting for review.",
+
+  "activityEmptyTitle": "No activity yet",
+  "activityEmptyMessage": "Every action an agent tries shows up here.",
+  "activityFilteredEmpty": "Nothing matches this filter.",
+  "filterAll": "All",
+
+  "auditValidTitle": "Audit chain intact",
+  "auditValidMessage": "Every recorded decision matches its hash. Nothing has been altered.",
+  "auditBrokenTitle": "Audit chain broken",
+  "auditBrokenMessage": "Entry {index} doesn't match its hash. Records from that point on may have been altered.",
+  "@auditBrokenMessage": {
+    "placeholders": {
+      "index": { "type": "int", "example": "1287" }
+    }
+  },
+  "auditBrokenUnknownEntry": "An entry doesn't match its hash. Records may have been altered.",
+  "auditVerifyAgain": "Verify again",
+
+  "signInTitle": "Sign in",
+  "signInSubtitle": "Review the actions Mirsad has held for you.",
+  "usernameLabel": "Username",
+  "passwordLabel": "Password",
+  "signInButton": "Sign in",
+  "usernameInvalid": "Enter your username, without spaces.",
+  "passwordRequired": "Enter your password.",
+  "mockSignInHint": "Mock mode: any username and a password of 6 or more characters works. Sign in as \"approver\" or \"auditor\" to try those roles; anyone else is an admin.",
+  "summaryTitle": "In short",
+  "liveOnline": "Online",
+  "liveReconnecting": "Reconnecting…",
+
+  "navHome": "Home",
+  "navAccount": "Account",
+  "homeTitle": "Overview",
+  "homeWindow": "Last {hours} hours",
+  "@homeWindow": {
+    "placeholders": {
+      "hours": { "type": "String", "example": "24" }
+    }
+  },
+  "homeCalls": "Calls checked",
+  "homeAllowed": "Allowed",
+  "homeDenied": "Denied",
+  "homeHeld": "Held for review",
+  "homeWaiting": "Waiting now",
+  "homeInjections": "Injections caught",
+  "homeAuditOk": "Audit chain intact",
+  "homeAuditBroken": "Audit chain broken",
+  "homeAuditUnknown": "Audit chain not checked",
+  "homeLatency": "Decides in {median} ms (p95 {p95} ms)",
+  "@homeLatency": {
+    "placeholders": {
+      "median": { "type": "String", "example": "1.4" },
+      "p95": { "type": "String", "example": "6.8" }
+    }
+  },
+  "homeBusiestTools": "Busiest tools",
+  "homeToolsTitle": "Explore",
+  "homeDetectorSubtitle": "Check text for prompt injection.",
+  "homeChatSubtitle": "Talk to the demo agent behind Mirsad.",
+  "accountTitle": "Account",
+  "accountRole": "Role",
+  "accountLanguage": "Language",
+  "languageName": "English",
+  "roleAdmin": "Administrator",
+  "roleApprover": "Approver",
+  "roleAuditor": "Auditor",
+  "detectorTitle": "Detector playground",
+  "detectorHint": "Paste text an agent might read, such as an email or a web page, to see what Mirsad's detector makes of it.",
+  "detectorInputLabel": "Text to scan",
+  "detectorScan": "Scan",
+  "detectorScore": "Score {score}",
+  "@detectorScore": {
+    "placeholders": {
+      "score": { "type": "String", "example": "0.83" }
+    }
+  },
+  "detectorLabelBenign": "Looks safe",
+  "detectorLabelSuspicious": "Suspicious",
+  "detectorLabelInjection": "Prompt injection",
+  "detectorLanguageEn": "English",
+  "detectorLanguageAr": "Arabic",
+  "detectorLanguageMixed": "Mixed languages",
+  "detectorLanguageOther": "Other language",
+  "detectorSignals": "Signals",
+  "detectorSpans": "Flagged passages",
+  "detectorNoSpans": "Nothing was flagged.",
+  "chatTitle": "Demo chat",
+  "chatNotEnabledTitle": "The demo agent isn't enabled yet",
+  "chatNotEnabledMessage": "An admin can turn it on in the gateway (MIRSAD_ENABLE_DEMO). The chat will appear here once it is."
+}
