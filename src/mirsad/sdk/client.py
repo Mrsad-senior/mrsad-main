@@ -13,7 +13,7 @@ Two ways to use it:
 Both clients fail closed: if the gateway cannot be reached the guard raises
 :class:`MirsadError` and the tool function is not executed.
 
-``timeout`` (default 150 s) must exceed the gateway's approval timeout because a call
+``timeout`` (default 330 s) must exceed the gateway's approval timeout because a call
 that needs human approval blocks until someone decides. It configures the HTTP client
 the SDK creates; a caller-supplied ``http_client`` keeps its own timeout settings.
 """
@@ -197,7 +197,7 @@ class MirsadClient(_Base):
         api_key: str,
         *,
         session_id: str | None = None,
-        timeout: float = 150,
+        timeout: float = 330,
         http_client: httpx.Client | None = None,
     ) -> None:
         super().__init__(base_url, api_key, session_id, timeout)
@@ -312,7 +312,7 @@ class AsyncMirsadClient(_Base):
         api_key: str,
         *,
         session_id: str | None = None,
-        timeout: float = 150,
+        timeout: float = 330,
         http_client: httpx.AsyncClient | None = None,
     ) -> None:
         super().__init__(base_url, api_key, session_id, timeout)

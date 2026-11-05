@@ -31,6 +31,26 @@ log = logging.getLogger("mirsad.approvals")
 AUTO_DECIDER_USER = "auto-decider"
 CROSS_PROCESS_RECHECK_S = 5.0
 _TERMINAL = {ApprovalStatus.APPROVED, ApprovalStatus.DENIED, ApprovalStatus.EXPIRED, ApprovalStatus.CANCELLED}
+_DECISION_CRITICAL_ARGUMENTS = {
+    "amount_sar", "to_iban", "iban", "to", "cc", "bcc", "recipient", "recipients",
+    "url", "webhook", "endpoint", "transfer_id", "count",
+}
+
+
+def _approval_arguments(arguments: dict[str, Any], *, redact_enabled: bool) -> dict[str, Any]:
+    """Redact secrets but keep the exact values an approver must judge.
+
+    Approval records are access-controlled. A reviewer must see the precise amount,
+    beneficiary and destination; passwords, tokens, message bodies and unrelated
+    personal fields remain redacted by the normal audit redactor.
+    """
+    if not redact_enabled:
+        return dict(arguments)
+    shown = redact(arguments)
+    for key in _DECISION_CRITICAL_ARGUMENTS:
+        if key in arguments:
+            shown[key] = arguments[key]
+    return shown
 
 
 class ApprovalNotFound(KeyError):
@@ -59,7 +79,7 @@ class ApprovalService:
         db: Database,
         notifier: Notifier,
         *,
-        timeout_s: float = 120.0,
+        timeout_s: float = 300.0,
         auto_decider: Callable[[ApprovalRecord], bool | None] | None = None,
         org_name: str | None = None,
         org_name_ar: str | None = None,
@@ -91,7 +111,7 @@ class ApprovalService:
             now = max(time.time(), self._last_created_at + 1e-6)
             self._last_created_at = now
         approval_id = new_id("apr_")
-        arguments = redact(call.arguments) if self.redact_arguments else dict(call.arguments)
+        arguments = _approval_arguments(call.arguments, redact_enabled=self.redact_arguments)
         shown_call = call.model_copy(update={"arguments": arguments})
         stored_decision = decision.model_copy(update={"approval_id": approval_id,
                                                       "approval_status": ApprovalStatus.PENDING.value})

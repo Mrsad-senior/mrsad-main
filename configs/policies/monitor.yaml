@@ -9,7 +9,7 @@ organization:
   internal_domains: [najd-trading.example]
 defaults:
   decision: deny            # tools not matched by any agent tool entry
-  approval_timeout_s: 120
+  approval_timeout_s: 300       # approvals expire after five minutes
 detector:                   # global defaults; tools/agents may override `detector:` keys
   flag_threshold: 0.5       # score >= flag  -> label suspicious, action "flag"
   block_threshold: 0.8      # score >= block -> on_detect action

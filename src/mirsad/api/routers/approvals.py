@@ -30,6 +30,18 @@ class DecisionRequest(StrictModel):
     note: str | None = Field(default=None, max_length=2000)
 
 
+def _gateway_is_waiting(request: Request, approval_id: str) -> bool:
+    """Return whether the main or sector-demo gateway owns this approval."""
+    gateways = (
+        request.app.state.gateway,
+        getattr(request.app.state, "sector_demo_gateway", None),
+    )
+    return any(
+        gateway is not None and gateway.is_waiting_for(approval_id)
+        for gateway in gateways
+    )
+
+
 @router.get("", response_model=list[ApprovalRecord])
 def list_approvals(request: Request, status_: StatusFilter = None,
                    limit: int = Query(100, ge=1, le=1000), _user=Depends(approver)) -> list[ApprovalRecord]:  # noqa: B008
@@ -52,7 +64,11 @@ async def decide(approval_id: str, body: DecisionRequest, request: Request,
     if comps.approvals.get(approval_id) is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Approval not found")
     # The gateway audits the outcome of approvals it is waiting on; orphaned ones are audited here.
-    gateway_waiting = request.app.state.gateway.is_waiting_for(approval_id)
+    # Sector demos use their own gateway but share the same approval service.
+    # If either gateway is waiting, that gateway will write the authoritative
+    # approval.decided audit event when it resumes. Treating a sector approval
+    # as orphaned here would write the same decision twice.
+    gateway_waiting = _gateway_is_waiting(request, approval_id)
     try:
         record = await comps.approvals.decide(approval_id, approve=body.approve, user=user.username, note=body.note)
     except ValueError as exc:

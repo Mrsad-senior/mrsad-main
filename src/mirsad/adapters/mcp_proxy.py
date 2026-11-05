@@ -416,7 +416,7 @@ def build_remote_proxy_server(
     *,
     session_id: str | None = None,
     http_client: httpx.AsyncClient | None = None,
-    timeout: float = 150.0,
+    timeout: float = 330.0,
 ) -> Server:
     """MCP server whose tools and calls are served by a remote Mirsad gateway over HTTP.
 
@@ -497,7 +497,7 @@ async def run_stdio_proxy(base_url: str, agent_key: str, *, session_id: str | No
     """
     from mcp.server.stdio import stdio_server
 
-    async with httpx.AsyncClient(timeout=httpx.Timeout(150.0, connect=10.0)) as http:
+    async with httpx.AsyncClient(timeout=httpx.Timeout(330.0, connect=10.0)) as http:
         server = build_remote_proxy_server(base_url, agent_key, session_id=session_id, http_client=http)
         async with stdio_server() as (read_stream, write_stream):
             await server.run(read_stream, write_stream, server.create_initialization_options())

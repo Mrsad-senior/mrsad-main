@@ -260,7 +260,7 @@ curl -s $BASE/v1/guard/tool-result -H "X-Mirsad-Key: $KEY" -H 'Content-Type: app
   -d '{"session_id":"conv-1","call_id":"c-7","tool":"fetch_url","content":"<html>…</html>"}'
 ```
 
-With `wait: true` (the default), a call that needs approval keeps the HTTP request open until an approver decides or the approval expires (`approval_timeout_s`, default 120 s). Set your client timeout accordingly; the SDK defaults to 150 s. With `wait: false` the call returns `require_approval` immediately and no approval request is created. Treat that result as "not allowed".
+With `wait: true` (the default), a call that needs approval keeps the HTTP request open until an approver decides or the approval expires (`approval_timeout_s`, default 300 s). Set your client timeout accordingly; the SDK defaults to 330 s. With `wait: false` the call returns `require_approval` immediately and no approval request is created. Treat that result as "not allowed".
 
 #### Approvals (approver / admin)
 
@@ -513,7 +513,7 @@ All settings are environment variables with the `MIRSAD_` prefix, or entries in 
 | `MIRSAD_SECRET_KEY` | generated, stored with mode 600 | JWT signing. The audit HMAC key is derived from it. |
 | `MIRSAD_POLICY_PATH` | `configs/policies/default.yaml` | Initial policy, used when the DB has none |
 | `MIRSAD_UPSTREAMS_PATH` | `configs/upstreams.yaml` | Upstream tool servers |
-| `MIRSAD_APPROVAL_TIMEOUT_S` | `120` | Approval expiry |
+| `MIRSAD_APPROVAL_TIMEOUT_S` | `300` | Approval expiry (five minutes) |
 | `MIRSAD_MAX_RESULT_CHARS` | `200000` | Size at which tool results are truncated |
 | `MIRSAD_AUDIT_PAYLOAD_MAX_CHARS` | `20000` | Audit payload size cap (enforced by the audit log) |
 | `MIRSAD_TOKEN_TTL_HOURS` | `12` | JWT lifetime |

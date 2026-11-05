@@ -349,7 +349,7 @@ def test_merge_keys_and_anchors_are_supported():
 def test_defaults_are_filled_in():
     doc = load_policy("version: 1\nagents: []\n")
     assert doc.defaults.decision == Action.DENY
-    assert doc.defaults.approval_timeout_s == 120
+    assert doc.defaults.approval_timeout_s == 300
     assert doc.detector.block_threshold == 0.8
     assert doc.taint.untrusted_controls_destination == Action.DENY
     assert "to_iban" in doc.taint.destination_params

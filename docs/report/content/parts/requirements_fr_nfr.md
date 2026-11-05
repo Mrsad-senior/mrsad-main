@@ -55,5 +55,5 @@ Table: Non-functional requirements {#tab:nfr widths=0.7,1.1,3,2}
 - BR2: Payments and record deletions always require human approval, whatever the risk score.
 - BR3: No more than 50 customer records may be exported or e-mailed in one call.
 - BR4: E-mail to domains outside the organisation requires approval; data originating from untrusted content may never choose its own destination.
-- BR5: An approval request expires after 120 seconds (configurable) and expiry means denial.
+- BR5: An approval request expires after 300 seconds (five minutes, configurable) and expiry means denial.
 - BR6: Audit events are append-only; no user role can edit or delete them through the application.

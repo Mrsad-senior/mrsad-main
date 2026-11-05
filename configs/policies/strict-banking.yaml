@@ -13,7 +13,7 @@ organization:
   internal_domains: [najd-bank.example]
 defaults:
   decision: deny
-  approval_timeout_s: 90
+  approval_timeout_s: 300       # approvals expire after five minutes
 detector:
   flag_threshold: 0.4
   block_threshold: 0.7

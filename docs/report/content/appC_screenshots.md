@@ -2,7 +2,7 @@
 
 All screenshots in this appendix were taken from the running system, not from mock-ups. The script `scripts/capture_screenshots.py` initialises a temporary installation with demonstration users and the demonstration agent (`mirsad init --demo`), starts the gateway with the simulated Najd Trading Co. workspace, and generates activity through the real agent API: eight allowed calls (reading e-mail, looking up customers, listing documents, an internal e-mail and a CRM note update), four calls that the policy denies (a 200-record export, a 250,000 SAR transfer, a request to a cloud metadata address and a tool that does not exist), and four calls that need approval. The approver then approves one request and denies another, leaving two pending. Playwright with Chrome captures the dashboard at 1440 × 900 pixels and the approver app at 390 × 844 pixels (a phone-sized screen). All names, addresses, IBANs and records are fictional.
 
-For the capture run the approval timeout was raised from the default 120 seconds to 15 minutes so that pending requests stay open while the pages are captured. This is why the countdowns show about 14–15 minutes (from a 900-second timeout).
+For the capture run the approval timeout was raised from the default 300 seconds to 15 minutes so that pending requests stay open while the pages are captured. This is why the countdowns show about 14–15 minutes (from a 900-second timeout).
 
 ## C.1 Administration Dashboard (English)
 

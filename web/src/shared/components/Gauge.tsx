@@ -34,7 +34,10 @@ export function ScoreGauge({
   const arc = (from: number, to: number) => {
     const [x1, y1] = point(from);
     const [x2, y2] = point(to);
-    return `M ${x1} ${y1} A ${r} ${r} 0 ${to - from > 0.5 ? 1 : 0} 1 ${x2} ${y2}`;
+    // The scale spans only a semicircle, so every visible segment is at most
+    // 180 degrees and must use SVG's short-arc flag. Treating a score above
+    // 0.5 as a >180-degree arc makes the fill wrap outside the gauge track.
+    return `M ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2}`;
   };
   const tick = (frac: number) => {
     const [x1, y1] = point(frac, r - 16);
