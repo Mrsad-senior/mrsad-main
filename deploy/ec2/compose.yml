@@ -9,6 +9,10 @@ services:
     ports: !override
       - "127.0.0.1:8700:8700"
     depends_on: !reset {}
+    # The image installs mirsad into site-packages, so the gateway looks for configs/ two levels
+    # above the package (policy, upstreams, sector demo policy), not in /app: mount it there.
+    volumes:
+      - ./configs:/usr/local/lib/python3.12/configs:ro
     environment:
       MIRSAD_DATABASE_URL: ${MIRSAD_DATABASE_URL:?set MIRSAD_DATABASE_URL in .env}
       MIRSAD_CORS_ORIGINS: ${MIRSAD_CORS_ORIGINS:?set MIRSAD_CORS_ORIGINS in .env}
@@ -20,6 +24,11 @@ services:
       MIRSAD_JUDGE_MODEL: ${MIRSAD_JUDGE_MODEL:-qwen2.5:3b}
       MIRSAD_JUDGE_EXTRACTION: ${MIRSAD_JUDGE_EXTRACTION:-flag}
       MIRSAD_INTENT_JUDGE_ENABLED: ${MIRSAD_INTENT_JUDGE_ENABLED:-0}
+      # Demo agent and the /v1 proxy: any OpenAI-compatible API (base URL ending in /v1). No Ollama
+      # service runs here, so these replace the base file's http://ollama:11434/v1.
+      MIRSAD_LLM_BASE_URL: ${MIRSAD_LLM_BASE_URL:?set MIRSAD_LLM_BASE_URL in .env}
+      MIRSAD_LLM_MODEL: ${MIRSAD_LLM_MODEL:?set MIRSAD_LLM_MODEL in .env}
+      MIRSAD_LLM_API_KEY: ${MIRSAD_LLM_API_KEY:-}
       MIRSAD_VAPID_PUBLIC_KEY: ${MIRSAD_VAPID_PUBLIC_KEY:-}
       MIRSAD_VAPID_PRIVATE_KEY: ${MIRSAD_VAPID_PRIVATE_KEY:-}
   db:
