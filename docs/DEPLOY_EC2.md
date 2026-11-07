@@ -155,10 +155,41 @@ nano .env
 | `MIRSAD_ADMIN_PASSWORD=` | yes | password of the first admin (`MIRSAD_ADMIN_USERNAME`). Read only on a start that finds no users in the database |
 | `TUNNEL_TOKEN=` | yes | the tunnel token from step 1 |
 | `MIRSAD_DATABASE_URL=` | yes | the Supabase session pooler URL from step 2, in single quotes |
+| `MIRSAD_LLM_BASE_URL=` / `MIRSAD_LLM_MODEL=` | yes | the demo agent's LLM, see Demo LLM below |
+| `MIRSAD_LLM_API_KEY=` | for a hosted API | that LLM's key, typed at a hidden prompt (below) |
 | `MIRSAD_VAPID_PUBLIC_KEY=` / `MIRSAD_VAPID_PRIVATE_KEY=` | no | web push for the approver PWA; set both or neither |
 
-The gateway needs no Supabase API key (publishable or secret) and no third-party API key: it talks to
-Supabase only as a Postgres database.
+The gateway needs no Supabase API key (publishable or secret): it talks to Supabase only as a Postgres
+database. Its only third-party key is the demo LLM's.
+
+### Demo LLM
+
+The Demo Console's agent (`MIRSAD_ENABLE_DEMO=true`) gets its replies from an LLM. No Ollama runs on this
+server, so point it at a hosted OpenAI-compatible API, such as Groq:
+
+- `MIRSAD_LLM_BASE_URL`: the API's base URL, ending in `/v1`. The agent calls `<base URL>/chat/completions`.
+  For Groq it is `https://api.groq.com/openai/v1`.
+- `MIRSAD_LLM_MODEL`: a model that supports tool calls, for example Groq's `openai/gpt-oss-120b`.
+- `MIRSAD_LLM_API_KEY`: the API's key, sent as `Authorization: Bearer <key>`. Leave it empty for an
+  endpoint that needs none.
+
+Compose refuses to start while the base URL or the model is empty, even with the demo off. The same key also
+serves the gateway's `/v1` proxy to any agent holding a Mirsad agent key, so give it a spending limit. The
+LLM judge layers don't use these settings: they call a local Ollama, so `MIRSAD_JUDGE_ENABLED` and
+`MIRSAD_INTENT_JUDGE_ENABLED` stay `0` here.
+
+Don't type the key in `nano`, where it shows on screen. `read -s` reads it without echoing it and keeps it
+out of the shell history:
+
+```bash
+cd ~/mirsad
+read -rsp 'LLM API key: ' K && echo
+(umask 077 && K="$K" awk '/^MIRSAD_LLM_API_KEY=/ { $0 = "MIRSAD_LLM_API_KEY=" ENVIRON["K"] } 1' .env > .env.new) \
+  && mv .env.new .env; unset K
+grep -c '^MIRSAD_LLM_API_KEY=.' .env   # prints 1 once the key is set, without showing it
+```
+
+When you change the key on a running server, run `docker compose up -d` afterwards to recreate the gateway.
 
 ## 6. Build and start
 
