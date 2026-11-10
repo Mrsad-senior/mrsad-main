@@ -121,7 +121,7 @@ export function Shell({ children }: { children: ReactNode }) {
 
       <aside className="sidebar" id="sidebar" aria-label={t('nav.sidebar')}>
         <div className="sidebar__brand">
-          <Logo size={36} subtitle={t('app.console')} />
+          <Logo size={32} subtitle={t('shell.tagline')} />
           <button type="button" className="icon-btn sidebar__close" onClick={() => setMenuOpen(false)} aria-label={t('nav.closeMenu')}>
             <Icon name="x" />
           </button>
@@ -139,7 +139,7 @@ export function Shell({ children }: { children: ReactNode }) {
                   {items.map((item) => (
                     <li key={item.to}>
                       <NavLink to={item.to} end={item.to === '/'} className="nav-link">
-                        <Icon name={item.icon} />
+                        <Icon name={item.icon} size={18} />
                         <span className="nav-link__label">{t(item.label)}</span>
                         {item.badge === 'approvals' && pending ? (
                           <span className="count-pill" aria-label={t('nav.pendingCount', { count: pending })}>
@@ -156,10 +156,22 @@ export function Shell({ children }: { children: ReactNode }) {
         </nav>
         <div className="sidebar__footer">
           <a className="nav-link" href="/approve" target="_blank" rel="noopener">
-            <Icon name="smartphone" />
+            <Icon name="smartphone" size={18} />
             <span className="nav-link__label">{t('nav.approverApp')}</span>
             <Icon name="external" size={14} />
           </a>
+          <div className="sidebar__user">
+            <span className="sidebar__avatar" aria-hidden="true">
+              {initials(user?.display_name || user?.username || '')}
+            </span>
+            <span className="sidebar__user-text">
+              <span className="sidebar__user-name">{user?.display_name || user?.username}</span>
+              <span className="sidebar__user-role">{user ? t(`roles.${user.role}`) : ''}</span>
+            </span>
+            <button type="button" className="icon-btn sidebar__signout" onClick={logout} aria-label={t('auth.signOut')} title={t('auth.signOut')}>
+              <Icon name="logout" size={18} />
+            </button>
+          </div>
         </div>
       </aside>
       <button type="button" className="shell__scrim" aria-hidden="true" tabIndex={-1} onClick={() => setMenuOpen(false)} />
@@ -179,20 +191,11 @@ export function Shell({ children }: { children: ReactNode }) {
           <span className="topbar__brand">
             <Logo size={28} />
           </span>
+          <span className="topbar__workspace">{t('shell.workspace')}</span>
           <span className="spacer" />
-          <LiveStatus />
           <LangToggle />
+          <LiveStatus />
           <ThemeToggle />
-          <div className="topbar__user">
-            <Icon name="user" size={18} />
-            <span className="topbar__user-text">
-              <span className="topbar__user-name">{user?.display_name || user?.username}</span>
-              <span className="topbar__user-role">{user ? t(`roles.${user.role}`) : ''}</span>
-            </span>
-          </div>
-          <button type="button" className="icon-btn" onClick={logout} aria-label={t('auth.signOut')} title={t('auth.signOut')}>
-            <Icon name="logout" />
-          </button>
         </header>
         <main id="main" ref={mainRef} tabIndex={-1} className="page">
           {children}
@@ -203,6 +206,16 @@ export function Shell({ children }: { children: ReactNode }) {
       </div>
     </div>
   );
+}
+
+/** Up to two initials for the avatar beside the signed-in user's name. */
+function initials(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  return parts
+    .slice(0, 2)
+    .map((part) => Array.from(part)[0] ?? '')
+    .join('')
+    .toUpperCase();
 }
 
 function LiveStatus() {

@@ -107,6 +107,10 @@ export const en = {
   'nav.tools': 'Tools',
   'nav.users': 'Users',
 
+  // shell --------------------------------------------------------------
+  'shell.tagline': 'AI agent firewall',
+  'shell.workspace': 'Security workspace',
+
   // live stream --------------------------------------------------------
   'live.connected': 'Live',
   'live.connecting': 'Connecting…',

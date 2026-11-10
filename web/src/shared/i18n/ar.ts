@@ -110,6 +110,10 @@ export const ar: Record<MessageKey, string> = {
   'nav.tools': 'الأدوات',
   'nav.users': 'المستخدمون',
 
+  // shell --------------------------------------------------------------
+  'shell.tagline': 'حماية وكلاء الذكاء الاصطناعي',
+  'shell.workspace': 'مساحة العمل الأمنية',
+
   // live stream --------------------------------------------------------
   'live.connected': 'مباشر',
   'live.connecting': 'جارٍ الاتصال…',
