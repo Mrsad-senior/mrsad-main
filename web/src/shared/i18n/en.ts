@@ -118,7 +118,7 @@ export const en = {
   // vocabularies -------------------------------------------------------
   'action.allow': 'Allowed',
   'action.deny': 'Denied',
-  'action.require_approval': 'Needs approval',
+  'action.require_approval': 'Held',
   'inspection.block': 'Blocked',
   'inspection.flag': 'Flagged',
   'inspection.pass': 'Passed',

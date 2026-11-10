@@ -121,7 +121,7 @@ export const ar: Record<MessageKey, string> = {
   // vocabularies -------------------------------------------------------
   'action.allow': 'مسموح',
   'action.deny': 'مرفوض',
-  'action.require_approval': 'يتطلب موافقة',
+  'action.require_approval': 'معلّق',
   'inspection.block': 'محجوب',
   'inspection.flag': 'مُعلَّم',
   'inspection.pass': 'سليم',
