@@ -46,6 +46,8 @@ body.approver {
 .a-header .live {
   color: var(--nav-muted);
   font-size: 0.78rem;
+  background: transparent;
+  padding-inline: 0;
 }
 
 .a-header .btn--ghost {
@@ -245,7 +247,7 @@ body.approver {
 .risk--low .a-detail__header { border-block-start-color: var(--chart-allow); }
 .risk--medium .a-detail__header { border-block-start-color: var(--chart-approval); }
 .risk--high .a-detail__header { border-block-start-color: var(--serious-fg); }
-.risk--critical .a-detail__header { border-block-start-color: var(--critical-bg); }
+.risk--critical .a-detail__header { border-block-start-color: var(--danger); }
 
 .a-detail__title {
   font-size: 1.4rem;

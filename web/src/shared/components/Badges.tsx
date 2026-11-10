@@ -1,6 +1,6 @@
 /**
- * Status badges. Every badge pairs colour with an icon and a text label, so meaning
- * never depends on colour alone (WCAG 1.4.1).
+ * Status badges. Every badge pairs colour with a text label, so meaning never depends on
+ * colour alone (WCAG 1.4.1). The icon stays in the markup; the Figma style hides it in CSS.
  */
 import type { Action, ApprovalStatus, DetectionLabel, InspectionAction, Layer, Risk } from '../api/types';
 import { useI18n } from '../i18n';
@@ -8,9 +8,9 @@ import { Icon, type IconName } from './Icon';
 
 type Tone = 'allow' | 'deny' | 'warn' | 'info' | 'neutral' | 'serious' | 'critical';
 
-function Badge({ tone, icon, children, title, size }: { tone: Tone; icon?: IconName; children: string; title?: string; size?: 'sm' | 'lg' }) {
+function Badge({ tone, icon, children, title, size, status }: { tone: Tone; icon?: IconName; children: string; title?: string; size?: 'sm' | 'lg'; status?: boolean }) {
   return (
-    <span className={`badge badge--${tone}${size ? ` badge--${size}` : ''}`} title={title}>
+    <span className={`badge badge--${tone}${size ? ` badge--${size}` : ''}${status ? ' badge--status' : ''}`} title={title}>
       {icon ? <Icon name={icon} size={size === 'lg' ? 18 : 14} strokeWidth={2.2} /> : null}
       <span>{children}</span>
     </span>
@@ -28,7 +28,7 @@ export function DecisionBadge({ action, size }: { action: Action | string | null
   if (!action) return <Badge tone="neutral">{t('app.none')}</Badge>;
   const [tone, icon] = ACTION_STYLE[action as Action] ?? ['neutral', 'info'];
   return (
-    <Badge tone={tone} icon={icon} size={size}>
+    <Badge tone={tone} icon={icon} size={size} status>
       {tx(`action.${action}`, action)}
     </Badge>
   );
@@ -85,7 +85,7 @@ export function ApprovalStatusBadge({ status }: { status: ApprovalStatus | strin
   const { tx } = useI18n();
   const [tone, icon] = STATUS_STYLE[status as ApprovalStatus] ?? ['neutral', 'info'];
   return (
-    <Badge tone={tone} icon={icon}>
+    <Badge tone={tone} icon={icon} status>
       {tx(`status.${status}`, status)}
     </Badge>
   );
