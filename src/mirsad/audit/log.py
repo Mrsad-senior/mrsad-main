@@ -136,7 +136,8 @@ def verify_events(
                                    "(event inserted, removed or reordered)")
         expected = compute_hash(hmac_key, event.prev_hash, event)
         if not hmac.compare_digest(expected, event.hash):
-            return fail(event.seq, f"seq {event.seq}: HMAC mismatch, the event was modified or its hash forged")
+            cause = "the event was modified, its hash was forged, or the audit signing key changed"
+            return fail(event.seq, f"seq {event.seq}: HMAC mismatch; {cause}")
         if anchor_seq is not None and event.seq == anchor_seq:
             anchor_ok = hmac.compare_digest(event.hash, str(anchor.get("hash", "")))
             if not anchor_ok:

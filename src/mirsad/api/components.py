@@ -231,9 +231,13 @@ def build_components(settings: Settings, overrides: dict[str, Any] | None = None
     else:
         import os
 
+        from mirsad.llm_config import resolve_judge_connection
         from mirsad.security.intent import OllamaIntentJudge
         from mirsad.security.monitor import SecurityMonitor
-        judge = OllamaIntentJudge(model=os.getenv('MIRSAD_JUDGE_MODEL', 'qwen2.5:3b')) if os.getenv('MIRSAD_INTENT_JUDGE_ENABLED') == '1' else None
+        connection = resolve_judge_connection()
+        judge = (OllamaIntentJudge(base_url=connection.base_url, api_key=connection.api_key,
+                                   model=connection.model)
+                 if os.getenv('MIRSAD_INTENT_JUDGE_ENABLED') == '1' else None)
         gateway = Gateway(
             policy=policy, taint=taint, detector=detector, audit=audit, approvals=approvals,
             security_monitor=SecurityMonitor(intent_judge=judge),

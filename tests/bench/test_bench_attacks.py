@@ -376,11 +376,16 @@ def test_attribute_categories():
 # --------------------------------------------------------------------------- runner, report, loader
 
 
-def _scenario_dir(tmp_path, **kw):
-    scen = tmp_path / "scenarios"
+def _scenario_dir_without_attacks(tmp_path, name="scenarios-no-attacks"):
+    scen = tmp_path / name
     scen.mkdir()
     for f in SCENARIOS_DIR.glob("*.yaml"):
         shutil.copy(f, scen / f.name)
+    return scen
+
+
+def _scenario_dir(tmp_path, **kw):
+    scen = _scenario_dir_without_attacks(tmp_path, "scenarios")
     write_attacks(scen / "attacks", **kw)
     return scen
 
@@ -424,8 +429,10 @@ def test_runner_auto_mode_runs_both_kinds_and_writes_the_asr_figure(tmp_path):
 
 
 def test_runner_rejects_attack_mode_without_files_and_bad_filters(tmp_path):
+    no_attacks = _scenario_dir_without_attacks(tmp_path)
     with pytest.raises(SystemExit, match="no attack episodes"):
-        run_main(["--episodes", "attack", "--out", str(tmp_path / "x"), "--no-figures"])
+        run_main(["--episodes", "attack", "--scenarios", str(no_attacks),
+                  "--out", str(tmp_path / "x"), "--no-figures"])
     scen = _scenario_dir(tmp_path)
     with pytest.raises(SystemExit, match="no-such-style"):
         run_main(["--episodes", "attack", "--scenarios", str(scen), "--templates", "no-such-style",
@@ -453,7 +460,9 @@ def test_loader_checks_attack_files(tmp_path):
 
 
 def test_loader_has_attacks_exit_codes(tmp_path, capsys):
-    assert loader_main([str(SCENARIOS_DIR), "--has-attacks"]) == 3
+    no_attacks = _scenario_dir_without_attacks(tmp_path)
+    assert loader_main([str(no_attacks), "--has-attacks"]) == 3
+    assert loader_main([str(SCENARIOS_DIR), "--has-attacks"]) == 0
     scen = _scenario_dir(tmp_path)
     assert loader_main([str(scen), "--has-attacks"]) == 0
     write_attacks(scen / "attacks", templates=[sample_template(template="SAMPLE without placeholder")])

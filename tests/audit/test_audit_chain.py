@@ -169,6 +169,7 @@ def test_wrong_key_fails_verification(db):
     AuditLog(db, HMAC_KEY).append("system.started")
     report = AuditLog(db, b"some-other-key-that-is-long-enough").verify()
     assert not report.ok and report.first_bad_seq == 1
+    assert "signing key changed" in report.message
 
 
 def test_payload_is_redacted_before_storage(audit, db):

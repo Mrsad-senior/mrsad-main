@@ -190,7 +190,7 @@ export const ar: Record<MessageKey, string> = {
 
   // overview -----------------------------------------------------------
   'overview.audit': 'سلامة سجل التدقيق',
-  'overview.auditBroken': 'تم اكتشاف تلاعب',
+  'overview.auditBroken': 'فشل التحقق من سجل التدقيق',
   'overview.auditChecked': 'تم التحقق من {count} حدث',
   'overview.auditHint': 'كل حدث مرتبط بالحدث السابق بسلسلة HMAC.',
   'overview.auditOk': 'سلسلة التجزئة سليمة',

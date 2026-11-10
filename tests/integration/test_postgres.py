@@ -11,7 +11,7 @@ import pytest
 from sqlalchemy import text
 
 pgserver = pytest.importorskip("pgserver")
-pytest.importorskip("psycopg")
+psycopg = pytest.importorskip("psycopg")
 
 from mirsad.approvals import ApprovalService, Notifier  # noqa: E402
 from mirsad.audit import AuditLog  # noqa: E402
@@ -26,9 +26,15 @@ pytestmark = pytest.mark.slow
 def pg_url(tmp_path_factory):
     server = pgserver.get_server(tmp_path_factory.mktemp("pgdata"), cleanup_mode="stop")
     uri = server.get_uri()  # postgresql://postgres:@/postgres?host=/socket/dir
-    server.psql("CREATE DATABASE mirsad_test;")
-    yield uri.replace("postgresql://", "postgresql+psycopg://", 1).replace("/postgres?", "/mirsad_test?", 1)
-    server.cleanup()
+    try:
+        # pgserver.psql builds an unquoted shell command, which fails when the
+        # repository path contains spaces on Windows. The driver is portable.
+        with psycopg.connect(uri, autocommit=True) as connection:
+            connection.execute("CREATE DATABASE mirsad_test")
+        yield uri.replace("postgresql://", "postgresql+psycopg://", 1).replace(
+            "/postgres?", "/mirsad_test?", 1)
+    finally:
+        server.cleanup()
 
 
 @pytest.fixture
