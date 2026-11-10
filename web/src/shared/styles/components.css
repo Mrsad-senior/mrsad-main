@@ -704,6 +704,27 @@ html:not([lang="ar"]) .badge--status {
   from { transform: translateY(40px); opacity: 0.5; }
 }
 
+/* Figma approve / reject confirmation: equal-width Cancel (navy) and confirm buttons. */
+.decision-dialog .decision-footer {
+  display: flex;
+  gap: var(--space-3);
+  inline-size: 100%;
+}
+
+.decision-dialog .decision-footer .btn {
+  flex: 1;
+}
+
+.decision-dialog__body {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.decision-dialog__identity {
+  color: var(--text-muted);
+  font-size: var(--font-size-small);
+}
+
 /* ------------------------------------------------------------------ toasts */
 .toasts {
   position: fixed;
@@ -1196,6 +1217,15 @@ html:not([lang="ar"]) .badge--status {
 
 .args__row dd {
   margin: 4px 0 0;
+}
+
+/* The argument name is monospace; its flag is prose and keeps the text font. */
+.args__row dt .tag {
+  font-family: var(--font-sans);
+}
+
+html[lang="ar"] .args__row dt .tag {
+  font-family: var(--font-arabic);
 }
 
 .args__row--flagged .args__value {

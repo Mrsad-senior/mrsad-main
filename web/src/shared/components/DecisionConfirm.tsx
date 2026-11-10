@@ -57,16 +57,12 @@ export function DecisionConfirm({
       onClose={onClose}
       variant={variant}
       size="sm"
+      className="decision-dialog"
       initialFocusRef={confirmRef}
-      title={
-        <>
-          <Icon name={approve ? 'check-circle' : 'x-octagon'} />
-          {approve ? t('approvals.confirmApprove') : t('approvals.confirmDeny')}
-        </>
-      }
+      title={approve ? t('approvals.confirmApprove') : t('approvals.confirmDeny')}
       footer={
         <div className="decision-footer">
-          <button type="button" className="btn btn--ghost btn--lg" onClick={onClose}>
+          <button type="button" className="btn btn--solid btn--lg" onClick={onClose}>
             {t('app.cancel')}
           </button>
           <button
@@ -89,7 +85,7 @@ export function DecisionConfirm({
           <code className="code-inline">{record.tool}</code>
           <span className="muted small">{t('approvals.requestedBy', { agent: record.agent_id })}</span>
         </div>
-        <p>{approve ? t('approvals.confirmApproveBody', { tool: record.tool }) : t('approvals.confirmDenyBody')}</p>
+        <p className="decision-dialog__body">{approve ? t('approvals.confirmApproveBody', { tool: record.tool }) : t('approvals.confirmDenyBody')}</p>
         <div className="field">
           <label className="field__label" htmlFor={noteId}>
             {t('approvals.note')}
@@ -105,6 +101,7 @@ export function DecisionConfirm({
             dir="auto"
           />
         </div>
+        <p className="decision-dialog__identity">{t('approvals.identityNote')}</p>
       </div>
     </Dialog>
   );

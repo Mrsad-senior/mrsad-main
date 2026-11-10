@@ -73,6 +73,30 @@ export function RiskBadge({ risk, size, withPrefix }: { risk: Risk | string | nu
   );
 }
 
+/**
+ * Numeric risk score in the risk level's colours (Figma: "0.96" in the queue, "Risk 0.96 ·
+ * Critical" in the details). The level word is always present, visibly or for screen readers.
+ */
+export function RiskScoreBadge({ risk, score, withLabel }: { risk: Risk | string | null | undefined; score?: number | null; withLabel?: boolean }) {
+  const { t, tx, fmtNumber } = useI18n();
+  if (typeof score !== 'number') return <RiskBadge risk={risk} />;
+  const [tone] = RISK_STYLE[risk as Risk] ?? ['neutral'];
+  const label = risk ? tx(`risk.${risk}`, risk) : t('app.none');
+  const value = fmtNumber(score, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return (
+    <span className={`badge badge--${tone}`} title={label}>
+      {withLabel ? (
+        <span>{t('risk.scoreWithLabel', { score: value, risk: label })}</span>
+      ) : (
+        <>
+          <span>{value}</span>
+          <span className="visually-hidden"> {label}</span>
+        </>
+      )}
+    </span>
+  );
+}
+
 const STATUS_STYLE: Record<ApprovalStatus, [Tone, IconName]> = {
   pending: ['warn', 'clock'],
   approved: ['allow', 'check-circle'],

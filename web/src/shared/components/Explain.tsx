@@ -186,12 +186,57 @@ export function approvalSummary(record: ApprovalRecord, lang: 'en' | 'ar', fallb
   return text || fallback;
 }
 
-/** Summary + why paused + provenance + arguments (shared by dashboard and PWA). */
-export function ApprovalExplanation({ record, argsOpen = false }: { record: ApprovalRecord; argsOpen?: boolean }) {
+/**
+ * Summary + why paused + provenance + arguments (shared by dashboard and PWA).
+ * `layout="review"` arranges the same sections as the Figma "Approval details" cards:
+ * what the agent is trying to do, then tool arguments beside the reasons, then provenance.
+ */
+export function ApprovalExplanation({ record, argsOpen = false, layout = 'stack' }: { record: ApprovalRecord; argsOpen?: boolean; layout?: 'stack' | 'review' }) {
   const { t, lang } = useI18n();
   const reasons = record.decision?.reasons ?? [];
   const provenance = extractProvenance(reasons);
   const flagged = provenance.map((p) => p.param).filter((p): p is string => Boolean(p));
+  const summary = approvalSummary(record, lang, t('approvals.fallbackSummary', { agent: record.agent_id, tool: record.tool }));
+  if (layout === 'review') {
+    return (
+      <div className="explain explain--review">
+        <section aria-labelledby={`sum-${record.id}`} className="review-card review-card--agent">
+          <h3 id={`sum-${record.id}`} className="review-card__eyebrow">
+            {t('approvals.agentTrying')}
+          </h3>
+          <p className="review-card__summary" dir="auto">
+            {summary}
+          </p>
+          <p className="review-card__tool">
+            <bdi className="mono">{record.tool}</bdi>
+          </p>
+        </section>
+        <div className="review-grid">
+          <section aria-labelledby={`args-${record.id}`} className="review-card">
+            <h3 id={`args-${record.id}`} className="review-card__title">
+              {t('approvals.toolArgs')}
+            </h3>
+            <p className="review-card__tool review-card__tool--link">
+              <bdi className="mono">{record.tool}</bdi>
+            </p>
+            <ArgumentsList args={record.arguments} flagged={flagged} defaultOpen />
+          </section>
+          <section aria-labelledby={`why-${record.id}`} className="review-card">
+            <h3 id={`why-${record.id}`} className="review-card__title">
+              {t('approvals.whyPaused')}
+            </h3>
+            <WhyPaused reasons={reasons} />
+          </section>
+        </div>
+        <section aria-labelledby={`from-${record.id}`} className="review-card">
+          <h3 id={`from-${record.id}`} className="review-card__title">
+            {t('approvals.dataFrom')}
+          </h3>
+          <ProvenanceList items={provenance} />
+        </section>
+      </div>
+    );
+  }
   return (
     <div className="explain">
       <section aria-labelledby={`sum-${record.id}`} className="explain__section">
@@ -199,7 +244,7 @@ export function ApprovalExplanation({ record, argsOpen = false }: { record: Appr
           {t('approvals.summary')}
         </h3>
         <p className="explain__summary" dir="auto">
-          {approvalSummary(record, lang, t('approvals.fallbackSummary', { agent: record.agent_id, tool: record.tool }))}
+          {summary}
         </p>
       </section>
       <section aria-labelledby={`why-${record.id}`} className="explain__section">

@@ -3,7 +3,7 @@ import { APPROVAL_STATUSES, type ApprovalRecord, type ApprovalStatus } from '../
 import { useApi } from '../../shared/app/auth';
 import { useNow, useQuery } from '../../shared/app/hooks';
 import { useLive, useLiveEvent } from '../../shared/app/live';
-import { ApprovalStatusBadge, RiskBadge, riskIcon } from '../../shared/components/Badges';
+import { ApprovalStatusBadge, RiskBadge, RiskScoreBadge } from '../../shared/components/Badges';
 import { Countdown } from '../../shared/components/Countdown';
 import { DecisionConfirm } from '../../shared/components/DecisionConfirm';
 import { Dialog } from '../../shared/components/Dialog';
@@ -16,7 +16,7 @@ import { PageHeader, Section } from '../components/PageHeader';
 
 export default function Approvals() {
   const api = useApi();
-  const { t } = useI18n();
+  const { t, fmtNumber } = useI18n();
   const live = useLive();
   const [statusFilter, setStatusFilter] = useState<ApprovalStatus | ''>('');
   const [detail, setDetail] = useState<ApprovalRecord | null>(null);
@@ -57,46 +57,66 @@ export default function Approvals() {
     <div className="stack-lg">
       <PageHeader title={t('approvals.title')} subtitle={t('approvals.subtitle')} />
 
+      <p className="banner banner--warn">
+        <Icon name="clock" size={20} />
+        <span>{t('approvals.autoRejectNotice')}</span>
+      </p>
+
       <Section
         id="queue"
         title={
           <>
-            <Icon name="inbox" size={18} />
             {t('approvals.queue')}
-            {pending.data?.length ? <span className="count-pill">{pending.data.length}</span> : null}
+            {pending.data?.length ? (
+              <span className="badge badge--warn queue-count">{t('approvals.pendingCount', { count: fmtNumber(pending.data.length) })}</span>
+            ) : null}
           </>
         }
-        subtitle={live.status === 'open' ? t('approvals.liveHint') : t('approvals.pollHint')}
       >
         <QueryView {...pending}>
           {(list) =>
             list.length === 0 ? (
               <EmptyState icon="shield-check" title={t('approvals.emptyQueue')} />
             ) : (
-              <ul className="queue" aria-live="polite">
-                {list.map((record) => (
-                  <QueueCard
-                    key={record.id}
-                    record={record}
-                    now={now}
-                    onOpen={() => setDetail(record)}
-                    onDecide={(approve) => setDeciding({ record, approve })}
-                  />
-                ))}
-              </ul>
+              <div className="table-wrap table-wrap--flush" aria-live="polite">
+                <table className="table queue-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">{t('approvals.colTool')}</th>
+                      <th scope="col">{t('approvals.colRequest')}</th>
+                      <th scope="col">{t('approvals.colAgent')}</th>
+                      <th scope="col">{t('approvals.colRiskScore')}</th>
+                      <th scope="col">{t('approvals.colAutoReject')}</th>
+                      <th scope="col">
+                        <span className="visually-hidden">{t('app.actions')}</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {list.map((record, index) => (
+                      <QueueRow
+                        key={record.id}
+                        record={record}
+                        now={now}
+                        urgent={index === 0}
+                        onOpen={() => setDetail(record)}
+                        onDecide={(approve) => setDeciding({ record, approve })}
+                      />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )
           }
         </QueryView>
       </Section>
+      <p className="page-note">
+        {live.status === 'open' ? t('approvals.liveHint') : t('approvals.pollHint')} · {t('approvals.timezone', { zone: timeZone() })}
+      </p>
 
       <Section
         id="history"
-        title={
-          <>
-            <Icon name="clock" size={18} />
-            {t('approvals.history')}
-          </>
-        }
+        title={t('approvals.history')}
         actions={
           <label className="row small">
             <span>{t('approvals.filterStatus')}</span>
@@ -119,29 +139,27 @@ export default function Approvals() {
           open
           onClose={() => setDetail(null)}
           variant="drawer"
-          title={
-            <>
-              <RiskBadge risk={detail.risk} />
-              <code className="code-inline">{detail.tool}</code>
-            </>
-          }
+          className="review-drawer"
+          title={t('approvals.reviewTitle')}
           footer={
             detail.status === 'pending' ? (
-              <>
+              <div className="review-decision">
+                <p className="review-decision__note">{t('approvals.signedNote')}</p>
                 <button type="button" className="btn btn--danger" onClick={() => setDeciding({ record: detail, approve: false })}>
-                  <Icon name="x" />
                   {t('approvals.deny')}
                 </button>
-                <button type="button" className="btn btn--approve" onClick={() => setDeciding({ record: detail, approve: true })}>
-                  <Icon name="check" />
+                <button type="button" className="btn btn--ghost" onClick={() => setDeciding({ record: detail, approve: true })}>
                   {t('approvals.approve')}
                 </button>
-              </>
+              </div>
             ) : undefined
           }
         >
-          <ApprovalMeta record={detail} now={now} />
-          <ApprovalExplanation record={detail} argsOpen />
+          <div className="review">
+            {detail.status !== 'pending' ? <DecisionOutcome record={detail} onBack={() => setDetail(null)} /> : null}
+            <ApprovalMeta record={detail} now={now} />
+            <ApprovalExplanation record={detail} argsOpen layout="review" />
+          </div>
         </Dialog>
       ) : null}
 
@@ -152,13 +170,65 @@ export default function Approvals() {
   );
 }
 
+/** Time zone the dates on this page are shown in (the browser's, as fmtDateTime uses it). */
+function timeZone(): string {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+  } catch {
+    return 'UTC';
+  }
+}
+
+/** Figma "Decision recorded": the outcome of a decided request, in green or rose. */
+function DecisionOutcome({ record, onBack }: { record: ApprovalRecord; onBack: () => void }) {
+  const { t, tx, fmtDateTime } = useI18n();
+  const approved = record.status === 'approved';
+  const denied = record.status === 'denied';
+  const tone = approved ? 'allow' : denied ? 'deny' : 'neutral';
+  const meta = [
+    record.id,
+    record.decided_by,
+    record.decided_at ? fmtDateTime(record.decided_at) : null,
+    record.decided_by ? t('approvals.outcomeSigned') : null,
+  ].filter(Boolean);
+  return (
+    <section className={`outcome outcome--${tone}`} role="status" aria-labelledby={`outcome-${record.id}`}>
+      <h3 className="outcome__title" id={`outcome-${record.id}`}>
+        {approved ? t('approvals.outcomeApproved') : denied ? t('approvals.outcomeDenied') : tx(`status.${record.status}`, record.status)}
+      </h3>
+      <p className="outcome__body">
+        {approved ? t('approvals.outcomeApprovedBody') : denied ? t('approvals.outcomeDeniedBody') : t('approvals.outcomeClosedBody')}
+      </p>
+      <p className="outcome__meta">
+        {meta.map((part, i) => (
+          <span key={i}>
+            {i > 0 ? ' · ' : null}
+            <bdi>{part}</bdi>
+          </span>
+        ))}
+      </p>
+      <button type="button" className="btn btn--primary outcome__back" onClick={onBack}>
+        {t('approvals.backToQueue')}
+      </button>
+    </section>
+  );
+}
+
 function ApprovalMeta({ record, now }: { record: ApprovalRecord; now: number }) {
   const { t, fmtDateTime } = useI18n();
   return (
     <div className="approval-meta">
+      <p className="approval-meta__crumbs">
+        <span>{t('nav.approvals')}</span>
+        <span aria-hidden="true"> / </span>
+        <bdi className="mono">{record.id}</bdi>
+        <span aria-hidden="true"> · </span>
+        <bdi className="mono">{record.agent_id}</bdi>
+      </p>
       <ApprovalStatusBadge status={record.status} />
-      {record.status === 'pending' ? <Countdown expiresAt={record.expires_at} createdAt={record.created_at} now={now} showBar /> : null}
-      <span className="muted small">
+      <RiskScoreBadge risk={record.risk} score={record.decision?.risk_score} withLabel />
+      {record.status === 'pending' ? <Countdown expiresAt={record.expires_at} createdAt={record.created_at} now={now} /> : null}
+      <span className="muted small approval-meta__requested">
         {t('approvals.requestedBy', { agent: record.agent_id })} · {fmtDateTime(record.created_at)}
       </span>
       {record.decided_by ? (
@@ -176,43 +246,71 @@ function ApprovalMeta({ record, now }: { record: ApprovalRecord; now: number }) 
   );
 }
 
-function QueueCard({ record, now, onOpen, onDecide }: { record: ApprovalRecord; now: number; onOpen: () => void; onDecide: (approve: boolean) => void }) {
+/**
+ * One row of the Figma "Actions awaiting your review" table. The first (most urgent) row is
+ * highlighted, as in the design. Deny and approve stay available from the row, as icon
+ * buttons beside "View", so the queue keeps its quick decisions.
+ */
+function QueueRow({
+  record,
+  now,
+  urgent,
+  onOpen,
+  onDecide,
+}: {
+  record: ApprovalRecord;
+  now: number;
+  urgent: boolean;
+  onOpen: () => void;
+  onDecide: (approve: boolean) => void;
+}) {
   const { t, lang } = useI18n();
   const expired = record.expires_at * 1000 <= now;
   return (
-    <li className={`queue-card risk--${record.risk}`}>
-      <div className="queue-card__stripe" aria-hidden="true">
-        <Icon name={riskIcon(record.risk)} size={18} />
-      </div>
-      <div className="queue-card__main">
-        <div className="row row--between">
-          <div className="row">
-            <RiskBadge risk={record.risk} />
-            <code className="code-inline">{record.tool}</code>
-            <span className="muted small">{t('approvals.requestedBy', { agent: record.agent_id })}</span>
-          </div>
-          <Countdown expiresAt={record.expires_at} createdAt={record.created_at} now={now} showBar />
+    <tr className={urgent ? 'queue-row--urgent' : undefined}>
+      <td className="queue-table__tool">
+        <bdi>{record.tool}</bdi>
+      </td>
+      <td className="queue-table__summary" dir="auto">
+        {approvalSummary(record, lang, t('approvals.fallbackSummary', { agent: record.agent_id, tool: record.tool }))}
+      </td>
+      <td className="queue-table__agent">
+        <bdi>{record.agent_id}</bdi>
+      </td>
+      <td>
+        <RiskScoreBadge risk={record.risk} score={record.decision?.risk_score} />
+      </td>
+      <td className="queue-table__countdown">
+        <Countdown expiresAt={record.expires_at} createdAt={record.created_at} now={now} compact />
+      </td>
+      <td>
+        <div className="queue-table__actions">
+          <button type="button" className="btn btn--ghost btn--sm queue-table__view" onClick={onOpen}>
+            {t('app.view')}
+          </button>
+          <button
+            type="button"
+            className="icon-btn icon-btn--sm queue-table__deny"
+            onClick={() => onDecide(false)}
+            disabled={expired}
+            aria-label={t('approvals.deny')}
+            title={t('approvals.deny')}
+          >
+            <Icon name="x" size={18} />
+          </button>
+          <button
+            type="button"
+            className="icon-btn icon-btn--sm queue-table__approve"
+            onClick={() => onDecide(true)}
+            disabled={expired}
+            aria-label={t('approvals.approve')}
+            title={t('approvals.approve')}
+          >
+            <Icon name="check" size={18} />
+          </button>
         </div>
-        <p className="queue-card__summary" dir="auto">
-          {approvalSummary(record, lang, t('approvals.fallbackSummary', { agent: record.agent_id, tool: record.tool }))}
-        </p>
-        <div className="row">
-          <button type="button" className="btn btn--ghost btn--sm" onClick={onOpen}>
-            <Icon name="eye" size={16} />
-            {t('approvals.review')}
-          </button>
-          <span className="spacer" />
-          <button type="button" className="btn btn--danger btn--sm" onClick={() => onDecide(false)} disabled={expired}>
-            <Icon name="x" size={16} />
-            {t('approvals.deny')}
-          </button>
-          <button type="button" className="btn btn--approve btn--sm" onClick={() => onDecide(true)} disabled={expired}>
-            <Icon name="check" size={16} />
-            {t('approvals.approve')}
-          </button>
-        </div>
-      </div>
-    </li>
+      </td>
+    </tr>
   );
 }
 
@@ -220,7 +318,7 @@ function HistoryTable({ list, onOpen }: { list: ApprovalRecord[]; onOpen: (r: Ap
   const { t, fmtDateTime } = useI18n();
   if (list.length === 0) return <EmptyState icon="clock" title={t('approvals.emptyHistory')} />;
   return (
-    <div className="table-wrap">
+    <div className="table-wrap table-wrap--flush">
       <table className="table table--interactive">
         <thead>
           <tr>

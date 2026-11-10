@@ -543,24 +543,6 @@ html[lang="ar"] .nav-group__title {
 }
 
 /* ------------------------------------------------------------------ approvals */
-.queue {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.queue-card {
-  display: flex;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  background: var(--surface);
-}
-
-.queue-card__stripe,
 .a-card__stripe {
   display: flex;
   align-items: flex-start;
@@ -572,34 +554,309 @@ html[lang="ar"] .nav-group__title {
   color: var(--neutral-fg);
 }
 
-.risk--low .queue-card__stripe,
 .risk--low .a-card__stripe { background: var(--allow-bg); color: var(--allow-fg); }
-.risk--medium .queue-card__stripe,
 .risk--medium .a-card__stripe { background: var(--warn-bg); color: var(--warn-fg); }
-.risk--high .queue-card__stripe,
 .risk--high .a-card__stripe { background: var(--serious-bg); color: var(--serious-fg); }
-.risk--critical .queue-card__stripe,
 .risk--critical .a-card__stripe { background: var(--critical-bg); color: var(--critical-fg); }
 
-.queue-card__main {
-  flex: 1;
-  min-inline-size: 0;
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.page-note {
+  color: var(--text-muted);
+  font-size: var(--font-size-small);
 }
 
-.queue-card__summary {
-  font-size: 0.98rem;
+/* A table that runs to the edges of its card, like the Figma tables. */
+.card .table-wrap--flush {
+  inline-size: auto;
+  margin-inline: calc(var(--card-padding) * -1);
+  margin-block-end: calc(var(--card-padding) * -1);
+  border: 0;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.queue-count {
+  margin-inline-start: var(--space-2);
+}
+
+/* Figma "Actions awaiting your review". */
+.queue-table td {
+  padding-block: var(--space-4);
+}
+
+.queue-table__tool,
+.queue-table__agent {
+  white-space: nowrap;
+}
+
+.queue-table__summary {
+  min-inline-size: 16em;
+  max-inline-size: 36em;
+}
+
+.queue-row--urgent td {
+  background: var(--warn-bg);
+}
+
+.queue-table__countdown .countdown__label {
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.queue-table__countdown .countdown--normal .countdown__label {
+  color: var(--warn-fg);
+}
+
+.queue-table__countdown .countdown__label .icon {
+  display: none;
+}
+
+.queue-table__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-1-5);
+}
+
+.queue-table__view {
+  min-inline-size: 84px;
+  min-block-size: 40px;
+}
+
+.queue-table__deny {
+  color: var(--deny-fg);
+}
+
+.queue-table__approve {
+  color: var(--primary-text);
+}
+
+.queue-table__deny:hover:not(:disabled) {
+  background: var(--deny-bg);
+}
+
+.queue-table__approve:hover:not(:disabled) {
+  background: var(--primary-soft);
+}
+
+.icon-btn:disabled {
+  opacity: 0.4;
+}
+
+/* Figma "03 Approval details", shown in the drawer that opens from the queue. */
+.dialog--drawer.review-drawer {
+  inline-size: min(960px, 100vw);
+}
+
+.review-drawer .dialog__header {
+  padding: var(--space-6) var(--space-6) var(--space-3);
+  border-block-end: 0;
+}
+
+.review-drawer .dialog__title {
+  font-size: var(--font-size-page-title);
+}
+
+.review-drawer .dialog__body {
+  flex: 1;
+  padding: 0 var(--space-6) var(--space-6);
+}
+
+.review-drawer .dialog__footer {
+  padding: var(--space-5) var(--space-6);
+  background: var(--surface-2);
+}
+
+.review {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
 }
 
 .approval-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px 14px;
-  margin-block-end: 18px;
+  gap: var(--space-2-5) var(--space-3);
+}
+
+.approval-meta__crumbs {
+  inline-size: 100%;
+  margin-block-end: var(--space-1-5);
+  color: var(--text-muted);
+}
+
+.approval-meta .countdown__label {
+  font-size: var(--font-size-table);
+  font-weight: var(--font-weight-medium);
+}
+
+.approval-meta .countdown--normal .countdown__label {
+  color: var(--warn-fg);
+}
+
+.explain--review {
+  gap: var(--space-6);
+}
+
+.review-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-inline-size: 0;
+  padding: var(--card-padding);
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.review-card--agent {
+  background: var(--danger-surface);
+  border-color: color-mix(in srgb, var(--danger) 18%, var(--border));
+}
+
+.review-card__eyebrow {
+  color: var(--deny-fg);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+html[lang="ar"] .review-card__eyebrow {
+  letter-spacing: 0;
+}
+
+.review-card__summary {
+  color: var(--heading);
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+}
+
+.review-card__tool {
+  color: var(--text-muted);
+  font-size: var(--font-size-small);
+}
+
+.review-card__tool--link {
+  color: var(--primary-text);
+  font-size: var(--font-size-table);
+  font-weight: var(--font-weight-medium);
+}
+
+.review-card__title {
+  color: var(--heading);
+  font-size: 1.0625rem;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  gap: var(--space-6);
+  align-items: stretch;
+}
+
+/* Tool arguments as the compact key: value list of the Figma card. */
+.review-card .args {
+  border: 0;
+  background: none;
+}
+
+.review-card .args__summary {
+  display: none;
+}
+
+.review-card .args__list {
+  padding: 0;
+  gap: var(--space-1-5);
+}
+
+.review-card .args__row {
+  display: grid;
+  grid-template-columns: minmax(6em, max-content) minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: baseline;
+}
+
+.review-card .args__row dt {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-regular);
+}
+
+.review-card .args__row dd {
+  margin: 0;
+}
+
+.review-card .args__value {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: var(--font-size-small);
+  max-block-size: none;
+}
+
+.review-decision {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  inline-size: 100%;
+}
+
+.review-decision__note {
+  flex: 1;
+  min-inline-size: 16em;
+  color: var(--text-muted);
+  font-size: var(--font-size-small);
+}
+
+.review-decision .btn {
+  min-inline-size: 190px;
+}
+
+/* Figma "Decision recorded": a green or rose card with the outcome. */
+.outcome {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+}
+
+.outcome--allow {
+  background: var(--success-surface);
+}
+
+.outcome--deny {
+  background: var(--danger-surface);
+}
+
+.outcome__title {
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-medium);
+}
+
+.outcome--allow .outcome__title {
+  color: var(--success);
+}
+
+.outcome--deny .outcome__title {
+  color: var(--danger);
+}
+
+.outcome__body {
+  font-size: 1rem;
+}
+
+.outcome__meta {
+  color: var(--text-muted);
+  font-size: var(--font-size-small);
+}
+
+.outcome__back {
+  min-inline-size: 210px;
+  margin-block-start: var(--space-1-5);
 }
 
 .approval-meta__note {
@@ -1052,6 +1309,10 @@ html[lang="ar"] .nav-group__title {
 
   .page {
     padding: 18px 16px 48px;
+  }
+
+  .review-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
