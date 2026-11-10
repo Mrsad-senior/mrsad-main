@@ -325,48 +325,41 @@ html[lang="ar"] .nav-group__title {
   gap: 12px;
 }
 
+/* Figma summary card: white card, label above a 30/600 figure coloured by its meaning. */
 .kpi {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 14px 16px;
+  gap: var(--space-1-5);
+  padding: var(--card-padding);
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
-  border-block-start: 3px solid var(--border);
-}
-
-.kpi--allow { border-block-start-color: var(--chart-allow); }
-.kpi--deny { border-block-start-color: var(--chart-deny); }
-.kpi--warn { border-block-start-color: var(--chart-approval); }
-
-.kpi--hero {
-  border-block-start-color: var(--primary);
 }
 
 .kpi__label {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.84rem;
+  gap: var(--space-1-5);
+  font-size: var(--font-size-table);
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: var(--font-weight-medium);
 }
 
 .kpi__value {
-  font-size: 1.75rem;
-  font-weight: 700;
+  color: var(--heading);
+  font-size: var(--font-size-kpi);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.2;
   font-variant-numeric: tabular-nums;
 }
 
-.kpi--hero .kpi__value {
-  font-size: 2.1rem;
-}
+.kpi--allow .kpi__value { color: var(--success); }
+.kpi--deny .kpi__value { color: var(--danger); }
+.kpi--warn .kpi__value { color: var(--warning); }
 
 .kpi__note {
-  font-size: 0.8rem;
+  font-size: var(--font-size-small);
   color: var(--text-muted);
 }
 
