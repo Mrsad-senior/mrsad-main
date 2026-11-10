@@ -34,6 +34,8 @@ export const EVENT_TYPES = [
 ] as const;
 
 const DECISION_ACTIONS = ['allow', 'require_approval', 'deny'] as const;
+/** Figma filter chips: All · Allowed · Held · Denied, bound to the `action` filter. */
+const DECISION_CHIPS = ['', ...DECISION_ACTIONS] as const;
 const INSPECTION_ACTIONS = ['pass', 'flag', 'sanitize', 'block'] as const;
 const PAGE_SIZES = [25, 50, 100] as const;
 const TEXT_FILTERS = ['agent_id', 'tool', 'action', 'event_type', 'session_id', 'call_id', 'q'] as const;
@@ -53,6 +55,12 @@ function filtersFromParams(params: URLSearchParams): AuditFilters {
   f.limit = (PAGE_SIZES as readonly number[]).includes(limit) ? limit : 25;
   f.offset = Math.max(0, Number(params.get('offset')) || 0);
   return f;
+}
+
+/** True when a filter other than the decision chips is set, so "More filters" opens. */
+function hasAdvancedFilters(f: AuditFilters): boolean {
+  const chipAction = !f.action || (DECISION_ACTIONS as readonly string[]).includes(f.action);
+  return !chipAction || Boolean(f.since || f.until || TEXT_FILTERS.some((key) => key !== 'action' && f[key]));
 }
 
 function paramsFromFilters(f: AuditFilters, seq?: number | null): URLSearchParams {
@@ -138,25 +146,47 @@ export default function Activity() {
       />
 
       {verify ? (
-        <div className={`banner banner--${verify.ok ? 'allow' : 'deny'}`} role="status">
-          <Icon name={verify.ok ? 'shield-check' : 'shield-alert'} />
-          <div className="banner__body">
-            <strong>
-              {verify.ok
-                ? t('activity.verifyOk', { count: fmtNumber(verify.checked) })
-                : t('activity.verifyFail', { seq: verify.first_bad_seq ?? '?', message: verify.message })}
-            </strong>
-            <span className="small mono">
-              {t('activity.verifyHead', { seq: verify.head_seq, hash: verify.head_hash.slice(0, 16) })}
-            </span>
+        <section className={`chain-card chain-card--${verify.ok ? 'ok' : 'broken'}`} role="status" aria-labelledby="chain-title">
+          <div className="chain-card__head">
+            <h2 className="chain-card__title" id="chain-title">
+              <Icon name={verify.ok ? 'check' : 'shield-alert'} size={26} strokeWidth={2.4} />
+              {verify.ok ? t('activity.chainValid') : t('activity.chainBroken')}
+            </h2>
+            <button type="button" className="icon-btn icon-btn--sm" onClick={() => setVerify(null)} aria-label={t('app.close')}>
+              <Icon name="x" />
+            </button>
           </div>
-          <button type="button" className="icon-btn icon-btn--sm" onClick={() => setVerify(null)} aria-label={t('app.close')}>
-            <Icon name="x" />
-          </button>
-        </div>
+          <p className="chain-card__body">
+            {verify.ok
+              ? t('activity.chainValidBody', { count: fmtNumber(verify.checked) })
+              : t('activity.verifyFail', { seq: verify.first_bad_seq ?? '?', message: verify.message })}
+          </p>
+          <p className="chain-card__meta mono">{t('activity.verifyHead', { seq: verify.head_seq, hash: verify.head_hash.slice(0, 16) })}</p>
+        </section>
       ) : null}
 
-      <FilterForm initial={filters} onApply={(f) => update({ ...f, limit, offset: 0 }, null)} />
+      <div className="activity-filters">
+        <div className="chip-filters" role="group" aria-label={t('activity.decisionFilter')}>
+          {DECISION_CHIPS.map((action) => (
+            <button
+              key={action || 'all'}
+              type="button"
+              className="btn btn--ghost chip-filter"
+              aria-pressed={(filters.action ?? '') === action}
+              onClick={() => update({ ...filters, action: action || undefined, offset: 0 }, null)}
+            >
+              {action ? tx(`action.${action}`, action) : t('activity.chipAll')}
+            </button>
+          ))}
+        </div>
+        <details className="filters-disclosure" open={hasAdvancedFilters(filters) || undefined}>
+          <summary className="filters-disclosure__summary">
+            <Icon name="filter" size={16} />
+            {t('activity.moreFilters')}
+          </summary>
+          <FilterForm initial={filters} onApply={(f) => update({ ...f, limit, offset: 0 }, null)} />
+        </details>
+      </div>
 
       {newEvents > 0 ? (
         <button type="button" className="banner banner--info new-events" onClick={query.reload}>
@@ -165,7 +195,7 @@ export default function Activity() {
         </button>
       ) : null}
 
-      <section className="card" aria-labelledby="events-title">
+      <section className="card card--table" aria-labelledby="events-title">
         <h2 id="events-title" className="visually-hidden">
           {t('activity.events')}
         </h2>

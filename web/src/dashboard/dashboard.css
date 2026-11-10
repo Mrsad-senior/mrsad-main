@@ -457,6 +457,118 @@ html[lang="ar"] .nav-group__title {
 .stackbar__seg--deny { background: var(--chart-deny); }
 
 /* ------------------------------------------------------------------ activity */
+/* Figma "04 Activity": four 150px filter chips; the selected one is indigo. */
+.activity-filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.chip-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.chip-filter {
+  min-inline-size: 150px;
+}
+
+.chip-filter[aria-pressed="true"],
+.chip-filter[aria-pressed="true"]:hover:not(:disabled) {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.filters-disclosure__summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  min-block-size: var(--touch);
+  color: var(--primary-text);
+  font-size: var(--font-size-table);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  list-style: none;
+}
+
+.filters-disclosure__summary::-webkit-details-marker {
+  display: none;
+}
+
+.filters-disclosure[open] > .filters-disclosure__summary {
+  margin-block-end: var(--space-2);
+}
+
+/* A card that is only a table: the table runs to the card edges. */
+.card--table {
+  padding: 0;
+  overflow: hidden;
+}
+
+.card--table .table-wrap {
+  border: 0;
+  border-radius: 0;
+}
+
+.card--table .pager {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-block-start: var(--border-width) solid var(--border);
+}
+
+/* Figma "05 Audit integrity" chain card, shown after "Verify chain". */
+.chain-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.chain-card--ok {
+  background: var(--success-surface);
+  border-color: color-mix(in srgb, var(--success) 22%, var(--border));
+}
+
+.chain-card--broken {
+  background: var(--danger-surface);
+  border-color: color-mix(in srgb, var(--danger) 30%, var(--border));
+}
+
+.chain-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.chain-card__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2-5);
+  font-size: var(--font-size-page-title);
+}
+
+.chain-card--ok .chain-card__title {
+  color: var(--success);
+}
+
+.chain-card--broken .chain-card__title {
+  color: var(--danger);
+}
+
+.chain-card__body {
+  color: var(--text);
+}
+
+.chain-card__meta {
+  color: var(--text-muted);
+  font-size: var(--font-size-small);
+}
+
 .filters .form-grid {
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 }

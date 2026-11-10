@@ -286,6 +286,12 @@ export const en = {
   'activity.verifyFail': 'Audit chain broken at event #{seq}: {message}',
   'activity.verifyHead': 'Head: #{seq} · {hash}…',
   'activity.verifyOk': 'Audit chain intact: {count} events verified.',
+  'activity.chainBroken': 'Audit chain broken',
+  'activity.chainValid': 'Audit chain valid',
+  'activity.chainValidBody': '{count} entries verified. No missing records or hash mismatches.',
+  'activity.chipAll': 'All events',
+  'activity.decisionFilter': 'Filter by decision',
+  'activity.moreFilters': 'More filters',
 
   // event drawer -------------------------------------------------------
   'drawer.arguments': 'Arguments',

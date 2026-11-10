@@ -289,6 +289,12 @@ export const ar: Record<MessageKey, string> = {
   'activity.verifyFail': 'السلسلة مكسورة عند الحدث #{seq}: {message}',
   'activity.verifyHead': 'الرأس: #{seq} · {hash}…',
   'activity.verifyOk': 'سلسلة التدقيق سليمة: تم التحقق من {count} حدث.',
+  'activity.chainBroken': 'سلسلة التدقيق مكسورة',
+  'activity.chainValid': 'سلسلة التدقيق سليمة',
+  'activity.chainValidBody': 'تم التحقق من {count} سجل. لا توجد سجلات مفقودة أو بصمات غير مطابقة.',
+  'activity.chipAll': 'كل الأحداث',
+  'activity.decisionFilter': 'التصفية حسب القرار',
+  'activity.moreFilters': 'مزيد من عوامل التصفية',
 
   // event drawer -------------------------------------------------------
   'drawer.arguments': 'الوسائط',
