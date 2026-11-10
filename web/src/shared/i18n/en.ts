@@ -61,8 +61,17 @@ export const en = {
   'auth.signOut': 'Sign out',
   'auth.signingIn': 'Signing in…',
   'auth.username': 'Username',
-  'auth.welcome': 'Monitor and govern what your AI agents do with their tools.',
+  'auth.welcome': 'The security firewall between AI agents and your banking systems.',
   'auth.welcomeApprover': 'Review agent actions that Mirsad paused and decide in seconds.',
+  'auth.welcomeBack': 'Welcome back',
+  'auth.signInPrompt': 'Sign in to your Mirsad workspace.',
+  'auth.heroLine1': 'Human judgment.',
+  'auth.heroLine2': 'At machine speed.',
+  'auth.step1': 'Detect risky intent',
+  'auth.step2': 'Hold before execution',
+  'auth.step3': 'Let your team decide',
+  'auth.tagline': 'Built for trust · Designed for control',
+  'auth.protected': 'Protected access · Authorised personnel only',
 
   // roles --------------------------------------------------------------
   'roles.admin': 'Administrator',

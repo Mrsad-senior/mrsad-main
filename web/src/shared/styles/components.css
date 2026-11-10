@@ -1347,37 +1347,185 @@ html:not([lang="ar"]) .badge--status {
 }
 
 /* ------------------------------------------------------------------ login */
+/* Figma "01 Sign in": a 660px navy brand panel beside a 780px form panel (1440px frame).
+   The grid follows the writing direction, so the brand panel is on the right in Arabic. */
 .login {
   min-block-size: 100dvh;
   display: grid;
-  place-items: center;
-  padding: 24px 16px;
-  background:
-    radial-gradient(1200px 600px at 10% -10%, color-mix(in srgb, var(--primary) 18%, transparent), transparent),
-    radial-gradient(900px 500px at 110% 110%, color-mix(in srgb, var(--nav-bg) 22%, transparent), transparent),
-    var(--bg);
+  grid-template-columns: minmax(0, 660fr) minmax(0, 780fr);
+  background: var(--bg);
+}
+
+.login__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-8);
+  padding: var(--space-16);
+  background: var(--nav-bg);
+  color: var(--nav-text);
+}
+
+.login__brand .logo__word {
+  font-size: 1.75rem;
+  font-weight: var(--font-weight-semibold);
+  gap: var(--space-3);
+}
+
+.login__brand .logo__sep {
+  display: none;
+}
+
+.login__hero {
+  display: flex;
+  flex-direction: column;
+  color: var(--nav-text);
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height);
+}
+
+.login__lead {
+  max-inline-size: 30em;
+  font-size: var(--font-size-body-lg);
+}
+
+.login__steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  inline-size: min(510px, 100%);
+  min-block-size: 206px;
+  margin: 0;
+  padding: var(--space-6);
+  list-style: none;
+  border: var(--border-width) solid var(--nav-muted);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-body-lg);
+  font-weight: var(--font-weight-medium);
+}
+
+.login__step-number {
+  display: inline-block;
+  min-inline-size: 2.2ch;
+  margin-inline-end: var(--space-2-5);
+  font-variant-numeric: tabular-nums;
+}
+
+.login__tagline {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.login__panel {
+  position: relative;
+  padding: 108px 100px var(--space-16);
 }
 
 .login__prefs {
-  position: fixed;
-  inset-block-start: 12px;
-  inset-inline-end: 12px;
+  position: absolute;
+  inset-block-start: var(--space-6);
+  inset-inline-end: var(--space-6);
   display: flex;
   gap: 6px;
 }
 
-.login__card {
-  inline-size: min(420px, 100%);
+.login__form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 28px;
-  box-shadow: var(--shadow-lg);
+  gap: var(--space-6);
+  inline-size: min(480px, 100%);
+}
+
+.login__logo {
+  display: none;
+}
+
+.login__eyebrow {
+  margin-block-end: calc(var(--space-6) * -1 + var(--space-4));
+  color: var(--accent-text);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+html[lang="ar"] .login__eyebrow,
+html[lang="ar"] .login__tagline {
+  letter-spacing: 0;
 }
 
 .login__title {
-  font-size: 1.35rem;
-  margin-block-start: 8px;
+  font-size: 2.125rem;
+  line-height: 1.3;
+}
+
+.login__prompt {
+  margin-block-start: calc(var(--space-6) * -1 + var(--space-3));
+  color: var(--text-muted);
+}
+
+.login__form .input {
+  min-block-size: 48px;
+}
+
+/* The show-password toggle sits inside the field, at its end. */
+.login__form .input-group {
+  position: relative;
+}
+
+.login__form .input-group .input {
+  padding-inline-end: 52px;
+}
+
+.login__form .input-group .icon-btn {
+  position: absolute;
+  inset-inline-end: 4px;
+  color: var(--text-muted);
+}
+
+.login__submit {
+  margin-block-start: var(--space-2);
+}
+
+.login__note {
+  margin-block-start: calc(var(--space-6) * -1 + var(--space-4));
+  color: var(--text-muted);
+  font-size: var(--font-size-small);
+}
+
+.login__lang {
+  align-self: flex-start;
+  min-block-size: 42px;
+  min-inline-size: 180px;
+}
+
+.login__lang .icon {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .login {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .login__brand {
+    display: none;
+  }
+
+  .login__panel {
+    padding: 72px 20px 40px;
+  }
+
+  .login__form {
+    margin-inline: auto;
+  }
+
+  .login__logo {
+    display: block;
+  }
 }
 
 .lang-toggle span {

@@ -1037,7 +1037,7 @@ html[lang="ar"] .nav-group__title {
 
   .topbar__workspace,
   .live__text,
-  .lang-toggle span {
+  .topbar .lang-toggle span {
     display: none;
   }
 
