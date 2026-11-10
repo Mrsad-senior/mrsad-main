@@ -26,15 +26,16 @@ class IntentJudge(Protocol):
 
 
 class OllamaIntentJudge:
-    """Optional local, mockable judge; requires no cloud key or paid provider."""
+    """Optional, mockable OpenAI-compatible judge; local Ollama remains the default."""
 
     def __init__(self, base_url: str = 'http://127.0.0.1:11434/v1',
                  model: str = 'qwen2.5:3b', client: httpx.Client | None = None,
-                 timeout: float = 20.0):
+                 timeout: float = 20.0, api_key: str | None = None):
         self.base_url = base_url.rstrip('/')
         self.model = model
         self.client = client
         self.timeout = timeout
+        self.api_key = api_key.strip() if api_key and api_key.strip() else None
 
     def assess(self, task: str, tool: str, arguments: dict[str, Any]) -> IntentAssessment:
         system = (
@@ -56,11 +57,13 @@ class OllamaIntentJudge:
                            'untrusted_tool_arguments': arguments}, ensure_ascii=False, default=str)
         request = {'model': self.model, 'temperature': 0, 'stream': False,
                    'messages': [{'role': 'system', 'content': system}, {'role': 'user', 'content': data}]}
+        headers = {'Authorization': f'Bearer {self.api_key}'} if self.api_key else None
         if self.client is None:
             with httpx.Client(timeout=self.timeout) as client:
-                response = client.post(f'{self.base_url}/chat/completions', json=request)
+                response = client.post(f'{self.base_url}/chat/completions', json=request, headers=headers)
         else:
-            response = self.client.post(f'{self.base_url}/chat/completions', json=request, timeout=self.timeout)
+            response = self.client.post(f'{self.base_url}/chat/completions', json=request,
+                                        headers=headers, timeout=self.timeout)
         response.raise_for_status()
         raw = response.json()['choices'][0]['message']['content'].strip()
         if raw.startswith('```'):

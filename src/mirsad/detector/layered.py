@@ -123,16 +123,18 @@ EXTRACTION_SCORES = {"flag": 0.6, "block": 0.8}
 
 
 class OllamaJudge:
-    """Local second-model classifier. Untrusted content is never promoted into instructions."""
+    """OpenAI-compatible second-model classifier; local Ollama remains the default."""
 
     def __init__(self, base_url: str = "http://127.0.0.1:11434/v1",
                  model: str = "qwen2.5:3b", timeout: float = 20.0,
-                 client: httpx.Client | None = None, extraction: str = "flag"):
+                 client: httpx.Client | None = None, extraction: str = "flag",
+                 api_key: str | None = None):
         if extraction not in (*EXTRACTION_SCORES, "off"):
             raise ValueError("extraction must be 'flag', 'block' or 'off'")
         self.base_url, self.model, self.timeout = base_url.rstrip('/'), model, timeout
         self.client = client
         self.extraction = extraction
+        self.api_key = api_key.strip() if api_key and api_key.strip() else None
 
     def score(self, text: str) -> Signal:
         # JSON input prevents an attacker from fabricating adjacent message turns.
@@ -219,11 +221,13 @@ class OllamaJudge:
         payload = {"model": self.model, "temperature": 0, "stream": False,
                    "messages": [{"role": "system", "content": system},
                                 {"role": "user", "content": json.dumps({"tool_output": text[:12000]}, ensure_ascii=False)}]}
+        headers = {"Authorization": f"Bearer {self.api_key}"} if self.api_key else None
         if self.client is not None:
-            response = self.client.post(f"{self.base_url}/chat/completions", json=payload, timeout=self.timeout)
+            response = self.client.post(f"{self.base_url}/chat/completions", json=payload,
+                                        headers=headers, timeout=self.timeout)
         else:
             with httpx.Client(timeout=self.timeout) as client:
-                response = client.post(f"{self.base_url}/chat/completions", json=payload)
+                response = client.post(f"{self.base_url}/chat/completions", json=payload, headers=headers)
         response.raise_for_status()
         raw = response.json()["choices"][0]["message"]["content"].strip()
         if raw.startswith('```'):

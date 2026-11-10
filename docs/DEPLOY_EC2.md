@@ -162,6 +162,15 @@ nano .env
 The gateway needs no Supabase API key (publishable or secret): it talks to Supabase only as a Postgres
 database. Its only third-party key is the demo LLM's.
 
+### Audit verification after a redeploy
+
+Keep `MIRSAD_SECRET_KEY` unchanged while reusing the same database. If the Overview page reports that audit
+verification failed, click **Verify now** and record the first bad event before changing anything. An HMAC
+mismatch at event 1 commonly means the server is using a different signing key from the one that created the
+stored chain. Restore the original key and recreate the `mirsad` service. Do not re-sign or delete the old
+events: if the original key cannot be recovered, preserve/export the database as evidence and start a new,
+explicitly documented audit chain.
+
 ### Demo LLM
 
 The Demo Console's agent (`MIRSAD_ENABLE_DEMO=true`) gets its replies from an LLM. No Ollama runs on this
@@ -174,9 +183,17 @@ server, so point it at a hosted OpenAI-compatible API, such as Groq:
   endpoint that needs none.
 
 Compose refuses to start while the base URL or the model is empty, even with the demo off. The same key also
-serves the gateway's `/v1` proxy to any agent holding a Mirsad agent key, so give it a spending limit. The
-LLM judge layers don't use these settings: they call a local Ollama, so `MIRSAD_JUDGE_ENABLED` and
-`MIRSAD_INTENT_JUDGE_ENABLED` stay `0` here.
+serves the gateway's `/v1` proxy to any agent holding a Mirsad agent key, so give it a spending limit.
+
+The two optional security judges can use the same hosted endpoint. They resolve their connection in this order:
+
+1. `MIRSAD_JUDGE_BASE_URL` / `MIRSAD_JUDGE_API_KEY` when set;
+2. `MIRSAD_LLM_BASE_URL` / `MIRSAD_LLM_API_KEY`;
+3. local Ollama at `http://127.0.0.1:11434/v1`, without an API key.
+
+Set `MIRSAD_JUDGE_ENABLED=1` for tool-result injection classification and
+`MIRSAD_INTENT_JUDGE_ENABLED=1` for original-request intent checks. The configured judge model must exist at
+the selected endpoint. Both judges fail closed if an enabled provider fails or times out.
 
 Don't type the key in `nano`, where it shows on screen. `read -s` reads it without echoing it and keeps it
 out of the shell history:

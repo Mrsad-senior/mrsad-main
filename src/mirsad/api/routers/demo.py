@@ -87,11 +87,15 @@ def _demo_gateway(request: Request, sector: str) -> Any:
         from pathlib import Path
 
         from mirsad.gateway import Gateway
+        from mirsad.llm_config import resolve_judge_connection
         from mirsad.policy import PolicyEngine
         from mirsad.security.intent import OllamaIntentJudge
         from mirsad.security.monitor import SecurityMonitor
         from mirsad.taint import TaintTracker
-        judge = OllamaIntentJudge(model=os.getenv('MIRSAD_JUDGE_MODEL', 'qwen2.5:3b')) if os.getenv('MIRSAD_INTENT_JUDGE_ENABLED') == '1' else None
+        connection = resolve_judge_connection()
+        judge = (OllamaIntentJudge(base_url=connection.base_url, api_key=connection.api_key,
+                                   model=connection.model)
+                 if os.getenv('MIRSAD_INTENT_JUDGE_ENABLED') == '1' else None)
         path = Path(__file__).resolve().parents[4] / 'configs' / 'policies' / 'sectors.yaml'
         # Source deployments and wheels may place the policy elsewhere: explicit
         # absence is fatal, not a silent fallback to permissive defaults.

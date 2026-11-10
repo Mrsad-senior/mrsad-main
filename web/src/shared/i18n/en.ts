@@ -187,7 +187,7 @@ export const en = {
 
   // overview -----------------------------------------------------------
   'overview.audit': 'Audit log integrity',
-  'overview.auditBroken': 'Tampering detected',
+  'overview.auditBroken': 'Audit verification failed',
   'overview.auditChecked': '{count} events verified',
   'overview.auditHint': 'Every event is HMAC-chained to the previous one.',
   'overview.auditOk': 'Hash chain intact',
