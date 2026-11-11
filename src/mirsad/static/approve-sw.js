@@ -6,11 +6,11 @@
  * API (so the last known queue is visible offline); cache-first for hashed /assets/*;
  * the SSE stream and every non-GET request bypass the worker entirely.
  */
-const VERSION = 'c41018cbdeae';
+const VERSION = '47f6d836d978';
 const SHELL_CACHE = `mirsad-shell-${VERSION}`;
 const API_CACHE = 'mirsad-api-v1';
 const PREFS_CACHE = 'mirsad-prefs-v1';
-const PRECACHE = ["/approve","/assets/manifest.webmanifest","/assets/icons/icon-192.png","/assets/favicon.svg","/assets/approve-BlorxPDo.js","/assets/approve-DgvOeCgl.css","/assets/inter-latin-ext-wght-normal-DO1Apj_S.woff2","/assets/inter-latin-wght-normal-Dx4kXJAl.woff2","/assets/modulepreload-polyfill-B5Qt9EMX.js","/assets/noto-sans-arabic-arabic-wght-normal-BhzieyvS.woff2","/assets/react-DqJZAsTa.js","/assets/shared-CA4dRS2j.css","/assets/shared-dleXXh0o.js"];
+const PRECACHE = ["/approve","/assets/manifest.webmanifest","/assets/icons/icon-192.png","/assets/favicon.svg","/assets/approve-DfV-FeoW.js","/assets/approve-DgvOeCgl.css","/assets/inter-latin-ext-wght-normal-DO1Apj_S.woff2","/assets/inter-latin-wght-normal-Dx4kXJAl.woff2","/assets/modulepreload-polyfill-B5Qt9EMX.js","/assets/noto-sans-arabic-arabic-wght-normal-BhzieyvS.woff2","/assets/react-DqJZAsTa.js","/assets/shared-CA4dRS2j.css","/assets/shared-CtPNV6Nt.js"];
 // Only approval data is kept for offline viewing; it is cleared on sign-out.
 const CACHEABLE_API = [/^\/api\/approvals(\/|$|\?)/, /^\/api\/auth\/me$/];
 
