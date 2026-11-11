@@ -544,4 +544,45 @@ describe('approvals page', () => {
     expect(within(details).getByRole('button', { name: 'Approve' })).toBeTruthy();
     expect(within(details).getByRole('button', { name: 'Deny' })).toBeTruthy();
   });
+
+  const STATS = {
+    hours: 9.5, total_calls: 1300, allowed: 1284, denied: 12, approvals_required: 4, approvals_pending: 3,
+    injections_detected: 0, results_sanitized: 0, median_latency_ms: 1, p95_latency_ms: 2, audit_ok: true, by_tool: [], by_layer: [],
+  };
+
+  it("shows today's summary cards from /api/stats/overview", async () => {
+    const { client, calls } = approvalsBackend({ 'GET /api/stats/overview': () => json(STATS) });
+    renderApprovals(client);
+
+    const cards = await screen.findByRole('list', { name: 'Today at a glance' });
+    await waitFor(() =>
+      expect(within(cards).getAllByRole('listitem').map((li) => li.textContent)).toEqual([
+        'Held now01', // the live queue (one pending record), not the stats snapshot
+        'Denied today12',
+        'Allowed today1,284',
+        'Audit chain statusValid',
+      ]),
+    );
+    const url = new URL(calls.find((c) => c.url.includes('/api/stats/overview'))?.url ?? '', 'http://localhost');
+    const hours = Number(url.searchParams.get('hours'));
+    expect(hours).toBeGreaterThan(0); // hours since local midnight
+    expect(hours).toBeLessThanOrEqual(24);
+  });
+
+  it('hides the summary cards, and shows nothing broken, when the stats call answers 403', async () => {
+    const { client, calls } = approvalsBackend({ 'GET /api/stats/overview': () => json({ detail: 'Forbidden' }, 403) });
+    renderApprovals(client);
+
+    expect(await screen.findByRole('table')).toBeTruthy(); // the queue still loads
+    await waitFor(() => expect(calls.some((c) => c.url.includes('/api/stats/overview'))).toBe(true));
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0)); // let the rejected call settle
+    });
+
+    expect(screen.queryByRole('list', { name: 'Today at a glance' })).toBeNull();
+    expect(screen.queryByText('Held now')).toBeNull();
+    expect(screen.queryAllByRole('alert').map((a) => a.textContent)).toEqual(['']); // only the empty toast region
+    expect(screen.queryByText(/permission|forbidden/i)).toBeNull();
+    expect(screen.getByText('Held actions are automatically rejected when the review window expires.')).toBeTruthy();
+  });
 });

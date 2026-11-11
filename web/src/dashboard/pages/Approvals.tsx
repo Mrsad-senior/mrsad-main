@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { APPROVAL_STATUSES, type ApprovalRecord, type ApprovalStatus } from '../../shared/api/types';
+import { APPROVAL_STATUSES, type ApprovalRecord, type ApprovalStatus, type StatsOverview } from '../../shared/api/types';
 import { useApi } from '../../shared/app/auth';
 import { useNow, useQuery } from '../../shared/app/hooks';
 import { useLive, useLiveEvent } from '../../shared/app/live';
@@ -12,6 +12,7 @@ import { Icon } from '../../shared/components/Icon';
 import { EmptyState, QueryView } from '../../shared/components/States';
 import { useI18n } from '../../shared/i18n';
 import { applyApprovalEvent, sortApprovals } from '../../shared/lib/approvals';
+import { browserTimeZone } from '../../shared/lib/format';
 import { PageHeader, Section } from '../components/PageHeader';
 
 export default function Approvals() {
@@ -28,6 +29,13 @@ export default function Approvals() {
     (signal) => api.approvals({ status: statusFilter || undefined, limit: 100 }, signal).then((list) => sortApprovals(list.filter((a) => a.status !== 'pending'))),
     [api, statusFilter],
   );
+  // The same call as Overview, over the hours since local midnight so "today" means today.
+  const stats = useQuery((signal) => api.statsOverview(hoursToday(), signal), [api]);
+  const { reload: reloadStats } = stats;
+  useEffect(() => {
+    const timer = setInterval(reloadStats, 30_000);
+    return () => clearInterval(timer);
+  }, [reloadStats]);
 
   useLiveEvent(
     (event, data) => {
@@ -56,6 +64,9 @@ export default function Approvals() {
   return (
     <div className="stack-lg">
       <PageHeader title={t('approvals.title')} subtitle={t('approvals.subtitle')} />
+
+      {/* Extra context only: if the stats call fails (a 403, say), the cards stay out of the way. */}
+      {stats.data && !stats.error ? <SummaryCards stats={stats.data} held={pending.data?.length ?? stats.data.approvals_pending} /> : null}
 
       <p className="banner banner--warn">
         <Icon name="clock" size={20} />
@@ -110,7 +121,7 @@ export default function Approvals() {
         </QueryView>
       </Section>
       <p className="page-note">
-        {live.status === 'open' ? t('approvals.liveHint') : t('approvals.pollHint')} · {t('approvals.timezone', { zone: timeZone() })}
+        {live.status === 'open' ? t('approvals.liveHint') : t('approvals.pollHint')} · {t('approvals.timezone', { zone: browserTimeZone() })}
       </p>
 
       <Section
@@ -169,13 +180,40 @@ export default function Approvals() {
   );
 }
 
-/** Time zone the dates on this page are shown in (the browser's, as fmtDateTime uses it). */
-function timeZone(): string {
-  try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
-  } catch {
-    return 'UTC';
-  }
+/** Hours since local midnight (at least a minute), for the stats window behind "today". */
+function hoursToday(now = new Date()): number {
+  const midnight = new Date(now);
+  midnight.setHours(0, 0, 0, 0);
+  return Math.max(1 / 60, Number(((now.getTime() - midnight.getTime()) / 3_600_000).toFixed(4)));
+}
+
+/** Figma summary cards: held now (the live queue), denied and allowed today, chain status. */
+function SummaryCards({ stats, held }: { stats: StatsOverview; held: number }) {
+  const { t, fmtNumber } = useI18n();
+  const audit = stats.audit_ok === true ? 'ok' : stats.audit_ok === false ? 'broken' : 'unknown';
+  return (
+    <ul className="kpis summary-cards" aria-label={t('approvals.statsLabel')}>
+      <li className="kpi kpi--warn">
+        <span className="kpi__label">{t('approvals.statHeld')}</span>
+        <span className="kpi__value">{fmtNumber(held, { minimumIntegerDigits: 2 })}</span>
+      </li>
+      <li className="kpi kpi--deny">
+        <span className="kpi__label">{t('approvals.statDenied')}</span>
+        <span className="kpi__value">{fmtNumber(stats.denied)}</span>
+      </li>
+      <li className="kpi kpi--allow">
+        <span className="kpi__label">{t('approvals.statAllowed')}</span>
+        <span className="kpi__value">{fmtNumber(stats.allowed)}</span>
+      </li>
+      <li className={`kpi kpi--audit-${audit}`}>
+        <span className="kpi__label">{t('approvals.statAudit')}</span>
+        <span className="kpi__value">
+          {audit === 'ok' ? t('approvals.auditValid') : audit === 'broken' ? t('approvals.auditBroken') : t('approvals.auditUnknown')}
+          {audit === 'ok' ? <Icon name="check" size={26} strokeWidth={2.6} /> : null}
+        </span>
+      </li>
+    </ul>
+  );
 }
 
 /** Figma "Decision recorded": the outcome of a decided request, in green or rose. */

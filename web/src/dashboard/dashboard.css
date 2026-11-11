@@ -363,6 +363,21 @@ html[lang="ar"] .nav-group__title {
   color: var(--text-muted);
 }
 
+/* Figma "Pending approvals" summary cards: four across. */
+.summary-cards {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.summary-cards .kpi__value {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.kpi--audit-ok .kpi__value { color: var(--accent-text); }
+.kpi--audit-broken .kpi__value { color: var(--danger); }
+.kpi--audit-unknown .kpi__value { color: var(--text-muted); }
+
 .audit-card {
   display: flex;
   flex-direction: column;
@@ -1353,6 +1368,10 @@ html[lang="ar"] .review-card__eyebrow {
 @media (max-width: 900px) {
   .shell {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .summary-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .sidebar {

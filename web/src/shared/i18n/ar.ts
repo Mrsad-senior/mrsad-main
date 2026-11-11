@@ -419,6 +419,14 @@ export const ar: Record<MessageKey, string> = {
   'approvals.reviewTitle': 'مراجعة إجراء معلّق',
   'approvals.signedNote': 'يُوقَّع قرارك ويُسجَّل في سلسلة تدقيق تكشف التلاعب.',
   'approvals.timezone': 'الأوقات بتوقيت {zone}',
+  'approvals.statsLabel': 'ملخص اليوم',
+  'approvals.statHeld': 'قيد المراجعة',
+  'approvals.statDenied': 'مرفوض اليوم',
+  'approvals.statAllowed': 'مسموح اليوم',
+  'approvals.statAudit': 'سلسلة التدقيق',
+  'approvals.auditValid': 'سليمة',
+  'approvals.auditBroken': 'مكسورة',
+  'approvals.auditUnknown': 'لم تُفحص',
   'approvals.toolArgs': 'معطيات الأداة',
 
   // policies -----------------------------------------------------------

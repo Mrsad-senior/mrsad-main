@@ -416,6 +416,14 @@ export const en = {
   'approvals.reviewTitle': 'Review held action',
   'approvals.signedNote': 'Your decision is signed and recorded in the tamper-evident audit chain.',
   'approvals.timezone': 'Times shown in {zone}',
+  'approvals.statsLabel': 'Today at a glance',
+  'approvals.statHeld': 'Held now',
+  'approvals.statDenied': 'Denied today',
+  'approvals.statAllowed': 'Allowed today',
+  'approvals.statAudit': 'Audit chain status',
+  'approvals.auditValid': 'Valid',
+  'approvals.auditBroken': 'Broken',
+  'approvals.auditUnknown': 'Not checked',
   'approvals.toolArgs': 'Tool arguments',
 
   // policies -----------------------------------------------------------
