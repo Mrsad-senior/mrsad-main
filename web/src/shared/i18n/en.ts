@@ -95,7 +95,8 @@ export const en = {
   'errors.validation': 'Some values are not valid.',
 
   // navigation ---------------------------------------------------------
-  'nav.activity': 'Activity & audit',
+  'nav.activity': 'Activity',
+  'nav.audit': 'Audit',
   'nav.agents': 'Agents',
   'nav.approvals': 'Approvals',
   'nav.approverApp': 'Approver app',
@@ -292,6 +293,25 @@ export const en = {
   'activity.chipAll': 'All events',
   'activity.decisionFilter': 'Filter by decision',
   'activity.moreFilters': 'More filters',
+
+  // audit integrity (Figma "05 Audit") ---------------------------------
+  'audit.title': 'Audit integrity',
+  'audit.subtitle': 'Tamper-evident evidence for every agent action and reviewer decision.',
+  'audit.notVerified': 'Chain not verified yet',
+  'audit.notVerifiedBody': 'Run a check to recompute the hash of every entry in the chain.',
+  'audit.brokenAt': 'The chain breaks at entry #{seq}. Entries from there on may have been altered.',
+  'audit.lastVerified': 'Last verified {time}',
+  'audit.verifiedBy': 'Verified by {user}',
+  'audit.linked': 'HMAC-SHA-256 linked entries',
+  'audit.recent': 'Recent audit entries',
+  'audit.viewAll': 'View all in Activity',
+  'audit.empty': 'No audit entries yet',
+  'audit.colEntry': 'Entry',
+  'audit.colTime': 'Time',
+  'audit.colEvent': 'Event',
+  'audit.colHash': 'Entry hash',
+  'audit.colPrevHash': 'Previous hash',
+  'audit.footnote': 'Each record links to the previous hash. Verification checks the complete chain.',
 
   // event drawer -------------------------------------------------------
   'drawer.arguments': 'Arguments',

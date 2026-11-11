@@ -25,6 +25,7 @@ const NAV: { group: MessageKey; items: NavItem[] }[] = [
     items: [
       { to: '/', label: 'nav.overview', icon: 'grid' },
       { to: '/activity', label: 'nav.activity', icon: 'activity', roles: ['admin', 'auditor'] },
+      { to: '/audit', label: 'nav.audit', icon: 'hash', roles: ['admin', 'auditor'] },
       { to: '/approvals', label: 'nav.approvals', icon: 'inbox', roles: ['admin', 'approver'], badge: 'approvals' },
     ],
   },

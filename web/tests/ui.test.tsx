@@ -4,8 +4,11 @@
  */
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import type { ReactNode } from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import { afterEach, describe, expect, it } from 'vitest';
 import { ApproverApp } from '../src/approver/App';
+import { DashboardApp } from '../src/dashboard/App';
+import Audit from '../src/dashboard/pages/Audit';
 import Demo from '../src/dashboard/pages/Demo';
 import Policies from '../src/dashboard/pages/Policies';
 import Users from '../src/dashboard/pages/Users';
@@ -22,6 +25,7 @@ import { fakeFetch, json } from './helpers';
 
 const ADMIN = { username: 'admin', role: 'admin', display_name: 'Admin', lang: 'en' };
 const APPROVER = { username: 'noura', role: 'approver', display_name: 'Noura', lang: 'en' };
+const AUDITOR = { username: 'auditor', role: 'auditor', display_name: 'Auditor', lang: 'en' };
 
 function makeClient(routes: Parameters<typeof fakeFetch>[0], user: Record<string, unknown> = ADMIN) {
   const fake = fakeFetch({ 'GET /api/auth/me': () => json(user), ...routes });
@@ -417,5 +421,96 @@ describe('policies page', () => {
       fireEvent.click(within(dialog).getByRole('button', { name: 'Activate this version' }));
     });
     await waitFor(() => expect(calls.some((c) => c.method === 'POST' && c.url.endsWith(`/api/policies/${v1.version}/activate`))).toBe(true));
+  });
+});
+
+describe('audit page', () => {
+  // 64-hex hashes whose ends read like the Figma rows ("f42a…91c8").
+  const HASH_A = `f42a${'0'.repeat(56)}91c8`;
+  const HASH_B = `9be3${'1'.repeat(56)}7d20`;
+  const HASH_C = `83ca${'2'.repeat(56)}4f11`;
+  const verified = {
+    seq: 1299, ts: 1793000000, event_type: 'audit.verified', payload: { by: 'auditor', ok: true, checked: 1298, first_bad_seq: null },
+    prev_hash: HASH_C, hash: HASH_B,
+  };
+  const decision = {
+    seq: 1300, ts: 1793000060, event_type: 'tool_call.decision', agent_id: 'email-crm-assistant', tool: 'send_email',
+    action: 'require_approval', risk: 'high', payload: {}, prev_hash: HASH_B, hash: HASH_A,
+  };
+  const isVerifiedQuery = (url: string) => url.includes('event_type=audit.verified');
+
+  function renderAudit(client: ApiClient) {
+    render(
+      <Providers client={client}>
+        <MemoryRouter>
+          <Audit />
+        </MemoryRouter>
+      </Providers>,
+    );
+  }
+
+  it('shows the last recorded check and the hash-linked recent entries, without writing to the log', async () => {
+    const { client, calls } = makeClient({
+      'GET /api/audit/events': (req) => json(isVerifiedQuery(req.url) ? { items: [verified], total: 1 } : { items: [decision, verified], total: 1300 }),
+    });
+    renderAudit(client);
+
+    expect(await screen.findByRole('heading', { name: 'Audit chain valid' })).toBeTruthy();
+    expect(screen.getByText('1,298 entries verified. No missing records or hash mismatches.')).toBeTruthy();
+    expect(screen.getByText('Verified by auditor')).toBeTruthy();
+
+    const rows = within(await screen.findByRole('table')).getAllByRole('row');
+    expect(rows).toHaveLength(3); // header + two entries
+    expect(within(rows[1]).getByRole('link', { name: 'Open event 1300' }).getAttribute('href')).toBe('/activity?seq=1300');
+    const [newer, older] = [within(rows[1]).getAllByRole('cell'), within(rows[2]).getAllByRole('cell')];
+    expect(newer[3].textContent).toBe('f42a…91c8');
+    expect(newer[4].textContent).toBe('9be3…7d20');
+    expect(older[3].textContent).toBe(newer[4].textContent); // each entry links to the one before it
+    expect(newer[3].querySelector('[title]')?.getAttribute('title')).toBe(HASH_A);
+
+    expect(calls.some((c) => c.method !== 'GET')).toBe(false);
+  });
+
+  it('runs a fresh check on request and reports where the chain breaks', async () => {
+    const { client, calls } = makeClient({
+      'GET /api/audit/events': (req) => json(isVerifiedQuery(req.url) ? { items: [], total: 0 } : { items: [decision], total: 1 }),
+      'POST /api/audit/verify': () =>
+        json({ ok: false, checked: 41, head_seq: 42, head_hash: HASH_A, first_bad_seq: 17, message: 'hash mismatch' }),
+    });
+    renderAudit(client);
+
+    expect(await screen.findByRole('heading', { name: 'Chain not verified yet' })).toBeTruthy();
+    const recentLoads = () => calls.filter((c) => c.url.includes('/api/audit/events') && !isVerifiedQuery(c.url)).length;
+    await waitFor(() => expect(recentLoads()).toBe(1));
+
+    fireEvent.click(screen.getByRole('button', { name: 'Verify now' }));
+
+    expect(await screen.findByRole('heading', { name: 'Audit chain broken' })).toBeTruthy();
+    expect(screen.getByText('Audit chain broken at event #17: hash mismatch')).toBeTruthy();
+    expect(calls.filter((c) => c.method === 'POST' && c.url.endsWith('/api/audit/verify'))).toHaveLength(1);
+    await waitFor(() => expect(recentLoads()).toBe(2)); // the check is itself logged, so the list refreshes
+  });
+
+  it('is in the sidebar for auditors and opens at #/audit', async () => {
+    window.location.hash = '#/audit';
+    const { client } = makeClient({ 'GET /api/audit/events': () => json({ items: [], total: 0 }) }, AUDITOR);
+    render(<DashboardApp client={client} />);
+
+    expect(await screen.findByRole('heading', { level: 1, name: 'Audit integrity' }, { timeout: 5000 })).toBeTruthy();
+    const nav = screen.getByRole('navigation', { name: 'Main navigation' });
+    expect(within(nav).getByRole('link', { name: 'Audit' }).getAttribute('href')).toBe('#/audit');
+  });
+
+  it('uses the same roles as Activity: approvers get neither the link nor the page', async () => {
+    window.location.hash = '#/audit';
+    const { client, calls } = makeClient({ 'GET /api/approvals': () => json([]) }, APPROVER);
+    render(<DashboardApp client={client} />);
+
+    expect(await screen.findByText('You do not have permission for this.', {}, { timeout: 5000 })).toBeTruthy();
+    expect(screen.getByText('This page requires the role: Administrator / Auditor.')).toBeTruthy();
+    const nav = screen.getByRole('navigation', { name: 'Main navigation' });
+    expect(within(nav).queryByRole('link', { name: 'Audit' })).toBeNull();
+    expect(within(nav).queryByRole('link', { name: 'Activity' })).toBeNull();
+    expect(calls.some((c) => c.url.includes('/api/audit/'))).toBe(false);
   });
 });

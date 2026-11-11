@@ -98,7 +98,8 @@ export const ar: Record<MessageKey, string> = {
   'errors.validation': 'بعض القيم غير صالحة.',
 
   // navigation ---------------------------------------------------------
-  'nav.activity': 'النشاط والتدقيق',
+  'nav.activity': 'النشاط',
+  'nav.audit': 'التدقيق',
   'nav.agents': 'الوكلاء',
   'nav.approvals': 'الموافقات',
   'nav.approverApp': 'تطبيق المعتمِد',
@@ -295,6 +296,25 @@ export const ar: Record<MessageKey, string> = {
   'activity.chipAll': 'كل الأحداث',
   'activity.decisionFilter': 'التصفية حسب القرار',
   'activity.moreFilters': 'مزيد من عوامل التصفية',
+
+  // audit integrity (Figma "05 Audit") ---------------------------------
+  'audit.title': 'سلامة سجل التدقيق',
+  'audit.subtitle': 'أدلة تكشف التلاعب لكل إجراء وقرار مراجعة.',
+  'audit.notVerified': 'لم يُتحقَّق من السلسلة بعد',
+  'audit.notVerifiedBody': 'شغّل التحقق لإعادة حساب بصمة كل سجل في السلسلة.',
+  'audit.brokenAt': 'تنقطع السلسلة عند السجل #{seq}. قد تكون السجلات التالية معدّلة.',
+  'audit.lastVerified': 'آخر تحقق: {time}',
+  'audit.verifiedBy': 'بواسطة {user}',
+  'audit.linked': 'سجلات مترابطة بـ HMAC-SHA-256',
+  'audit.recent': 'أحدث سجلات التدقيق',
+  'audit.viewAll': 'عرض الكل في النشاط',
+  'audit.empty': 'لا توجد سجلات تدقيق بعد',
+  'audit.colEntry': 'السجل',
+  'audit.colTime': 'الوقت',
+  'audit.colEvent': 'الحدث',
+  'audit.colHash': 'بصمة السجل',
+  'audit.colPrevHash': 'البصمة السابقة',
+  'audit.footnote': 'يرتبط كل سجل بالبصمة السابقة. يشمل التحقق السلسلة كاملة.',
 
   // event drawer -------------------------------------------------------
   'drawer.arguments': 'الوسائط',

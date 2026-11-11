@@ -14,6 +14,7 @@ import { Shell } from './Shell';
 // Pages are code-split: charts (Recharts) only load with the Overview page.
 const Overview = lazy(() => import('./pages/Overview'));
 const Activity = lazy(() => import('./pages/Activity'));
+const Audit = lazy(() => import('./pages/Audit'));
 const Approvals = lazy(() => import('./pages/Approvals'));
 const Policies = lazy(() => import('./pages/Policies'));
 const Agents = lazy(() => import('./pages/Agents'));
@@ -59,6 +60,7 @@ function Gate() {
           <Routes>
             <Route path="/" element={<Overview />} />
             <Route path="/activity" element={<Guard roles={['admin', 'auditor']}><Activity /></Guard>} />
+            <Route path="/audit" element={<Guard roles={['admin', 'auditor']}><Audit /></Guard>} />
             <Route path="/approvals" element={<Guard roles={['admin', 'approver']}><Approvals /></Guard>} />
             <Route path="/policies" element={<Guard roles={['admin', 'auditor']}><Policies /></Guard>} />
             <Route path="/agents" element={<Guard roles={['admin']}><Agents /></Guard>} />

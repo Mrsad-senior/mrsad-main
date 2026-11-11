@@ -78,6 +78,15 @@ export function shortHash(hash: string | null | undefined, size = 10): string {
   return hash.length > size ? `${hash.slice(0, size)}…` : hash;
 }
 
+/** Time zone the dates are shown in (the browser's, as formatDateTime uses it). */
+export function browserTimeZone(): string {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+  } catch {
+    return 'UTC';
+  }
+}
+
 export function truncate(text: string, max: number): string {
   const chars = Array.from(text);
   return chars.length > max ? `${chars.slice(0, max).join('')}…` : text;

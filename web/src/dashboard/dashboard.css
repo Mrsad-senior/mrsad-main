@@ -511,7 +511,7 @@ html[lang="ar"] .nav-group__title {
   border-block-start: var(--border-width) solid var(--border);
 }
 
-/* Figma "05 Audit integrity" chain card, shown after "Verify chain". */
+/* Figma "05 Audit integrity" chain card: on the Audit page, and on Activity after "Verify chain". */
 .chain-card {
   display: flex;
   flex-direction: column;
@@ -535,6 +535,7 @@ html[lang="ar"] .nav-group__title {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: var(--space-3);
 }
 
@@ -560,6 +561,25 @@ html[lang="ar"] .nav-group__title {
 .chain-card__meta {
   color: var(--text-muted);
   font-size: var(--font-size-small);
+}
+
+/* Not designed in Figma: no verification on record yet. */
+.chain-card--unknown {
+  background: var(--surface-2);
+}
+
+.chain-card--unknown .chain-card__title {
+  color: var(--heading);
+}
+
+/* Figma "Recent audit entries": each previous hash matches the entry hash in the row below. */
+.audit-table td {
+  padding-block: var(--space-4);
+}
+
+.audit-hash {
+  white-space: nowrap;
+  color: var(--text);
 }
 
 .filters .form-grid {
