@@ -100,7 +100,6 @@ export default function Approvals() {
                         now={now}
                         urgent={index === 0}
                         onOpen={() => setDetail(record)}
-                        onDecide={(approve) => setDeciding({ record, approve })}
                       />
                     ))}
                   </tbody>
@@ -248,24 +247,11 @@ function ApprovalMeta({ record, now }: { record: ApprovalRecord; now: number }) 
 
 /**
  * One row of the Figma "Actions awaiting your review" table. The first (most urgent) row is
- * highlighted, as in the design. Deny and approve stay available from the row, as icon
- * buttons beside "View", so the queue keeps its quick decisions.
+ * highlighted, as in the design. The only action is "View": reviewers decide from the
+ * details, after seeing the arguments and why Mirsad paused the call.
  */
-function QueueRow({
-  record,
-  now,
-  urgent,
-  onOpen,
-  onDecide,
-}: {
-  record: ApprovalRecord;
-  now: number;
-  urgent: boolean;
-  onOpen: () => void;
-  onDecide: (approve: boolean) => void;
-}) {
+function QueueRow({ record, now, urgent, onOpen }: { record: ApprovalRecord; now: number; urgent: boolean; onOpen: () => void }) {
   const { t, lang } = useI18n();
-  const expired = record.expires_at * 1000 <= now;
   return (
     <tr className={urgent ? 'queue-row--urgent' : undefined}>
       <td className="queue-table__tool">
@@ -287,26 +273,6 @@ function QueueRow({
         <div className="queue-table__actions">
           <button type="button" className="btn btn--ghost btn--sm queue-table__view" onClick={onOpen}>
             {t('app.view')}
-          </button>
-          <button
-            type="button"
-            className="icon-btn icon-btn--sm queue-table__deny"
-            onClick={() => onDecide(false)}
-            disabled={expired}
-            aria-label={t('approvals.deny')}
-            title={t('approvals.deny')}
-          >
-            <Icon name="x" size={18} />
-          </button>
-          <button
-            type="button"
-            className="icon-btn icon-btn--sm queue-table__approve"
-            onClick={() => onDecide(true)}
-            disabled={expired}
-            aria-label={t('approvals.approve')}
-            title={t('approvals.approve')}
-          >
-            <Icon name="check" size={18} />
           </button>
         </div>
       </td>

@@ -746,26 +746,6 @@ html[lang="ar"] .nav-group__title {
   min-block-size: 40px;
 }
 
-.queue-table__deny {
-  color: var(--deny-fg);
-}
-
-.queue-table__approve {
-  color: var(--primary-text);
-}
-
-.queue-table__deny:hover:not(:disabled) {
-  background: var(--deny-bg);
-}
-
-.queue-table__approve:hover:not(:disabled) {
-  background: var(--primary-soft);
-}
-
-.icon-btn:disabled {
-  opacity: 0.4;
-}
-
 /* Figma "03 Approval details", shown in the drawer that opens from the queue. */
 .dialog--drawer.review-drawer {
   inline-size: min(960px, 100vw);

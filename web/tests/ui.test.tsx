@@ -8,6 +8,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { afterEach, describe, expect, it } from 'vitest';
 import { ApproverApp } from '../src/approver/App';
 import { DashboardApp } from '../src/dashboard/App';
+import Approvals from '../src/dashboard/pages/Approvals';
 import Audit from '../src/dashboard/pages/Audit';
 import Demo from '../src/dashboard/pages/Demo';
 import Policies from '../src/dashboard/pages/Policies';
@@ -512,5 +513,35 @@ describe('audit page', () => {
     expect(within(nav).queryByRole('link', { name: 'Audit' })).toBeNull();
     expect(within(nav).queryByRole('link', { name: 'Activity' })).toBeNull();
     expect(calls.some((c) => c.url.includes('/api/audit/'))).toBe(false);
+  });
+});
+
+describe('approvals page', () => {
+  function approvalsBackend(routes: Parameters<typeof fakeFetch>[0] = {}, user: Record<string, unknown> = APPROVER) {
+    const record = pendingRecord();
+    return makeClient({ 'GET /api/approvals': (req) => json(req.url.includes('status=pending') ? [record] : []), ...routes }, user);
+  }
+
+  function renderApprovals(client: ApiClient) {
+    render(
+      <Providers client={client}>
+        <Approvals />
+      </Providers>,
+    );
+  }
+
+  it('offers only "View" in the queue; Approve and Deny come with the details', async () => {
+    const { client } = approvalsBackend();
+    renderApprovals(client);
+
+    const row = within(await screen.findByRole('table')).getAllByRole('row')[1];
+    expect(within(row).getAllByRole('button').map((b) => b.textContent)).toEqual(['View']);
+    expect(screen.queryByRole('button', { name: 'Approve' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Deny' })).toBeNull();
+
+    fireEvent.click(within(row).getByRole('button', { name: 'View' }));
+    const details = await screen.findByRole('dialog', { name: 'Review held action' });
+    expect(within(details).getByRole('button', { name: 'Approve' })).toBeTruthy();
+    expect(within(details).getByRole('button', { name: 'Deny' })).toBeTruthy();
   });
 });
