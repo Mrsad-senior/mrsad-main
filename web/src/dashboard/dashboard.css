@@ -368,6 +368,11 @@ html[lang="ar"] .nav-group__title {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+/* .kpis resets its margin, which would cancel the page's .stack-lg spacing. */
+.stack-lg > .summary-cards {
+  margin-block-start: 24px;
+}
+
 .summary-cards .kpi__value {
   display: inline-flex;
   align-items: center;
